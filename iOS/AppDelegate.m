@@ -37,7 +37,7 @@ RCT_EXPORT_MODULE();
    * on the same Wi-Fi network.
    */
 
-  //_jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle"];
+  _jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle"];
 
   /**
    * OPTION 2
@@ -49,7 +49,7 @@ RCT_EXPORT_MODULE();
    * see http://facebook.github.io/react-native/docs/runningondevice.html
    */
 
-   _jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+//   jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:_jsCodeLocation
                                                       moduleName:@"RNPlayNative"
