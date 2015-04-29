@@ -71,7 +71,7 @@ var RNPlayNative = React.createClass({
 
   selectApp: function(app) {
     //fetch(app.app_bundle.url).then(e => e.text()).then(content => eval.call(content));
-    Bridge.setBundleURLAndReload(app.app_bundle.url, app.module_name);
+    Bridge.loadAppFromBundleURL(app.app_bundle.url, app.module_name);
   },
 
   renderLoading: function() {
