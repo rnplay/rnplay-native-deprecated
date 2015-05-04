@@ -1075,7 +1075,7 @@ if (!String.prototype.repeat) {
   }
 })();
 
-__d('RNPlayNative/index.ios',["react-native/Libraries/react-native/react-native","NativeModules","react-native-camera/Camera.ios"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('RNPlayNative/index.ios',["react-native/Libraries/react-native/react-native","NativeModules","react-native-camera/Camera.ios","Overlay","image!photo-camera5"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * React Native Playground
  * https://github.com/jsierles/rnplay
  */
@@ -1092,18 +1092,21 @@ var $__0=
   
   
   
-  React,ActivityIndicatorIOS=$__0.ActivityIndicatorIOS,AppRegistry=$__0.AppRegistry,StyleSheet=$__0.StyleSheet,Text=$__0.Text,ListView=$__0.ListView,View=$__0.View,TouchableOpacity=$__0.TouchableOpacity;
+  
+  React,ActivityIndicatorIOS=$__0.ActivityIndicatorIOS,AppRegistry=$__0.AppRegistry,StyleSheet=$__0.StyleSheet,Text=$__0.Text,ListView=$__0.ListView,View=$__0.View,Image=$__0.Image,TouchableOpacity=$__0.TouchableOpacity;
 
 var Bridge = require('NativeModules').AppDelegate;
 var Camera = require('react-native-camera/Camera.ios');
+var Overlay = require('Overlay');
 
-var REQUEST_URL = 'http://rnplay.org/rn_apps.json';
+var REQUEST_URL = 'http://rnplay.org/plays.json';
 
 var RNPlayNative = React.createClass({displayName: "RNPlayNative",
   
   getInitialState: function() {
     return {
       loaded: false,
+      isModalOpen: false,
       dataSource: new ListView.DataSource({
         rowHasChanged: function(row1, row2)  {return row1 !== row2;},
       }),
@@ -1134,6 +1137,20 @@ var RNPlayNative = React.createClass({displayName: "RNPlayNative",
           dataSource: this.state.dataSource, 
           renderRow: this.renderApp, 
           style: styles.listView}
+        ), 
+        React.createElement(TouchableOpacity, {onPress: function()  {return this.setState({isModalOpen: true});}.bind(this)}, 
+          React.createElement(Image, {style: styles.cameraButton, resizeMode: "contain", source: require("image!photo-camera5")})
+        ), 
+        React.createElement(Overlay, {isVisible: this.state.isModalOpen}, 
+          React.createElement(Camera, {
+            ref: "cam", 
+            style: styles.container, 
+            onBarCodeRead: this.onBarCodeRead}, 
+            React.createElement(TouchableOpacity, {onPress: function()  {return this.setState({isModalOpen: false});}.bind(this)}, 
+              React.createElement(Text, {style: styles.cancelButton}, "X")
+            )
+          )
+          
         )
       )
     );
@@ -1142,14 +1159,14 @@ var RNPlayNative = React.createClass({displayName: "RNPlayNative",
   renderApp: function(app) {
     return (
       React.createElement(TouchableOpacity, {onPress: function()  {return this.selectApp(app);}.bind(this)}, 
-        React.createElement(Text, {style: styles.app}, app.name)
+        React.createElement(Text, {style: styles.app}, app.name || app.module_name)
       )
     );
   },
 
   selectApp: function(app) {
-    //fetch(app.app_bundle.url).then(e => e.text()).then(content => eval.call(content));
-    Bridge.loadAppFromBundleURL(app.app_bundle.url, app.module_name);
+    console.log(app);
+    Bridge.loadAppFromBundleURL(app.bundle_url, app.module_name);
   },
 
   renderLoading: function() {
@@ -1169,18 +1186,11 @@ var RNPlayNative = React.createClass({displayName: "RNPlayNative",
   },
 
   render: function() {
-    return (
-      React.createElement(Camera, {
-        ref: "cam", 
-        style: styles.container, 
-        onBarCodeRead: this.onBarCodeRead}
-     )
-    );
-    // if (!this.state.loaded) {
-    //   return this.renderLoading();
-    // } else {
-    //   return this.renderAppList();
-    // }
+    if (!this.state.loaded) {
+      return this.renderLoading();
+    } else {
+      return this.renderAppList();
+    }
   }
 });
 
@@ -1188,6 +1198,18 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 30
+  },
+  cameraButton: {
+    height: 60,
+    width: 20,
+    alignSelf: 'center',
+    marginLeft: 5
+  },
+  cancelButton: {
+    color: '#fff',
+    flex: 1,
+    fontSize: 25,
+    marginLeft: 20
   },
   header: {
     textAlign: "center",
@@ -40483,5 +40505,70 @@ var styles = StyleSheet.create({
 Camera.constants = constants;
 module.exports = Camera;
 });
+__d('Overlay',["createReactIOSNativeComponentClass","ReactIOSViewAttributes","merge","react-native/Libraries/react-native/react-native"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+ * @providesModule Overlay
+ * @flow
+ */
+
+'use strict';
+
+var createReactIOSNativeComponentClass = require('createReactIOSNativeComponentClass');
+var ReactIOSViewAttributes = require('ReactIOSViewAttributes');
+var merge = require('merge');
+
+var React = require('react-native/Libraries/react-native/react-native');
+var $__0=
+  
+  
+  
+  React,View=$__0.View,PropTypes=$__0.PropTypes,StyleSheet=$__0.StyleSheet;
+
+              
+                     
+ 
+
+var Overlay = React.createClass({displayName: "Overlay",
+  getDefaultProps:function()        {
+    return {
+      isVisible: false,
+    }
+  },
+
+  render:function() {
+    var $__0=
+      
+      this.props,isVisible=$__0.isVisible;
+
+    if (this.props.isVisible) {
+      return (
+        React.createElement(RNOverlay, {visible: true, style: styles.container, pointerEvents: "none", aboveStatusBar: this.props.aboveStatusBar}, 
+          React.Children.map(this.props.children, React.addons.cloneWithProps)
+        )
+      );
+    } else {
+      return React.createElement(View, null);
+    }
+  },
+});
+
+var RNOverlay = createReactIOSNativeComponentClass({
+  validAttributes: merge(ReactIOSViewAttributes.UIView, {visible: true, aboveStatusBar: true}),
+  uiViewClassName: 'RNOverlay',
+});
+
+var styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'transparent',
+  },
+})
+
+module.exports = Overlay;
+});
+__d('image!photo-camera5',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/joshua/projects/RNPlayNative/photo-camera5.png","uri":"photo-camera5","width":256,"height":256,"deprecated":true};});
 ;require("RNPlayNative/index.ios");
 //@ sourceMappingURL=/index.ios.map
