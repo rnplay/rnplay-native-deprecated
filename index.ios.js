@@ -18,8 +18,7 @@ var {
 } = React;
 
 var Bridge = require('NativeModules').AppDelegate;
-
-var REQUEST_URL = 'http://rnplay.org/rn_apps.json';
+var Camera = require('react-native-camera');
 
 var RNPlayNative = React.createClass({
   
@@ -70,7 +69,6 @@ var RNPlayNative = React.createClass({
   },
 
   selectApp: function(app) {
-    //fetch(app.app_bundle.url).then(e => e.text()).then(content => eval.call(content));
     Bridge.loadAppFromBundleURL(app.app_bundle.url, app.module_name);
   },
 
@@ -82,12 +80,22 @@ var RNPlayNative = React.createClass({
     );
   },
 
-  render: function() {
-    if (!this.state.loaded) {
-      return this.renderLoading();
-    } else {
-      return this.renderAppList();
+  onBarCodeRead(data) {
+    if (!this.barCodeRead) {
+      this.barCodeRead = true
+      var appdata = JSON.parse(data.data)
+      Bridge.loadAppFromBundleURL(appdata.url, appdata.module_name);
     }
+  },
+
+  render: function() {
+    return (
+      <Camera
+        ref="cam"
+        style={styles.container}
+        onBarCodeRead={this.onBarCodeRead}
+     />
+    );
   }
 });
 
