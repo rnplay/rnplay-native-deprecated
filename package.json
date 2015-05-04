@@ -6,7 +6,9 @@
     "start": "node_modules/react-native/packager/packager.sh"
   },
   "dependencies": {
-    "react-native": "facebook/react-native"
+    "react-native": "facebook/react-native",
+    "react-native-modal": "^0.2.13",
+    "react-native-overlay": "^0.1.7"
   },
   "devDependencies": {
     "rem": "ReactExtensionManager/rem"

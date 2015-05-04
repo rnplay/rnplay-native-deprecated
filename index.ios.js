@@ -14,17 +14,22 @@ var {
   Text,
   ListView,
   View,
+  Image,
   TouchableOpacity
 } = React;
 
 var Bridge = require('NativeModules').AppDelegate;
 var Camera = require('react-native-camera');
+var Overlay = require('react-native-overlay');
+
+var REQUEST_URL = 'http://rnplay.ka/plays.json';
 
 var RNPlayNative = React.createClass({
   
   getInitialState: function() {
     return {
       loaded: false,
+      isModalOpen: false,
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
@@ -56,6 +61,20 @@ var RNPlayNative = React.createClass({
           renderRow={this.renderApp}
           style={styles.listView}
         />
+        <TouchableOpacity onPress={() => this.setState({isModalOpen: true})}>
+          <Image style={styles.cameraButton} resizeMode="contain" source={require("image!photo-camera5")} />
+        </TouchableOpacity>
+        <Overlay isVisible={this.state.isModalOpen}>
+          <Camera
+            ref="cam"
+            style={styles.container}
+            onBarCodeRead={this.onBarCodeRead}>
+            <TouchableOpacity onPress={() => this.setState({isModalOpen: false})}>
+              <Text style={styles.cancelButton}>X</Text>
+            </TouchableOpacity>
+          </Camera>
+          
+        </Overlay>
       </View>
     );
   },
@@ -63,13 +82,14 @@ var RNPlayNative = React.createClass({
   renderApp: function(app) {
     return (
       <TouchableOpacity onPress={() => this.selectApp(app)}>
-        <Text style={styles.app}>{app.name}</Text>
+        <Text style={styles.app}>{app.name || app.module_name}</Text>
       </TouchableOpacity>
     );
   },
 
   selectApp: function(app) {
-    Bridge.loadAppFromBundleURL(app.app_bundle.url, app.module_name);
+    console.log(app);
+    Bridge.loadAppFromBundleURL(app.bundle_url, app.module_name);
   },
 
   renderLoading: function() {
@@ -89,13 +109,11 @@ var RNPlayNative = React.createClass({
   },
 
   render: function() {
-    return (
-      <Camera
-        ref="cam"
-        style={styles.container}
-        onBarCodeRead={this.onBarCodeRead}
-     />
-    );
+    if (!this.state.loaded) {
+      return this.renderLoading();
+    } else {
+      return this.renderAppList();
+    }
   }
 });
 
@@ -103,6 +121,18 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 30
+  },
+  cameraButton: {
+    height: 60,
+    width: 20,
+    alignSelf: 'center',
+    marginLeft: 5
+  },
+  cancelButton: {
+    color: '#fff',
+    flex: 1,
+    fontSize: 25,
+    marginLeft: 20
   },
   header: {
     textAlign: "center",
