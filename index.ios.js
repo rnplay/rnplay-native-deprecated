@@ -22,7 +22,7 @@ var Bridge = require('NativeModules').AppDelegate;
 var Camera = require('react-native-camera');
 var Overlay = require('react-native-overlay');
 
-var REQUEST_URL = 'http://rnplay.ka/plays.json';
+var REQUEST_URL = 'http://rnplay.org/plays.json';
 
 var RNPlayNative = React.createClass({
   

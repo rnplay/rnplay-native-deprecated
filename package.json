@@ -9,8 +9,5 @@
     "react-native": "0.4.1",
     "react-native-modal": "^0.2.13",
     "react-native-overlay": "^0.1.7"
-  },
-  "devDependencies": {
-    "rem": "ReactExtensionManager/rem"
   }
 }
