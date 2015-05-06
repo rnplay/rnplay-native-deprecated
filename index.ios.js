@@ -18,7 +18,7 @@ var {
   TouchableOpacity
 } = React;
 
-var Bridge = require('NativeModules').AppDelegate;
+var AppReloader = require('NativeModules').AppReloader;
 var Camera = require('react-native-camera');
 var Overlay = require('react-native-overlay');
 
@@ -89,7 +89,7 @@ var RNPlayNative = React.createClass({
 
   selectApp: function(app) {
     console.log(app);
-    Bridge.loadAppFromBundleURL(app.bundle_url, app.module_name);
+    AppReloader.reloadAppWithURLString(app.bundle_url, app.module_name);
   },
 
   renderLoading: function() {
@@ -104,7 +104,7 @@ var RNPlayNative = React.createClass({
     if (!this.barCodeRead) {
       this.barCodeRead = true
       var appdata = JSON.parse(data.data)
-      Bridge.loadAppFromBundleURL(appdata.url, appdata.module_name);
+      AppReloader.reloadAppWithURLString(appdata.url, appdata.module_name);
     }
   },
 
