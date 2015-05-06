@@ -19,7 +19,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   NSURL *initialJSBundleURL = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle"];
-  NSString *initialModuleName = @"App";
+  NSString *initialModuleName = @"RNPlayNative";
   
   self.viewController = [[ViewController alloc] initWithLaunchOptions:launchOptions];
   [self.viewController reloadWithJSBundleURL:initialJSBundleURL moduleNamed:initialModuleName];
@@ -43,6 +43,10 @@
 
 RCT_EXPORT_MODULE()
 
+-(dispatch_queue_t)methodQueue
+{
+  return dispatch_get_main_queue();
+}
 
 /**
  *  var AppReloader = require('NativeModules').AppReloader;
