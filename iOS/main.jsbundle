@@ -1021,53 +1021,14 @@ if (!String.prototype.repeat) {
  *
  * @provides Array.prototype.es6
  * @polyfill
- * @requires __DEV__
  */
 
 /*eslint-disable */
 /*jslint bitwise: true */
 
-(function (undefined) {
-  if (__DEV__) {
-    // Define DEV-only setter that blows up when someone incorrectly
-    // iterates over arrays.
-    try {
-      Object.defineProperty && Object.defineProperty(
-        Array.prototype,
-        '__ARRAY_ENUMERATION_GUARD__',
-        {
-          configurable: true,
-          enumerable: true,
-          get: function() {
-            console.error(
-              'Your code is broken! Do not iterate over arrays with ' +
-              'for...in.'
-            );
-          }
-        }
-      );
-    } catch (e) {
-      // Nothing
-    }
-  }
-
+(function(undefined) {
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
   function findIndex(predicate, context) {
-    /**
-     * Why am I seeing this "findIndex" method as a value in my array!?
-     *
-     * We polyfill the "findIndex" method -- called like
-     * `[1, 2, 3].findIndex(1)` -- for older browsers. A side effect of the way
-     * we do that is that the method is enumerable. If you were incorrectly
-     * iterating over your array using the object property iterator syntax
-     * `for (key in obj)` you will see the method name "findIndex" as a key.
-     *
-     * To fix your code please do one of the following:
-     *
-     *  - Use a regular for loop with index.
-     *  - Use one of the array methods: a.forEach, a.map, etc.
-     *  - Guard your body of your loop with a `arr.hasOwnProperty(key)` check.
-     */
     if (this == null) {
       throw new TypeError(
         'Array.prototype.findIndex called on null or undefined'
@@ -1087,33 +1048,30 @@ if (!String.prototype.repeat) {
   }
 
   if (!Array.prototype.findIndex) {
-    Array.prototype.findIndex = findIndex;
+    Object.defineProperty(Array.prototype, 'findIndex', {
+      enumerable: false,
+      writable: true,
+      configurable: true,
+      value: findIndex
+    });
   }
 
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
   if (!Array.prototype.find) {
-    Array.prototype.find = function(predicate, context) {
-      /**
-       * Why am I seeing this "find" method as a value in my array!?
-       *
-       * We polyfill the "find" method -- called like
-       * `[1, 2, 3].find(1)` -- for older browsers. A side effect of the way
-       * we do that is that the method is enumerable. If you were incorrectly
-       * iterating over your array using the object property iterator syntax
-       * `for (key in obj)` you will see the method name "find" as a key.
-       *
-       * To fix your code please do one of the following:
-       *
-       *  - Use a regular for loop with index.
-       *  - Use one of the array methods: a.forEach, a.map, etc.
-       *  - Guard your body of your loop with a `arr.hasOwnProperty(key)` check.
-       */
-      if (this == null) {
-        throw new TypeError('Array.prototype.find called on null or undefined');
+    Object.defineProperty(Array.prototype, 'find', {
+      enumerable: false,
+      writable: true,
+      configurable: true,
+      value: function(predicate, context) {
+        if (this == null) {
+          throw new TypeError(
+            'Array.prototype.find called on null or undefined'
+          );
+        }
+        var index = findIndex.call(this, predicate, context);
+        return index === -1 ? undefined : this[index];
       }
-      var index = findIndex.call(this, predicate, context);
-      return index === -1 ? undefined : this[index];
-    };
+    });
   }
 })();
 
@@ -1137,7 +1095,7 @@ var $__0=
   
   React,ActivityIndicatorIOS=$__0.ActivityIndicatorIOS,AppRegistry=$__0.AppRegistry,StyleSheet=$__0.StyleSheet,Text=$__0.Text,ListView=$__0.ListView,View=$__0.View,Image=$__0.Image,TouchableOpacity=$__0.TouchableOpacity;
 
-var Bridge = require('NativeModules').AppDelegate;
+var AppReloader = require('NativeModules').AppReloader;
 var Camera = require('react-native-camera/Camera.ios');
 var Overlay = require('Overlay');
 
@@ -1208,7 +1166,7 @@ var RNPlayNative = React.createClass({displayName: "RNPlayNative",
 
   selectApp: function(app) {
     console.log(app);
-    Bridge.loadAppFromBundleURL(app.bundle_url, app.module_name);
+    AppReloader.reloadAppWithURLString(app.bundle_url, app.module_name);
   },
 
   renderLoading: function() {
@@ -1223,7 +1181,7 @@ var RNPlayNative = React.createClass({displayName: "RNPlayNative",
     if (!this.barCodeRead) {
       this.barCodeRead = true
       var appdata = JSON.parse(data.data)
-      Bridge.loadAppFromBundleURL(appdata.url, appdata.module_name);
+      AppReloader.reloadAppWithURLString(appdata.url, appdata.module_name);
     }
   },
 
@@ -1268,7 +1226,7 @@ var styles = StyleSheet.create({
 });
 
 AppRegistry.registerComponent('RNPlayNative', function()  {return RNPlayNative;});});
-__d('react-native/Libraries/react-native/react-native',["React","ActivityIndicatorIOS","DatePickerIOS","Image","ListView","MapView","NavigatorIOS","PickerIOS","Navigator","ScrollView","SliderIOS","SwitchIOS","TabBarIOS","Text","TextInput","TouchableHighlight","TouchableOpacity","TouchableWithoutFeedback","View","WebView","AlertIOS","AppRegistry","AppStateIOS","AsyncStorage","CameraRoll","InteractionManager","LinkingIOS","LayoutAnimation","NetInfo","PixelRatio","PushNotificationIOS","PanResponder","StatusBarIOS","StyleSheet","VibrationIOS","RCTDeviceEventEmitter","NativeModules","requireNativeComponent","LinkedStateMixin","ReactComponentWithPureRenderMixin","NativeModules","ReactUpdates","cloneWithProps","ReactFragment","update","ReactDefaultPerf","ReactTestUtils"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('react-native/Libraries/react-native/react-native',["React","ActivityIndicatorIOS","DatePickerIOS","Image","ListView","MapView","NavigatorIOS","PickerIOS","Navigator","SegmentedControlIOS","ScrollView","SliderIOS","SwitchIOS","TabBarIOS","Text","TextInput","TouchableHighlight","TouchableOpacity","TouchableWithoutFeedback","View","WebView","AlertIOS","AppRegistry","AppStateIOS","AsyncStorage","CameraRoll","InteractionManager","LinkingIOS","LayoutAnimation","NetInfo","PixelRatio","PushNotificationIOS","PanResponder","StatusBarIOS","StyleSheet","VibrationIOS","RCTDeviceEventEmitter","NativeModules","requireNativeComponent","LinkedStateMixin","ReactComponentWithPureRenderMixin","NativeModules","ReactUpdates","cloneWithProps","ReactFragment","update","ReactDefaultPerf","ReactTestUtils"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -1297,6 +1255,7 @@ var ReactNative = Object.assign(Object.create(require('React')), {
   NavigatorIOS: require('NavigatorIOS'),
   PickerIOS: require('PickerIOS'),
   Navigator: require('Navigator'),
+  SegmentedControlIOS: require('SegmentedControlIOS'),
   ScrollView: require('ScrollView'),
   SliderIOS: require('SliderIOS'),
   SwitchIOS: require('SwitchIOS'),
@@ -5772,9 +5731,9 @@ function warnForPropsMutation(propName, element) {
 
   warning(
     false,
-    'Don\'t set .props.%s of the React component%s. ' +
-    'Instead, specify the correct value when ' +
-    'initially creating the element.%s',
+    'Don\'t set .props.%s of the React component%s. Instead, specify the ' +
+    'correct value when initially creating the element or use ' +
+    'React.cloneElement to make a new element with updated props.%s',
     propName,
     elementInfo,
     ownerInfo
@@ -7123,7 +7082,7 @@ eventType        , subscription                   )                    {
 
 module.exports = EventSubscriptionVendor;
 });
-__d('ExceptionsManager',["Platform","NativeModules","loadSourceMap","parseErrorStack"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ExceptionsManager',["Platform","NativeModules","loadSourceMap","parseErrorStack","stringifySafe"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -7141,6 +7100,7 @@ var RCTExceptionsManager = require('NativeModules').ExceptionsManager;
 
 var loadSourceMap = require('loadSourceMap');
 var parseErrorStack = require('parseErrorStack');
+var stringifySafe = require('stringifySafe');
 
 var sourceMapPromise;
 
@@ -7150,17 +7110,11 @@ var sourceMapPromise;
                   
  
 
-function handleException(e           ) {
-  var stack = parseErrorStack(e);
-  console.error(
-    'Err0r: ' +
-    '\n stack: \n' + stackToString(stack) +
-    '\n URL: ' + e.sourceURL +
-    '\n line: ' + e.line +
-    '\n message: ' + e.message
-  );
-
+function reportException(e           , stack      ) {
   if (RCTExceptionsManager) {
+    if (!stack) {
+      stack = parseErrorStack(e);
+    }
     RCTExceptionsManager.reportUnhandledException(e.message, stack);
     if (__DEV__) {
       (sourceMapPromise = sourceMapPromise || loadSourceMap())
@@ -7172,6 +7126,47 @@ function handleException(e           ) {
           console.error('#CLOWNTOWN (error while displaying error): ' + error.message);
         });
     }
+  }
+}
+
+function handleException(e           ) {
+  var stack = parseErrorStack(e);
+  var msg =
+    'Error: ' + e.message +
+    '\n stack: \n' + stackToString(stack) +
+    '\n URL: ' + e.sourceURL +
+    '\n line: ' + e.line +
+    '\n message: ' + e.message;
+  if (console.errorOriginal) {
+    console.errorOriginal(msg);
+  } else {
+    console.error(msg);
+  }
+  reportException(e, stack);
+}
+
+/**
+ * Shows a redbox with stacktrace for all console.error messages.  Disable by
+ * setting `console.reportErrorsAsExceptions = false;` in your app.
+ */
+function installConsoleErrorReporter() {
+  if (console.reportException) {
+    return; // already installed
+  }
+  console.reportException = reportException;
+  console.errorOriginal = console.error.bind(console);
+  console.error = function reactConsoleError() {
+    console.errorOriginal.apply(null, arguments);
+    if (!console.reportErrorsAsExceptions) {
+      return;
+    }
+    var str = Array.prototype.map.call(arguments, stringifySafe).join(', ');
+    var error      = new Error('console.error: ' + str);
+    error.framesToPop = 1;
+    reportException(error);
+  };
+  if (console.reportErrorsAsExceptions === undefined) {
+    console.reportErrorsAsExceptions = true; // Individual apps can disable this
   }
 }
 
@@ -7196,7 +7191,7 @@ function fillSpaces(n) {
   return new Array(n + 1).join(' ');
 }
 
-module.exports = { handleException:handleException };
+module.exports = { handleException:handleException, installConsoleErrorReporter:installConsoleErrorReporter };
 });
 __d('Platform',[],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
@@ -7435,6 +7430,9 @@ var warning = require('warning');
 var JSTimersExecution = require('JSTimersExecution');
 
 var INTERNAL_ERROR = 'Error in MessageQueue implementation';
+
+// Prints all bridge traffic to console.log
+var DEBUG_SPY_MODE = false;
 
                       
                  
@@ -7678,6 +7676,9 @@ var MessageQueueMixin = {
         'both the success callback and the error callback.',
          cbID
       );
+      if (DEBUG_SPY_MODE) {
+        console.log('N->JS: Callback#' + cbID + '(' + JSON.stringify(args) + ')');
+      }
       cb.apply(scope, args);
     } catch(ie_requires_catch) {
       throw ie_requires_catch;
@@ -7707,6 +7708,11 @@ var MessageQueueMixin = {
     var moduleName = this._localModuleIDToModuleName[moduleID];
 
     var methodName = this._localModuleNameToMethodIDToName[moduleName][methodID];
+    if (DEBUG_SPY_MODE) {
+      console.log(
+        'N->JS: ' + moduleName + '.' + methodName +
+        '(' + JSON.stringify(params) + ')');
+    }
     var ret = jsCall(this._requireFunc(moduleName), methodName, params);
 
     return ret;
@@ -7874,6 +7880,17 @@ var MessageQueueMixin = {
     this._swapAndReinitializeBuffer();
     var ret = currentOutgoingItems[REQUEST_MODULE_IDS].length ||
       currentOutgoingItems[RESPONSE_RETURN_VALUES].length ? currentOutgoingItems : null;
+
+    if (DEBUG_SPY_MODE && ret) {
+      for (var i = 0; i < currentOutgoingItems[0].length; i++) {
+        var moduleName = this._remoteModuleIDToModuleName[currentOutgoingItems[0][i]];
+        var methodName =
+          this._remoteModuleNameToMethodIDToName[moduleName][currentOutgoingItems[1][i]];
+        console.log(
+          'JS->N: ' + moduleName + '.' + methodName +
+          '(' + JSON.stringify(currentOutgoingItems[2][i]) + ')');
+      }
+    }
 
     return ret;
   },
@@ -11406,6 +11423,49 @@ var StackTraceParser = {
 
 module.exports = StackTraceParser;
 });
+__d('stringifySafe',[],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule stringifySafe
+ * @flow
+ */
+'use strict';
+
+/**
+ * Tries to stringify with JSON.stringify and toString, but catches exceptions
+ * (e.g. from circular objects) and always returns a string and never throws.
+ */
+function stringifySafe(arg     )         {
+  var ret;
+  if (arg === undefined) {
+    ret = 'undefined';
+  } else if (arg === null) {
+    ret = 'null';
+  } else if (typeof arg === 'string') {
+    ret = '"' + arg + '"';
+  } else {
+    // Perform a try catch, just in case the object has a circular
+    // reference or stringify throws for some other reason.
+    try {
+      ret = JSON.stringify(arg);
+    } catch (e) {
+      if (typeof arg.toString === 'function') {
+        try {
+          ret = arg.toString();
+        } catch (E) {}
+      }
+    }
+  }
+  return ret || '["' + typeof arg + '" failed to stringify]';
+}
+
+module.exports = stringifySafe;
+});
 __d('XMLHttpRequest',["NativeModules","crc32","XMLHttpRequestBase"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -11720,6 +11780,12 @@ var subscriptions = [];
 
 var updatesEnabled = false;
 
+                   
+                  
+                     
+                           
+ 
+
 /**
  * You need to include the `NSLocationWhenInUseUsageDescription` key
  * in Info.plist to enable geolocation. Geolocation is enabled by default
@@ -11730,10 +11796,14 @@ var updatesEnabled = false;
  */
 var Geolocation = {
 
+  /*
+   * Invokes the success callback once with the latest location info.  Supported
+   * options: timeout (ms), maximumAge (ms), enableHighAccuracy (bool)
+   */
   getCurrentPosition: function(
     geo_success          ,
     geo_error           ,
-    geo_options         
+    geo_options             
   ) {
     invariant(
       typeof geo_success === 'function',
@@ -11746,7 +11816,11 @@ var Geolocation = {
     );
   },
 
-  watchPosition: function(success          , error           , options         )         {
+  /*
+   * Invokes the success callback whenever the location changes.  Supported
+   * options: timeout (ms), maximumAge (ms), enableHighAccuracy (bool)
+   */
+  watchPosition: function(success          , error           , options             )         {
     if (!updatesEnabled) {
       RCTLocationObserver.startObserving(options || {});
       updatesEnabled = true;
@@ -13519,7 +13593,7 @@ __d('NodeHandle',[],function(global, require, requireDynamic, requireLazy, modul
   *  worker thread.
   *
   *  The only other requirement of a platform/environment is that it always be
-  *  possible to extract the react rootNodeID in a blocking manner (see
+  *  possible to extract the React rootNodeID in a blocking manner (see
   *  `getRootNodeID`).
   *
   * +------------------+ +------------------+ +------------------+
@@ -14238,7 +14312,7 @@ var ReactInstanceMap = require('ReactInstanceMap');
  *
  * `mountImage`: A way to represent the potential to create lower level
  * resources whos `nodeHandle` can be discovered immediately by knowing the
- * `rootNodeID`. Today's web react represents this with `innerHTML` annotated
+ * `rootNodeID`. Today's web React represents this with `innerHTML` annotated
  * with DOM ids that match the `rootNodeID`.
  *
  * Opaque name      TodaysWebReact   FutureWebWorkerReact   ReactNative
@@ -15830,7 +15904,7 @@ var ReactIOSMount = {
    * that has been rendered and unmounting it. There should just be one child
    * component at this time.
    */
-  unmountComponentAtNode: function(containerTag        )       {
+  unmountComponentAtNode: function(containerTag        )          {
     if (!ReactIOSTagHandles.reactTagIsNativeTopRootID(containerTag)) {
       console.error('You cannot render into anything but a top root');
       return false;
@@ -15921,6 +15995,7 @@ assign(
 function isInternalComponentType(type) {
   return (
     typeof type === 'function' &&
+    typeof type.prototype !== 'undefined' &&
     typeof type.prototype.mountComponent === 'function' &&
     typeof type.prototype.receiveComponent === 'function'
   );
@@ -16187,6 +16262,14 @@ var ReactCompositeComponentMixin = {
         'getInitialState was defined on %s, a plain JavaScript class. ' +
         'This is only supported for classes created using React.createClass. ' +
         'Did you mean to define a state property instead?',
+        this.getName() || 'a component'
+      );
+      warning(
+        !inst.getDefaultProps ||
+        inst.getDefaultProps.isReactClassApproved,
+        'getDefaultProps was defined on %s, a plain JavaScript class. ' +
+        'This is only supported for classes created using React.createClass. ' +
+        'Use a static property to define defaultProps instead.',
         this.getName() || 'a component'
       );
       warning(
@@ -16758,7 +16841,7 @@ var ReactCompositeComponentMixin = {
         this._renderedComponent,
         thisID,
         transaction,
-        context
+        this._processChildContext(context)
       );
       this._replaceNodeWithMarkupByID(prevComponentID, nextMarkup);
     }
@@ -21037,7 +21120,7 @@ function onlyChild(children) {
 
 module.exports = onlyChild;
 });
-__d('ActivityIndicatorIOS',["NativeMethodsMixin","NativeModules","ReactPropTypes","React","StyleSheet","View","keyMirror","requireNativeComponent","verifyPropTypes"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ActivityIndicatorIOS',["NativeMethodsMixin","NativeModules","ReactPropTypes","React","StyleSheet","View","requireNativeComponent","verifyPropTypes"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -21057,21 +21140,16 @@ var React = require('React');
 var StyleSheet = require('StyleSheet');
 var View = require('View');
 
-var keyMirror = require('keyMirror');
 var requireNativeComponent = require('requireNativeComponent');
 var verifyPropTypes = require('verifyPropTypes');
-
-var SpinnerSize = keyMirror({
-  large: null,
-  small: null,
-});
 
 var GRAY = '#999999';
 
                      
                      
-                          
                 
+                            
+                          
   
 
 var ActivityIndicatorIOS = React.createClass({displayName: "ActivityIndicatorIOS",
@@ -21086,7 +21164,10 @@ var ActivityIndicatorIOS = React.createClass({displayName: "ActivityIndicatorIOS
      * The foreground color of the spinner (default is gray).
      */
     color: PropTypes.string,
-
+    /**
+     * Whether the indicator should hide when not animating (true by default).
+     */
+    hidesWhenStopped: PropTypes.bool,
     /**
      * Size of the indicator. Small has a height of 20, large has a height of 36.
      */
@@ -21099,27 +21180,18 @@ var ActivityIndicatorIOS = React.createClass({displayName: "ActivityIndicatorIOS
   getDefaultProps: function()               {
     return {
       animating: true,
-      size: SpinnerSize.small,
       color: GRAY,
+      hidesWhenStopped: true,
+      size: 'small',
     };
   },
 
   render: function() {
-    var style = styles.sizeSmall;
-    var NativeConstants = NativeModules.UIManager.UIActivityIndicatorView.Constants;
-    var activityIndicatorViewStyle = NativeConstants.StyleWhite;
-    if (this.props.size === 'large') {
-      style = styles.sizeLarge;
-      activityIndicatorViewStyle = NativeConstants.StyleWhiteLarge;
-    }
+    var $__0=   this.props,style=$__0.style,props=(function(source, exclusion) {var rest = {};var hasOwn = Object.prototype.hasOwnProperty;if (source == null) {throw new TypeError();}for (var key in source) {if (hasOwn.call(source, key) && !hasOwn.call(exclusion, key)) {rest[key] = source[key];}}return rest;})($__0,{style:1});
+    var sizeStyle = (this.props.size === 'large') ? styles.sizeLarge : styles.sizeSmall;
     return (
-      React.createElement(View, {
-        style: [styles.container, style, this.props.style]}, 
-        React.createElement(UIActivityIndicatorView, {
-          activityIndicatorViewStyle: activityIndicatorViewStyle, 
-          animating: this.props.animating, 
-          color: this.props.color}
-        )
+      React.createElement(View, {style: [styles.container, sizeStyle, style]}, 
+        React.createElement(RCTActivityIndicatorView, React.__spread({},  props))
       )
     );
   }
@@ -21138,15 +21210,15 @@ var styles = StyleSheet.create({
   }
 });
 
-var UIActivityIndicatorView = requireNativeComponent(
-  'UIActivityIndicatorView',
+var RCTActivityIndicatorView = requireNativeComponent(
+  'RCTActivityIndicatorView',
   null
 );
 if (__DEV__) {
   var nativeOnlyProps = {activityIndicatorViewStyle: true};
   verifyPropTypes(
     ActivityIndicatorIOS,
-    UIActivityIndicatorView.viewConfig,
+    RCTActivityIndicatorView.viewConfig,
     nativeOnlyProps
   );
 }
@@ -21336,7 +21408,7 @@ var stylePropType = StyleSheetPropType(ViewStylePropTypes);
  * container that supports layout with flexbox, style, some touch handling, and
  * accessibility controls, and is designed to be nested inside other views and
  * to have 0 to many children of any type. `View` maps directly to the native
- * view equivalent on whatever platform react is running on, whether that is a
+ * view equivalent on whatever platform React is running on, whether that is a
  * `UIView`, `<div>`, `android.view`, etc.  This example creates a `View` that
  * wraps two colored boxes and custom component in a row with padding.
  *
@@ -22053,7 +22125,7 @@ var verifyPropTypes = require('verifyPropTypes');
 var warning = require('warning');
 
 /**
- * A react component for displaying different types of images,
+ * A React component for displaying different types of images,
  * including network images, static resources, temporary local images, and
  * images from local disk, such as the camera roll.
  *
@@ -22285,10 +22357,11 @@ function pickScale(scales, deviceScale) {
   return scales[scales.length - 1] || 1;
 }
 
-// TODO(frantic):
-//   * Pick best scale and append @Nx to file path
-//   * We are currently using httpServerLocation for both http and in-app bundle
 function resolveAssetSource(source) {
+  if (!source || typeof source !== 'object') {
+    return null;
+  }
+
   if (!source.__packager_asset) {
     return source;
   }
@@ -22440,7 +22513,7 @@ var dimensions = NativeModules.UIManager.Dimensions;
 // We calculate the window dimensions in JS so that we don't encounter loss of
 // precision in transferring the dimensions (which could be non-integers) over
 // the bridge.
-if (dimensions.windowPhysicalPixels) {
+if (dimensions && dimensions.windowPhysicalPixels) {
   // parse/stringify => Clone hack
   dimensions = JSON.parse(JSON.stringify(dimensions));
 
@@ -25750,7 +25823,8 @@ var Navigator = React.createClass({displayName: "Navigator",
   },
 
   contextTypes: {
-    navigator: PropTypes.object,
+    // TODO (t6707746) Re-enable this when owner context switches to parent context
+    // navigator: PropTypes.object,
   },
 
   statics: {
@@ -25797,13 +25871,11 @@ var Navigator = React.createClass({displayName: "Navigator",
       // On first render, we will render every scene in the initialRouteStack
       updatingRangeStart: 0,
       updatingRangeLength: routeStack.length,
-      // Either animating or gesturing.
-      isAnimating: false,
-      jumpToIndex: routeStack.length - 1,
       presentedIndex: initialRouteIndex,
-      isResponderOnlyToBlockTouches: false,
-      fromIndex: initialRouteIndex,
-      toIndex: initialRouteIndex,
+      transitionFromIndex: null,
+      activeGesture: null,
+      pendingGestureProgress: null,
+      transitionQueue: [],
     };
   },
 
@@ -25838,9 +25910,24 @@ var Navigator = React.createClass({displayName: "Navigator",
       popToTop: this.popToTop,
     };
     this._handlers = {};
-
+    this.springSystem = new rebound.SpringSystem();
+    this.spring = this.springSystem.createSpring();
+    this.spring.setRestSpeedThreshold(0.05);
+    this.spring.setCurrentValue(0).setAtRest();
+    this.spring.addListener({
+      onSpringEndStateChange: function()  {
+        if (!this._interactionHandle) {
+          this._interactionHandle = this.createInteractionHandle();
+        }
+      }.bind(this),
+      onSpringUpdate: function()  {
+        this._handleSpringUpdate();
+      }.bind(this),
+      onSpringAtRest: function()  {
+        this._completeTransition();
+      }.bind(this),
+    });
     this.panGesture = PanResponder.create({
-      onStartShouldSetPanResponderCapture: this._handleStartShouldSetPanResponderCapture,
       onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
       onPanResponderGrant: this._handlePanResponderGrant,
       onPanResponderRelease: this._handlePanResponderRelease,
@@ -25909,20 +25996,8 @@ var Navigator = React.createClass({displayName: "Navigator",
     this._handlers[this.state.routeStack.indexOf(route)] = handler;
   },
 
-  _configureSpring: function(animationConfig) {
-    var config = this.spring.getSpringConfig();
-    config.friction = animationConfig.springFriction;
-    config.tension = animationConfig.springTension;
-  },
-
   componentDidMount: function() {
-    this.springSystem = new rebound.SpringSystem();
-    this.spring = this.springSystem.createSpring();
-    this.spring.setRestSpeedThreshold(0.05);
-    var animationConfig = this.state.sceneConfigStack[this.state.presentedIndex];
-    animationConfig && this._configureSpring(animationConfig);
-    this.spring.addListener(this);
-    this.onSpringUpdate();
+    this._handleSpringUpdate();
     this._emitDidFocus(this.state.routeStack[this.state.presentedIndex]);
     if (this.parentNavigator) {
       this.parentNavigator.setHandler(this._handleRequest);
@@ -25966,98 +26041,113 @@ var Navigator = React.createClass({displayName: "Navigator",
       updatingRangeStart: 0,
       updatingRangeLength: nextRouteStack.length,
       presentedIndex: destIndex,
-      jumpToIndex: destIndex,
-      toIndex: destIndex,
-      fromIndex: destIndex,
+      activeGesture: null,
+      transitionFromIndex: null,
+      transitionQueue: [],
     }, function()  {
-      this.onSpringUpdate();
+      this._handleSpringUpdate();
     }.bind(this));
   },
 
+  _transitionTo: function(destIndex, velocity, jumpSpringTo, cb) {
+    if (destIndex === this.state.presentedIndex) {
+      return;
+    }
+    if (this.state.transitionFromIndex !== null) {
+      this.state.transitionQueue.push({
+        destIndex:destIndex,
+        velocity:velocity,
+        cb:cb,
+      });
+      return;
+    }
+    this.state.transitionFromIndex = this.state.presentedIndex;
+    this.state.presentedIndex = destIndex;
+    this.state.transitionCb = cb;
+    this._onAnimationStart();
+    if (AnimationsDebugModule) {
+      AnimationsDebugModule.startRecordingFps();
+    }
+    var sceneConfig = this.state.sceneConfigStack[this.state.transitionFromIndex] ||
+      this.state.sceneConfigStack[this.state.presentedIndex];
+    invariant(
+      sceneConfig,
+      'Cannot configure scene at index ' + this.state.transitionFromIndex
+    );
+    if (jumpSpringTo != null) {
+      this.spring.setCurrentValue(jumpSpringTo);
+    }
+    this.spring.setOvershootClampingEnabled(true);
+    this.spring.getSpringConfig().friction = sceneConfig.springFriction;
+    this.spring.getSpringConfig().tension = sceneConfig.springTension;
+    this.spring.setVelocity(velocity || sceneConfig.defaultTransitionVelocity);
+    this.spring.setEndValue(1);
+    var willFocusRoute = this._subRouteFocus[this.state.presentedIndex] || this.state.routeStack[this.state.presentedIndex];
+    this._emitWillFocus(willFocusRoute);
+  },
+
   /**
-   * TODO: Accept callback for spring completion.
+   * This happens for each frame of either a gesture or a transition. If both are
+   * happening, we only set values for the transition and the gesture will catch up later
    */
-  _requestTransitionTo: function(topOfStack) {
-    if (topOfStack !== this.state.presentedIndex) {
-      invariant(!this.state.isAnimating, 'Cannot navigate while transitioning');
-      this.state.fromIndex = this.state.presentedIndex;
-      this.state.toIndex = topOfStack;
-      this.spring.setOvershootClampingEnabled(false);
-      if (AnimationsDebugModule) {
-        AnimationsDebugModule.startRecordingFps();
-      }
-      this._transitionToToIndexWithVelocity(
-        this.state.sceneConfigStack[this.state.fromIndex].defaultTransitionVelocity
+  _handleSpringUpdate: function() {
+    // Prioritize handling transition in progress over a gesture:
+    if (this.state.transitionFromIndex != null) {
+      this._transitionBetween(
+        this.state.transitionFromIndex,
+        this.state.presentedIndex,
+        this.spring.getCurrentValue()
+      );
+    } else if (this.state.activeGesture != null) {
+      this._transitionBetween(
+        this.state.presentedIndex,
+        this.state.presentedIndex + this._deltaForGestureAction(this.state.activeGesture),
+        this.spring.getCurrentValue()
       );
     }
   },
 
   /**
-   * `onSpring*` spring delegate. Wired up via `spring.addListener(this)`
+   * This happens at the end of a transition started by transitionTo
    */
-  onSpringEndStateChange: function() {
-    if (!this._interactionHandle) {
-      this._interactionHandle = this.createInteractionHandle();
+  _completeTransition: function() {
+    if (this.spring.getCurrentValue() !== 1) {
+      if (this.state.pendingGestureProgress) {
+        this.state.pendingGestureProgress = null;
+      }
+      return;
     }
-  },
-
-  onSpringUpdate: function() {
-    this._transitionBetween(
-      this.state.fromIndex,
-      this.state.toIndex,
-      this.spring.getCurrentValue()
-    );
-  },
-
-  onSpringAtRest: function() {
-    this.state.isAnimating = false;
-    this._completeTransition();
+    this._onAnimationEnd();
+    var presentedIndex = this.state.presentedIndex;
+    var didFocusRoute = this._subRouteFocus[presentedIndex] || this.state.routeStack[presentedIndex];
+    this._emitDidFocus(didFocusRoute);
+    if (AnimationsDebugModule) {
+      AnimationsDebugModule.stopRecordingFps(Date.now());
+    }
+    this.state.transitionFromIndex = null;
     this.spring.setCurrentValue(0).setAtRest();
+    this._hideScenes();
+    if (this.state.transitionCb) {
+      this.state.transitionCb();
+      this.state.transitionCb = null;
+    }
     if (this._interactionHandle) {
       this.clearInteractionHandle(this._interactionHandle);
       this._interactionHandle = null;
     }
-  },
-
-  _completeTransition: function() {
-    if (this.spring.getCurrentValue() === 1) {
-      this._onAnimationEnd();
-      var presentedIndex = this.state.toIndex;
-      this.state.presentedIndex = presentedIndex;
-      this.state.fromIndex = presentedIndex;
-      var didFocusRoute = this._subRouteFocus[presentedIndex] || this.state.routeStack[presentedIndex];
-      this._emitDidFocus(didFocusRoute);
-      this._removePoppedRoutes();
-      if (AnimationsDebugModule) {
-        AnimationsDebugModule.stopRecordingFps(Date.now());
-      }
-    } else {
-      this.state.fromIndex = this.state.presentedIndex;
-      this.state.toIndex = this.state.presentedIndex;
+    if (this.state.pendingGestureProgress) {
+      this.spring.setEndValue(this.state.pendingGestureProgress);
+      return;
     }
-    this._hideOtherScenes(this.state.presentedIndex);
-  },
-
-  _transitionToToIndexWithVelocity: function(v) {
-    this._configureSpring(
-      // For visual consistency, the from index is always used to configure the spring
-      this.state.sceneConfigStack[this.state.fromIndex]
-    );
-    this._onAnimationStart();
-    this.state.isAnimating = true;
-    this.spring.setVelocity(v);
-    this.spring.setEndValue(1);
-    var willFocusRoute = this._subRouteFocus[this.state.toIndex] || this.state.routeStack[this.state.toIndex];
-    this._emitWillFocus(willFocusRoute);
-  },
-
-  _transitionToFromIndexWithVelocity: function(v) {
-    this._configureSpring(
-      this.state.sceneConfigStack[this.state.fromIndex]
-    );
-    this.state.isAnimating = true;
-    this.spring.setVelocity(v);
-    this.spring.setEndValue(0);
+    if (this.state.transitionQueue.length) {
+      var queuedTransition = this.state.transitionQueue.shift();
+      this._transitionTo(
+        queuedTransition.destIndex,
+        queuedTransition.velocity,
+        null,
+        queuedTransition.cb
+      );
+    }
   },
 
   _emitDidFocus: function(route) {
@@ -26091,9 +26181,11 @@ var Navigator = React.createClass({displayName: "Navigator",
   /**
    * Does not delete the scenes - merely hides them.
    */
-  _hideOtherScenes: function(activeIndex) {
+  _hideScenes: function() {
     for (var i = 0; i < this.state.routeStack.length; i++) {
-      if (i === activeIndex) {
+      // This gets called when we detach a gesture, so there will not be a
+      // current gesture, but there might be a transition in progress
+      if (i === this.state.presentedIndex || i === this.state.transitionFromIndex) {
         continue;
       }
       var sceneRef = 'scene_' + i;
@@ -26103,22 +26195,31 @@ var Navigator = React.createClass({displayName: "Navigator",
   },
 
   _onAnimationStart: function() {
-    this._setRenderSceneToHarwareTextureAndroid(this.state.fromIndex, true);
-    this._setRenderSceneToHarwareTextureAndroid(this.state.toIndex, true);
+    var fromIndex = this.state.presentedIndex;
+    var toIndex = this.state.presentedIndex;
+    if (this.state.transitionFromIndex != null) {
+      fromIndex = this.state.transitionFromIndex;
+    } else if (this.state.activeGesture) {
+      toIndex = this.state.presentedIndex + this._deltaForGestureAction(this.state.activeGesture);
+    }
+    this._setRenderSceneToHarwareTextureAndroid(fromIndex, true);
+    this._setRenderSceneToHarwareTextureAndroid(toIndex, true);
 
     var navBar = this._navBar;
     if (navBar && navBar.onAnimationStart) {
-      navBar.onAnimationStart(this.state.fromIndex, this.state.toIndex);
+      navBar.onAnimationStart(fromIndex, toIndex);
     }
   },
 
   _onAnimationEnd: function() {
-    this._setRenderSceneToHarwareTextureAndroid(this.state.fromIndex, false);
-    this._setRenderSceneToHarwareTextureAndroid(this.state.toIndex, false);
+    var max = this.state.routeStack.length - 1;
+    for (var index = 0; index <= max; index++) {
+      this._setRenderSceneToHarwareTextureAndroid(index, false);
+    }
 
     var navBar = this._navBar;
     if (navBar && navBar.onAnimationEnd) {
-      navBar.onAnimationEnd(this.state.fromIndex, this.state.toIndex);
+      navBar.onAnimationEnd();
     }
   },
 
@@ -26128,16 +26229,6 @@ var Navigator = React.createClass({displayName: "Navigator",
       return;
     }
     viewAtIndex.setNativeProps({renderToHardwareTextureAndroid: shouldRenderToHardwareTexture});
-  },
-
-  /**
-   * Becomes the responder on touch start (capture) while animating so that it
-   * blocks all touch interactions inside of it. However, this responder lock
-   * means nothing more than that. We record if the sole reason for being
-   * responder is to block interactions (`isResponderOnlyToBlockTouches`).
-   */
-  _handleStartShouldSetPanResponderCapture: function(e, gestureState) {
-    return this.state.isAnimating;
   },
 
   _handleMoveShouldSetPanResponder: function(e, gestureState) {
@@ -26157,18 +26248,12 @@ var Navigator = React.createClass({displayName: "Navigator",
 
   _handlePanResponderGrant: function(e, gestureState) {
     invariant(
-      this._expectingGestureGrant || this.state.isAnimating,
+      this._expectingGestureGrant,
       'Responder granted unexpectedly.'
     );
-    this._activeGestureAction = this._expectingGestureGrant;
+    this._attachGesture(this._expectingGestureGrant);
+    this._onAnimationStart();
     this._expectingGestureGrant = null;
-    this.state.isResponderOnlyToBlockTouches = this.state.isAnimating;
-    if (!this.state.isAnimating) {
-      this.state.fromIndex = this.state.presentedIndex;
-      var gestureSceneDelta = this._deltaForGestureAction(this._activeGestureAction);
-      this.state.toIndex = this.state.presentedIndex + gestureSceneDelta;
-      this._onAnimationStart();
-    }
   },
 
   _deltaForGestureAction: function(gestureAction) {
@@ -26186,13 +26271,13 @@ var Navigator = React.createClass({displayName: "Navigator",
 
   _handlePanResponderRelease: function(e, gestureState) {
     var sceneConfig = this.state.sceneConfigStack[this.state.presentedIndex];
-    var releaseGestureAction = this._activeGestureAction;
-    this._activeGestureAction = null;
-    if (this.state.isResponderOnlyToBlockTouches) {
-      this.state.isResponderOnlyToBlockTouches = false;
+    var releaseGestureAction = this.state.activeGesture;
+    if (!releaseGestureAction) {
+      // The gesture may have been detached while responder, so there is no action here
       return;
     }
     var releaseGesture = sceneConfig.gestures[releaseGestureAction];
+    var destIndex = this.state.presentedIndex + this._deltaForGestureAction(this.state.activeGesture);
     if (this.spring.getCurrentValue() === 0) {
       // The spring is at zero, so the gesture is already complete
       this.spring.setCurrentValue(0).setAtRest();
@@ -26215,46 +26300,91 @@ var Navigator = React.createClass({displayName: "Navigator",
       var hasGesturedEnoughToComplete = gestureDistance > releaseGesture.fullDistance * releaseGesture.stillCompletionRatio;
       transitionVelocity = hasGesturedEnoughToComplete ? releaseGesture.snapVelocity : -releaseGesture.snapVelocity;
     }
-    this.spring.setOvershootClampingEnabled(true);
     if (transitionVelocity < 0 || this._doesGestureOverswipe(releaseGestureAction)) {
-      this._transitionToFromIndexWithVelocity(transitionVelocity);
+      // This gesture is to an overswiped region or does not have enough velocity to complete
+      // If we are currently mid-transition, then this gesture was a pending gesture. Because this gesture takes no action, we can stop here
+      if (this.state.transitionFromIndex == null) {
+        // There is no current transition, so we need to transition back to the presented index
+        var transitionBackToPresentedIndex = this.state.presentedIndex;
+        // slight hack: change the presented index for a moment in order to transitionTo correctly
+        this.state.presentedIndex = destIndex;
+        this._transitionTo(
+          transitionBackToPresentedIndex,
+          - transitionVelocity,
+          1 - this.spring.getCurrentValue()
+        );
+      }
     } else {
-      this._transitionToToIndexWithVelocity(transitionVelocity);
+      // The gesture has enough velocity to complete, so we transition to the gesture's destination
+      this._transitionTo(destIndex, transitionVelocity);
     }
+    this._detachGesture();
   },
 
   _handlePanResponderTerminate: function(e, gestureState) {
-    this._activeGestureAction = null;
-    this.state.isResponderOnlyToBlockTouches = false;
-    this._transitionToFromIndexWithVelocity(0);
+    var destIndex = this.state.presentedIndex + this._deltaForGestureAction(this.state.activeGesture);
+    this._detachGesture();
+    var transitionBackToPresentedIndex = this.state.presentedIndex;
+    // slight hack: change the presented index for a moment in order to transitionTo correctly
+    this.state.presentedIndex = destIndex;
+    this._transitionTo(
+      transitionBackToPresentedIndex,
+      null,
+      1 - this.spring.getCurrentValue()
+    );
+  },
+
+  _attachGesture: function(gestureId) {
+    this.state.activeGesture = gestureId;
+  },
+
+  _detachGesture: function() {
+    this.state.activeGesture = null;
+    this.state.pendingGestureProgress = null;
+    this._hideScenes();
   },
 
   _handlePanResponderMove: function(e, gestureState) {
-    if (!this.state.isResponderOnlyToBlockTouches) {
-      var sceneConfig = this.state.sceneConfigStack[this.state.presentedIndex];
-      var gesture = sceneConfig.gestures[this._activeGestureAction];
-      var isTravelVertical = gesture.direction === 'top-to-bottom' || gesture.direction === 'bottom-to-top';
-      var isTravelInverted = gesture.direction === 'right-to-left' || gesture.direction === 'bottom-to-top';
-      var distance = isTravelVertical ? gestureState.dy : gestureState.dx;
-      distance = isTravelInverted ? - distance : distance;
-      var gestureDetectMovement = gesture.gestureDetectMovement;
-      var nextProgress = (distance - gestureDetectMovement) /
-        (gesture.fullDistance - gestureDetectMovement);
-      if (this._doesGestureOverswipe(this._activeGestureAction)) {
-        var frictionConstant = gesture.overswipe.frictionConstant;
-        var frictionByDistance = gesture.overswipe.frictionByDistance;
-        var frictionRatio = 1 / ((frictionConstant) + (Math.abs(nextProgress) * frictionByDistance));
-        nextProgress *= frictionRatio;
-      }
-      this.spring.setCurrentValue(clamp(0, nextProgress, 1));
+    var sceneConfig = this.state.sceneConfigStack[this.state.presentedIndex];
+    if (this.state.activeGesture) {
+      var gesture = sceneConfig.gestures[this.state.activeGesture];
+      return this._moveAttachedGesture(gesture, gestureState);
+    }
+    var matchedGesture = this._matchGestureAction(sceneConfig.gestures, gestureState);
+    if (matchedGesture) {
+      this._attachGesture(matchedGesture);
+    }
+  },
+
+  _moveAttachedGesture: function(gesture, gestureState) {
+    var isTravelVertical = gesture.direction === 'top-to-bottom' || gesture.direction === 'bottom-to-top';
+    var isTravelInverted = gesture.direction === 'right-to-left' || gesture.direction === 'bottom-to-top';
+    var distance = isTravelVertical ? gestureState.dy : gestureState.dx;
+    distance = isTravelInverted ? - distance : distance;
+    var gestureDetectMovement = gesture.gestureDetectMovement;
+    var nextProgress = (distance - gestureDetectMovement) /
+      (gesture.fullDistance - gestureDetectMovement);
+    if (nextProgress < 0 && gesture.isDetachable) {
+      this._detachGesture();
+    }
+    if (this._doesGestureOverswipe(this.state.activeGesture)) {
+      var frictionConstant = gesture.overswipe.frictionConstant;
+      var frictionByDistance = gesture.overswipe.frictionByDistance;
+      var frictionRatio = 1 / ((frictionConstant) + (Math.abs(nextProgress) * frictionByDistance));
+      nextProgress *= frictionRatio;
+    }
+    nextProgress = clamp(0, nextProgress, 1);
+    if (this.state.transitionFromIndex != null) {
+      this.state.pendingGestureProgress = nextProgress;
+    } else if (this.state.pendingGestureProgress) {
+      this.spring.setEndValue(nextProgress);
+    } else {
+      this.spring.setCurrentValue(nextProgress);
     }
   },
 
   _matchGestureAction: function(gestures, gestureState) {
     if (!gestures) {
-      return null;
-    }
-    if (this.state.isResponderOnlyToBlockTouches || this.state.isAnimating) {
       return null;
     }
     var matchedGesture = null;
@@ -26297,7 +26427,7 @@ var Navigator = React.createClass({displayName: "Navigator",
       return;
     }
     // Use toIndex animation when we move forwards. Use fromIndex when we move back
-    var sceneConfigIndex = this.state.presentedIndex < toIndex ? toIndex : fromIndex;
+    var sceneConfigIndex = fromIndex < toIndex ? toIndex : fromIndex;
     var sceneConfig = this.state.sceneConfigStack[sceneConfigIndex];
     // this happens for overswiping when there is no scene at toIndex
     if (!sceneConfig) {
@@ -26332,10 +26462,6 @@ var Navigator = React.createClass({displayName: "Navigator",
     this.state.updatingRangeLength = this.state.routeStack.length;
   },
 
-  _canNavigate: function() {
-    return !this.state.isAnimating;
-  },
-
   _getDestIndexWithinBounds: function(n) {
     var currentIndex = this.state.presentedIndex;
     var destIndex = currentIndex + n;
@@ -26353,17 +26479,13 @@ var Navigator = React.createClass({displayName: "Navigator",
 
   _jumpN: function(n) {
     var destIndex = this._getDestIndexWithinBounds(n);
-    if (!this._canNavigate()) {
-      return; // It's busy animating or transitioning.
-    }
     var requestTransitionAndResetUpdatingRange = function()  {
-      this._requestTransitionTo(destIndex);
+      this._transitionTo(destIndex);
       this._resetUpdatingRange();
     }.bind(this);
     this.setState({
       updatingRangeStart: destIndex,
       updatingRangeLength: 1,
-      toIndex: destIndex,
     }, requestTransitionAndResetUpdatingRange);
   },
 
@@ -26386,9 +26508,6 @@ var Navigator = React.createClass({displayName: "Navigator",
 
   push: function(route) {
     invariant(!!route, 'Must supply route to push');
-    if (!this._canNavigate()) {
-      return; // It's busy animating or transitioning.
-    }
     var activeLength = this.state.presentedIndex + 1;
     var activeStack = this.state.routeStack.slice(0, activeLength);
     var activeIDStack = this.state.idStack.slice(0, activeLength);
@@ -26399,34 +26518,34 @@ var Navigator = React.createClass({displayName: "Navigator",
       this.props.configureScene(route),
     ]);
     var requestTransitionAndResetUpdatingRange = function()  {
-      this._requestTransitionTo(nextStack.length - 1);
+      this._transitionTo(nextStack.length - 1);
       this._resetUpdatingRange();
     }.bind(this);
-    var navigationState = {
-      toRoute: route,
-      fromRoute: this.state.routeStack[this.state.routeStack.length - 1],
-    };
     this.setState({
       idStack: nextIDStack,
       routeStack: nextStack,
       sceneConfigStack: nextAnimationConfigStack,
-      jumpToIndex: nextStack.length - 1,
       updatingRangeStart: nextStack.length - 1,
       updatingRangeLength: 1,
     }, requestTransitionAndResetUpdatingRange);
   },
 
   _popN: function(n) {
-    if (n === 0 || !this._canNavigate()) {
+    if (n === 0) {
       return;
     }
     invariant(
       this.state.presentedIndex - n >= 0,
       'Cannot pop below zero'
     );
-    this.state.jumpToIndex = this.state.presentedIndex - n;
-    this._requestTransitionTo(
-      this.state.presentedIndex - n
+    var popIndex = this.state.presentedIndex - n;
+    this._transitionTo(
+      popIndex,
+      null, // default velocity
+      null, // no spring jumping
+      function()  {
+        this._cleanScenesPastIndex(popIndex);
+      }.bind(this)
     );
   },
 
@@ -26440,7 +26559,7 @@ var Navigator = React.createClass({displayName: "Navigator",
    * `index` specifies the route in the stack that should be replaced.
    * If it's negative, it counts from the back.
    */
-  replaceAtIndex: function(route, index) {
+  replaceAtIndex: function(route, index, cb) {
     invariant(!!route, 'Must supply route to replace');
     if (index < 0) {
       index += this.state.routeStack.length;
@@ -26471,6 +26590,7 @@ var Navigator = React.createClass({displayName: "Navigator",
         this._emitWillFocus(route);
         this._emitDidFocus(route);
       }
+      cb && cb();
     }.bind(this));
   },
 
@@ -26507,7 +26627,7 @@ var Navigator = React.createClass({displayName: "Navigator",
   },
 
   replacePreviousAndPop: function(route) {
-    if (this.state.routeStack.length < 2 || !this._canNavigate()) {
+    if (this.state.routeStack.length < 2) {
       return;
     }
     this.replacePrevious(route);
@@ -26516,10 +26636,9 @@ var Navigator = React.createClass({displayName: "Navigator",
 
   resetTo: function(route) {
     invariant(!!route, 'Must supply route to push');
-    if (this._canNavigate()) {
-      this.replaceAtIndex(route, 0);
+    this.replaceAtIndex(route, 0, function()  {
       this.popToRoute(route);
-    }
+    }.bind(this));
   },
 
   getCurrentRoutes: function() {
@@ -26535,8 +26654,8 @@ var Navigator = React.createClass({displayName: "Navigator",
     this.props.onItemRef && this.props.onItemRef(ref, itemIndex);
   },
 
-  _removePoppedRoutes: function() {
-    var newStackLength = this.state.jumpToIndex + 1;
+  _cleanScenesPastIndex: function(index) {
+    var newStackLength = index + 1;
     // Remove any unneeded rendered routes.
     if (newStackLength < this.state.routeStack.length) {
       var updatingRangeStart = newStackLength; // One past the top
@@ -26737,7 +26856,7 @@ var InteractionMixin = {
 
 module.exports = InteractionMixin;
 });
-__d('NavigatorBreadcrumbNavigationBar',["NavigatorBreadcrumbNavigationBarStyles","NavigatorNavigationBarStyles","React","StaticContainer.react","StyleSheet","View"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('NavigatorBreadcrumbNavigationBar',["NavigatorBreadcrumbNavigationBarStyles","NavigatorNavigationBarStyles","React","StaticContainer.react","StyleSheet","View","invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015, Facebook, Inc.  All rights reserved.
  *
  * Facebook, Inc. (“Facebook”) owns all right, title and interest, including
@@ -26771,6 +26890,8 @@ var React = require('React');
 var StaticContainer = require('StaticContainer.react');
 var StyleSheet = require('StyleSheet');
 var View = require('View');
+
+var invariant = require('invariant');
 
 var Interpolators = NavigatorBreadcrumbNavigationBarStyles.Interpolators;
 var PropTypes = React.PropTypes;
@@ -26838,6 +26959,10 @@ var NavigatorBreadcrumbNavigationBar = React.createClass({displayName: "Navigato
     var oldDistToCenter = index - fromIndex;
     var newDistToCenter = index - toIndex;
     var interpolate;
+    invariant(
+      Interpolators[index],
+      'Cannot find breadcrumb interpolators for ' + index
+    );
     if (oldDistToCenter > 0 && newDistToCenter === 0 ||
         newDistToCenter > 0 && oldDistToCenter === 0) {
       interpolate = Interpolators[index].RightToCenter;
@@ -26885,10 +27010,9 @@ var NavigatorBreadcrumbNavigationBar = React.createClass({displayName: "Navigato
     }
   },
 
-  onAnimationEnd: function(fromIndex, toIndex) {
-    var max = Math.max(fromIndex, toIndex);
-    var min = Math.min(fromIndex, toIndex);
-    for (var index = min; index <= max; index++) {
+  onAnimationEnd: function() {
+    var max = this.props.navState.routeStack.length - 1;
+    for (var index = 0; index <= max; index++) {
       this._setRenderViewsToHardwareTextureAndroid(index, false);
     }
   },
@@ -28438,6 +28562,30 @@ var FadeToTheLeft = {
   },
 };
 
+var FadeIn = {
+  opacity: {
+    from: 0,
+    to: 1,
+    min: 0.5,
+    max: 1,
+    type: 'linear',
+    extrapolate: false,
+    round: 100,
+  },
+};
+
+var FadeOut = {
+  opacity: {
+    from: 1,
+    to: 0,
+    min: 0,
+    max: 0.5,
+    type: 'linear',
+    extrapolate: false,
+    round: 100,
+  },
+};
+
 var ToTheLeft = {
   transformTranslate: {
     from: {x: 0, y: 0, z: 0},
@@ -28452,8 +28600,17 @@ var ToTheLeft = {
     value: 1.0,
     type: 'constant',
   },
-};
 
+  translateX: {
+    from: 0,
+    to: -Dimensions.get('window').width,
+    min: 0,
+    max: 1,
+    type: 'linear',
+    extrapolate: true,
+    round: PixelRatio.get(),
+  },
+};
 
 var FromTheRight = {
   opacity: {
@@ -28573,12 +28730,52 @@ var FromTheFront = {
   },
 };
 
+var ToTheBackAndroid = {
+  opacity: {
+    value: 1,
+    type: 'constant',
+  },
+};
+
+var FromTheFrontAndroid = {
+  opacity: {
+    from: 0,
+    to: 1,
+    min: 0,
+    max: 1,
+    type: 'linear',
+    extrapolate: false,
+    round: 100,
+  },
+  transformTranslate: {
+    from: {x: 0, y: 50, z: 0},
+    to: {x: 0, y: 0, z: 0},
+    min: 0,
+    max: 1,
+    type: 'linear',
+    extrapolate: true,
+    round: PixelRatio.get(),
+  },
+  translateY: {
+    from: 50,
+    to: 0,
+    min: 0,
+    max: 1,
+    type: 'linear',
+    extrapolate: true,
+    round: PixelRatio.get(),
+  },
+};
+
 var BaseOverswipeConfig = {
   frictionConstant: 1,
   frictionByDistance: 1.5,
 };
 
 var BaseLeftToRightGesture = {
+
+  // If the gesture can end and restart during one continuous touch
+  isDetachable: false,
 
   // How far the swipe must drag to start transitioning
   gestureDetectMovement: 2,
@@ -28653,18 +28850,36 @@ var NavigatorSceneConfigs = {
       out: buildStyleInterpolator(ToTheBack),
     }
   }),
+  FloatFromBottomAndroid: Object.assign({},
+    BaseConfig,
+    {gestures: null,
+    animationInterpolators: {
+      into: buildStyleInterpolator(FromTheFrontAndroid),
+      out: buildStyleInterpolator(ToTheBackAndroid),
+    }
+  }),
+  FadeAndroid: Object.assign({},
+    BaseConfig,
+    {gestures: null,
+    animationInterpolators: {
+      into: buildStyleInterpolator(FadeIn),
+      out: buildStyleInterpolator(FadeOut),
+    }
+  }),
   HorizontalSwipeJump: Object.assign({},
     BaseConfig,
     {gestures: {
       jumpBack: Object.assign({},
         BaseLeftToRightGesture,
         {overswipe: BaseOverswipeConfig,
-        edgeHitWidth: null
+        edgeHitWidth: null,
+        isDetachable: true
       }),
       jumpForward: Object.assign({},
         BaseRightToLeftGesture,
         {overswipe: BaseOverswipeConfig,
-        edgeHitWidth: null
+        edgeHitWidth: null,
+        isDetachable: true
       }),
     },
     animationInterpolators: {
@@ -30392,6 +30607,127 @@ __d('rebound/rebound',[],function(global, require, requireDynamic, requireLazy, 
  *  of patent rights can be found in the PATENTS file in the same directory.
  */
 });
+__d('SegmentedControlIOS',["NativeMethodsMixin","NativeModules","ReactPropTypes","React","StyleSheet","requireNativeComponent","verifyPropTypes"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule SegmentedControlIOS
+ * @flow
+ */
+'use strict';
+
+var NativeMethodsMixin = require('NativeMethodsMixin');
+var NativeModules = require('NativeModules');
+var PropTypes = require('ReactPropTypes');
+var React = require('React');
+var StyleSheet = require('StyleSheet');
+
+var requireNativeComponent = require('requireNativeComponent');
+var verifyPropTypes = require('verifyPropTypes');
+
+                     
+                        
+                   
+  
+
+var SEGMENTED_CONTROL_REFERENCE = 'segmentedcontrol';
+
+                    
+
+/**
+ * Use `SegmentedControlIOS` to render a UISegmentedControl iOS.
+ */
+var SegmentedControlIOS = React.createClass({displayName: "SegmentedControlIOS",
+  mixins: [NativeMethodsMixin],
+
+  propTypes: {
+    /**
+     * The labels for the control's segment buttons, in order.
+     */
+    values: PropTypes.arrayOf(PropTypes.string),
+
+    /**
+     * The index in `props.values` of the segment to be pre-selected
+     */
+    selectedIndex: PropTypes.number,
+
+    /**
+     * Callback that is called when the user taps a segment;
+     * passes the segment's value as an argument
+     */
+    onValueChange: PropTypes.func,
+
+    /**
+     * Callback that is called when the user taps a segment;
+     * passes the event as an argument
+     */
+    onChange: PropTypes.func,
+
+    /**
+     * If false the user won't be able to interact with the control.
+     * Default value is true.
+     */
+    enabled: PropTypes.bool,
+
+    /**
+     * Accent color of the control.
+     */
+    tintColor: PropTypes.string,
+
+    /**
+     * If true, then selecting a segment won't persist visually.
+     * The `onValueChange` callback will still work as expected.
+     */
+    momentary: PropTypes.bool
+  },
+
+  getDefaultProps: function()               {
+    return {
+      values: [],
+      enabled: true
+    };
+  },
+
+  _onChange: function(event       ) {
+    this.props.onChange && this.props.onChange(event);
+    this.props.onValueChange && this.props.onValueChange(event.nativeEvent.value);
+  },
+
+  render: function() {
+    return (
+      React.createElement(RCTSegmentedControl, React.__spread({}, 
+        this.props, 
+        {ref: SEGMENTED_CONTROL_REFERENCE, 
+        style: [styles.segmentedControl, this.props.style], 
+        onChange: this._onChange})
+      )
+    );
+  }
+});
+
+var styles = StyleSheet.create({
+  segmentedControl: {
+    height: NativeModules.SegmentedControlManager.ComponentHeight
+  },
+});
+
+var RCTSegmentedControl = requireNativeComponent(
+  'RCTSegmentedControl',
+  null
+);
+if (__DEV__) {
+  verifyPropTypes(
+    RCTSegmentedControl,
+    RCTSegmentedControl.viewConfig
+  );
+}
+
+module.exports = SegmentedControlIOS;
+});
 __d('SliderIOS',["NativeMethodsMixin","ReactPropTypes","React","StyleSheet","View","requireNativeComponent"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -30735,6 +31071,9 @@ var TabBarItemIOS = React.createClass({displayName: "TabBarItemIOS",
      * blank content, you probably forgot to add a selected one.
      */
     selected: React.PropTypes.bool,
+    /**
+     * React style object.
+     */
     style: View.propTypes.style,
     /**
      * Text that appears under the icon. It is ignored when a system icon
@@ -30846,7 +31185,7 @@ var viewConfig = {
 };
 
 /**
- * A react component for displaying text which supports nesting,
+ * A React component for displaying text which supports nesting,
  * styling, and touch handling.  In the following example, the nested title and
  * body text will inherit the `fontFamily` from `styles.baseText`, but the title
  * provides its own additional styles.  The title and body will stack on top of
@@ -31457,6 +31796,7 @@ var TouchableMixin = {
     if (isTouchWithinActive) {
       this._receiveSignal(Signals.ENTER_PRESS_RECT, e);
     } else {
+      this._cancelLongPressDelayTimeout();
       this._receiveSignal(Signals.LEAVE_PRESS_RECT, e);
     }
   },
@@ -31886,6 +32226,7 @@ var returnKeyTypeConsts = RCTUIManager.UIReturnKeyType;
 var RCTTextViewAttributes = merge(ReactIOSViewAttributes.UIView, {
   autoCorrect: true,
   autoCapitalize: true,
+  clearTextOnFocus: true,
   color: true,
   editable: true,
   fontFamily: true,
@@ -31896,6 +32237,7 @@ var RCTTextViewAttributes = merge(ReactIOSViewAttributes.UIView, {
   returnKeyType: true,
   enablesReturnKeyAutomatically: true,
   secureTextEntry: true,
+  selectTextOnFocus: true,
   mostRecentEventCounter: true,
   placeholder: true,
   placeholderTextColor: true,
@@ -32293,6 +32635,7 @@ var TextInput = React.createClass({displayName: "TextInput",
           onSubmitEditing: this.props.onSubmitEditing, 
           onSelectionChangeShouldSetResponder: function()  {return true;}, 
           placeholder: this.props.placeholder, 
+          placeholderTextColor: this.props.placeholderTextColor, 
           text: this.state.bufferedValue, 
           autoCapitalize: autoCapitalize, 
           autoCorrect: this.props.autoCorrect, 
@@ -32345,7 +32688,9 @@ var TextInput = React.createClass({displayName: "TextInput",
           text: this.state.bufferedValue, 
           autoCapitalize: autoCapitalize, 
           autoCorrect: this.props.autoCorrect, 
-          clearButtonMode: clearButtonMode}
+          clearButtonMode: clearButtonMode, 
+          selectTextOnFocus: this.props.selectTextOnFocus, 
+          clearTextOnFocus: this.props.clearTextOnFocus}
         );
     }
 
@@ -34501,6 +34846,10 @@ var WebView = React.createClass({displayName: "WebView",
     onNavigationStateChange: PropTypes.func,
     startInLoadingState: PropTypes.bool, // force WebView to show loadingView on first load
     style: View.propTypes.style,
+    /**
+     * Used for android only, JS is enabled by default for WebView on iOS
+     */
+    javaScriptEnabledAndroid: PropTypes.bool,
   },
 
   getInitialState: function() {
@@ -34819,7 +35168,7 @@ var AppRegistry = {
 
 module.exports = AppRegistry;
 });
-__d('renderApplication',["React","invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('renderApplication',["ExceptionsManager","React","StyleSheet","View","WarningBox","invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -34832,7 +35181,12 @@ __d('renderApplication',["React","invariant"],function(global, require, requireD
  */
 'use strict';
 
+require('ExceptionsManager').installConsoleErrorReporter();
+
 var React = require('React');
+var StyleSheet = require('StyleSheet');
+var View = require('View');
+var WarningBox = require('WarningBox');
 
 var invariant = require('invariant');
 
@@ -34845,15 +35199,696 @@ function renderApplication         (
     rootTag,
     'Expect to have a valid rootTag, instead got ', rootTag
   );
+  var shouldRenderWarningBox = __DEV__ && console.yellowBoxEnabled;
+  var warningBox = shouldRenderWarningBox ? React.createElement(WarningBox, null) : null;
   React.render(
-    React.createElement(RootComponent, React.__spread({}, 
-      initialProps)
+    React.createElement(View, {style: styles.appContainer}, 
+      React.createElement(RootComponent, React.__spread({}, 
+        initialProps)
+      ), 
+      warningBox
     ),
     rootTag
   );
 }
 
+var styles = StyleSheet.create({
+  appContainer: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+  },
+});
+
 module.exports = renderApplication;
+});
+__d('WarningBox',["AsyncStorage","EventEmitter","Map","PanResponder","React","StyleSheet","Text","TouchableOpacity","View","invariant","rebound/rebound","stringifySafe","Dimensions"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule WarningBox
+ */
+'use strict';
+
+var AsyncStorage = require('AsyncStorage');
+var EventEmitter = require('EventEmitter');
+var Map = require('Map');
+var PanResponder = require('PanResponder');
+var React = require('React');
+var StyleSheet = require('StyleSheet');
+var Text = require('Text');
+var TouchableOpacity = require('TouchableOpacity');
+var View = require('View');
+
+var invariant = require('invariant');
+var rebound = require('rebound/rebound');
+var stringifySafe = require('stringifySafe');
+
+var SCREEN_WIDTH = require('Dimensions').get('window').width;
+var IGNORED_WARNINGS_KEY = '__DEV_WARNINGS_IGNORED';
+
+var consoleWarn = console.warn.bind(console);
+
+var warningCounts = new Map();
+var ignoredWarnings                = [];
+var totalWarningCount = 0;
+var warningCountEvents = new EventEmitter();
+
+/**
+ * WarningBox renders warnings on top of the app being developed. Warnings help
+ * guard against subtle yet significant issues that can impact the quality of
+ * your application, such as accessibility and memory leaks. This "in your
+ * face" style of warning allows developers to notice and correct these issues
+ * as quickly as possible.
+ *
+ * The warning box is currently opt-in. Set the following flag to enable it:
+ *
+ * `console.yellowBoxEnabled = true;`
+ *
+ * If "ignore" is tapped on a warning, the WarningBox will record that warning
+ * and will not display it again. This is useful for hiding errors that already
+ * exist or have been introduced elsewhere. To re-enable all of the errors, set
+ * the following:
+ *
+ * `console.yellowBoxResetIgnored = true;`
+ *
+ * This can also be set permanently, and ignore will only silence the warnings
+ * until the next refresh.
+ */
+
+if (__DEV__) {
+  console.warn = function() {
+    consoleWarn.apply(null, arguments);
+    if (!console.yellowBoxEnabled) {
+      return;
+    }
+    var warning = Array.prototype.map.call(arguments, stringifySafe).join(' ');
+    if (!console.yellowBoxResetIgnored &&
+        ignoredWarnings.indexOf(warning) !== -1) {
+      return;
+    }
+    var count = warningCounts.has(warning) ? warningCounts.get(warning) + 1 : 1;
+    warningCounts.set(warning, count);
+    totalWarningCount += 1;
+    warningCountEvents.emit('count', totalWarningCount);
+  };
+}
+
+function saveIgnoredWarnings() {
+  AsyncStorage.setItem(
+    IGNORED_WARNINGS_KEY,
+    JSON.stringify(ignoredWarnings),
+    function(err) {
+      if (err) {
+        console.warn('Could not save ignored warnings.', err);
+      }
+    }
+  );
+}
+
+AsyncStorage.getItem(IGNORED_WARNINGS_KEY, function(err, data) {
+  if (!err && data && !console.yellowBoxResetIgnored) {
+    ignoredWarnings = JSON.parse(data);
+  }
+});
+
+var WarningRow = React.createClass({displayName: "WarningRow",
+  componentWillMount: function() {
+    this.springSystem = new rebound.SpringSystem();
+    this.dismissalSpring = this.springSystem.createSpring();
+    this.dismissalSpring.setRestSpeedThreshold(0.05);
+    this.dismissalSpring.setCurrentValue(0);
+    this.dismissalSpring.addListener({
+      onSpringUpdate: function()  {
+        var val = this.dismissalSpring.getCurrentValue();
+        this.text && this.text.setNativeProps({
+          left: SCREEN_WIDTH * val,
+        });
+        this.container && this.container.setNativeProps({
+          opacity: 1 - val,
+        });
+        this.closeButton && this.closeButton.setNativeProps({
+          opacity: 1 - (val * 5),
+        });
+      }.bind(this),
+      onSpringAtRest: function()  {
+        if (this.dismissalSpring.getCurrentValue()) {
+          this.collapseSpring.setEndValue(1);
+        }
+      }.bind(this),
+    });
+    this.collapseSpring = this.springSystem.createSpring();
+    this.collapseSpring.setRestSpeedThreshold(0.05);
+    this.collapseSpring.setCurrentValue(0);
+    this.collapseSpring.getSpringConfig().friction = 20;
+    this.collapseSpring.getSpringConfig().tension = 200;
+    this.collapseSpring.addListener({
+      onSpringUpdate: function()  {
+        var val = this.collapseSpring.getCurrentValue();
+        this.container && this.container.setNativeProps({
+          height: Math.abs(46 - (val * 46)),
+        });
+      }.bind(this),
+      onSpringAtRest: function()  {
+        this.props.onDismissed();
+      }.bind(this),
+    });
+    this.panGesture = PanResponder.create({
+      onStartShouldSetPanResponder: function()  {
+        return !! this.dismissalSpring.getCurrentValue();
+      }.bind(this),
+      onMoveShouldSetPanResponder: function()  {return true;},
+      onPanResponderGrant: function()  {
+        this.isResponderOnlyToBlockTouches =
+          !! this.dismissalSpring.getCurrentValue();
+      }.bind(this),
+      onPanResponderMove: function(e, gestureState)  {
+        if (this.isResponderOnlyToBlockTouches) {
+          return;
+        }
+        this.dismissalSpring.setCurrentValue(gestureState.dx / SCREEN_WIDTH);
+      }.bind(this),
+      onPanResponderRelease: function(e, gestureState)  {
+        if (this.isResponderOnlyToBlockTouches) {
+          return;
+        }
+        var gestureCompletion = gestureState.dx / SCREEN_WIDTH;
+        var doesGestureRelease = (gestureState.vx + gestureCompletion) > 0.5;
+        this.dismissalSpring.setEndValue(doesGestureRelease ? 1 : 0);
+      }.bind(this)
+    });
+  },
+  render: function() {
+    var countText;
+    if (warningCounts.get(this.props.warning) > 1) {
+      countText = (
+        React.createElement(Text, {style: styles.bold}, 
+          "(", warningCounts.get(this.props.warning), ")", " "
+        )
+      );
+    }
+    return (
+      React.createElement(View, React.__spread({
+        style: styles.warningBox, 
+        ref: function(container)  { this.container = container; }.bind(this)}, 
+        this.panGesture.panHandlers), 
+        React.createElement(TouchableOpacity, {
+          onPress: this.props.onOpened}, 
+          React.createElement(View, null, 
+            React.createElement(Text, {
+              style: styles.warningText, 
+              numberOfLines: 2, 
+              ref: function(text)  { this.text = text; }.bind(this)}, 
+              countText, 
+              this.props.warning
+            )
+          )
+        ), 
+        React.createElement(View, {
+          ref: function(closeButton)  { this.closeButton = closeButton; }.bind(this), 
+          style: styles.closeButton}, 
+          React.createElement(TouchableOpacity, {
+            onPress: function()  {
+              this.dismissalSpring.setEndValue(1);
+            }.bind(this)}, 
+            React.createElement(Text, {style: styles.closeButtonText}, "✕")
+          )
+        )
+      )
+    );
+  }
+});
+
+var WarningBoxOpened = React.createClass({displayName: "WarningBoxOpened",
+  render: function() {
+    var countText;
+    if (warningCounts.get(this.props.warning) > 1) {
+      countText = (
+        React.createElement(Text, {style: styles.bold}, 
+          "(", warningCounts.get(this.props.warning), ")", " "
+        )
+      );
+    }
+    return (
+      React.createElement(TouchableOpacity, {
+        activeOpacity: 0.9, 
+        onPress: this.props.onClose}, 
+        React.createElement(View, {style: styles.yellowBox}, 
+          React.createElement(Text, {style: styles.yellowBoxText}, 
+            countText, 
+            this.props.warning
+          ), 
+          React.createElement(View, {style: styles.yellowBoxButtons}, 
+            React.createElement(View, {style: styles.yellowBoxButton}, 
+              React.createElement(TouchableOpacity, {
+                onPress: this.props.onDismissed}, 
+                React.createElement(Text, {style: styles.yellowBoxButtonText}, 
+                  "Dismiss"
+                )
+              )
+            ), 
+            React.createElement(View, {style: styles.yellowBoxButton}, 
+              React.createElement(TouchableOpacity, {
+                onPress: this.props.onIgnored}, 
+                React.createElement(Text, {style: styles.yellowBoxButtonText}, 
+                  "Ignore"
+                )
+              )
+            )
+          )
+        )
+      )
+    );
+  },
+});
+
+var canMountWarningBox = true;
+
+var WarningBox = React.createClass({displayName: "WarningBox",
+  getInitialState: function() {
+    return {
+      totalWarningCount:totalWarningCount,
+      openWarning: null,
+    };
+  },
+  componentWillMount: function() {
+    if (console.yellowBoxResetIgnored) {
+      AsyncStorage.setItem(IGNORED_WARNINGS_KEY, '[]', function(err) {
+        if (err) {
+          console.warn('Could not reset ignored warnings.', err);
+        }
+      });
+      ignoredWarnings = [];
+    }
+  },
+  componentDidMount: function() {
+    invariant(
+      canMountWarningBox,
+      'There can only be one WarningBox'
+    );
+    canMountWarningBox = false;
+    warningCountEvents.addListener(
+      'count',
+      this._onWarningCount
+    );
+  },
+  componentWillUnmount: function() {
+    warningCountEvents.removeAllListeners();
+    canMountWarningBox = true;
+  },
+  _onWarningCount: function(totalWarningCount) {
+    // Must use setImmediate because warnings often happen during render and
+    // state cannot be set while rendering
+    setImmediate(function()  {
+      this.setState({ totalWarningCount:totalWarningCount, });
+    }.bind(this));
+  },
+  _onDismiss: function(warning) {
+    warningCounts["delete"](warning);
+    this.setState({
+      openWarning: null,
+    });
+  },
+  render: function() {
+    if (warningCounts.size === 0) {
+      return React.createElement(View, null);
+    }
+    if (this.state.openWarning) {
+      return (
+        React.createElement(WarningBoxOpened, {
+          warning: this.state.openWarning, 
+          onClose: function()  {
+            this.setState({ openWarning: null });
+          }.bind(this), 
+          onDismissed: this._onDismiss.bind(this, this.state.openWarning), 
+          onIgnored: function()  {
+            ignoredWarnings.push(this.state.openWarning);
+            saveIgnoredWarnings();
+            this._onDismiss(this.state.openWarning);
+          }.bind(this)}
+        )
+      );
+    }
+    var warningRows = [];
+    warningCounts.forEach(function(count, warning)  {
+      warningRows.push(
+        React.createElement(WarningRow, {
+          key: warning, 
+          onOpened: function()  {
+            this.setState({ openWarning: warning });
+          }.bind(this), 
+          onDismissed: this._onDismiss.bind(this, warning), 
+          warning: warning}
+        )
+      );
+    }.bind(this));
+    return (
+      React.createElement(View, {style: styles.warningContainer}, 
+        warningRows
+      )
+    );
+  },
+});
+
+var styles = StyleSheet.create({
+  bold: {
+    fontWeight: 'bold',
+  },
+  closeButton: {
+    position: 'absolute',
+    right: 0,
+    height: 46,
+    width: 46,
+  },
+  closeButtonText: {
+    color: 'white',
+    fontSize: 32,
+    position: 'relative',
+    left: 8,
+  },
+  warningContainer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0
+  },
+  warningBox: {
+    position: 'relative',
+    backgroundColor: 'rgba(171, 124, 36, 0.9)',
+    flex: 1,
+    height: 46,
+  },
+  warningText: {
+    color: 'white',
+    position: 'absolute',
+    left: 0,
+    marginLeft: 15,
+    marginRight: 46,
+    top: 7,
+  },
+  yellowBox: {
+    backgroundColor: 'rgba(171, 124, 36, 0.9)',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    padding: 15,
+    paddingTop: 35,
+  },
+  yellowBoxText: {
+    color: 'white',
+    fontSize: 20,
+  },
+  yellowBoxButtons: {
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 0,
+  },
+  yellowBoxButton: {
+    flex: 1,
+    padding: 25,
+  },
+  yellowBoxButtonText: {
+    color: 'white',
+    fontSize: 16,
+  }
+});
+
+module.exports = WarningBox;
+});
+__d('AsyncStorage',["NativeModules"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule AsyncStorage
+ * @flow-weak
+ */
+'use strict';
+
+var NativeModules = require('NativeModules');
+var RCTAsyncLocalStorage = NativeModules.AsyncLocalStorage;
+var RCTAsyncRocksDBStorage = NativeModules.AsyncRocksDBStorage;
+
+// We use RocksDB if available.
+var RCTAsyncStorage = RCTAsyncRocksDBStorage || RCTAsyncLocalStorage;
+
+/**
+ * AsyncStorage is a simple, asynchronous, persistent, global, key-value storage
+ * system.  It should be used instead of LocalStorage.
+ *
+ * It is recommended that you use an abstraction on top of AsyncStorage instead
+ * of AsyncStorage directly for anything more than light usage since it
+ * operates globally.
+ *
+ * This JS code is a simple facad over the native iOS implementation to provide
+ * a clear JS API, real Error objects, and simple non-multi functions. Each
+ * method returns a `Promise` object.
+ */
+var AsyncStorage = {
+  /**
+   * Fetches `key` and passes the result to `callback`, along with an `Error` if
+   * there is any. Returns a `Promise` object.
+   */
+  getItem: function(
+    key        ,
+    callback                                          
+  )          {
+    return new Promise(function(resolve, reject)  {
+      RCTAsyncStorage.multiGet([key], function(errors, result) {
+        // Unpack result to get value from [[key,value]]
+        var value = (result && result[0] && result[0][1]) ? result[0][1] : null;
+        callback && callback((errors && convertError(errors[0])) || null, value);
+        if (errors) {
+          reject(convertError(errors[0]));
+        } else {
+          resolve(value);
+        }
+      });
+    });
+  },
+
+  /**
+   * Sets `value` for `key` and calls `callback` on completion, along with an
+   * `Error` if there is any. Returns a `Promise` object.
+   */
+  setItem: function(
+    key        ,
+    value        ,
+    callback                          
+  )          {
+    return new Promise(function(resolve, reject)  {
+      RCTAsyncStorage.multiSet([[key,value]], function(errors) {
+        callback && callback((errors && convertError(errors[0])) || null);
+        if (errors) {
+          reject(convertError(errors[0]));
+        } else {
+          resolve(null);
+        }
+      });
+    });
+  },
+  /**
+   * Returns a `Promise` object.
+   */
+  removeItem: function(
+    key        ,
+    callback                          
+  )          {
+    return new Promise(function(resolve, reject)  {
+      RCTAsyncStorage.multiRemove([key], function(errors) {
+        callback && callback((errors && convertError(errors[0])) || null);
+        if (errors) {
+          reject(convertError(errors[0]));
+        } else {
+          resolve(null);
+        }
+      });
+    });
+  },
+
+  /**
+   * Merges existing value with input value, assuming they are stringified json. Returns a `Promise` object.
+   *
+   * Not supported by all native implementations.
+   */
+  mergeItem: function(
+    key        ,
+    value        ,
+    callback                          
+  )          {
+    return new Promise(function(resolve, reject)  {
+      RCTAsyncStorage.multiMerge([[key,value]], function(errors) {
+        callback && callback((errors && convertError(errors[0])) || null);
+        if (errors) {
+          reject(convertError(errors[0]));
+        } else {
+          resolve(null);
+        }
+      });
+    });
+  },
+
+  /**
+   * Erases *all* AsyncStorage for all clients, libraries, etc.  You probably
+   * don't want to call this - use removeItem or multiRemove to clear only your
+   * own keys instead. Returns a `Promise` object.
+   */
+  clear: function(callback                          )          {
+    return new Promise(function(resolve, reject)  {
+      RCTAsyncStorage.clear(function(error) {
+        callback && callback(convertError(error));
+        if (error && convertError(error)){
+          reject(convertError(error));
+        } else {
+          resolve(null);
+        }
+      });
+    });
+  },
+
+  /**
+   * Gets *all* keys known to the system, for all callers, libraries, etc. Returns a `Promise` object.
+   */
+  getAllKeys: function(callback                         )          {
+    return new Promise(function(resolve, reject)  {
+      RCTAsyncStorage.getAllKeys(function(error, keys) {
+        callback && callback(convertError(error), keys);
+        if (error) {
+          reject(convertError(error));
+        } else {
+          resolve(keys);
+        }
+      });
+    });
+  },
+
+  /**
+   * The following batched functions are useful for executing a lot of
+   * operations at once, allowing for native optimizations and provide the
+   * convenience of a single callback after all operations are complete.
+   *
+   * These functions return arrays of errors, potentially one for every key.
+   * For key-specific errors, the Error object will have a key property to
+   * indicate which key caused the error.
+   */
+
+  /**
+   * multiGet invokes callback with an array of key-value pair arrays that
+   * matches the input format of multiSet. Returns a `Promise` object.
+   *
+   *   multiGet(['k1', 'k2'], cb) -> cb([['k1', 'val1'], ['k2', 'val2']])
+   */
+  multiGet: function(
+    keys               ,
+    callback                                                                
+  )          {
+    return new Promise(function(resolve, reject)  {
+      RCTAsyncStorage.multiGet(keys, function(errors, result) {
+        var error = (errors && errors.map(function(error)  {return convertError(error);})) || null;
+        callback && callback(error, result);
+        if (errors) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  },
+
+  /**
+   * multiSet and multiMerge take arrays of key-value array pairs that match
+   * the output of multiGet, e.g. Returns a `Promise` object.
+   *
+   *   multiSet([['k1', 'val1'], ['k2', 'val2']], cb);
+   */
+  multiSet: function(
+    keyValuePairs                      ,
+    callback                                  
+  )          {
+    return new Promise(function(resolve, reject)  {
+      RCTAsyncStorage.multiSet(keyValuePairs, function(errors) {
+        var error = (errors && errors.map(function(error)  {return convertError(error);})) || null;
+        callback && callback(error);
+        if (errors) {
+          reject(error);
+        } else {
+          resolve(null);
+        }
+      });
+    });
+  },
+
+  /**
+   * Delete all the keys in the `keys` array. Returns a `Promise` object.
+   */
+  multiRemove: function(
+    keys               ,
+    callback                                  
+  )          {
+    return new Promise(function(resolve, reject)  {
+      RCTAsyncStorage.multiRemove(keys, function(errors) {
+        var error = (errors && errors.map(function(error)  {return convertError(error);})) || null;
+        callback && callback(error);
+        if (errors) {
+          reject(error);
+        } else {
+          resolve(null);
+        }
+      });
+    });
+  },
+
+  /**
+   * Merges existing values with input values, assuming they are stringified
+   * json. Returns a `Promise` object.
+   *
+   * Not supported by all native implementations.
+   */
+  multiMerge: function(
+    keyValuePairs                      ,
+    callback                                  
+  )          {
+    return new Promise(function(resolve, reject)  {
+      RCTAsyncStorage.multiMerge(keyValuePairs, function(errors) {
+        var error = (errors && errors.map(function(error)  {return convertError(error);})) || null;
+        callback && callback(error);
+        if (errors) {
+          reject(error);
+        } else {
+          resolve(null);
+        }
+      });
+    });
+  },
+};
+
+// Not all native implementations support merge.
+if (!RCTAsyncStorage.multiMerge) {
+  delete AsyncStorage.mergeItem;
+  delete AsyncStorage.multiMerge;
+}
+
+function convertError(error) {
+  if (!error) {
+    return null;
+  }
+  var out = new Error(error.message);
+  out.key = error.key; // flow doesn't like this :(
+  return out;
+}
+
+module.exports = AsyncStorage;
 });
 __d('RCTRenderingPerf',["ReactDefaultPerf","ReactPerf","invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
@@ -37422,273 +38457,6 @@ RCTAppState.getCurrentAppState(
 
 module.exports = AppStateIOS;
 });
-__d('AsyncStorage',["NativeModules"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
- * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule AsyncStorage
- * @flow-weak
- */
-'use strict';
-
-var NativeModules = require('NativeModules');
-var RCTAsyncLocalStorage = NativeModules.AsyncLocalStorage;
-var RCTAsyncRocksDBStorage = NativeModules.AsyncRocksDBStorage;
-
-// We use RocksDB if available.
-var RCTAsyncStorage = RCTAsyncRocksDBStorage || RCTAsyncLocalStorage;
-
-/**
- * AsyncStorage is a simple, asynchronous, persistent, global, key-value storage
- * system.  It should be used instead of LocalStorage.
- *
- * It is recommended that you use an abstraction on top of AsyncStorage instead
- * of AsyncStorage directly for anything more than light usage since it
- * operates globally.
- *
- * This JS code is a simple facad over the native iOS implementation to provide
- * a clear JS API, real Error objects, and simple non-multi functions. Each
- * method returns a `Promise` object.
- */
-var AsyncStorage = {
-  /**
-   * Fetches `key` and passes the result to `callback`, along with an `Error` if
-   * there is any. Returns a `Promise` object.
-   */
-  getItem: function(
-    key        ,
-    callback                                          
-  )          {
-    return new Promise(function(resolve, reject)  {
-      RCTAsyncStorage.multiGet([key], function(errors, result) {
-        // Unpack result to get value from [[key,value]]
-        var value = (result && result[0] && result[0][1]) ? result[0][1] : null;
-        callback && callback((errors && convertError(errors[0])) || null, value);
-        if (errors) {
-          reject(convertError(errors[0]));
-        } else {
-          resolve(value);
-        }
-      });
-    });
-  },
-
-  /**
-   * Sets `value` for `key` and calls `callback` on completion, along with an
-   * `Error` if there is any. Returns a `Promise` object.
-   */
-  setItem: function(
-    key        ,
-    value        ,
-    callback                          
-  )          {
-    return new Promise(function(resolve, reject)  {
-      RCTAsyncStorage.multiSet([[key,value]], function(errors) {
-        callback && callback((errors && convertError(errors[0])) || null);
-        if (errors) {
-          reject(convertError(errors[0]));
-        } else {
-          resolve(null);
-        }
-      });
-    });
-  },
-  /**
-   * Returns a `Promise` object.
-   */
-  removeItem: function(
-    key        ,
-    callback                          
-  )          {
-    return new Promise(function(resolve, reject)  {
-      RCTAsyncStorage.multiRemove([key], function(errors) {
-        callback && callback((errors && convertError(errors[0])) || null);
-        if (errors) {
-          reject(convertError(errors[0]));
-        } else {
-          resolve(null);
-        }
-      });
-    });
-  },
-
-  /**
-   * Merges existing value with input value, assuming they are stringified json. Returns a `Promise` object.
-   *
-   * Not supported by all native implementations.
-   */
-  mergeItem: function(
-    key        ,
-    value        ,
-    callback                          
-  )          {
-    return new Promise(function(resolve, reject)  {
-      RCTAsyncStorage.multiMerge([[key,value]], function(errors) {
-        callback && callback((errors && convertError(errors[0])) || null);
-        if (errors) {
-          reject(convertError(errors[0]));
-        } else {
-          resolve(null);
-        }
-      });
-    });
-  },
-
-  /**
-   * Erases *all* AsyncStorage for all clients, libraries, etc.  You probably
-   * don't want to call this - use removeItem or multiRemove to clear only your
-   * own keys instead. Returns a `Promise` object.
-   */
-  clear: function(callback                          )          {
-    return new Promise(function(resolve, reject)  {
-      RCTAsyncStorage.clear(function(error) {
-        callback && callback(convertError(error));
-        if (error && convertError(error)){
-          reject(convertError(error));
-        } else {
-          resolve(null);
-        }
-      });
-    });
-  },
-
-  /**
-   * Gets *all* keys known to the system, for all callers, libraries, etc. Returns a `Promise` object.
-   */
-  getAllKeys: function(callback                         )          {
-    return new Promise(function(resolve, reject)  {
-      RCTAsyncStorage.getAllKeys(function(error, keys) {
-        callback && callback(convertError(error), keys);
-        if (error) {
-          reject(convertError(error));
-        } else {
-          resolve(keys);
-        }
-      });
-    });
-  },
-
-  /**
-   * The following batched functions are useful for executing a lot of
-   * operations at once, allowing for native optimizations and provide the
-   * convenience of a single callback after all operations are complete.
-   *
-   * These functions return arrays of errors, potentially one for every key.
-   * For key-specific errors, the Error object will have a key property to
-   * indicate which key caused the error.
-   */
-
-  /**
-   * multiGet invokes callback with an array of key-value pair arrays that
-   * matches the input format of multiSet. Returns a `Promise` object.
-   *
-   *   multiGet(['k1', 'k2'], cb) -> cb([['k1', 'val1'], ['k2', 'val2']])
-   */
-  multiGet: function(
-    keys               ,
-    callback                                                                
-  )          {
-    return new Promise(function(resolve, reject)  {
-      RCTAsyncStorage.multiGet(keys, function(errors, result) {
-        var error = (errors && errors.map(function(error)  {return convertError(error);})) || null;
-        callback && callback(error, result);
-        if (errors) {
-          reject(error);
-        } else {
-          resolve(result);
-        }
-      });
-    });
-  },
-
-  /**
-   * multiSet and multiMerge take arrays of key-value array pairs that match
-   * the output of multiGet, e.g. Returns a `Promise` object.
-   *
-   *   multiSet([['k1', 'val1'], ['k2', 'val2']], cb);
-   */
-  multiSet: function(
-    keyValuePairs                      ,
-    callback                                  
-  )          {
-    return new Promise(function(resolve, reject)  {
-      RCTAsyncStorage.multiSet(keyValuePairs, function(errors) {
-        var error = (errors && errors.map(function(error)  {return convertError(error);})) || null;
-        callback && callback(error);
-        if (errors) {
-          reject(error);
-        } else {
-          resolve(null);
-        }
-      });
-    });
-  },
-
-  /**
-   * Delete all the keys in the `keys` array. Returns a `Promise` object.
-   */
-  multiRemove: function(
-    keys               ,
-    callback                                  
-  )          {
-    return new Promise(function(resolve, reject)  {
-      RCTAsyncStorage.multiRemove(keys, function(errors) {
-        var error = (errors && errors.map(function(error)  {return convertError(error);})) || null;
-        callback && callback(error);
-        if (errors) {
-          reject(error);
-        } else {
-          resolve(null);
-        }
-      });
-    });
-  },
-
-  /**
-   * Merges existing values with input values, assuming they are stringified
-   * json. Returns a `Promise` object.
-   *
-   * Not supported by all native implementations.
-   */
-  multiMerge: function(
-    keyValuePairs                      ,
-    callback                                  
-  )          {
-    return new Promise(function(resolve, reject)  {
-      RCTAsyncStorage.multiMerge(keyValuePairs, function(errors) {
-        var error = (errors && errors.map(function(error)  {return convertError(error);})) || null;
-        callback && callback(error);
-        if (errors) {
-          reject(error);
-        } else {
-          resolve(null);
-        }
-      });
-    });
-  },
-};
-
-// Not all native implementations support merge.
-if (!RCTAsyncStorage.multiMerge) {
-  delete AsyncStorage.mergeItem;
-  delete AsyncStorage.multiMerge;
-}
-
-function convertError(error) {
-  if (!error) {
-    return null;
-  }
-  var out = new Error(error.message);
-  out.key = error.key; // flow doesn't like this :(
-  return out;
-}
-
-module.exports = AsyncStorage;
-});
 __d('CameraRoll',["ReactPropTypes","NativeModules","createStrictShapeTypeChecker","deepFreezeAndThrowOnMutationInDev","invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -38880,11 +39648,14 @@ __d('update',["Object.assign","keyOf","invariant"],function(global, require, req
  * @providesModule update
  */
 
+ /* global hasOwnProperty:true */
+
 'use strict';
 
 var assign = require('Object.assign');
 var keyOf = require('keyOf');
 var invariant = require('invariant');
+var hasOwnProperty = {}.hasOwnProperty;
 
 function shallowCopy(x) {
   if (Array.isArray(x)) {
@@ -38944,7 +39715,7 @@ function update(value, spec) {
     COMMAND_SET
   );
 
-  if (spec.hasOwnProperty(COMMAND_SET)) {
+  if (hasOwnProperty.call(spec, COMMAND_SET)) {
     invariant(
       Object.keys(spec).length === 1,
       'Cannot have more than one key in an object with %s',
@@ -38956,7 +39727,7 @@ function update(value, spec) {
 
   var nextValue = shallowCopy(value);
 
-  if (spec.hasOwnProperty(COMMAND_MERGE)) {
+  if (hasOwnProperty.call(spec, COMMAND_MERGE)) {
     var mergeObj = spec[COMMAND_MERGE];
     invariant(
       mergeObj && typeof mergeObj === 'object',
@@ -38973,21 +39744,21 @@ function update(value, spec) {
     assign(nextValue, spec[COMMAND_MERGE]);
   }
 
-  if (spec.hasOwnProperty(COMMAND_PUSH)) {
+  if (hasOwnProperty.call(spec, COMMAND_PUSH)) {
     invariantArrayCase(value, spec, COMMAND_PUSH);
     spec[COMMAND_PUSH].forEach(function(item) {
       nextValue.push(item);
     });
   }
 
-  if (spec.hasOwnProperty(COMMAND_UNSHIFT)) {
+  if (hasOwnProperty.call(spec, COMMAND_UNSHIFT)) {
     invariantArrayCase(value, spec, COMMAND_UNSHIFT);
     spec[COMMAND_UNSHIFT].forEach(function(item) {
       nextValue.unshift(item);
     });
   }
 
-  if (spec.hasOwnProperty(COMMAND_SPLICE)) {
+  if (hasOwnProperty.call(spec, COMMAND_SPLICE)) {
     invariant(
       Array.isArray(value),
       'Expected %s target to be an array; got %s',
@@ -39013,7 +39784,7 @@ function update(value, spec) {
     });
   }
 
-  if (spec.hasOwnProperty(COMMAND_APPLY)) {
+  if (hasOwnProperty.call(spec, COMMAND_APPLY)) {
     invariant(
       typeof spec[COMMAND_APPLY] === 'function',
       'update(): expected spec of %s to be a function; got %s.',
@@ -39710,7 +40481,7 @@ var Camera = React.createClass({displayName: "Camera",
     }
 
     if (typeof options.target === 'string') {
-      options.target = constants.CaptureTarget[options.target];
+      options.target = constants.CaptureMode[options.target];
     }
 
     NativeModules.CameraManager.capture(options, cb);
@@ -39798,6 +40569,6 @@ var styles = StyleSheet.create({
 
 module.exports = Overlay;
 });
-__d('image!photo-camera5',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/brentvatne/coding/RNPlayNative/photo-camera5.png","uri":"photo-camera5","width":256,"height":256,"deprecated":true};});
+__d('image!photo-camera5',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/joshua/projects/RNPlayNative/photo-camera5.png","uri":"photo-camera5","width":256,"height":256,"deprecated":true};});
 ;require("RNPlayNative/index.ios");
 //@ sourceMappingURL=/index.ios.map
