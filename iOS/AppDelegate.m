@@ -18,18 +18,17 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  
-  NSURL *initialJSBundleURL = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  NSURL *initialJSBundleURL = [NSURL URLWithString:[[[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"] absoluteString]];
   NSString *initialModuleName = @"RNPlayNative";
-  
+
   self.viewController = [[ViewController alloc] initWithLaunchOptions:launchOptions];
   [self.viewController reloadWithJSBundleURL:initialJSBundleURL moduleNamed:initialModuleName];
-  
+
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   self.window.rootViewController = self.viewController;
   self.window.backgroundColor = [UIColor blackColor];
   [self.window makeKeyAndVisible];
-  
+
   return YES;
 }
 
