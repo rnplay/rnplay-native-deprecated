@@ -18,7 +18,8 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  NSURL *initialJSBundleURL = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle"];
+  
+  NSURL *initialJSBundleURL = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
   NSString *initialModuleName = @"RNPlayNative";
   
   self.viewController = [[ViewController alloc] initWithLaunchOptions:launchOptions];
