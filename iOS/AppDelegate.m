@@ -8,49 +8,51 @@
  */
 
 #import "AppDelegate.h"
-#import "JSUrl.h"
+#import "ViewController.h"
 
-#import "RCTRootView.h"
+@interface AppDelegate()
 
+@property (nonatomic, strong) ViewController *viewController;
+
+@end
 @implementation AppDelegate
 
-{
-  NSDictionary *_launchOptions;
-}
-
-RCT_EXPORT_MODULE();
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-
-  _launchOptions = launchOptions;
-
-  NSString *jsCodeLocation = [[[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"] absoluteString];
-  [self loadAppFromBundleURL:jsCodeLocation moduleName:@"RNPlayNative"];
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  NSURL *initialJSBundleURL = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle"];
+  NSString *initialModuleName = @"App";
+  
+  self.viewController = [[ViewController alloc] initWithLaunchOptions:launchOptions];
+  [self.viewController reloadWithJSBundleURL:initialJSBundleURL moduleNamed:initialModuleName];
+  
+  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  self.window.rootViewController = self.viewController;
+  self.window.backgroundColor = [UIColor blackColor];
+  [self.window makeKeyAndVisible];
+  
   return YES;
 }
 
-- (dispatch_queue_t)methodQueue
-{
-  return dispatch_get_main_queue();
+@end
+
+#import "RCTBridgeModule.h"
+
+@interface AppReloader : NSObject <RCTBridgeModule>
+@end
+
+@implementation AppReloader
+
+RCT_EXPORT_MODULE()
+
+
+/**
+ *  var AppReloader = require('NativeModules').AppReloader;
+ *  AppReloader.reloadAppWithURLString('https://example.com/index.ios.bundle', 'App')
+ */
+RCT_EXPORT_METHOD(reloadAppWithURLString:(NSString *)URLString moduleNamed:(NSString *)moduleName) {
+  AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+  
+  NSURL *JSBundleURL = [NSURL URLWithString:URLString];
+  [delegate.viewController reloadWithJSBundleURL:JSBundleURL moduleNamed:moduleName];
 }
-
-RCT_EXPORT_METHOD(loadAppFromBundleURL:(NSString *)url moduleName:(NSString *)moduleName)
-{
-  NSURL *jsCodeLocation;
-
-  jsCodeLocation = [NSURL URLWithString:url];
-
-  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
-                                                      moduleName:moduleName
-                                                   launchOptions:_launchOptions];
-
-  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  UIViewController *rootViewController = [[UIViewController alloc] init];
-  rootViewController.view = rootView;
-  self.window.rootViewController = rootViewController;
-  [self.window makeKeyAndVisible];
-}
-
 
 @end
