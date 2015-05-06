@@ -54,7 +54,7 @@ RCT_EXPORT_MODULE()
  */
 RCT_EXPORT_METHOD(reloadAppWithURLString:(NSString *)URLString moduleNamed:(NSString *)moduleName) {
   AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-  
+
   NSURL *JSBundleURL = [NSURL URLWithString:URLString];
   [delegate.viewController reloadWithJSBundleURL:JSBundleURL moduleNamed:moduleName];
 }
