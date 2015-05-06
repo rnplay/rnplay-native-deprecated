@@ -24,19 +24,11 @@ RCT_EXPORT_MODULE();
 {
 
   _launchOptions = launchOptions;
- 
-  //NSString *jsCodeLocation = [[[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"] absoluteString];
 
-  [self loadAppFromBundleURL:JSURL moduleName:@"RNPlayNative"];
-  
+  NSString *jsCodeLocation = [[[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"] absoluteString];
+  [self loadAppFromBundleURL:jsCodeLocation moduleName:@"RNPlayNative"];
   return YES;
 }
-
-// - (void)loadAppFromBundleURL:(NSString *)url moduleName:(NSString *)moduleName
-// {
-
- 
-// }
 
 - (dispatch_queue_t)methodQueue
 {
