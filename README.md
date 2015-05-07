@@ -12,7 +12,7 @@ Clone the repo.
 
 Run 'npm install' in the project directory.
 
-Open the RNPlayNative.xcworkspace file in XCode.
+Open the RNPlayNative.xcodeproj file in XCode.
 
 Set the XCode build target to a plugged-in device.
 
