@@ -18,8 +18,24 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  NSURL *initialJSBundleURL = [NSURL URLWithString:[[[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"] absoluteString]];
-  NSString *initialModuleName = @"RNPlayNative";
+  NSURL *initialJSBundleURL;
+  NSString *initialModuleName;
+
+
+  // Example:
+  // NSString *suppliedAppId = @"qAFzcA";
+  // NSString *suppliedModuleName = @"ParallaxExample";
+
+   NSString *suppliedAppId = [[NSUserDefaults standardUserDefaults] stringForKey:@"appId"];
+   NSString *suppliedModuleName = [[NSUserDefaults standardUserDefaults] stringForKey:@"moduleName"];
+
+  if (suppliedAppId) {
+    initialJSBundleURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", @"http://packager.rnplay.org/", suppliedAppId, @".bundle"]];
+    initialModuleName = suppliedModuleName;
+  } else {
+    initialJSBundleURL = [NSURL URLWithString:[[[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"] absoluteString]];
+    initialModuleName = @"RNPlayNative";
+  }
 
   self.viewController = [[ViewController alloc] initWithLaunchOptions:launchOptions];
   [self.viewController reloadWithJSBundleURL:initialJSBundleURL moduleNamed:initialModuleName];
