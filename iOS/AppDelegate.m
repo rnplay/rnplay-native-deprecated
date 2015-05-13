@@ -36,6 +36,7 @@
     initialModuleName = suppliedModuleName;
   } else if (suppliedAppUrl) {
     initialJSBundleURL = [NSURL URLWithString:suppliedAppUrl];
+    initialModuleName = suppliedModuleName;
   } else if (useUIExplorer) {
     initialJSBundleURL = [NSURL URLWithString:[[[NSBundle mainBundle] URLForResource:@"uiexplorer" withExtension:@"jsbundle"] absoluteString]];
     initialModuleName = @"UIExplorerApp";
