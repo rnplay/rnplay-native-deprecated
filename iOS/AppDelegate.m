@@ -28,10 +28,17 @@
 
    NSString *suppliedAppId = [[NSUserDefaults standardUserDefaults] stringForKey:@"appId"];
    NSString *suppliedModuleName = [[NSUserDefaults standardUserDefaults] stringForKey:@"moduleName"];
+   NSString *suppliedAppUrl = [[NSUserDefaults standardUserDefaults] stringForKey:@"bundleUrl"];
+   NSString *useUIExplorer = [[NSUserDefaults standardUserDefaults] stringForKey:@"UIExplorer"];
 
   if (suppliedAppId) {
     initialJSBundleURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", @"http://packager.rnplay.org/", suppliedAppId, @".bundle"]];
     initialModuleName = suppliedModuleName;
+  } else if (suppliedAppUrl) {
+    initialJSBundleURL = [NSURL URLWithString:suppliedAppUrl];
+  } else if (useUIExplorer) {
+    initialJSBundleURL = [NSURL URLWithString:[[[NSBundle mainBundle] URLForResource:@"uiexplorer" withExtension:@"jsbundle"] absoluteString]];
+    initialModuleName = @"UIExplorerApp";
   } else {
     initialJSBundleURL = [NSURL URLWithString:[[[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"] absoluteString]];
     initialModuleName = @"RNPlayNative";
