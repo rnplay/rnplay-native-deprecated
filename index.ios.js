@@ -73,7 +73,6 @@ var RNPlayNative = React.createClass({
               <Text style={styles.cancelButton}>X</Text>
             </TouchableOpacity>
           </Camera>
-          
         </Overlay>
       </View>
     );
