@@ -23,7 +23,7 @@ var AppReloader = require('NativeModules').AppReloader;
 var Camera = require('react-native-camera');
 var Overlay = require('react-native-overlay');
 
-var REQUEST_URL = 'http://rnplay.org/builds/0.4.4/plays/public.json';
+var REQUEST_URL = 'https://rnplay.org/builds/0.4.4/plays/public.json';
 
 var RNPlayNative = React.createClass({
   getInitialState: function() {
@@ -80,14 +80,20 @@ var RNPlayNative = React.createClass({
 
   renderApp: function(app) {
     return (
-      <TouchableOpacity onPress={() => this.selectApp(app)}>
-        <Text style={styles.app}>{app.name || app.module_name}</Text>
-      </TouchableOpacity>
+      <View style={styles.appContainer}>
+        <TouchableOpacity onPress={() => this.selectApp(app)}>
+          <Text style={styles.app}>{app.name || app.module_name}</Text>
+        </TouchableOpacity>
+        <View style={styles.creator}>
+          <Text style={styles.username}>{app.creator.username || 'anonymous'}</Text>
+          <Image style={styles.avatar} source={{uri: app.creator.avatar_url || 'https://facebook.github.io/react-native/img/header_logo.png'}} />
+        </View>
+      </View>
     );
+
   },
 
   selectApp: function(app) {
-    console.log(app);
     AppReloader.reloadAppWithURLString(app.bundle_url, app.module_name);
   },
 
@@ -121,11 +127,32 @@ var styles = StyleSheet.create({
     flex: 1,
     paddingTop: 30
   },
+  appContainer: {
+    marginBottom: 20
+  },
+  creator: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  username: {
+    fontSize: 12,
+    opacity: .5
+  },
   cameraButton: {
     height: 60,
     width: 20,
     alignSelf: 'center',
     marginLeft: 5
+  },
+  avatar: {
+    width: 20,
+    height: 20,
+    marginLeft: 5,
+    borderRadius: 10,
+    opacity: .5,
+    marginTop: 3,
+    backgroundColor: "#000"
   },
   cancelButton: {
     color: '#fff',
