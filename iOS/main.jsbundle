@@ -874,14 +874,17 @@ Object.assign = function(target, sources) {
       ErrorUtils._globalHandler = fun;
     },
     reportError: function(error) {
-      Error._globalHandler && ErrorUtils._globalHandler(error);
+      ErrorUtils._globalHandler && ErrorUtils._globalHandler(error);
+    },
+    reportFatalError: function(error) {
+      ErrorUtils._globalHandler && ErrorUtils._globalHandler(error, true);
     },
     applyWithGuard: function(fun, context, args) {
       try {
         ErrorUtils._inGuard++;
         return fun.apply(context, args);
       } catch (e) {
-        ErrorUtils._globalHandler && ErrorUtils._globalHandler(e);
+        ErrorUtils.reportError(e);
       } finally {
         ErrorUtils._inGuard--;
       }
@@ -1084,7 +1087,7 @@ if (!String.prototype.repeat) {
   }
 })();
 
-__d('RNPlayNative/index.ios',["react-native/Libraries/react-native/react-native","ReactIOSART","NativeModules","react-native-camera/Camera.ios","Overlay","image!photo-camera5"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('RNPlayNative/index.ios',["react-native/Libraries/react-native/react-native","ReactNativeART","NativeModules","react-native-camera/Camera.ios","Overlay","image!photo-camera5"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * React Native Playground
  * https://github.com/jsierles/rnplay
  */
@@ -1104,12 +1107,12 @@ var $__0=
   
   React,ActivityIndicatorIOS=$__0.ActivityIndicatorIOS,AppRegistry=$__0.AppRegistry,StyleSheet=$__0.StyleSheet,Text=$__0.Text,ListView=$__0.ListView,View=$__0.View,Image=$__0.Image,TouchableOpacity=$__0.TouchableOpacity;
 
-var ReactART = require('ReactIOSART');
+var ReactART = require('ReactNativeART');
 var AppReloader = require('NativeModules').AppReloader;
 var Camera = require('react-native-camera/Camera.ios');
 var Overlay = require('Overlay');
 
-var REQUEST_URL = 'http://rnplay.org/plays.json';
+var REQUEST_URL = 'http://rnplay.org/plays/public.json';
 
 var RNPlayNative = React.createClass({displayName: "RNPlayNative",
   getInitialState: function() {
@@ -1159,7 +1162,6 @@ var RNPlayNative = React.createClass({displayName: "RNPlayNative",
               React.createElement(Text, {style: styles.cancelButton}, "X")
             )
           )
-          
         )
       )
     );
@@ -1320,7 +1322,7 @@ if (__DEV__) {
 
 module.exports = ReactNative;
 });
-__d('React',["ReactIOS"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('React',["ReactNative"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -1334,9 +1336,9 @@ __d('React',["ReactIOS"],function(global, require, requireDynamic, requireLazy, 
 
 "use strict";
 
-module.exports = require('ReactIOS');
+module.exports = require('ReactNative');
 });
-__d('ReactIOS',["ReactChildren","ReactClass","ReactComponent","ReactContext","ReactCurrentOwner","ReactElement","ReactElementValidator","ReactInstanceHandles","ReactIOSDefaultInjection","ReactIOSMount","ReactPropTypes","deprecated","invariant","onlyChild","ReactReconciler","ReactIOSTextComponent"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ReactNative',["ReactChildren","ReactClass","ReactComponent","ReactContext","ReactCurrentOwner","ReactElement","ReactElementValidator","ReactInstanceHandles","ReactNativeDefaultInjection","ReactNativeMount","ReactPropTypes","deprecated","findNodeHandle","invariant","onlyChild","ReactReconciler","ReactNativeTextComponent"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -1344,7 +1346,7 @@ __d('ReactIOS',["ReactChildren","ReactClass","ReactComponent","ReactContext","Re
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule ReactIOS
+ * @providesModule ReactNative
  * @flow
  */
 "use strict";
@@ -1357,15 +1359,16 @@ var ReactCurrentOwner = require('ReactCurrentOwner');
 var ReactElement = require('ReactElement');
 var ReactElementValidator = require('ReactElementValidator');
 var ReactInstanceHandles = require('ReactInstanceHandles');
-var ReactIOSDefaultInjection = require('ReactIOSDefaultInjection');
-var ReactIOSMount = require('ReactIOSMount');
+var ReactNativeDefaultInjection = require('ReactNativeDefaultInjection');
+var ReactNativeMount = require('ReactNativeMount');
 var ReactPropTypes = require('ReactPropTypes');
 
 var deprecated = require('deprecated');
+var findNodeHandle = require('findNodeHandle');
 var invariant = require('invariant');
 var onlyChild = require('onlyChild');
 
-ReactIOSDefaultInjection.inject();
+ReactNativeDefaultInjection.inject();
 
 var createElement = ReactElement.createElement;
 var createFactory = ReactElement.createFactory;
@@ -1410,11 +1413,11 @@ var render = function(
   mountInto        ,
   callback                
 )                  {
-  return ReactIOSMount.renderComponent(element, mountInto, callback);
+  return ReactNativeMount.renderComponent(element, mountInto, callback);
 };
 
-var ReactIOS = {
-  hasReactIOSInitialized: false,
+var ReactNative = {
+  hasReactNativeInitialized: false,
   Children: {
     map: ReactChildren.map,
     forEach: ReactChildren.forEach,
@@ -1428,13 +1431,14 @@ var ReactIOS = {
   createFactory: createFactory,
   cloneElement: cloneElement,
   _augmentElement: augmentElement,
+  findNodeHandle: findNodeHandle,
   render: render,
-  unmountComponentAtNode: ReactIOSMount.unmountComponentAtNode,
+  unmountComponentAtNode: ReactNativeMount.unmountComponentAtNode,
 
  // Hook for JSX spread, don't use this for anything else.
   __spread: Object.assign,
 
-  unmountComponentAtNodeAndRemoveContainer: ReactIOSMount.unmountComponentAtNodeAndRemoveContainer,
+  unmountComponentAtNodeAndRemoveContainer: ReactNativeMount.unmountComponentAtNodeAndRemoveContainer,
   isValidClass: ReactElement.isValidFactory,
   isValidElement: ReactElement.isValidElement,
 
@@ -1464,13 +1468,13 @@ if (
   __REACT_DEVTOOLS_GLOBAL_HOOK__.inject({
     CurrentOwner: ReactCurrentOwner,
     InstanceHandles: ReactInstanceHandles,
-    Mount: ReactIOSMount,
+    Mount: ReactNativeMount,
     Reconciler: require('ReactReconciler'),
-    TextComponent: require('ReactIOSTextComponent'),
+    TextComponent: require('ReactNativeTextComponent'),
   });
 }
 
-module.exports = ReactIOS;
+module.exports = ReactNative;
 });
 __d('ReactChildren',["PooledClass","ReactFragment","traverseAllChildren","warning"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -6419,7 +6423,7 @@ var keyOf = function(oneKeyObj) {
 
 module.exports = keyOf;
 });
-__d('ReactIOSDefaultInjection',["InitializeJavaScriptAppEngine","EventPluginHub","EventPluginUtils","IOSDefaultEventPluginOrder","IOSNativeBridgeEventPlugin","NodeHandle","ReactClass","ReactComponentEnvironment","ReactDefaultBatchingStrategy","ReactEmptyComponent","ReactInstanceHandles","ReactIOSComponentEnvironment","ReactIOSComponentMixin","ReactIOSGlobalInteractionHandler","ReactIOSGlobalResponderHandler","ReactIOSMount","ReactIOSTextComponent","ReactNativeComponent","ReactUpdates","ResponderEventPlugin","UniversalWorkerNodeHandle","createReactIOSNativeComponentClass","invariant","RCTEventEmitter","RCTLog","RCTJSTimers"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ReactNativeDefaultInjection',["InitializeJavaScriptAppEngine","EventPluginHub","EventPluginUtils","IOSDefaultEventPluginOrder","IOSNativeBridgeEventPlugin","NodeHandle","ReactClass","ReactComponentEnvironment","ReactDefaultBatchingStrategy","ReactEmptyComponent","ReactInstanceHandles","ReactNativeComponentEnvironment","ReactNativeGlobalInteractionHandler","ReactNativeGlobalResponderHandler","ReactNativeMount","ReactNativeTextComponent","ReactNativeComponent","ReactUpdates","ResponderEventPlugin","UniversalWorkerNodeHandle","createReactNativeComponentClass","invariant","RCTEventEmitter","RCTLog","RCTJSTimers"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -6427,7 +6431,7 @@ __d('ReactIOSDefaultInjection',["InitializeJavaScriptAppEngine","EventPluginHub"
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule ReactIOSDefaultInjection
+ * @providesModule ReactNativeDefaultInjection
  * @flow
  */
 
@@ -6447,18 +6451,17 @@ var ReactComponentEnvironment = require('ReactComponentEnvironment');
 var ReactDefaultBatchingStrategy = require('ReactDefaultBatchingStrategy');
 var ReactEmptyComponent = require('ReactEmptyComponent');
 var ReactInstanceHandles = require('ReactInstanceHandles');
-var ReactIOSComponentEnvironment = require('ReactIOSComponentEnvironment');
-var ReactIOSComponentMixin = require('ReactIOSComponentMixin');
-var ReactIOSGlobalInteractionHandler = require('ReactIOSGlobalInteractionHandler');
-var ReactIOSGlobalResponderHandler = require('ReactIOSGlobalResponderHandler');
-var ReactIOSMount = require('ReactIOSMount');
-var ReactIOSTextComponent = require('ReactIOSTextComponent');
+var ReactNativeComponentEnvironment = require('ReactNativeComponentEnvironment');
+var ReactNativeGlobalInteractionHandler = require('ReactNativeGlobalInteractionHandler');
+var ReactNativeGlobalResponderHandler = require('ReactNativeGlobalResponderHandler');
+var ReactNativeMount = require('ReactNativeMount');
+var ReactNativeTextComponent = require('ReactNativeTextComponent');
 var ReactNativeComponent = require('ReactNativeComponent');
 var ReactUpdates = require('ReactUpdates');
 var ResponderEventPlugin = require('ResponderEventPlugin');
 var UniversalWorkerNodeHandle = require('UniversalWorkerNodeHandle');
 
-var createReactIOSNativeComponentClass = require('createReactIOSNativeComponentClass');
+var createReactNativeComponentClass = require('createReactNativeComponentClass');
 var invariant = require('invariant');
 
 // Just to ensure this gets packaged, since its only caller is from Native.
@@ -6474,11 +6477,11 @@ function inject() {
   EventPluginHub.injection.injectInstanceHandle(ReactInstanceHandles);
 
   ResponderEventPlugin.injection.injectGlobalResponderHandler(
-    ReactIOSGlobalResponderHandler
+    ReactNativeGlobalResponderHandler
   );
 
   ResponderEventPlugin.injection.injectGlobalInteractionHandler(
-    ReactIOSGlobalInteractionHandler
+    ReactNativeGlobalInteractionHandler
   );
 
   /**
@@ -6491,7 +6494,7 @@ function inject() {
   });
 
   ReactUpdates.injection.injectReconcileTransaction(
-    ReactIOSComponentEnvironment.ReactReconcileTransaction
+    ReactNativeComponentEnvironment.ReactReconcileTransaction
   );
 
   ReactUpdates.injection.injectBatchingStrategy(
@@ -6499,22 +6502,20 @@ function inject() {
   );
 
   ReactComponentEnvironment.injection.injectEnvironment(
-    ReactIOSComponentEnvironment
+    ReactNativeComponentEnvironment
   );
 
   // Can't import View here because it depends on React to make its composite
-  var RCTView = createReactIOSNativeComponentClass({
+  var RCTView = createReactNativeComponentClass({
     validAttributes: {},
     uiViewClassName: 'RCTView',
   });
   ReactEmptyComponent.injection.injectEmptyComponent(RCTView);
 
-  EventPluginUtils.injection.injectMount(ReactIOSMount);
-
-  ReactClass.injection.injectMixin(ReactIOSComponentMixin);
+  EventPluginUtils.injection.injectMount(ReactNativeMount);
 
   ReactNativeComponent.injection.injectTextComponentClass(
-    ReactIOSTextComponent
+    ReactNativeTextComponent
   );
   ReactNativeComponent.injection.injectAutoWrapper(function(tag) {
     // Show a nicer error message for non-function tags
@@ -6532,7 +6533,7 @@ module.exports = {
   inject: inject,
 };
 });
-__d('InitializeJavaScriptAppEngine',["RCTDeviceEventEmitter","ExceptionsManager","ErrorUtils","ExceptionsManager","Platform","JSTimers","NativeModules","Promise","XMLHttpRequest","fetch","Geolocation"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('InitializeJavaScriptAppEngine',["RCTDeviceEventEmitter","ExceptionsManager","ErrorUtils","ExceptionsManager","Platform","JSTimers","NativeModules","Promise","XMLHttpRequest","fetch","Geolocation","WebSocket"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -6567,53 +6568,20 @@ if (typeof window === 'undefined') {
   window = GLOBAL;
 }
 
-/**
- * The document must be shimmed before anything else that might define the
- * `ExecutionEnvironment` module (which checks for `document.createElement`).
- */
-function setupDocumentShim() {
-  // The browser defines Text and Image globals by default. If you forget to
-  // require them, then the error message is very confusing.
-  function getInvalidGlobalUseError(name) {
-    return new Error(
-      'You are trying to render the global ' + name + ' variable as a ' +
-      'React element. You probably forgot to require ' + name + '.'
-    );
-  }
-  GLOBAL.Text = {
-    get defaultProps() {
-      throw getInvalidGlobalUseError('Text');
-    }
-  };
-  GLOBAL.Image = {
-    get defaultProps() {
-      throw getInvalidGlobalUseError('Image');
-    }
-  };
-  // Force `ExecutionEnvironment.canUseDOM` to be false.
-  if (GLOBAL.document) {
-    GLOBAL.document.createElement = null;
-  }
-
-  // There is no DOM so MutationObserver doesn't make sense. It is used
-  // as feature detection in Bluebird Promise implementation
-  GLOBAL.MutationObserver = undefined;
-}
-
-function handleErrorWithRedBox(e) {
+function handleErrorWithRedBox(e, isFatal) {
   try {
-    require('ExceptionsManager').handleException(e);
+    require('ExceptionsManager').handleException(e, isFatal);
   } catch(ee) {
     console.log('Failed to print error: ', ee.message);
   }
 }
 
-function setupRedBoxErrorHandler() {
+function setUpRedBoxErrorHandler() {
   var ErrorUtils = require('ErrorUtils');
   ErrorUtils.setGlobalHandler(handleErrorWithRedBox);
 }
 
-function setupRedBoxConsoleErrorHandler() {
+function setUpRedBoxConsoleErrorHandler() {
   // ExceptionsManager transitively requires Promise so we install it after
   var ExceptionsManager = require('ExceptionsManager');
   var Platform = require('Platform');
@@ -6630,7 +6598,7 @@ function setupRedBoxConsoleErrorHandler() {
  * implement our own custom timing bridge that should be immune to
  * unexplainably dropped timing signals.
  */
-function setupTimers() {
+function setUpTimers() {
   var JSTimers = require('JSTimers');
   GLOBAL.setTimeout = JSTimers.setTimeout;
   GLOBAL.setInterval = JSTimers.setInterval;
@@ -6645,7 +6613,7 @@ function setupTimers() {
   };
 }
 
-function setupAlert() {
+function setUpAlert() {
   var RCTAlertManager = require('NativeModules').AlertManager;
   if (!GLOBAL.alert) {
     GLOBAL.alert = function(text) {
@@ -6659,13 +6627,13 @@ function setupAlert() {
   }
 }
 
-function setupPromise() {
+function setUpPromise() {
   // The native Promise implementation throws the following error:
   // ERROR: Event loop not supported.
   GLOBAL.Promise = require('Promise');
 }
 
-function setupXHR() {
+function setUpXHR() {
   // The native XMLHttpRequest in Chrome dev tools is CORS aware and won't
   // let you fetch anything from the internet
   GLOBAL.XMLHttpRequest = require('XMLHttpRequest');
@@ -6677,19 +6645,29 @@ function setupXHR() {
   GLOBAL.Response = fetchPolyfill.Response;
 }
 
-function setupGeolocation() {
+function setUpGeolocation() {
   GLOBAL.navigator = GLOBAL.navigator || {};
   GLOBAL.navigator.geolocation = require('Geolocation');
 }
 
-setupDocumentShim();
-setupRedBoxErrorHandler();
-setupTimers();
-setupAlert();
-setupPromise();
-setupXHR();
-setupRedBoxConsoleErrorHandler();
-setupGeolocation();
+function setUpWebSockets() {
+  GLOBAL.WebSocket = require('WebSocket');
+}
+
+function setupProfile() {
+  console.profile = console.profile || GLOBAL.consoleProfile || function () {};
+  console.profileEnd = console.profileEnd || GLOBAL.consoleProfileEnd || function () {};
+}
+
+setUpRedBoxErrorHandler();
+setUpTimers();
+setUpAlert();
+setUpPromise();
+setUpXHR();
+setUpRedBoxConsoleErrorHandler();
+setUpGeolocation();
+setUpWebSockets();
+setupProfile();
 });
 __d('RCTDeviceEventEmitter',["EventEmitter"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
@@ -7135,26 +7113,39 @@ var sourceMapPromise;
                   
  
 
-function reportException(e           , stack      ) {
+function reportException(e           , isFatal      , stack      ) {
   if (RCTExceptionsManager) {
     if (!stack) {
       stack = parseErrorStack(e);
     }
-    RCTExceptionsManager.reportUnhandledException(e.message, stack);
+    if (!RCTExceptionsManager.reportFatalException ||
+        !RCTExceptionsManager.reportSoftException) {
+      // Backwards compatibility - no differentiation
+      // TODO(#7049989): deprecate reportUnhandledException on Android
+      RCTExceptionsManager.reportUnhandledException(e.message, stack);
+    } else {
+      if (isFatal) {
+        RCTExceptionsManager.reportFatalException(e.message, stack);
+      } else {
+        RCTExceptionsManager.reportSoftException(e.message, stack);
+      }
+    }
     if (__DEV__) {
       (sourceMapPromise = sourceMapPromise || loadSourceMap())
         .then(function(map)  {
           var prettyStack = parseErrorStack(e, map);
           RCTExceptionsManager.updateExceptionMessage(e.message, prettyStack);
         })
-        .then(null, function(error)  {
-          console.error('#CLOWNTOWN (error while displaying error): ' + error.message);
+        ["catch"](function(error)  {
+          // This can happen in a variety of normal situations, such as
+          // Network module not being available, or when running locally
+          console.warn('Unable to load source map: ' + error.message);
         });
     }
   }
 }
 
-function handleException(e           ) {
+function handleException(e           , isFatal         ) {
   var stack = parseErrorStack(e);
   var msg =
     'Error: ' + e.message +
@@ -7167,7 +7158,7 @@ function handleException(e           ) {
   } else {
     console.error(msg);
   }
-  reportException(e, stack);
+  reportException(e, isFatal, stack);
 }
 
 /**
@@ -7188,7 +7179,7 @@ function installConsoleErrorReporter() {
     var str = Array.prototype.map.call(arguments, stringifySafe).join(', ');
     var error      = new Error('console.error: ' + str);
     error.framesToPop = 1;
-    reportException(error);
+    reportException(error, /* isFatal */ false);
   };
   if (console.reportErrorsAsExceptions === undefined) {
     console.reportErrorsAsExceptions = true; // Individual apps can disable this
@@ -7496,6 +7487,14 @@ var REQUEST_PARAMSS = 2;
 var RESPONSE_CBIDS = 3;
 var RESPONSE_RETURN_VALUES = 4;
 
+var applyWithErrorReporter = function(fun          , context      , args      ) {
+  try {
+    return fun.apply(context, args);
+  } catch (e) {
+    ErrorUtils.reportFatalError(e);
+  }
+};
+
 /**
  * Utility to catch errors and prevent having to bind, or execute a bound
  * function, while catching errors in a process and returning a resulting
@@ -7512,10 +7511,10 @@ var RESPONSE_RETURN_VALUES = 4;
  */
 var guardReturn = function(operation, operationArguments, getReturnValue, context) {
   if (operation) {
-    ErrorUtils.applyWithGuard(operation, context, operationArguments);
+    applyWithErrorReporter(operation, context, operationArguments);
   }
   if (getReturnValue) {
-    return ErrorUtils.applyWithGuard(getReturnValue, context, null);
+    return applyWithErrorReporter(getReturnValue, context, null);
   }
   return null;
 };
@@ -8360,9 +8359,12 @@ __d('loadSourceMap',["Promise","NativeModules","SourceMap","react-native/Librari
 'use strict';
 
 var Promise = require('Promise');
-var RCTSourceCode = require('NativeModules').SourceCode;
+var NativeModules = require('NativeModules');
 var SourceMapConsumer = require('SourceMap').SourceMapConsumer;
 var SourceMapURL = require('react-native/Libraries/JavaScriptAppEngine/Initialization/source-map-url');
+
+var RCTSourceCode = NativeModules.SourceCode;
+var RCTDataManager = NativeModules.DataManager;
 
 function loadSourceMap()          {
   return fetchSourceMap()
@@ -8378,17 +8380,31 @@ function fetchSourceMap()          {
     return Promise.reject(new Error('RCTSourceCode module is not available'));
   }
 
+  if (!RCTDataManager) {
+    // Used internally by fetch
+    return Promise.reject(new Error('RCTDataManager module is not available'));
+  }
+
   return new Promise(RCTSourceCode.getScriptText)
     .then(extractSourceMapURL)
+    .then(function(url)  {
+      if (url === null) {
+        return Promise.reject(new Error('No source map URL found. May be running from bundled file.'));
+      }
+      return Promise.resolve(url);
+    })
     .then(fetch)
     .then(function(response)  {return response.text();})
 }
 
-function extractSourceMapURL($__0  )         {var url=$__0.url,text=$__0.text,fullSourceMappingURL=$__0.fullSourceMappingURL;
+function extractSourceMapURL($__0  )          {var url=$__0.url,text=$__0.text,fullSourceMappingURL=$__0.fullSourceMappingURL;
   if (fullSourceMappingURL) {
     return fullSourceMappingURL;
   }
   var mapURL = SourceMapURL.getFrom(text);
+  if (!mapURL) {
+    return null;
+  }
   var baseURL = url.match(/(.+:\/\/.*?)\//)[1];
   return baseURL + mapURL;
 }
@@ -12009,6 +12025,209 @@ var logError = function() {
 
 module.exports = logError;
 });
+__d('WebSocket',["RCTDeviceEventEmitter","NativeModules","WebSocketBase"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule WebSocket
+ *
+ */
+'use strict';
+
+var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
+var RCTWebSocketManager = require('NativeModules').WebSocketManager;
+
+var WebSocketBase = require('WebSocketBase');
+
+var WebSocketId = 0;
+
+for(var WebSocketBase____Key in WebSocketBase){if(WebSocketBase.hasOwnProperty(WebSocketBase____Key)){WebSocket[WebSocketBase____Key]=WebSocketBase[WebSocketBase____Key];}}var ____SuperProtoOfWebSocketBase=WebSocketBase===null?null:WebSocketBase.prototype;WebSocket.prototype=Object.create(____SuperProtoOfWebSocketBase);WebSocket.prototype.constructor=WebSocket;WebSocket.__superConstructor__=WebSocketBase;function WebSocket(){if(WebSocketBase!==null){WebSocketBase.apply(this,arguments);}}
+                    
+             
+
+  WebSocket.prototype.connectToSocketImpl=function(url        )       {
+    this.$WebSocket_socketId = WebSocketId++;
+    RCTWebSocketManager.connect(url, this.$WebSocket_socketId);
+    this.$WebSocket_registerEvents(this.$WebSocket_socketId);
+  };
+
+  WebSocket.prototype.closeConnectionImpl=function()       {
+    RCTWebSocketManager.close(this.$WebSocket_socketId);
+  };
+
+  WebSocket.prototype.cancelConnectionImpl=function()       {
+    RCTWebSocketManager.close(this.$WebSocket_socketId);
+  };
+
+  WebSocket.prototype.sendStringImpl=function(message        )       {
+    RCTWebSocketManager.send(message, this.$WebSocket_socketId);
+  };
+
+  WebSocket.prototype.sendArrayBufferImpl=function()       {
+    // TODO
+    console.warn('Sending ArrayBuffers is not yet supported');
+  };
+
+  WebSocket.prototype.$WebSocket_unregisterEvents=function()       {
+    this.$WebSocket_subs.forEach(function(e)  {return e.remove();});
+    this.$WebSocket_subs = [];
+  };
+
+  WebSocket.prototype.$WebSocket_registerEvents=function(id        )       {
+    this.$WebSocket_subs = [
+      RCTDeviceEventEmitter.addListener(
+        'websocketMessage',
+        function(ev) {
+          if (ev.id !== id) {
+            return;
+          }
+          this.onmessage && this.onmessage({
+            data: ev.data
+          });
+        }.bind(this)
+      ),
+      RCTDeviceEventEmitter.addListener(
+        'websocketOpen',
+        function(ev) {
+          if (ev.id !== id) {
+            return;
+          }
+          this.readyState = this.OPEN;
+          this.onopen && this.onopen();
+        }.bind(this)
+      ),
+      RCTDeviceEventEmitter.addListener(
+        'websocketClosed',
+        function(ev) {
+          if (ev.id !== id) {
+            return;
+          }
+          this.readyState = this.CLOSED;
+          this.onclose && this.onclose(ev);
+          this.$WebSocket_unregisterEvents();
+          RCTWebSocketManager.close(id);
+        }.bind(this)
+      ),
+      RCTDeviceEventEmitter.addListener(
+        'websocketFailed',
+        function(ev) {
+          if (ev.id !== id) {
+            return;
+          }
+          this.onerror && this.onerror(new Error(ev.message));
+          this.$WebSocket_unregisterEvents();
+          RCTWebSocketManager.close(id);
+        }.bind(this)
+      )
+    ];
+  };
+
+
+
+module.exports = WebSocket;
+});
+__d('WebSocketBase',[],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule WebSocketBase
+ *
+ */
+'use strict';
+
+/**
+ * Shared base for platform-specific WebSocket implementations.
+ */
+
+                     
+               
+                  
+                 
+
+                     
+                     
+                       
+                    
+
+                      
+                         
+                     
+                    
+                     
+               
+
+  function WebSocketBase(url        , protocols      ) {
+    this.CONNECTING = 0;
+    this.OPEN = 1;
+    this.CLOSING = 2;
+    this.CLOSED = 3;
+
+    if (!protocols) {
+      protocols = [];
+    }
+
+    this.connectToSocketImpl(url);
+  }
+
+  WebSocketBase.prototype.close=function()       {
+    if (this.readyState === WebSocketBase.CLOSING ||
+        this.readyState === WebSocketBase.CLOSED) {
+      return;
+    }
+
+    if (this.readyState === WebSocketBase.CONNECTING) {
+      this.cancelConnectionImpl();
+    }
+
+    this.closeConnectionImpl();
+  };
+
+  WebSocketBase.prototype.send=function(data     )       {
+    if (this.readyState === WebSocketBase.CONNECTING) {
+      throw new Error('INVALID_STATE_ERR');
+    }
+
+    if (typeof data === 'string') {
+      this.sendStringImpl(data);
+    } else if (data instanceof ArrayBuffer) {
+      this.sendArrayBufferImpl(data);
+    } else {
+      throw new Error('Not supported data type');
+    }
+  };
+
+  WebSocketBase.prototype.closeConnectionImpl=function()       {
+    throw new Error('Subclass must define closeConnectionImpl method');
+  };
+
+  WebSocketBase.prototype.connectToSocketImpl=function()       {
+    throw new Error('Subclass must define connectToSocketImpl method');
+  };
+
+  WebSocketBase.prototype.cancelConnectionImpl=function()       {
+    throw new Error('Subclass must define cancelConnectionImpl method');
+  };
+
+  WebSocketBase.prototype.sendStringImpl=function()       {
+    throw new Error('Subclass must define sendStringImpl method');
+  };
+
+  WebSocketBase.prototype.sendArrayBufferImpl=function()       {
+    throw new Error('Subclass must define sendArrayBufferImpl method');
+  };
+
+
+
+module.exports = WebSocketBase;
+});
 __d('EventPluginHub',["EventPluginRegistry","EventPluginUtils","accumulateInto","forEachAccumulated","invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -13976,7 +14195,7 @@ var ReactEmptyComponent = {
 
 module.exports = ReactEmptyComponent;
 });
-__d('ReactIOSComponentEnvironment',["ReactIOSDOMIDOperations","ReactIOSReconcileTransaction"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ReactNativeComponentEnvironment',["ReactNativeDOMIDOperations","ReactNativeReconcileTransaction"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -13984,19 +14203,19 @@ __d('ReactIOSComponentEnvironment',["ReactIOSDOMIDOperations","ReactIOSReconcile
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule ReactIOSComponentEnvironment
+ * @providesModule ReactNativeComponentEnvironment
  * @flow
  */
 'use strict';
 
-var ReactIOSDOMIDOperations = require('ReactIOSDOMIDOperations');
-var ReactIOSReconcileTransaction = require('ReactIOSReconcileTransaction');
+var ReactNativeDOMIDOperations = require('ReactNativeDOMIDOperations');
+var ReactNativeReconcileTransaction = require('ReactNativeReconcileTransaction');
 
-var ReactIOSComponentEnvironment = {
+var ReactNativeComponentEnvironment = {
 
-  processChildrenUpdates: ReactIOSDOMIDOperations.dangerouslyProcessChildrenUpdates,
+  processChildrenUpdates: ReactNativeDOMIDOperations.dangerouslyProcessChildrenUpdates,
 
-  replaceNodeWithMarkupByID: ReactIOSDOMIDOperations.dangerouslyReplaceNodeWithMarkupByID,
+  replaceNodeWithMarkupByID: ReactNativeDOMIDOperations.dangerouslyReplaceNodeWithMarkupByID,
 
   /**
    * Nothing to do for UIKit bridge.
@@ -14014,12 +14233,12 @@ var ReactIOSComponentEnvironment = {
 
   },
 
-  ReactReconcileTransaction: ReactIOSReconcileTransaction,
+  ReactReconcileTransaction: ReactNativeReconcileTransaction,
 };
 
-module.exports = ReactIOSComponentEnvironment;
+module.exports = ReactNativeComponentEnvironment;
 });
-__d('ReactIOSDOMIDOperations',["ReactIOSTagHandles","ReactMultiChildUpdateTypes","NativeModules","ReactPerf"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ReactNativeDOMIDOperations',["ReactNativeTagHandles","ReactMultiChildUpdateTypes","NativeModules","ReactPerf"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -14027,13 +14246,13 @@ __d('ReactIOSDOMIDOperations',["ReactIOSTagHandles","ReactMultiChildUpdateTypes"
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule ReactIOSDOMIDOperations
+ * @providesModule ReactNativeDOMIDOperations
  * @flow
  */
 
 "use strict";
 
-var ReactIOSTagHandles = require('ReactIOSTagHandles');
+var ReactNativeTagHandles = require('ReactNativeTagHandles');
 var ReactMultiChildUpdateTypes = require('ReactMultiChildUpdateTypes');
 var RCTUIManager = require('NativeModules').UIManager;
 var ReactPerf = require('ReactPerf');
@@ -14059,7 +14278,7 @@ var dangerouslyProcessChildrenUpdates = function(childrenUpdates, markupList) {
   // containerID.
   for (var i = 0; i < childrenUpdates.length; i++) {
     var update = childrenUpdates[i];
-    var containerTag = ReactIOSTagHandles.mostRecentMountedNodeHandleForRootNodeID(update.parentID);
+    var containerTag = ReactNativeTagHandles.mostRecentMountedNodeHandleForRootNodeID(update.parentID);
     var updates = byContainerTag[containerTag] || (byContainerTag[containerTag] = {});
     if (update.type === ReactMultiChildUpdateTypes.MOVE_EXISTING) {
       (updates.moveFromIndices || (updates.moveFromIndices = [])).push(update.fromIndex);
@@ -14070,7 +14289,7 @@ var dangerouslyProcessChildrenUpdates = function(childrenUpdates, markupList) {
       var mountImage = markupList[update.markupIndex];
       var tag = mountImage.tag;
       var rootNodeID = mountImage.rootNodeID;
-      ReactIOSTagHandles.associateRootNodeIDWithMountedNodeHandle(rootNodeID, tag);
+      ReactNativeTagHandles.associateRootNodeIDWithMountedNodeHandle(rootNodeID, tag);
       (updates.addAtIndices || (updates.addAtIndices = [])).push(update.toIndex);
       (updates.addChildTags || (updates.addChildTags = [])).push(tag);
     }
@@ -14096,7 +14315,7 @@ var dangerouslyProcessChildrenUpdates = function(childrenUpdates, markupList) {
  * Operations used to process updates to DOM nodes. This is made injectable via
  * `ReactComponent.DOMIDOperations`.
  */
-var ReactIOSDOMIDOperations = {
+var ReactNativeDOMIDOperations = {
   dangerouslyProcessChildrenUpdates: ReactPerf.measure(
     // FIXME(frantic): #4441289 Hack to avoid modifying react-tools
     'ReactDOMIDOperations',
@@ -14114,16 +14333,16 @@ var ReactIOSDOMIDOperations = {
     'ReactDOMIDOperations',
     'dangerouslyReplaceNodeWithMarkupByID',
     function(id, mountImage) {
-      var oldTag = ReactIOSTagHandles.mostRecentMountedNodeHandleForRootNodeID(id);
+      var oldTag = ReactNativeTagHandles.mostRecentMountedNodeHandleForRootNodeID(id);
       RCTUIManager.replaceExistingNonRootView(oldTag, mountImage.tag);
-      ReactIOSTagHandles.associateRootNodeIDWithMountedNodeHandle(id, mountImage.tag);
+      ReactNativeTagHandles.associateRootNodeIDWithMountedNodeHandle(id, mountImage.tag);
     }
   ),
 };
 
-module.exports = ReactIOSDOMIDOperations;
+module.exports = ReactNativeDOMIDOperations;
 });
-__d('ReactIOSTagHandles',["invariant","warning"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ReactNativeTagHandles',["invariant","warning"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -14131,7 +14350,7 @@ __d('ReactIOSTagHandles',["invariant","warning"],function(global, require, requi
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule ReactIOSTagHandles
+ * @providesModule ReactNativeTagHandles
  * @flow
  */
 'use strict';
@@ -14153,17 +14372,17 @@ var warning = require('warning');
  * unmount a component with a `rootNodeID`, then mount a new one in its place,
  */
 var INITIAL_TAG_COUNT = 1;
-var ReactIOSTagHandles = {
+var ReactNativeTagHandles = {
   tagsStartAt: INITIAL_TAG_COUNT,
   tagCount: INITIAL_TAG_COUNT,
 
   allocateTag: function()         {
     // Skip over root IDs as those are reserved for native
-    while (this.reactTagIsNativeTopRootID(ReactIOSTagHandles.tagCount)) {
-      ReactIOSTagHandles.tagCount++;
+    while (this.reactTagIsNativeTopRootID(ReactNativeTagHandles.tagCount)) {
+      ReactNativeTagHandles.tagCount++;
     }
-    var tag = ReactIOSTagHandles.tagCount;
-    ReactIOSTagHandles.tagCount++;
+    var tag = ReactNativeTagHandles.tagCount;
+    ReactNativeTagHandles.tagCount++;
     return tag;
   },
 
@@ -14182,8 +14401,8 @@ var ReactIOSTagHandles = {
   ) {
     warning(rootNodeID && tag, 'Root node or tag is null when associating');
     if (rootNodeID && tag) {
-      ReactIOSTagHandles.tagToRootNodeID[tag] = rootNodeID;
-      ReactIOSTagHandles.rootNodeIDToTag[rootNodeID] = tag;
+      ReactNativeTagHandles.tagToRootNodeID[tag] = rootNodeID;
+      ReactNativeTagHandles.rootNodeIDToTag[rootNodeID] = tag;
     }
   },
 
@@ -14215,7 +14434,7 @@ var ReactIOSTagHandles = {
   mostRecentMountedNodeHandleForRootNodeID: function(
     rootNodeID        
   )         {
-    return ReactIOSTagHandles.rootNodeIDToTag[rootNodeID];
+    return ReactNativeTagHandles.rootNodeIDToTag[rootNodeID];
   },
 
   tagToRootNodeID: ([]                ),
@@ -14223,7 +14442,7 @@ var ReactIOSTagHandles = {
   rootNodeIDToTag: ({}                          )
 };
 
-module.exports = ReactIOSTagHandles;
+module.exports = ReactNativeTagHandles;
 });
 __d('ReactMultiChildUpdateTypes',["keyMirror"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -14257,7 +14476,7 @@ var ReactMultiChildUpdateTypes = keyMirror({
 
 module.exports = ReactMultiChildUpdateTypes;
 });
-__d('ReactIOSReconcileTransaction',["CallbackQueue","PooledClass","Transaction"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ReactNativeReconcileTransaction',["CallbackQueue","PooledClass","Transaction"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -14265,7 +14484,7 @@ __d('ReactIOSReconcileTransaction',["CallbackQueue","PooledClass","Transaction"]
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule ReactIOSReconcileTransaction
+ * @providesModule ReactNativeReconcileTransaction
  * @flow
  */
 
@@ -14314,9 +14533,9 @@ var TRANSACTION_WRAPPERS = [ON_DOM_READY_QUEUEING];
  * - Implement/integrate with customized constraint based layout system and keep
  *   track of which dimensions must be remeasured.
  *
- * @class ReactIOSReconcileTransaction
+ * @class ReactNativeReconcileTransaction
  */
-function ReactIOSReconcileTransaction() {
+function ReactNativeReconcileTransaction() {
   this.reinitializeTransaction();
   this.reactMountReady = CallbackQueue.getPooled(null);
 }
@@ -14352,17 +14571,17 @@ var Mixin = {
 };
 
 Object.assign(
-  ReactIOSReconcileTransaction.prototype,
+  ReactNativeReconcileTransaction.prototype,
   Transaction.Mixin,
-  ReactIOSReconcileTransaction,
+  ReactNativeReconcileTransaction,
   Mixin
 );
 
-PooledClass.addPoolingTo(ReactIOSReconcileTransaction);
+PooledClass.addPoolingTo(ReactNativeReconcileTransaction);
 
-module.exports = ReactIOSReconcileTransaction;
+module.exports = ReactNativeReconcileTransaction;
 });
-__d('ReactIOSComponentMixin',["ReactIOSTagHandles","ReactInstanceMap"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ReactNativeGlobalInteractionHandler',["InteractionManager"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -14370,87 +14589,7 @@ __d('ReactIOSComponentMixin',["ReactIOSTagHandles","ReactInstanceMap"],function(
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule ReactIOSComponentMixin
- * @flow
- */
-'use strict';
-
-var ReactIOSTagHandles = require('ReactIOSTagHandles');
-var ReactInstanceMap = require('ReactInstanceMap');
-
-/**
- * ReactNative vs ReactWeb
- * -----------------------
- * React treats some pieces of data opaquely. This means that the information
- * is first class (it can be passed around), but cannot be inspected. This
- * allows us to build infrastructure that reasons about resources, without
- * making assumptions about the nature of those resources, and this allows that
- * infra to be shared across multiple platforms, where the resources are very
- * different. General infra (such as `ReactMultiChild`) reasons opaquely about
- * the data, but platform specific code (such as `ReactIOSNativeComponent`) can
- * make assumptions about the data.
- *
- *
- * `rootNodeID`, uniquely identifies a position in the generated native view
- * tree. Many layers of composite components (created with `React.createClass`)
- * can all share the same `rootNodeID`.
- *
- * `nodeHandle`: A sufficiently unambiguous way to refer to a lower level
- * resource (dom node, native view etc). The `rootNodeID` is sufficient for web
- * `nodeHandle`s, because the position in a tree is always enough to uniquely
- * identify a DOM node (we never have nodes in some bank outside of the
- * document). The same would be true for `ReactNative`, but we must maintain a
- * mapping  that we can send efficiently serializable
- * strings across native boundaries.
- *
- * Opaque name      TodaysWebReact   FutureWebWorkerReact   ReactNative
- * ----------------------------------------------------------------------------
- * nodeHandle       N/A              rootNodeID             tag
- *
- *
- * `mountImage`: A way to represent the potential to create lower level
- * resources whos `nodeHandle` can be discovered immediately by knowing the
- * `rootNodeID`. Today's web React represents this with `innerHTML` annotated
- * with DOM ids that match the `rootNodeID`.
- *
- * Opaque name      TodaysWebReact   FutureWebWorkerReact   ReactNative
- * ----------------------------------------------------------------------------
- * mountImage       innerHTML        innerHTML              {rootNodeID, tag}
- *
- */
-var ReactIOSComponentMixin = {
-  /**
-   * This has no particular meaning in ReactIOS. If this were in the DOM, this
-   * would return the DOM node. There should be nothing that invokes this
-   * method. Any current callers of this are mistaken - they should be invoking
-   * `getNodeHandle`.
-   */
-  getNativeNode: function() {
-    // TODO (balpert): Wrap iOS native components in a composite wrapper, then
-    // ReactInstanceMap.get here will always succeed
-    return ReactIOSTagHandles.rootNodeIDToTag[
-      (ReactInstanceMap.get(this) || this)._rootNodeID
-    ];
-  },
-
-  getNodeHandle: function() {
-    return ReactIOSTagHandles.rootNodeIDToTag[
-      (ReactInstanceMap.get(this) || this)._rootNodeID
-    ];
-  }
-};
-
-module.exports = ReactIOSComponentMixin;
-});
-__d('ReactIOSGlobalInteractionHandler',["InteractionManager"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
- * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ReactIOSGlobalInteractionHandler
+ * @providesModule ReactNativeGlobalInteractionHandler
  * @flow
  */
 'use strict';
@@ -14461,7 +14600,7 @@ var InteractionManager = require('InteractionManager');
 // released/terminated.
 var interactionHandle = null;
 
-var ReactIOSGlobalInteractionHandler = {
+var ReactNativeGlobalInteractionHandler = {
   onChange: function(numberActiveTouches        ) {
     if (numberActiveTouches === 0) {
       if (interactionHandle) {
@@ -14474,7 +14613,7 @@ var ReactIOSGlobalInteractionHandler = {
   }
 };
 
-module.exports = ReactIOSGlobalInteractionHandler;
+module.exports = ReactNativeGlobalInteractionHandler;
 });
 __d('InteractionManager',["ErrorUtils","EventEmitter","Set","invariant","keyMirror","setImmediate"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
@@ -15779,7 +15918,7 @@ function isCallableWithoutNew(Collection) {
 
 module.exports = shouldPolyfillES6Collection;
 });
-__d('ReactIOSGlobalResponderHandler',["NativeModules","ReactIOSTagHandles"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ReactNativeGlobalResponderHandler',["NativeModules","ReactNativeTagHandles"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -15787,19 +15926,19 @@ __d('ReactIOSGlobalResponderHandler',["NativeModules","ReactIOSTagHandles"],func
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule ReactIOSGlobalResponderHandler
+ * @providesModule ReactNativeGlobalResponderHandler
  * @flow
  */
 'use strict';
 
 var RCTUIManager = require('NativeModules').UIManager;
-var ReactIOSTagHandles = require('ReactIOSTagHandles');
+var ReactNativeTagHandles = require('ReactNativeTagHandles');
 
-var ReactIOSGlobalResponderHandler = {
+var ReactNativeGlobalResponderHandler = {
   onChange: function(from        , to        ) {
     if (to !== null) {
       RCTUIManager.setJSResponder(
-        ReactIOSTagHandles.mostRecentMountedNodeHandleForRootNodeID(to)
+        ReactNativeTagHandles.mostRecentMountedNodeHandleForRootNodeID(to)
       );
     } else {
       RCTUIManager.clearJSResponder();
@@ -15807,9 +15946,9 @@ var ReactIOSGlobalResponderHandler = {
   }
 };
 
-module.exports = ReactIOSGlobalResponderHandler;
+module.exports = ReactNativeGlobalResponderHandler;
 });
-__d('ReactIOSMount',["NativeModules","ReactIOSTagHandles","ReactPerf","ReactReconciler","ReactUpdateQueue","ReactUpdates","emptyObject","instantiateReactComponent","invariant","shouldUpdateReactComponent"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ReactNativeMount',["NativeModules","ReactNativeTagHandles","ReactPerf","ReactReconciler","ReactUpdateQueue","ReactUpdates","emptyObject","instantiateReactComponent","invariant","shouldUpdateReactComponent"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -15817,14 +15956,14 @@ __d('ReactIOSMount',["NativeModules","ReactIOSTagHandles","ReactPerf","ReactReco
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule ReactIOSMount
+ * @providesModule ReactNativeMount
  * @flow
  */
 'use strict';
 
 var RCTUIManager = require('NativeModules').UIManager;
 
-var ReactIOSTagHandles = require('ReactIOSTagHandles');
+var ReactNativeTagHandles = require('ReactNativeTagHandles');
 var ReactPerf = require('ReactPerf');
 var ReactReconciler = require('ReactReconciler');
 var ReactUpdateQueue = require('ReactUpdateQueue');
@@ -15856,7 +15995,7 @@ function mountComponentIntoNode(
     componentInstance, rootID, transaction, emptyObject
   );
   componentInstance._isTopLevel = true;
-  ReactIOSMount._mountImageIntoNode(markup, container);
+  ReactNativeMount._mountImageIntoNode(markup, container);
 }
 
 /**
@@ -15886,7 +16025,7 @@ function batchedMountComponentIntoNode(
  * As soon as `ReactMount` is refactored to not rely on the DOM, we can share
  * code between the two. For now, we'll hard code the ID logic.
  */
-var ReactIOSMount = {
+var ReactNativeMount = {
   instanceCount: 0,
 
   _instancesByContainerID: {},
@@ -15900,9 +16039,9 @@ var ReactIOSMount = {
     containerTag        ,
     callback                
   )                  {
-    var topRootNodeID = ReactIOSTagHandles.tagToRootNodeID[containerTag];
+    var topRootNodeID = ReactNativeTagHandles.tagToRootNodeID[containerTag];
     if (topRootNodeID) {
-      var prevComponent = ReactIOSMount._instancesByContainerID[topRootNodeID];
+      var prevComponent = ReactNativeMount._instancesByContainerID[topRootNodeID];
       if (prevComponent) {
         var prevElement = prevComponent._currentElement;
         if (shouldUpdateReactComponent(prevElement, nextElement)) {
@@ -15912,28 +16051,28 @@ var ReactIOSMount = {
           }
           return prevComponent;
         } else {
-          ReactIOSMount.unmountComponentAtNode(containerTag);
+          ReactNativeMount.unmountComponentAtNode(containerTag);
         }
       }
     }
 
-    if (!ReactIOSTagHandles.reactTagIsNativeTopRootID(containerTag)) {
+    if (!ReactNativeTagHandles.reactTagIsNativeTopRootID(containerTag)) {
       console.error('You cannot render into anything but a top root');
       return;
     }
 
-    var topRootNodeID = ReactIOSTagHandles.allocateRootNodeIDForTag(containerTag);
-    ReactIOSTagHandles.associateRootNodeIDWithMountedNodeHandle(
+    var topRootNodeID = ReactNativeTagHandles.allocateRootNodeIDForTag(containerTag);
+    ReactNativeTagHandles.associateRootNodeIDWithMountedNodeHandle(
       topRootNodeID,
       containerTag
     );
 
     var instance = instantiateReactComponent(nextElement);
-    ReactIOSMount._instancesByContainerID[topRootNodeID] = instance;
+    ReactNativeMount._instancesByContainerID[topRootNodeID] = instance;
 
     var childRootNodeID = instanceNumberToChildRootID(
       topRootNodeID,
-      ReactIOSMount.instanceCount++
+      ReactNativeMount.instanceCount++
     );
 
     // The initial render is synchronous but any updates that happen during
@@ -15964,14 +16103,14 @@ var ReactIOSMount = {
     function(mountImage, containerID) {
       // Since we now know that the `mountImage` has been mounted, we can
       // mark it as such.
-      ReactIOSTagHandles.associateRootNodeIDWithMountedNodeHandle(
+      ReactNativeTagHandles.associateRootNodeIDWithMountedNodeHandle(
         mountImage.rootNodeID,
         mountImage.tag
       );
       var addChildTags = [mountImage.tag];
       var addAtIndices = [0];
       RCTUIManager.manageChildren(
-        ReactIOSTagHandles.mostRecentMountedNodeHandleForRootNodeID(containerID),
+        ReactNativeTagHandles.mostRecentMountedNodeHandleForRootNodeID(containerID),
         null,         // moveFromIndices
         null,         // moveToIndices
         addChildTags,
@@ -15992,7 +16131,7 @@ var ReactIOSMount = {
   unmountComponentAtNodeAndRemoveContainer: function(
     containerTag        
   ) {
-    ReactIOSMount.unmountComponentAtNode(containerTag);
+    ReactNativeMount.unmountComponentAtNode(containerTag);
     // call back into native to remove all of the subviews from this container
     RCTUIManager.removeRootView(containerTag);
   },
@@ -16003,18 +16142,18 @@ var ReactIOSMount = {
    * component at this time.
    */
   unmountComponentAtNode: function(containerTag        )          {
-    if (!ReactIOSTagHandles.reactTagIsNativeTopRootID(containerTag)) {
+    if (!ReactNativeTagHandles.reactTagIsNativeTopRootID(containerTag)) {
       console.error('You cannot render into anything but a top root');
       return false;
     }
 
-    var containerID = ReactIOSTagHandles.tagToRootNodeID[containerTag];
-    var instance = ReactIOSMount._instancesByContainerID[containerID];
+    var containerID = ReactNativeTagHandles.tagToRootNodeID[containerTag];
+    var instance = ReactNativeMount._instancesByContainerID[containerID];
     if (!instance) {
       return false;
     }
-    ReactIOSMount.unmountComponentFromNode(instance, containerID);
-    delete ReactIOSMount._instancesByContainerID[containerID];
+    ReactNativeMount.unmountComponentFromNode(instance, containerID);
+    delete ReactNativeMount._instancesByContainerID[containerID];
     return true;
   },
 
@@ -16025,7 +16164,7 @@ var ReactIOSMount = {
    * @param {string} containerID ID of container we're removing from.
    * @final
    * @internal
-   * @see {ReactIOSMount.unmountComponentAtNode}
+   * @see {ReactNativeMount.unmountComponentAtNode}
    */
   unmountComponentFromNode: function(
     instance                ,
@@ -16034,7 +16173,7 @@ var ReactIOSMount = {
     // Call back into native to remove all of the subviews from this container
     ReactReconciler.unmountComponent(instance);
     var containerTag =
-      ReactIOSTagHandles.mostRecentMountedNodeHandleForRootNodeID(containerID);
+      ReactNativeTagHandles.mostRecentMountedNodeHandleForRootNodeID(containerID);
     RCTUIManager.removeSubviewsFromContainerWithID(containerTag);
   },
 
@@ -16043,13 +16182,13 @@ var ReactIOSMount = {
   }
 };
 
-ReactIOSMount.renderComponent = ReactPerf.measure(
+ReactNativeMount.renderComponent = ReactPerf.measure(
   'ReactMount',
   '_renderNewRootComponent',
-  ReactIOSMount.renderComponent
+  ReactNativeMount.renderComponent
 );
 
-module.exports = ReactIOSMount;
+module.exports = ReactNativeMount;
 });
 __d('instantiateReactComponent',["ReactCompositeComponent","ReactEmptyComponent","ReactNativeComponent","Object.assign","invariant","warning"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -17180,7 +17319,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 
 module.exports = shouldUpdateReactComponent;
 });
-__d('ReactIOSTextComponent',["ReactIOSTagHandles","NativeModules","Object.assign"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ReactNativeTextComponent',["ReactNativeTagHandles","NativeModules","Object.assign"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -17188,21 +17327,21 @@ __d('ReactIOSTextComponent',["ReactIOSTagHandles","NativeModules","Object.assign
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule ReactIOSTextComponent
+ * @providesModule ReactNativeTextComponent
  */
 
 'use strict';
 
-var ReactIOSTagHandles = require('ReactIOSTagHandles');
+var ReactNativeTagHandles = require('ReactNativeTagHandles');
 var RCTUIManager = require('NativeModules').UIManager;
 
 var assign = require('Object.assign');
 
-var ReactIOSTextComponent = function(props) {
+var ReactNativeTextComponent = function(props) {
   // This constructor and its argument is currently used by mocks.
 };
 
-assign(ReactIOSTextComponent.prototype, {
+assign(ReactNativeTextComponent.prototype, {
 
   construct: function(text) {
     // This is really a ReactText (ReactNode), not a ReactElement
@@ -17213,7 +17352,7 @@ assign(ReactIOSTextComponent.prototype, {
 
   mountComponent: function(rootID, transaction, context) {
     this._rootNodeID = rootID;
-    var tag = ReactIOSTagHandles.allocateTag();
+    var tag = ReactNativeTagHandles.allocateTag();
     RCTUIManager.createView(tag, 'RCTRawText', {text: this._stringText});
     return {
       rootNodeID: rootID,
@@ -17228,7 +17367,7 @@ assign(ReactIOSTextComponent.prototype, {
       if (nextStringText !== this._stringText) {
         this._stringText = nextStringText;
         RCTUIManager.updateView(
-          ReactIOSTagHandles.mostRecentMountedNodeHandleForRootNodeID(
+          ReactNativeTagHandles.mostRecentMountedNodeHandleForRootNodeID(
             this._rootNodeID
           ),
           'RCTRawText',
@@ -17246,7 +17385,7 @@ assign(ReactIOSTextComponent.prototype, {
 
 });
 
-module.exports = ReactIOSTextComponent;
+module.exports = ReactNativeTextComponent;
 });
 __d('ResponderEventPlugin',["EventConstants","EventPluginUtils","EventPropagators","NodeHandle","ReactInstanceHandles","ResponderSyntheticEvent","ResponderTouchHistoryStore","accumulate","invariant","keyOf"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright 2013-2014 Facebook, Inc.
@@ -18123,11 +18262,11 @@ function accumulate(current, next) {
 
 module.exports = accumulate;
 });
-__d('UniversalWorkerNodeHandle',["ReactIOSTagHandles","invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('UniversalWorkerNodeHandle',["ReactNativeTagHandles","invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * @providesModule UniversalWorkerNodeHandle
  */
 
-var ReactIOSTagHandles = require('ReactIOSTagHandles');
+var ReactNativeTagHandles = require('ReactNativeTagHandles');
 
 var invariant = require('invariant');
 
@@ -18137,13 +18276,13 @@ var UniversalWorkerNodeHandle = {
       nodeHandle !== undefined && nodeHandle !== null && nodeHandle !== 0,
       'No node handle defined'
     );
-    return ReactIOSTagHandles.tagToRootNodeID[nodeHandle];
+    return ReactNativeTagHandles.tagToRootNodeID[nodeHandle];
   }
 };
 
 module.exports = UniversalWorkerNodeHandle;
 });
-__d('createReactIOSNativeComponentClass',["ReactElement","ReactIOSNativeComponent"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('createReactNativeComponentClass',["ReactElement","ReactNativeBaseComponent"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -18151,17 +18290,17 @@ __d('createReactIOSNativeComponentClass',["ReactElement","ReactIOSNativeComponen
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule createReactIOSNativeComponentClass
+ * @providesModule createReactNativeComponentClass
  * @flow
  */
 
 "use strict";
 
 var ReactElement = require('ReactElement');
-var ReactIOSNativeComponent = require('ReactIOSNativeComponent');
+var ReactNativeBaseComponent = require('ReactNativeBaseComponent');
 
-// See also ReactIOSNativeComponent
-                                          
+// See also ReactNativeBaseComponent
+                                           
                           
                           
  
@@ -18170,8 +18309,8 @@ var ReactIOSNativeComponent = require('ReactIOSNativeComponent');
  * @param {string} config iOS View configuration.
  * @private
  */
-var createReactIOSNativeComponentClass = function(
-  viewConfig                                   
+var createReactNativeComponentClass = function(
+  viewConfig                                    
 )           { // returning Function is lossy :/
   var Constructor = function(element) {
     this._currentElement = element;
@@ -18181,14 +18320,14 @@ var createReactIOSNativeComponentClass = function(
     this.previousFlattenedStyle = null;
   };
   Constructor.displayName = viewConfig.uiViewClassName;
-  Constructor.prototype = new ReactIOSNativeComponent(viewConfig);
+  Constructor.prototype = new ReactNativeBaseComponent(viewConfig);
 
   return Constructor;
 };
 
-module.exports = createReactIOSNativeComponentClass;
+module.exports = createReactNativeComponentClass;
 });
-__d('ReactIOSNativeComponent',["NativeMethodsMixin","ReactIOSComponentMixin","ReactIOSEventEmitter","ReactIOSStyleAttributes","ReactIOSTagHandles","ReactMultiChild","NativeModules","styleDiffer","deepFreezeAndThrowOnMutationInDev","diffRawProperties","flattenStyle","precomputeStyle","warning"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ReactNativeBaseComponent',["NativeMethodsMixin","ReactNativeEventEmitter","ReactNativeStyleAttributes","ReactNativeTagHandles","ReactMultiChild","NativeModules","styleDiffer","deepFreezeAndThrowOnMutationInDev","diffRawProperties","flattenStyle","precomputeStyle","warning"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -18196,16 +18335,15 @@ __d('ReactIOSNativeComponent',["NativeMethodsMixin","ReactIOSComponentMixin","Re
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule ReactIOSNativeComponent
+ * @providesModule ReactNativeBaseComponent
  * @flow
  */
 'use strict';
 
 var NativeMethodsMixin = require('NativeMethodsMixin');
-var ReactIOSComponentMixin = require('ReactIOSComponentMixin');
-var ReactIOSEventEmitter = require('ReactIOSEventEmitter');
-var ReactIOSStyleAttributes = require('ReactIOSStyleAttributes');
-var ReactIOSTagHandles = require('ReactIOSTagHandles');
+var ReactNativeEventEmitter = require('ReactNativeEventEmitter');
+var ReactNativeStyleAttributes = require('ReactNativeStyleAttributes');
+var ReactNativeTagHandles = require('ReactNativeTagHandles');
 var ReactMultiChild = require('ReactMultiChild');
 var RCTUIManager = require('NativeModules').UIManager;
 
@@ -18216,23 +18354,23 @@ var flattenStyle = require('flattenStyle');
 var precomputeStyle = require('precomputeStyle');
 var warning = require('warning');
 
-var registrationNames = ReactIOSEventEmitter.registrationNames;
-var putListener = ReactIOSEventEmitter.putListener;
-var deleteAllListeners = ReactIOSEventEmitter.deleteAllListeners;
+var registrationNames = ReactNativeEventEmitter.registrationNames;
+var putListener = ReactNativeEventEmitter.putListener;
+var deleteAllListeners = ReactNativeEventEmitter.deleteAllListeners;
 
-                                          
+                                           
                           
                           
  
 
 /**
- * @constructor ReactIOSNativeComponent
+ * @constructor ReactNativeBaseComponent
  * @extends ReactComponent
  * @extends ReactMultiChild
  * @param {!object} UIKit View Configuration.
  */
-var ReactIOSNativeComponent = function(
-  viewConfig                                   
+var ReactNativeBaseComponent = function(
+  viewConfig                                    
 ) {
   this.viewConfig = viewConfig;
 };
@@ -18265,7 +18403,7 @@ cachedIndexArray._cache = {};
  * Mixin for containers that contain UIViews. NOTE: markup is rendered markup
  * which is a `viewID` ... see the return value for `mountComponent` !
  */
-ReactIOSNativeComponent.Mixin = {
+ReactNativeBaseComponent.Mixin = {
   getPublicInstance: function() {
     // TODO: This should probably use a composite wrapper
     return this;
@@ -18287,7 +18425,7 @@ ReactIOSNativeComponent.Mixin = {
    * recording the fact that its own `rootNodeID` is associated with a
    * `nodeHandle`. Only the code that actually adds its `nodeHandle` (`tag`) as
    * a child of a container can confidently record that in
-   * `ReactIOSTagHandles`.
+   * `ReactNativeTagHandles`.
    */
   initializeChildren: function(children, containerTag, transaction, context) {
     var mountImages = this.mountChildren(children, transaction, context);
@@ -18307,7 +18445,7 @@ ReactIOSNativeComponent.Mixin = {
           mountImage && mountImage.rootNodeID && mountImage.tag,
           'Mount image returned does not have required data'
         );
-        ReactIOSTagHandles.associateRootNodeIDWithMountedNodeHandle(
+        ReactNativeTagHandles.associateRootNodeIDWithMountedNodeHandle(
           childID,
           childTag
         );
@@ -18356,7 +18494,7 @@ ReactIOSNativeComponent.Mixin = {
         updatePayload,
         this.previousFlattenedStyle,
         nextFlattenedStyle,
-        ReactIOSStyleAttributes
+        ReactNativeStyleAttributes
       );
       this.previousFlattenedStyle = nextFlattenedStyle;
     }
@@ -18385,7 +18523,7 @@ ReactIOSNativeComponent.Mixin = {
 
     if (updatePayload) {
       RCTUIManager.updateView(
-        ReactIOSTagHandles.mostRecentMountedNodeHandleForRootNodeID(this._rootNodeID),
+        ReactNativeTagHandles.mostRecentMountedNodeHandleForRootNodeID(this._rootNodeID),
         this.viewConfig.uiViewClassName,
         updatePayload
       );
@@ -18433,7 +18571,7 @@ ReactIOSNativeComponent.Mixin = {
   mountComponent: function(rootID, transaction, context) {
     this._rootNodeID = rootID;
 
-    var tag = ReactIOSTagHandles.allocateTag();
+    var tag = ReactNativeTagHandles.allocateTag();
 
     this.previousFlattenedStyle = {};
     var updatePayload = this.computeUpdatedProperties(
@@ -18458,20 +18596,19 @@ ReactIOSNativeComponent.Mixin = {
 };
 
 /**
- * Order of mixins is important. ReactIOSNativeComponent overrides methods in
+ * Order of mixins is important. ReactNativeBaseComponent overrides methods in
  * ReactMultiChild.
  */
 Object.assign(
-  ReactIOSNativeComponent.prototype,
+  ReactNativeBaseComponent.prototype,
   ReactMultiChild.Mixin,
-  ReactIOSNativeComponent.Mixin,
-  NativeMethodsMixin,
-  ReactIOSComponentMixin
+  ReactNativeBaseComponent.Mixin,
+  NativeMethodsMixin
 );
 
-module.exports = ReactIOSNativeComponent;
+module.exports = ReactNativeBaseComponent;
 });
-__d('NativeMethodsMixin',["NativeModules","TextInputState","flattenStyle","invariant","mergeFast","precomputeStyle"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('NativeMethodsMixin',["NativeModules","TextInputState","findNodeHandle","flattenStyle","invariant","mergeFast","precomputeStyle"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -18489,6 +18626,7 @@ var RCTPOPAnimationManager = NativeModules.POPAnimationManager;
 var RCTUIManager = NativeModules.UIManager;
 var TextInputState = require('TextInputState');
 
+var findNodeHandle = require('findNodeHandle');
 var flattenStyle = require('flattenStyle');
 var invariant = require('invariant');
 var mergeFast = require('mergeFast');
@@ -18524,16 +18662,23 @@ var animationIDInvariant = function(
 var NativeMethodsMixin = {
   addAnimation: function(anim        , callback                           ) {
     animationIDInvariant('addAnimation', anim);
-    RCTPOPAnimationManager.addAnimation(this.getNodeHandle(), anim, callback);
+    RCTPOPAnimationManager.addAnimation(
+      findNodeHandle(this),
+      anim,
+      mountSafeCallback(this, callback)
+    );
   },
 
   removeAnimation: function(anim        ) {
     animationIDInvariant('removeAnimation', anim);
-    RCTPOPAnimationManager.removeAnimation(this.getNodeHandle(), anim);
+    RCTPOPAnimationManager.removeAnimation(findNodeHandle(this), anim);
   },
 
   measure: function(callback                          ) {
-    RCTUIManager.measure(this.getNodeHandle(), callback);
+    RCTUIManager.measure(
+      findNodeHandle(this),
+      mountSafeCallback(this, callback)
+    );
   },
 
   measureLayout: function(
@@ -18542,10 +18687,10 @@ var NativeMethodsMixin = {
     onFail             /* currently unused */
   ) {
     RCTUIManager.measureLayout(
-      this.getNodeHandle(),
+      findNodeHandle(this),
       relativeToNativeNode,
-      onFail,
-      onSuccess
+      mountSafeCallback(this, onFail),
+      mountSafeCallback(this, onSuccess)
     );
   },
 
@@ -18579,18 +18724,18 @@ var NativeMethodsMixin = {
     }
 
     RCTUIManager.updateView(
-      this.getNodeHandle(),
+      findNodeHandle(this),
       this.viewConfig.uiViewClassName,
       props
     );
   },
 
   focus: function() {
-    TextInputState.focusTextInput(this.getNodeHandle());
+    TextInputState.focusTextInput(findNodeHandle(this));
   },
 
   blur: function() {
-    TextInputState.blurTextInput(this.getNodeHandle());
+    TextInputState.blurTextInput(findNodeHandle(this));
   }
 };
 
@@ -18624,6 +18769,19 @@ if (__DEV__) {
     throwOnStylesProp(this, newProps);
   };
 }
+
+/**
+ * In the future, we should cleanup callbacks by cancelling them instead of
+ * using this.
+ */
+var mountSafeCallback = function(context                , callback           )      {
+  return function() {
+    if (!callback || (context.isMounted && !context.isMounted())) {
+      return;
+    }
+    return callback.apply(context, arguments);
+  };
+};
 
 module.exports = NativeMethodsMixin;
 });
@@ -18661,11 +18819,11 @@ var TextInputState = {
   },
 
   /**
-   * @param {string} TextInputID id of the text field to focus
+   * @param {number} TextInputID id of the text field to focus
    * Focuses the specified text field
    * noop if the text field was already focused
    */
-  focusTextInput: function(textFieldID        ) {
+  focusTextInput: function(textFieldID         ) {
     if (this._currentlyFocusedID !== textFieldID && textFieldID !== null) {
       this._currentlyFocusedID = textFieldID;
       RCTUIManager.focus(textFieldID);
@@ -18673,11 +18831,11 @@ var TextInputState = {
   },
 
   /**
-   * @param {string} textFieldID id of the text field to focus
+   * @param {number} textFieldID id of the text field to focus
    * Unfocuses the specified text field
    * noop if it wasn't focused
    */
-  blurTextInput: function(textFieldID        ) {
+  blurTextInput: function(textFieldID         ) {
     if (this._currentlyFocusedID === textFieldID && textFieldID !== null) {
       this._currentlyFocusedID = null;
       RCTUIManager.blur(textFieldID);
@@ -18686,6 +18844,119 @@ var TextInputState = {
 };
 
 module.exports = TextInputState;
+});
+__d('findNodeHandle',["ReactCurrentOwner","ReactInstanceMap","ReactNativeTagHandles","invariant","warning"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule findNodeHandle
+ * @flow
+ */
+
+'use strict';
+
+var ReactCurrentOwner = require('ReactCurrentOwner');
+var ReactInstanceMap = require('ReactInstanceMap');
+var ReactNativeTagHandles = require('ReactNativeTagHandles');
+
+var invariant = require('invariant');
+var warning = require('warning');
+
+/**
+ * ReactNative vs ReactWeb
+ * -----------------------
+ * React treats some pieces of data opaquely. This means that the information
+ * is first class (it can be passed around), but cannot be inspected. This
+ * allows us to build infrastructure that reasons about resources, without
+ * making assumptions about the nature of those resources, and this allows that
+ * infra to be shared across multiple platforms, where the resources are very
+ * different. General infra (such as `ReactMultiChild`) reasons opaquely about
+ * the data, but platform specific code (such as `ReactNativeBaseComponent`) can
+ * make assumptions about the data.
+ *
+ *
+ * `rootNodeID`, uniquely identifies a position in the generated native view
+ * tree. Many layers of composite components (created with `React.createClass`)
+ * can all share the same `rootNodeID`.
+ *
+ * `nodeHandle`: A sufficiently unambiguous way to refer to a lower level
+ * resource (dom node, native view etc). The `rootNodeID` is sufficient for web
+ * `nodeHandle`s, because the position in a tree is always enough to uniquely
+ * identify a DOM node (we never have nodes in some bank outside of the
+ * document). The same would be true for `ReactNative`, but we must maintain a
+ * mapping that we can send efficiently serializable
+ * strings across native boundaries.
+ *
+ * Opaque name      TodaysWebReact   FutureWebWorkerReact   ReactNative
+ * ----------------------------------------------------------------------------
+ * nodeHandle       N/A              rootNodeID             tag
+ */
+
+function findNodeHandle(componentOrHandle     )          {
+  if (__DEV__) {
+    var owner = ReactCurrentOwner.current;
+    if (owner !== null) {
+      warning(
+        owner._warnedAboutRefsInRender,
+        '%s is accessing findNodeHandle inside its render(). ' +
+        'render() should be a pure function of props and state. It should ' +
+        'never access something that requires stale data from the previous ' +
+        'render, such as refs. Move this logic to componentDidMount and ' +
+        'componentDidUpdate instead.',
+        owner.getName() || 'A component'
+      );
+      owner._warnedAboutRefsInRender = true;
+    }
+  }
+  if (componentOrHandle == null) {
+    return null;
+  }
+  if (typeof componentOrHandle === 'number') {
+    // Already a node handle
+    return componentOrHandle;
+  }
+
+  var component = componentOrHandle;
+
+  // TODO (balpert): Wrap iOS native components in a composite wrapper, then
+  // ReactInstanceMap.get here will always succeed for mounted components
+  var internalInstance = ReactInstanceMap.get(component);
+  if (internalInstance) {
+    return ReactNativeTagHandles.rootNodeIDToTag[internalInstance._rootNodeID];
+  } else {
+    var rootNodeID = component._rootNodeID;
+    if (rootNodeID) {
+      return ReactNativeTagHandles.rootNodeIDToTag[rootNodeID];
+    } else {
+      invariant(
+        (
+          // Native
+          typeof component === 'object' &&
+          '_rootNodeID' in component
+        ) || (
+          // Composite
+          component.render != null &&
+          typeof component.render === 'function'
+        ),
+        'findNodeHandle(...): Argument is not a component ' +
+        '(type: %s, keys: %s)',
+        typeof component,
+        Object.keys(component)
+      );
+      invariant(
+        false,
+        'findNodeHandle(...): Unable to find node handle for unmounted ' +
+        'component.'
+      );
+    }
+  }
+}
+
+module.exports = findNodeHandle;
 });
 __d('flattenStyle',["StyleSheetRegistry","invariant","mergeIntoFast"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
@@ -18847,7 +19118,7 @@ var mergeFast = function(one        , two        )         {
 
 module.exports = mergeFast;
 });
-__d('precomputeStyle',["MatrixMath","deepFreezeAndThrowOnMutationInDev","invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('precomputeStyle',["MatrixMath","Platform","deepFreezeAndThrowOnMutationInDev","invariant","stringifySafe"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -18861,8 +19132,11 @@ __d('precomputeStyle',["MatrixMath","deepFreezeAndThrowOnMutationInDev","invaria
 'use strict';
 
 var MatrixMath = require('MatrixMath');
+var Platform = require('Platform');
+
 var deepFreezeAndThrowOnMutationInDev = require('deepFreezeAndThrowOnMutationInDev');
 var invariant = require('invariant');
+var stringifySafe = require('stringifySafe');
 
 /**
  * This method provides a hook where flattened styles may be precomputed or
@@ -18885,8 +19159,9 @@ function precomputeStyle(style         )          {
  * Generate a transform matrix based on the provided transforms, and use that
  * within the style object instead.
  *
- * This allows us to provide an API that is similar to CSS and to have a
- * universal, singular interface to native code.
+ * This allows us to provide an API that is similar to CSS, where transforms may
+ * be applied in an arbitrary order, and yet have a universal, singular
+ * interface to native code.
  */
 function _precomputeTransforms(style        )         {
   var $__0=  style,transform=$__0.transform;
@@ -18929,6 +19204,17 @@ function _precomputeTransforms(style        )         {
     }
   });
 
+  // Android does not support the direct application of a transform matrix to
+  // a view, so we need to decompose the result matrix into transforms that can
+  // get applied in the specific order of (1) translate (2) scale (3) rotate.
+  // Once we can directly apply a matrix, we can remove this decomposition.
+  if (Platform.OS === 'android') {
+    return Object.assign({},
+      style,
+      {transformMatrix: result,
+      decomposedMatrix: MatrixMath.decomposeMatrix(result)
+    });
+  }
   return Object.assign({},
     style,
     {transformMatrix: result
@@ -18959,6 +19245,13 @@ function _convertToRadians(value        )         {
 }
 
 function _validateTransform(key, value, transformation) {
+  invariant(
+    !value.getValue,
+    'You passed an animated value or spring to a normal component. ' +
+    'You need to wrap that component in an Animated. For example, ' +
+    'replace <View /> by <Animated.View />.'
+  );
+
   var multivalueTransforms = [
     'matrix',
     'translate',
@@ -18968,7 +19261,7 @@ function _validateTransform(key, value, transformation) {
       Array.isArray(value),
       'Transform with key of %s must have an array as the value: %s',
       key,
-      JSON.stringify(transformation)
+      stringifySafe(transformation)
     );
   }
   switch (key) {
@@ -18978,7 +19271,7 @@ function _validateTransform(key, value, transformation) {
         'Matrix transform must have a length of 9 (2d) or 16 (3d). ' +
           'Provided matrix has a length of %s: %s',
         value.length,
-        JSON.stringify(transformation)
+        stringifySafe(transformation)
       );
       break;
     case 'translate':
@@ -18988,13 +19281,13 @@ function _validateTransform(key, value, transformation) {
         typeof value === 'string',
         'Transform with key of "%s" must be a string: %s',
         key,
-        JSON.stringify(transformation)
+        stringifySafe(transformation)
       );
       invariant(
         value.indexOf('deg') > -1 || value.indexOf('rad') > -1,
         'Rotate transform must be expressed in degrees (deg) or radians ' +
           '(rad): %s',
-        JSON.stringify(transformation)
+        stringifySafe(transformation)
       );
       break;
     default:
@@ -19002,19 +19295,21 @@ function _validateTransform(key, value, transformation) {
         typeof value === 'number',
         'Transform with key of "%s" must be a number: %s',
         key,
-        JSON.stringify(transformation)
+        stringifySafe(transformation)
       );
   }
 }
 
 module.exports = precomputeStyle;
 });
-__d('MatrixMath',[],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('MatrixMath',["invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright 2004-present Facebook. All Rights Reserved.
  *
  * @providesModule MatrixMath
  */
 'use strict';
+
+var invariant = require('invariant');
 
 /**
  * Memory conservative (mutative) matrix math utilities. Uses "command"
@@ -19085,17 +19380,18 @@ var MatrixMath = {
     matrixCommand[10] = factor;
   },
 
-  reuseRotateYCommand: function(matrixCommand, amount) {
-    matrixCommand[0] = Math.cos(amount);
-    matrixCommand[2] = Math.sin(amount);
-    matrixCommand[8] = Math.sin(-amount);
-    matrixCommand[10] = Math.cos(amount);
+  reuseRotateXCommand: function(matrixCommand, radians) {
+    matrixCommand[5] = Math.cos(radians);
+    matrixCommand[6] = Math.sin(radians);
+    matrixCommand[9] = -Math.sin(radians);
+    matrixCommand[10] = Math.cos(radians);
   },
 
-  createRotateZ: function(radians) {
-    var mat = MatrixMath.createIdentityMatrix();
-    MatrixMath.reuseRotateZCommand(mat, radians);
-    return mat;
+  reuseRotateYCommand: function(matrixCommand, amount) {
+    matrixCommand[0] = Math.cos(amount);
+    matrixCommand[2] = -Math.sin(amount);
+    matrixCommand[8] = Math.sin(amount);
+    matrixCommand[10] = Math.cos(amount);
   },
 
   // http://www.w3.org/TR/css3-transforms/#recomposing-to-a-2d-matrix
@@ -19104,6 +19400,12 @@ var MatrixMath = {
     matrixCommand[1] = Math.sin(radians);
     matrixCommand[4] = -Math.sin(radians);
     matrixCommand[5] = Math.cos(radians);
+  },
+
+  createRotateZ: function(radians) {
+    var mat = MatrixMath.createIdentityMatrix();
+    MatrixMath.reuseRotateZCommand(mat, radians);
+    return mat;
   },
 
   multiplyInto: function(out, a, b) {
@@ -19135,7 +19437,398 @@ var MatrixMath = {
     out[13] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
     out[14] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
     out[15] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
-  }
+  },
+
+  determinant:function(matrix               )         {
+    var $__0=
+         
+         
+         
+         
+      matrix,m00=$__0[0],m01=$__0[1],m02=$__0[2],m03=$__0[3],m10=$__0[4],m11=$__0[5],m12=$__0[6],m13=$__0[7],m20=$__0[8],m21=$__0[9],m22=$__0[10],m23=$__0[11],m30=$__0[12],m31=$__0[13],m32=$__0[14],m33=$__0[15];
+    return (
+      m03 * m12 * m21 * m30 - m02 * m13 * m21 * m30 -
+      m03 * m11 * m22 * m30 + m01 * m13 * m22 * m30 +
+      m02 * m11 * m23 * m30 - m01 * m12 * m23 * m30 -
+      m03 * m12 * m20 * m31 + m02 * m13 * m20 * m31 +
+      m03 * m10 * m22 * m31 - m00 * m13 * m22 * m31 -
+      m02 * m10 * m23 * m31 + m00 * m12 * m23 * m31 +
+      m03 * m11 * m20 * m32 - m01 * m13 * m20 * m32 -
+      m03 * m10 * m21 * m32 + m00 * m13 * m21 * m32 +
+      m01 * m10 * m23 * m32 - m00 * m11 * m23 * m32 -
+      m02 * m11 * m20 * m33 + m01 * m12 * m20 * m33 +
+      m02 * m10 * m21 * m33 - m00 * m12 * m21 * m33 -
+      m01 * m10 * m22 * m33 + m00 * m11 * m22 * m33
+    );
+  },
+
+  /**
+   * Inverse of a matrix. Multiplying by the inverse is used in matrix math
+   * instead of division.
+   *
+   * Formula from:
+   * http://www.euclideanspace.com/maths/algebra/matrix/functions/inverse/fourD/index.htm
+   */
+  inverse:function(matrix               )                {
+    var det = MatrixMath.determinant(matrix);
+    if (!det) {
+      return matrix;
+    }
+    var $__0=
+         
+         
+         
+         
+      matrix,m00=$__0[0],m01=$__0[1],m02=$__0[2],m03=$__0[3],m10=$__0[4],m11=$__0[5],m12=$__0[6],m13=$__0[7],m20=$__0[8],m21=$__0[9],m22=$__0[10],m23=$__0[11],m30=$__0[12],m31=$__0[13],m32=$__0[14],m33=$__0[15];
+    return [
+      (m12*m23*m31 - m13*m22*m31 + m13*m21*m32 - m11*m23*m32 - m12*m21*m33 + m11*m22*m33) / det,
+      (m03*m22*m31 - m02*m23*m31 - m03*m21*m32 + m01*m23*m32 + m02*m21*m33 - m01*m22*m33) / det,
+      (m02*m13*m31 - m03*m12*m31 + m03*m11*m32 - m01*m13*m32 - m02*m11*m33 + m01*m12*m33) / det,
+      (m03*m12*m21 - m02*m13*m21 - m03*m11*m22 + m01*m13*m22 + m02*m11*m23 - m01*m12*m23) / det,
+      (m13*m22*m30 - m12*m23*m30 - m13*m20*m32 + m10*m23*m32 + m12*m20*m33 - m10*m22*m33) / det,
+      (m02*m23*m30 - m03*m22*m30 + m03*m20*m32 - m00*m23*m32 - m02*m20*m33 + m00*m22*m33) / det,
+      (m03*m12*m30 - m02*m13*m30 - m03*m10*m32 + m00*m13*m32 + m02*m10*m33 - m00*m12*m33) / det,
+      (m02*m13*m20 - m03*m12*m20 + m03*m10*m22 - m00*m13*m22 - m02*m10*m23 + m00*m12*m23) / det,
+      (m11*m23*m30 - m13*m21*m30 + m13*m20*m31 - m10*m23*m31 - m11*m20*m33 + m10*m21*m33) / det,
+      (m03*m21*m30 - m01*m23*m30 - m03*m20*m31 + m00*m23*m31 + m01*m20*m33 - m00*m21*m33) / det,
+      (m01*m13*m30 - m03*m11*m30 + m03*m10*m31 - m00*m13*m31 - m01*m10*m33 + m00*m11*m33) / det,
+      (m03*m11*m20 - m01*m13*m20 - m03*m10*m21 + m00*m13*m21 + m01*m10*m23 - m00*m11*m23) / det,
+      (m12*m21*m30 - m11*m22*m30 - m12*m20*m31 + m10*m22*m31 + m11*m20*m32 - m10*m21*m32) / det,
+      (m01*m22*m30 - m02*m21*m30 + m02*m20*m31 - m00*m22*m31 - m01*m20*m32 + m00*m21*m32) / det,
+      (m02*m11*m30 - m01*m12*m30 - m02*m10*m31 + m00*m12*m31 + m01*m10*m32 - m00*m11*m32) / det,
+      (m01*m12*m20 - m02*m11*m20 + m02*m10*m21 - m00*m12*m21 - m01*m10*m22 + m00*m11*m22) / det
+    ];
+  },
+
+  /**
+   * Turns columns into rows and rows into columns.
+   */
+   transpose:function(m               )                {
+    return [
+      m[0], m[4], m[8],  m[12],
+      m[1], m[5], m[9],  m[13],
+      m[2], m[6], m[10], m[14],
+      m[3], m[7], m[11], m[15]
+    ];
+  },
+
+  /**
+   * Based on: http://tog.acm.org/resources/GraphicsGems/gemsii/unmatrix.c
+   */
+  multiplyVectorByMatrix:function(
+    v               ,
+    m               
+  )                {
+    var $__0=     v,vx=$__0[0],vy=$__0[1],vz=$__0[2],vw=$__0[3];
+    return [
+      vx * m[0] + vy * m[4] + vz * m[8]  + vw * m[12],
+      vx * m[1] + vy * m[5] + vz * m[9]  + vw * m[13],
+      vx * m[2] + vy * m[6] + vz * m[10] + vw * m[14],
+      vx * m[3] + vy * m[7] + vz * m[11] + vw * m[15]
+    ];
+  },
+
+  /**
+   * From: https://code.google.com/p/webgl-mjs/source/browse/mjs.js
+   */
+  v3Length:function(a               )         {
+    return Math.sqrt(a[0]*a[0] + a[1]*a[1] + a[2]*a[2]);
+  },
+
+  /**
+   * Based on: https://code.google.com/p/webgl-mjs/source/browse/mjs.js
+   */
+   v3Normalize:function(
+     vector               ,
+     v3Length        
+    )                {
+    var im = 1 / (v3Length || MatrixMath.v3Length(vector));
+    return [
+      vector[0] * im,
+      vector[1] * im,
+      vector[2] * im
+    ];
+  },
+
+  /**
+   * The dot product of a and b, two 3-element vectors.
+   * From: https://code.google.com/p/webgl-mjs/source/browse/mjs.js
+   */
+  v3Dot:function(a, b) {
+    return a[0] * b[0] +
+           a[1] * b[1] +
+           a[2] * b[2];
+  },
+
+  /**
+   * From:
+   * http://www.opensource.apple.com/source/WebCore/WebCore-514/platform/graphics/transforms/TransformationMatrix.cpp
+   */
+  v3Combine:function(
+    a               ,
+    b               ,
+    aScale        ,
+    bScale        
+  )                {
+    return [
+      aScale * a[0] + bScale * b[0],
+      aScale * a[1] + bScale * b[1],
+      aScale * a[2] + bScale * b[2]
+    ];
+  },
+
+  /**
+   * From:
+   * http://www.opensource.apple.com/source/WebCore/WebCore-514/platform/graphics/transforms/TransformationMatrix.cpp
+   */
+  v3Cross:function(a               , b               )                {
+    return [
+      a[1] * b[2] - a[2] * b[1],
+      a[2] * b[0] - a[0] * b[2],
+      a[0] * b[1] - a[1] * b[0]
+    ];
+  },
+
+  /**
+   * Based on:
+   * http://www.euclideanspace.com/maths/geometry/rotations/conversions/quaternionToEuler/
+   * and:
+   * http://quat.zachbennett.com/
+   *
+   * Note that this rounds degrees to the thousandth of a degree, due to
+   * floating point errors in the creation of the quaternion.
+   *
+   * Also note that this expects the qw value to be last, not first.
+   *
+   * Also, when researching this, remember that:
+   * yaw   === heading            === z-axis
+   * pitch === elevation/attitude === y-axis
+   * roll  === bank               === x-axis
+   */
+  quaternionToDegreesXYZ:function(q               , matrix, row)                {
+    var $__0=     q,qx=$__0[0],qy=$__0[1],qz=$__0[2],qw=$__0[3];
+    var qw2 = qw * qw;
+    var qx2 = qx * qx;
+    var qy2 = qy * qy;
+    var qz2 = qz * qz;
+    var test = qx * qy + qz * qw;
+    var unit = qw2 + qx2 + qy2 + qz2;
+    var conv = 180 / Math.PI;
+
+    if (test > 0.49999 * unit) {
+      return [0, 2 * Math.atan2(qx, qw) * conv, 90];
+    }
+    if (test < -0.49999 * unit) {
+      return [0, -2 * Math.atan2(qx, qw) * conv, -90];
+    }
+
+    return [
+      MatrixMath.roundTo3Places(
+        Math.atan2(2*qx*qw-2*qy*qz,1-2*qx2-2*qz2) * conv
+      ),
+      MatrixMath.roundTo3Places(
+        Math.atan2(2*qy*qw-2*qx*qz,1-2*qy2-2*qz2) * conv
+      ),
+      MatrixMath.roundTo3Places(
+        Math.asin(2*qx*qy+2*qz*qw) * conv
+      )
+    ];
+  },
+
+  /**
+   * Based on:
+   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round
+   */
+  roundTo3Places:function(n        )         {
+    var arr = n.toString().split('e');
+    return Math.round(arr[0] + 'e' + (arr[1] ? (+arr[1] - 3) : 3)) * 0.001;
+  },
+
+  /**
+   * Decompose a matrix into separate transform values, for use on platforms
+   * where applying a precomposed matrix is not possible, and transforms are
+   * applied in an inflexible ordering (e.g. Android).
+   *
+   * Implementation based on
+   * http://www.w3.org/TR/css3-transforms/#decomposing-a-2d-matrix
+   * http://www.w3.org/TR/css3-transforms/#decomposing-a-3d-matrix
+   * which was based on
+   * http://tog.acm.org/resources/GraphicsGems/gemsii/unmatrix.c
+   */
+  decomposeMatrix:function(transformMatrix               )          {
+
+    invariant(
+      transformMatrix.length === 16,
+      'Matrix decomposition needs a list of 3d matrix values, received %s',
+      transformMatrix
+    );
+
+    // output values
+    var perspective = [];
+    var quaternion = [];
+    var scale = [];
+    var skew = [];
+    var translation = [];
+
+    // create normalized, 2d array matrix
+    // and normalized 1d array perspectiveMatrix with redefined 4th column
+    if (!transformMatrix[15]) {
+      return;
+    }
+    var matrix = [];
+    var perspectiveMatrix = [];
+    for (var i = 0; i < 4; i++) {
+      matrix.push([]);
+      for (var j = 0; j < 4; j++) {
+        var value = transformMatrix[(i * 4) + j] / transformMatrix[15];
+        matrix[i].push(value);
+        perspectiveMatrix.push(j === 3 ? 0 : value);
+      }
+    }
+    perspectiveMatrix[15] = 1;
+
+    // test for singularity of upper 3x3 part of the perspective matrix
+    if (!MatrixMath.determinant(perspectiveMatrix)) {
+      return;
+    }
+
+    // isolate perspective
+    if (matrix[0][3] !== 0 || matrix[1][3] !== 0 || matrix[2][3] !== 0) {
+      // rightHandSide is the right hand side of the equation.
+      // rightHandSide is a vector, or point in 3d space relative to the origin.
+      var rightHandSide = [
+        matrix[0][3],
+        matrix[1][3],
+        matrix[2][3],
+        matrix[3][3]
+      ];
+
+      // Solve the equation by inverting perspectiveMatrix and multiplying
+      // rightHandSide by the inverse.
+      var inversePerspectiveMatrix = MatrixMath.inverse3x3(
+        perspectiveMatrix
+      );
+      var transposedInversePerspectiveMatrix = MatrixMath.transpose4x4(
+        inversePerspectiveMatrix
+      );
+      var perspective = MatrixMath.multiplyVectorByMatrix(
+        rightHandSide,
+        transposedInversePerspectiveMatrix
+      );
+    } else {
+      // no perspective
+      perspective[0] = perspective[1] = perspective[2] = 0;
+      perspective[3] = 1;
+    }
+
+    // translation is simple
+    for (var i = 0; i < 3; i++) {
+      translation[i] = matrix[3][i];
+    }
+
+    // Now get scale and shear.
+    // 'row' is a 3 element array of 3 component vectors
+    var row = [];
+    for (i = 0; i < 3; i++) {
+      row[i] = [
+        matrix[i][0],
+        matrix[i][1],
+        matrix[i][2]
+      ];
+    }
+
+    // Compute X scale factor and normalize first row.
+    scale[0] = MatrixMath.v3Length(row[0]);
+    row[0] = MatrixMath.v3Normalize(row[0], scale[0]);
+
+    // Compute XY shear factor and make 2nd row orthogonal to 1st.
+    skew[0] = MatrixMath.v3Dot(row[0], row[1]);
+    row[1] = MatrixMath.v3Combine(row[1], row[0], 1.0, -skew[0]);
+
+    // Compute XY shear factor and make 2nd row orthogonal to 1st.
+    skew[0] = MatrixMath.v3Dot(row[0], row[1]);
+    row[1] = MatrixMath.v3Combine(row[1], row[0], 1.0, -skew[0]);
+
+    // Now, compute Y scale and normalize 2nd row.
+    scale[1] = MatrixMath.v3Length(row[1]);
+    row[1] = MatrixMath.v3Normalize(row[1], scale[1]);
+    skew[0] /= scale[1];
+
+    // Compute XZ and YZ shears, orthogonalize 3rd row
+    skew[1] = MatrixMath.v3Dot(row[0], row[2]);
+    row[2] = MatrixMath.v3Combine(row[2], row[0], 1.0, -skew[1]);
+    skew[2] = MatrixMath.v3Dot(row[1], row[2]);
+    row[2] = MatrixMath.v3Combine(row[2], row[1], 1.0, -skew[2]);
+
+    // Next, get Z scale and normalize 3rd row.
+    scale[2] = MatrixMath.v3Length(row[2]);
+    row[2] = MatrixMath.v3Normalize(row[2], scale[2]);
+    skew[1] /= scale[2];
+    skew[2] /= scale[2];
+
+    // At this point, the matrix (in rows) is orthonormal.
+    // Check for a coordinate system flip.  If the determinant
+    // is -1, then negate the matrix and the scaling factors.
+    var pdum3 = MatrixMath.v3Cross(row[1], row[2]);
+    if (MatrixMath.v3Dot(row[0], pdum3) < 0) {
+      for (i = 0; i < 3; i++) {
+        scale[i] *= -1;
+        row[i][0] *= -1;
+        row[i][1] *= -1;
+        row[i][2] *= -1;
+      }
+    }
+
+    // Now, get the rotations out
+    quaternion[0] =
+      0.5 * Math.sqrt(Math.max(1 + row[0][0] - row[1][1] - row[2][2], 0));
+    quaternion[1] =
+      0.5 * Math.sqrt(Math.max(1 - row[0][0] + row[1][1] - row[2][2], 0));
+    quaternion[2] =
+      0.5 * Math.sqrt(Math.max(1 - row[0][0] - row[1][1] + row[2][2], 0));
+    quaternion[3] =
+      0.5 * Math.sqrt(Math.max(1 + row[0][0] + row[1][1] + row[2][2], 0));
+
+    if (row[2][1] > row[1][2]) {
+      quaternion[0] = -quaternion[0];
+    }
+    if (row[0][2] > row[2][0]) {
+      quaternion[1] = -quaternion[1];
+    }
+    if (row[1][0] > row[0][1]) {
+      quaternion[2] = -quaternion[2];
+    }
+
+    // correct for occasional, weird Euler synonyms for 2d rotation
+    var rotationDegrees;
+    if (
+      quaternion[0] < 0.001 && quaternion[0] >= 0 &&
+      quaternion[1] < 0.001 && quaternion[1] >= 0
+    ) {
+      // this is a 2d rotation on the z-axis
+      rotationDegrees = [0, 0, MatrixMath.roundTo3Places(
+        Math.atan2(row[0][1], row[0][0]) * 180 / Math.PI
+      )];
+    } else {
+      rotationDegrees = MatrixMath.quaternionToDegreesXYZ(quaternion, matrix, row);
+    }
+
+    // expose both base data and convenience names
+    return {
+      rotationDegrees:rotationDegrees,
+      perspective:perspective,
+      quaternion:quaternion,
+      scale:scale,
+      skew:skew,
+      translation:translation,
+
+      rotate: rotationDegrees[2],
+      scaleX: scale[0],
+      scaleY: scale[1],
+      translateX: translation[0],
+      translateY: translation[1],
+    };
+  },
 
 };
 
@@ -19207,7 +19900,7 @@ function identity(value) {
 
 module.exports = deepFreezeAndThrowOnMutationInDev;
 });
-__d('ReactIOSEventEmitter',["EventPluginHub","ReactEventEmitterMixin","ReactIOSTagHandles","NodeHandle","EventConstants","merge","warning"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ReactNativeEventEmitter',["EventPluginHub","ReactEventEmitterMixin","ReactNativeTagHandles","NodeHandle","EventConstants","merge","warning"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -19215,7 +19908,7 @@ __d('ReactIOSEventEmitter',["EventPluginHub","ReactEventEmitterMixin","ReactIOST
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule ReactIOSEventEmitter
+ * @providesModule ReactNativeEventEmitter
  * @flow
  */
 
@@ -19223,7 +19916,7 @@ __d('ReactIOSEventEmitter',["EventPluginHub","ReactEventEmitterMixin","ReactIOST
 
 var EventPluginHub = require('EventPluginHub');
 var ReactEventEmitterMixin = require('ReactEventEmitterMixin');
-var ReactIOSTagHandles = require('ReactIOSTagHandles');
+var ReactNativeTagHandles = require('ReactNativeTagHandles');
 var NodeHandle = require('NodeHandle');
 var EventConstants = require('EventConstants');
 
@@ -19291,15 +19984,15 @@ var removeTouchesAtIndices = function(
 };
 
 /**
- * `ReactIOSEventEmitter` is used to attach top-level event listeners. For example:
+ * `ReactNativeEventEmitter` is used to attach top-level event listeners. For example:
  *
- *   ReactIOSEventEmitter.putListener('myID', 'onClick', myFunction);
+ *   ReactNativeEventEmitter.putListener('myID', 'onClick', myFunction);
  *
  * This would allocate a "registration" of `('onClick', myFunction)` on 'myID'.
  *
  * @internal
  */
-var ReactIOSEventEmitter = merge(ReactEventEmitterMixin, {
+var ReactNativeEventEmitter = merge(ReactEventEmitterMixin, {
 
   registrationNames: EventPluginHub.registrationNameModules,
 
@@ -19327,7 +20020,7 @@ var ReactIOSEventEmitter = merge(ReactEventEmitterMixin, {
     nativeEventParam        
   ) {
     var nativeEvent = nativeEventParam || EMPTY_NATIVE_EVENT;
-    ReactIOSEventEmitter.handleTopLevel(
+    ReactNativeEventEmitter.handleTopLevel(
       topLevelType,
       rootNodeID,
       rootNodeID,
@@ -19347,8 +20040,8 @@ var ReactIOSEventEmitter = merge(ReactEventEmitterMixin, {
     topLevelType        ,
     nativeEventParam        
   ) {
-    var rootNodeID = ReactIOSTagHandles.tagToRootNodeID[tag];
-    ReactIOSEventEmitter._receiveRootNodeIDEvent(
+    var rootNodeID = ReactNativeTagHandles.tagToRootNodeID[tag];
+    ReactNativeEventEmitter._receiveRootNodeIDEvent(
       rootNodeID,
       topLevelType,
       nativeEventParam
@@ -19400,7 +20093,7 @@ var ReactIOSEventEmitter = merge(ReactEventEmitterMixin, {
       var rootNodeID = null;
       var target = nativeEvent.target;
       if (target !== null && target !== undefined) {
-        if (target < ReactIOSTagHandles.tagsStartAt) {
+        if (target < ReactNativeTagHandles.tagsStartAt) {
           if (__DEV__) {
             warning(
               false,
@@ -19411,7 +20104,7 @@ var ReactIOSEventEmitter = merge(ReactEventEmitterMixin, {
           rootNodeID = NodeHandle.getRootNodeID(target);
         }
       }
-      ReactIOSEventEmitter._receiveRootNodeIDEvent(
+      ReactNativeEventEmitter._receiveRootNodeIDEvent(
         rootNodeID,
         eventTopLevelType,
         nativeEvent
@@ -19420,7 +20113,7 @@ var ReactIOSEventEmitter = merge(ReactEventEmitterMixin, {
   }
 });
 
-module.exports = ReactIOSEventEmitter;
+module.exports = ReactNativeEventEmitter;
 });
 __d('ReactEventEmitterMixin',["EventPluginHub"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -19471,7 +20164,7 @@ var ReactEventEmitterMixin = {
 
 module.exports = ReactEventEmitterMixin;
 });
-__d('ReactIOSStyleAttributes',["ImageStylePropTypes","TextStylePropTypes","ViewStylePropTypes","keyMirror","matricesDiffer","sizesDiffer"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ReactNativeStyleAttributes',["ImageStylePropTypes","TextStylePropTypes","ViewStylePropTypes","keyMirror","matricesDiffer","sizesDiffer"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -19479,7 +20172,7 @@ __d('ReactIOSStyleAttributes',["ImageStylePropTypes","TextStylePropTypes","ViewS
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule ReactIOSStyleAttributes
+ * @providesModule ReactNativeStyleAttributes
  * @flow
  */
 
@@ -19493,16 +20186,16 @@ var keyMirror = require('keyMirror');
 var matricesDiffer = require('matricesDiffer');
 var sizesDiffer = require('sizesDiffer');
 
-var ReactIOSStyleAttributes = Object.assign({},
+var ReactNativeStyleAttributes = Object.assign({},
   keyMirror(ViewStylePropTypes),
   keyMirror(TextStylePropTypes),
   keyMirror(ImageStylePropTypes)
 );
 
-ReactIOSStyleAttributes.transformMatrix = { diff: matricesDiffer };
-ReactIOSStyleAttributes.shadowOffset = { diff: sizesDiffer };
+ReactNativeStyleAttributes.transformMatrix = { diff: matricesDiffer };
+ReactNativeStyleAttributes.shadowOffset = { diff: sizesDiffer };
 
-module.exports = ReactIOSStyleAttributes;
+module.exports = ReactNativeStyleAttributes;
 });
 __d('ImageStylePropTypes',["ImageResizeMode","LayoutPropTypes","ReactPropTypes","TransformPropTypes"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
@@ -20097,6 +20790,7 @@ var TextStylePropTypes = Object.assign(Object.create(ViewStylePropTypes), {
   writingDirection: ReactPropTypes.oneOf(
     ['auto' /*default*/, 'ltr', 'rtl']
   ),
+  letterSpacing: ReactPropTypes.number,
 });
 
 // Text doesn't support padding correctly (#4841912)
@@ -20146,6 +20840,10 @@ var ViewStylePropTypes = Object.assign({},
   borderBottomColor: ReactPropTypes.string,
   borderLeftColor: ReactPropTypes.string,
   borderRadius: ReactPropTypes.number,
+  borderTopLeftRadius: ReactPropTypes.number,
+  borderTopRightRadius: ReactPropTypes.number,
+  borderBottomLeftRadius: ReactPropTypes.number,
+  borderBottomRightRadius: ReactPropTypes.number,
   opacity: ReactPropTypes.number,
   overflow: ReactPropTypes.oneOf(['visible', 'hidden']),
   shadowColor: ReactPropTypes.string,
@@ -21083,7 +21781,7 @@ function diffRawProperties(
 
 module.exports = diffRawProperties;
 });
-__d('RCTEventEmitter',["ReactIOSEventEmitter"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('RCTEventEmitter',["ReactNativeEventEmitter"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -21096,10 +21794,10 @@ __d('RCTEventEmitter',["ReactIOSEventEmitter"],function(global, require, require
  */
 'use strict';
 
-var ReactIOSEventEmitter = require('ReactIOSEventEmitter');
+var ReactNativeEventEmitter = require('ReactNativeEventEmitter');
 
 // Completely locally implemented - no native hooks.
-module.exports = ReactIOSEventEmitter;
+module.exports = ReactNativeEventEmitter;
 });
 __d('RCTLog',["invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
@@ -21512,7 +22210,7 @@ StyleSheetValidation.addValidStylePropTypes(ViewStylePropTypes);
 
 module.exports = StyleSheetValidation;
 });
-__d('View',["NativeMethodsMixin","ReactPropTypes","NativeModules","React","ReactIOSStyleAttributes","ReactIOSViewAttributes","StyleSheetPropType","ViewStylePropTypes","createReactIOSNativeComponentClass"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('View',["NativeMethodsMixin","ReactPropTypes","NativeModules","React","ReactNativeStyleAttributes","ReactNativeViewAttributes","StyleSheetPropType","ViewStylePropTypes","createReactNativeComponentClass"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -21529,12 +22227,12 @@ var NativeMethodsMixin = require('NativeMethodsMixin');
 var PropTypes = require('ReactPropTypes');
 var RCTUIManager = require('NativeModules').UIManager;
 var React = require('React');
-var ReactIOSStyleAttributes = require('ReactIOSStyleAttributes');
-var ReactIOSViewAttributes = require('ReactIOSViewAttributes');
+var ReactNativeStyleAttributes = require('ReactNativeStyleAttributes');
+var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var StyleSheetPropType = require('StyleSheetPropType');
 var ViewStylePropTypes = require('ViewStylePropTypes');
 
-var createReactIOSNativeComponentClass = require('createReactIOSNativeComponentClass');
+var createReactNativeComponentClass = require('createReactNativeComponentClass');
 
 var stylePropType = StyleSheetPropType(ViewStylePropTypes);
 
@@ -21567,7 +22265,7 @@ var View = React.createClass({displayName: "View",
    */
   viewConfig: {
     uiViewClassName: 'RCTView',
-    validAttributes: ReactIOSViewAttributes.RCTView
+    validAttributes: ReactNativeViewAttributes.RCTView
   },
 
   propTypes: {
@@ -21677,8 +22375,8 @@ var View = React.createClass({displayName: "View",
   },
 });
 
-var RCTView = createReactIOSNativeComponentClass({
-  validAttributes: ReactIOSViewAttributes.RCTView,
+var RCTView = createReactNativeComponentClass({
+  validAttributes: ReactNativeViewAttributes.RCTView,
   uiViewClassName: 'RCTView',
 });
 RCTView.propTypes = View.propTypes;
@@ -21686,7 +22384,7 @@ if (__DEV__) {
   var viewConfig = RCTUIManager.viewConfigs && RCTUIManager.viewConfigs.RCTView || {};
   for (var prop in viewConfig.nativeProps) {
     var viewAny      = View; // Appease flow
-    if (!viewAny.propTypes[prop] && !ReactIOSStyleAttributes[prop]) {
+    if (!viewAny.propTypes[prop] && !ReactNativeStyleAttributes[prop]) {
       throw new Error(
         'View is missing propType for native prop `' + prop + '`'
       );
@@ -21701,7 +22399,7 @@ if (__DEV__) {
 
 module.exports = ViewToExport;
 });
-__d('ReactIOSViewAttributes',["merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ReactNativeViewAttributes',["merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -21709,16 +22407,16 @@ __d('ReactIOSViewAttributes',["merge"],function(global, require, requireDynamic,
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule ReactIOSViewAttributes
+ * @providesModule ReactNativeViewAttributes
  * @flow
  */
 'use strict';
 
 var merge = require('merge');
 
-var ReactIOSViewAttributes = {};
+var ReactNativeViewAttributes = {};
 
-ReactIOSViewAttributes.UIView = {
+ReactNativeViewAttributes.UIView = {
   pointerEvents: true,
   accessible: true,
   accessibilityLabel: true,
@@ -21726,8 +22424,8 @@ ReactIOSViewAttributes.UIView = {
   onLayout: true,
 };
 
-ReactIOSViewAttributes.RCTView = merge(
-  ReactIOSViewAttributes.UIView, {
+ReactNativeViewAttributes.RCTView = merge(
+  ReactNativeViewAttributes.UIView, {
 
   // This is a special performance property exposed by RCTView and useful for
   // scrolling content when there are many subviews, most of which are offscreen.
@@ -21737,7 +22435,7 @@ ReactIOSViewAttributes.RCTView = merge(
   removeClippedSubviews: true,
 });
 
-module.exports = ReactIOSViewAttributes;
+module.exports = ReactNativeViewAttributes;
 });
 __d('StyleSheetPropType',["createStrictShapeTypeChecker","flattenStyle"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
@@ -21852,7 +22550,7 @@ function createStrictShapeTypeChecker(
 
 module.exports = createStrictShapeTypeChecker;
 });
-__d('requireNativeComponent',["NativeModules","UnimplementedView","createReactIOSNativeComponentClass","deepDiffer","insetsDiffer","pointsDiffer","matricesDiffer","sizesDiffer","verifyPropTypes"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('requireNativeComponent',["NativeModules","UnimplementedView","createReactNativeComponentClass","deepDiffer","insetsDiffer","pointsDiffer","matricesDiffer","sizesDiffer","verifyPropTypes"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -21868,7 +22566,7 @@ __d('requireNativeComponent',["NativeModules","UnimplementedView","createReactIO
 var RCTUIManager = require('NativeModules').UIManager;
 var UnimplementedView = require('UnimplementedView');
 
-var createReactIOSNativeComponentClass = require('createReactIOSNativeComponentClass');
+var createReactNativeComponentClass = require('createReactNativeComponentClass');
 var deepDiffer = require('deepDiffer');
 var insetsDiffer = require('insetsDiffer');
 var pointsDiffer = require('pointsDiffer');
@@ -21913,7 +22611,7 @@ function requireNativeComponent(
   if (__DEV__) {
     wrapperComponent && verifyPropTypes(wrapperComponent, viewConfig);
   }
-  return createReactIOSNativeComponentClass(viewConfig);
+  return createReactNativeComponentClass(viewConfig);
 }
 
 var TypeToDifferMap = {
@@ -22040,7 +22738,7 @@ var pointsDiffer = function(one        , two        )       {
 
 module.exports = pointsDiffer;
 });
-__d('verifyPropTypes',["ReactIOSStyleAttributes","View"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('verifyPropTypes',["ReactNativeStyleAttributes","View"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -22053,7 +22751,7 @@ __d('verifyPropTypes',["ReactIOSStyleAttributes","View"],function(global, requir
  */
 'use strict';
 
-var ReactIOSStyleAttributes = require('ReactIOSStyleAttributes');
+var ReactNativeStyleAttributes = require('ReactNativeStyleAttributes');
 var View = require('View');
 
 function verifyPropTypes(
@@ -22068,7 +22766,7 @@ function verifyPropTypes(
   for (var prop in nativeProps) {
     if (!component.propTypes[prop] &&
         !View.propTypes[prop] &&
-        !ReactIOSStyleAttributes[prop] &&
+        !ReactNativeStyleAttributes[prop] &&
         (!nativePropsToIgnore || !nativePropsToIgnore[prop])) {
       throw new Error(
         '`' + component.displayName + '` has no propType for native prop `' +
@@ -22232,7 +22930,7 @@ var RCTDatePickerIOS = requireNativeComponent('RCTDatePicker', DatePickerIOS);
 
 module.exports = DatePickerIOS;
 });
-__d('Image',["EdgeInsetsPropType","ImageResizeMode","ImageStylePropTypes","NativeMethodsMixin","NativeModules","ReactPropTypes","React","ReactIOSViewAttributes","StyleSheet","StyleSheetPropType","flattenStyle","invariant","merge","requireNativeComponent","resolveAssetSource","verifyPropTypes","warning"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('Image',["EdgeInsetsPropType","ImageResizeMode","ImageStylePropTypes","NativeMethodsMixin","NativeModules","ReactPropTypes","React","ReactNativeViewAttributes","StyleSheet","StyleSheetPropType","flattenStyle","invariant","merge","requireNativeComponent","resolveAssetSource","verifyPropTypes","warning"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -22252,7 +22950,7 @@ var NativeMethodsMixin = require('NativeMethodsMixin');
 var NativeModules = require('NativeModules');
 var PropTypes = require('ReactPropTypes');
 var React = require('React');
-var ReactIOSViewAttributes = require('ReactIOSViewAttributes');
+var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var StyleSheet = require('StyleSheet');
 var StyleSheetPropType = require('StyleSheetPropType');
 
@@ -22347,7 +23045,7 @@ var Image = React.createClass({displayName: "Image",
    */
   viewConfig: {
     uiViewClassName: 'UIView',
-    validAttributes: ReactIOSViewAttributes.UIView
+    validAttributes: ReactNativeViewAttributes.UIView
   },
 
   render: function() {
@@ -22451,7 +23149,7 @@ var EdgeInsetsPropType = createStrictShapeTypeChecker({
 
 module.exports = EdgeInsetsPropType;
 });
-__d('resolveAssetSource',["AssetRegistry","PixelRatio","NativeModules"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('resolveAssetSource',["AssetRegistry","PixelRatio","Platform","NativeModules"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -22460,27 +23158,85 @@ __d('resolveAssetSource',["AssetRegistry","PixelRatio","NativeModules"],function
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule resolveAssetSource
+ *
+ * Resolves an asset into a `source` for `Image`.
  */
 'use strict';
 
 var AssetRegistry = require('AssetRegistry');
 var PixelRatio = require('PixelRatio');
+var Platform = require('Platform');
 var SourceCode = require('NativeModules').SourceCode;
 
 var _serverURL;
 
-function getServerURL() {
+function getDevServerURL() {
+  if (!__DEV__) {
+    // In prod we want assets to be loaded from the archive
+    return null;
+  }
   if (_serverURL === undefined) {
     var scriptURL = SourceCode.scriptURL;
     var match = scriptURL && scriptURL.match(/^https?:\/\/.*?\//);
     if (match) {
+      // Bundle was loaded from network
       _serverURL = match[0];
     } else {
+      // Bundle was loaded from file
       _serverURL = null;
     }
   }
 
   return _serverURL;
+}
+
+/**
+ * Returns the path at which the asset can be found in the archive
+ */
+function getPathInArchive(asset) {
+  if (Platform.OS === 'android') {
+    var assetDir = getBasePath(asset);
+    // E.g. 'assets_awesomemodule_icon'
+    // The Android resource system picks the correct scale.
+    return (assetDir + '/' + asset.name)
+      .toLowerCase()
+      .replace(/\//g, '_')           // Encode folder structure in file name
+      .replace(/([^a-z0-9_])/g, ''); // Remove illegal chars
+  } else {
+    // E.g. 'assets/AwesomeModule/icon@2x.png'
+    return getScaledAssetPath(asset);
+  }
+}
+
+/**
+ * Returns an absolute URL which can be used to fetch the asset
+ * from the devserver
+ */
+function getPathOnDevserver(devServerUrl, asset) {
+  return devServerUrl + getScaledAssetPath(asset) + '?hash=' + asset.hash;
+}
+
+/**
+ * Returns a path like 'assets/AwesomeModule'
+ */
+function getBasePath(asset) {
+  // TODO(frantic): currently httpServerLocation is used both as
+  // path in http URL and path within IPA. Should we have zipArchiveLocation?
+  var path = asset.httpServerLocation;
+  if (path[0] === '/') {
+    path = path.substr(1);
+  }
+  return path;
+}
+
+/**
+ * Returns a path like 'assets/AwesomeModule/icon@2x.png'
+ */
+function getScaledAssetPath(asset) {
+  var scale = pickScale(asset.scales, PixelRatio.get());
+  var scaleSuffix = scale === 1 ? '' : '@' + scale + 'x';
+  var assetDir = getBasePath(asset);
+  return assetDir + '/' + asset.name + scaleSuffix + '.' + asset.type;
 }
 
 function pickScale(scales, deviceScale) {
@@ -22511,31 +23267,19 @@ function resolveAssetSource(source) {
 }
 
 function assetToImageSource(asset) {
-  // TODO(frantic): currently httpServerLocation is used both as
-  // path in http URL and path within IPA. Should we have zipArchiveLocation?
-  var path = asset.httpServerLocation;
-  if (path[0] === '/') {
-    path = path.substr(1);
-  }
-
-  var scale = pickScale(asset.scales, PixelRatio.get());
-  var scaleSuffix = scale === 1 ? '' : '@' + scale + 'x';
-
-  var fileName = asset.name + scaleSuffix + '.' + asset.type;
-  var serverURL = getServerURL();
-  if (serverURL) {
+  var devServerURL = getDevServerURL();
+  if (devServerURL) {
     return {
       width: asset.width,
       height: asset.height,
-      uri: serverURL + path + '/' + fileName +
-        '?hash=' + asset.hash,
+      uri: getPathOnDevserver(devServerURL, asset),
       isStatic: false,
     };
   } else {
     return {
       width: asset.width,
       height: asset.height,
-      uri: path + '/' + fileName,
+      uri: getPathInArchive(asset),
       isStatic: true,
     };
   }
@@ -22635,9 +23379,9 @@ function PixelRatio(){}
     return Math.round(layoutSize * PixelRatio.get());
   };
 
+  // No-op for iOS, but used on the web. Should not be documented.
+  PixelRatio.startDetecting=function() {};
 
-// No-op for iOS, but used on the web. Should not be documented.
-PixelRatio.startDetecting = function() {};
 
 module.exports = PixelRatio;
 });
@@ -22799,7 +23543,7 @@ var SCROLLVIEW_REF = 'listviewscroll';
  * smoothly while dynamically loading potentially very large (or conceptually
  * infinite) data sets:
  *
- *  * Only re-render changed rows - the hasRowChanged function provided to the
+ *  * Only re-render changed rows - the rowHasChanged function provided to the
  *    data source tells the ListView if it needs to re-render a row because the
  *    source data has changed - see ListViewDataSource for more details.
  *
@@ -23058,12 +23802,12 @@ var ListView = React.createClass({displayName: "ListView",
   _measureAndUpdateScrollProps: function() {
     RCTUIManager.measureLayout(
       this.refs[SCROLLVIEW_REF].getInnerViewNode(),
-      this.refs[SCROLLVIEW_REF].getNodeHandle(),
+      React.findNodeHandle(this.refs[SCROLLVIEW_REF]),
       logError,
       this._setScrollContentHeight
     );
     RCTUIManager.measureLayoutRelativeToParent(
-      this.refs[SCROLLVIEW_REF].getNodeHandle(),
+      React.findNodeHandle(this.refs[SCROLLVIEW_REF]),
       logError,
       this._setScrollVisibleHeight
     );
@@ -23309,6 +24053,10 @@ function defaultGetSectionHeaderData(
    * The default extractor expects data of one of the following forms:
    *
    *      { sectionID_1: { rowID_1: <rowData1>, ... }, ... }
+   *
+   *    or
+   *
+   *      { sectionID_1: [ <rowData1>, <rowData2>, ... ], ... }
    *
    *    or
    *
@@ -23646,7 +24394,7 @@ function isEmpty(obj) {
 
 module.exports = isEmpty;
 });
-__d('ScrollView',["EdgeInsetsPropType","Platform","PointPropType","NativeModules","React","ReactIOSViewAttributes","NativeModules","ScrollResponder","StyleSheet","StyleSheetPropType","View","ViewStylePropTypes","createReactIOSNativeComponentClass","deepDiffer","flattenStyle","insetsDiffer","invariant","pointsDiffer","requireNativeComponent"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ScrollView',["EdgeInsetsPropType","Platform","PointPropType","NativeModules","React","ReactNativeViewAttributes","NativeModules","ScrollResponder","StyleSheet","StyleSheetPropType","View","ViewStylePropTypes","createReactNativeComponentClass","deepDiffer","flattenStyle","insetsDiffer","invariant","pointsDiffer","requireNativeComponent"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -23665,7 +24413,7 @@ var PointPropType = require('PointPropType');
 var RCTScrollView = require('NativeModules').UIManager.RCTScrollView;
 var RCTScrollViewConsts = RCTScrollView.Constants;
 var React = require('React');
-var ReactIOSViewAttributes = require('ReactIOSViewAttributes');
+var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var RCTUIManager = require('NativeModules').UIManager;
 var ScrollResponder = require('ScrollResponder');
 var StyleSheet = require('StyleSheet');
@@ -23673,7 +24421,7 @@ var StyleSheetPropType = require('StyleSheetPropType');
 var View = require('View');
 var ViewStylePropTypes = require('ViewStylePropTypes');
 
-var createReactIOSNativeComponentClass = require('createReactIOSNativeComponentClass');
+var createReactNativeComponentClass = require('createReactNativeComponentClass');
 var deepDiffer = require('deepDiffer');
 var flattenStyle = require('flattenStyle');
 var insetsDiffer = require('insetsDiffer');
@@ -23855,19 +24603,19 @@ var ScrollView = React.createClass({displayName: "ScrollView",
   },
 
   getInnerViewNode: function()      {
-    return this.refs[INNERVIEW].getNodeHandle();
+    return React.findNodeHandle(this.refs[INNERVIEW]);
   },
 
   scrollTo: function(destY         , destX         ) {
     if (Platform.OS === 'android') {
       RCTUIManager.dispatchViewManagerCommand(
-        this.getNodeHandle(),
+        React.findNodeHandle(this),
         RCTUIManager.RCTScrollView.Commands.scrollTo,
         [destX || 0, destY || 0]
       );
     } else {
       RCTUIManager.scrollTo(
-        this.getNodeHandle(),
+        React.findNodeHandle(this),
         destX || 0,
         destY || 0
       );
@@ -23876,7 +24624,7 @@ var ScrollView = React.createClass({displayName: "ScrollView",
 
   scrollWithoutAnimationTo: function(destY         , destX         ) {
     RCTUIManager.scrollWithoutAnimationTo(
-      this.getNodeHandle(),
+      React.findNodeHandle(this),
       destX || 0,
       destY || 0
     );
@@ -23991,7 +24739,7 @@ var styles = StyleSheet.create({
 });
 
 var validAttributes = Object.assign({},
-  ReactIOSViewAttributes.UIView,
+  ReactNativeViewAttributes.UIView,
   {alwaysBounceHorizontal: true,
   alwaysBounceVertical: true,
   automaticallyAdjustContentInsets: true,
@@ -24018,11 +24766,11 @@ var validAttributes = Object.assign({},
 });
 
 if (Platform.OS === 'android') {
-  var AndroidScrollView = createReactIOSNativeComponentClass({
+  var AndroidScrollView = createReactNativeComponentClass({
     validAttributes: validAttributes,
     uiViewClassName: 'RCTScrollView',
   });
-  var AndroidHorizontalScrollView = createReactIOSNativeComponentClass({
+  var AndroidHorizontalScrollView = createReactNativeComponentClass({
     validAttributes: validAttributes,
     uiViewClassName: 'AndroidHorizontalScrollView',
   });
@@ -24057,7 +24805,7 @@ var PointPropType = createStrictShapeTypeChecker({
 
 module.exports = PointPropType;
 });
-__d('ScrollResponder',["NativeModules","RCTDeviceEventEmitter","Subscribable","TextInputState","warning"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ScrollResponder',["NativeModules","RCTDeviceEventEmitter","React","Subscribable","TextInputState","warning"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -24072,6 +24820,7 @@ __d('ScrollResponder',["NativeModules","RCTDeviceEventEmitter","Subscribable","T
 
 var NativeModules = require('NativeModules');
 var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
+var React = require('React');
 var Subscribable = require('Subscribable');
 var TextInputState = require('TextInputState');
 
@@ -24409,7 +25158,7 @@ var ScrollResponderMixin = {
    * can also be used to quickly scroll to any element we want to focus
    */
   scrollResponderScrollTo: function(offsetX        , offsetY        ) {
-    RCTUIManagerDeprecated.scrollTo(this.getNodeHandle(), offsetX, offsetY);
+    RCTUIManagerDeprecated.scrollTo(React.findNodeHandle(this), offsetX, offsetY);
   },
 
   /**
@@ -24417,7 +25166,7 @@ var ScrollResponderMixin = {
    * @param {object} rect Should have shape {x, y, width, height}
    */
   scrollResponderZoomTo: function(rect                                                          ) {
-    RCTUIManagerDeprecated.zoomToRect(this.getNodeHandle(), rect);
+    RCTUIManagerDeprecated.zoomToRect(React.findNodeHandle(this), rect);
   },
 
   /**
@@ -24435,7 +25184,7 @@ var ScrollResponderMixin = {
     this.preventNegativeScrollOffset = !!preventNegativeScrollOffset;
     RCTUIManager.measureLayout(
       nodeHandle,
-      this.getNodeHandle(),
+      React.findNodeHandle(this),
       this.scrollResponderTextInputFocusError,
       this.scrollResponderInputMeasureAndScrollToKeyboard
     );
@@ -24618,7 +25367,7 @@ __d('StaticRenderer',["React"],function(global, require, requireDynamic, require
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @provides StaticRenderer
+ * @providesModule StaticRenderer
  * @flow
  */
 'use strict';
@@ -24720,7 +25469,7 @@ var TimerMixin = {
 
 module.exports = TimerMixin;
 });
-__d('MapView',["EdgeInsetsPropType","NativeMethodsMixin","Platform","React","ReactIOSViewAttributes","View","createReactIOSNativeComponentClass","deepDiffer","insetsDiffer","merge","requireNativeComponent"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('MapView',["EdgeInsetsPropType","NativeMethodsMixin","Platform","React","ReactNativeViewAttributes","View","createReactNativeComponentClass","deepDiffer","insetsDiffer","merge","requireNativeComponent"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -24737,10 +25486,10 @@ var EdgeInsetsPropType = require('EdgeInsetsPropType');
 var NativeMethodsMixin = require('NativeMethodsMixin');
 var Platform = require('Platform');
 var React = require('React');
-var ReactIOSViewAttributes = require('ReactIOSViewAttributes');
+var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var View = require('View');
 
-var createReactIOSNativeComponentClass = require('createReactIOSNativeComponentClass');
+var createReactNativeComponentClass = require('createReactNativeComponentClass');
 var deepDiffer = require('deepDiffer');
 var insetsDiffer = require('insetsDiffer');
 var merge = require('merge');
@@ -24885,9 +25634,9 @@ var MapView = React.createClass({displayName: "MapView",
 });
 
 if (Platform.OS === 'android') {
-  var RCTMap = createReactIOSNativeComponentClass({
+  var RCTMap = createReactNativeComponentClass({
     validAttributes: merge(
-      ReactIOSViewAttributes.UIView, {
+      ReactNativeViewAttributes.UIView, {
         showsUserLocation: true,
         zoomEnabled: true,
         rotateEnabled: true,
@@ -24908,7 +25657,7 @@ if (Platform.OS === 'android') {
 
 module.exports = MapView;
 });
-__d('NavigatorIOS',["EventEmitter","Image","React","ReactIOSViewAttributes","NativeModules","StyleSheet","StaticContainer.react","View","createReactIOSNativeComponentClass","invariant","logError","merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('NavigatorIOS',["EventEmitter","Image","React","ReactNativeViewAttributes","NativeModules","StyleSheet","StaticContainer.react","View","createReactNativeComponentClass","invariant","logError","merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -24924,14 +25673,14 @@ __d('NavigatorIOS',["EventEmitter","Image","React","ReactIOSViewAttributes","Nat
 var EventEmitter = require('EventEmitter');
 var Image = require('Image');
 var React = require('React');
-var ReactIOSViewAttributes = require('ReactIOSViewAttributes');
+var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var RCTNavigatorManager = require('NativeModules').NavigatorManager;
 var StyleSheet = require('StyleSheet');
 var StaticContainer = require('StaticContainer.react');
 var View = require('View');
 
-var createReactIOSNativeComponentClass =
-  require('createReactIOSNativeComponentClass');
+var createReactNativeComponentClass =
+  require('createReactNativeComponentClass');
 var invariant = require('invariant');
 var logError = require('logError');
 var merge = require('merge');
@@ -24945,14 +25694,14 @@ function getuid() {
   return __uid++;
 }
 
-var RCTNavigator = createReactIOSNativeComponentClass({
-  validAttributes: merge(ReactIOSViewAttributes.UIView, {
+var RCTNavigator = createReactNativeComponentClass({
+  validAttributes: merge(ReactNativeViewAttributes.UIView, {
     requestedTopOfStack: true
   }),
   uiViewClassName: 'RCTNavigator',
 });
 
-var RCTNavigatorItem = createReactIOSNativeComponentClass({
+var RCTNavigatorItem = createReactNativeComponentClass({
   validAttributes: {
     // TODO: Remove or fix the attributes that are not fully functional.
     //  NavigatorIOS does not use them all, because some are problematic
@@ -24977,7 +25726,7 @@ var RCTNavigatorItem = createReactIOSNativeComponentClass({
 var NavigatorTransitionerIOS = React.createClass({displayName: "NavigatorTransitionerIOS",
   requestSchedulingNavigation: function(cb) {
     RCTNavigatorManager.requestSchedulingJavaScriptNavigation(
-      (this     ).getNodeHandle(),
+      React.findNodeHandle(this),
       logError,
       cb
     );
@@ -25633,7 +26382,7 @@ var StaticContainer = React.createClass({displayName: "StaticContainer",
 
 module.exports = StaticContainer;
 });
-__d('PickerIOS',["NativeMethodsMixin","React","ReactChildren","ReactIOSViewAttributes","NativeModules","StyleSheet","View","createReactIOSNativeComponentClass","merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('PickerIOS',["NativeMethodsMixin","React","ReactChildren","ReactNativeViewAttributes","NativeModules","StyleSheet","View","createReactNativeComponentClass","merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -25650,13 +26399,13 @@ __d('PickerIOS',["NativeMethodsMixin","React","ReactChildren","ReactIOSViewAttri
 var NativeMethodsMixin = require('NativeMethodsMixin');
 var React = require('React');
 var ReactChildren = require('ReactChildren');
-var ReactIOSViewAttributes = require('ReactIOSViewAttributes');
+var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var RCTPickerIOSConsts = require('NativeModules').UIManager.RCTPicker.Constants;
 var StyleSheet = require('StyleSheet');
 var View = require('View');
 
-var createReactIOSNativeComponentClass =
-  require('createReactIOSNativeComponentClass');
+var createReactNativeComponentClass =
+  require('createReactNativeComponentClass');
 var merge = require('merge');
 
 var PICKER = 'picker';
@@ -25747,12 +26496,12 @@ var styles = StyleSheet.create({
   },
 });
 
-var rkPickerIOSAttributes = merge(ReactIOSViewAttributes.UIView, {
+var rkPickerIOSAttributes = merge(ReactNativeViewAttributes.UIView, {
   items: true,
   selectedIndex: true,
 });
 
-var RCTPickerIOS = createReactIOSNativeComponentClass({
+var RCTPickerIOS = createReactNativeComponentClass({
   validAttributes: rkPickerIOSAttributes,
   uiViewClassName: 'RCTPicker',
 });
@@ -26014,7 +26763,7 @@ var Navigator = React.createClass({displayName: "Navigator",
     onDidFocus: PropTypes.func,
 
     /**
-     * Will be called with (ref, indexInStack) when the scene ref changes
+     * Will be called with (ref, indexInStack, route) when the scene ref changes
      */
     onItemRef: PropTypes.func,
 
@@ -26343,7 +27092,7 @@ var Navigator = React.createClass({displayName: "Navigator",
    * This happens at the end of a transition started by transitionTo, and when the spring catches up to a pending gesture
    */
   _completeTransition: function() {
-    if (this.spring.getCurrentValue() !== 1) {
+    if (this.spring.getCurrentValue() !== 1 && this.spring.getCurrentValue() !== 0) {
       // The spring has finished catching up to a gesture in progress. Remove the pending progress
       // and we will be in a normal activeGesture state
       if (this.state.pendingGestureProgress) {
@@ -26420,11 +27169,17 @@ var Navigator = React.createClass({displayName: "Navigator",
   },
 
   /**
-   * Hides scenes that we are not currently on or transitioning from
+   * Hides all scenes that we are not currently on, gesturing to, or transitioning from
    */
   _hideScenes: function() {
+    var gesturingToIndex = null;
+    if (this.state.activeGesture) {
+      gesturingToIndex = this.state.presentedIndex + this._deltaForGestureAction(this.state.activeGesture);
+    }
     for (var i = 0; i < this.state.routeStack.length; i++) {
-      if (i === this.state.presentedIndex || i === this.state.transitionFromIndex) {
+      if (i === this.state.presentedIndex ||
+          i === this.state.transitionFromIndex ||
+          i === gesturingToIndex) {
         continue;
       }
       this._disableScene(i);
@@ -26495,10 +27250,14 @@ var Navigator = React.createClass({displayName: "Navigator",
     viewAtIndex.setNativeProps({renderToHardwareTextureAndroid: shouldRenderToHardwareTexture});
   },
 
+  _handleTouchStart: function() {
+    this._eligibleGestures = GESTURE_ACTIONS;
+  },
+
   _handleMoveShouldSetPanResponder: function(e, gestureState) {
     var currentRoute = this.state.routeStack[this.state.presentedIndex];
     var sceneConfig = this.state.sceneConfigStack[this.state.presentedIndex];
-    this._expectingGestureGrant = this._matchGestureAction(sceneConfig.gestures, gestureState);
+    this._expectingGestureGrant = this._matchGestureAction(this._eligibleGestures, sceneConfig.gestures, gestureState);
     return !! this._expectingGestureGrant;
   },
 
@@ -26616,7 +27375,7 @@ var Navigator = React.createClass({displayName: "Navigator",
       var gesture = sceneConfig.gestures[this.state.activeGesture];
       return this._moveAttachedGesture(gesture, gestureState);
     }
-    var matchedGesture = this._matchGestureAction(sceneConfig.gestures, gestureState);
+    var matchedGesture = this._matchGestureAction(GESTURE_ACTIONS, sceneConfig.gestures, gestureState);
     if (matchedGesture) {
       this._attachGesture(matchedGesture);
     }
@@ -26631,8 +27390,13 @@ var Navigator = React.createClass({displayName: "Navigator",
     var nextProgress = (distance - gestureDetectMovement) /
       (gesture.fullDistance - gestureDetectMovement);
     if (nextProgress < 0 && gesture.isDetachable) {
+      var gesturingToIndex = this.state.presentedIndex + this._deltaForGestureAction(this.state.activeGesture);
+      this._transitionBetween(this.state.presentedIndex, gesturingToIndex, 0);
       this._detachGesture();
-      this.spring.setCurrentValue(0);
+      if (this.state.pendingGestureProgress != null) {
+        this.spring.setCurrentValue(0);
+      }
+      return;
     }
     if (this._doesGestureOverswipe(this.state.activeGesture)) {
       var frictionConstant = gesture.overswipe.frictionConstant;
@@ -26650,12 +27414,12 @@ var Navigator = React.createClass({displayName: "Navigator",
     }
   },
 
-  _matchGestureAction: function(gestures, gestureState) {
+  _matchGestureAction: function(eligibleGestures, gestures, gestureState) {
     if (!gestures) {
       return null;
     }
     var matchedGesture = null;
-    GESTURE_ACTIONS.some(function(gestureName)  {
+    eligibleGestures.some(function(gestureName, gestureIndex)  {
       var gesture = gestures[gestureName];
       if (!gesture) {
         return;
@@ -26681,12 +27445,19 @@ var Navigator = React.createClass({displayName: "Navigator",
       }
       var moveStartedInRegion = gesture.edgeHitWidth == null ||
         currentLoc < edgeHitWidth;
-      var moveTravelledFarEnough =
-        travelDist >= gesture.gestureDetectMovement &&
-        travelDist > oppositeAxisTravelDist * gesture.directionRatio;
-      if (moveStartedInRegion && moveTravelledFarEnough) {
+      if (!moveStartedInRegion) {
+        return false;
+      }
+      var moveTravelledFarEnough = travelDist >= gesture.gestureDetectMovement;
+      if (!moveTravelledFarEnough) {
+        return false;
+      }
+      var directionIsCorrect = Math.abs(travelDist) > Math.abs(oppositeAxisTravelDist) * gesture.directionRatio;
+      if (directionIsCorrect) {
         matchedGesture = gestureName;
         return true;
+      } else {
+        this._eligibleGestures = this._eligibleGestures.slice().splice(gestureIndex, 1);
       }
     }.bind(this));
     return matchedGesture;
@@ -26912,7 +27683,11 @@ var Navigator = React.createClass({displayName: "Navigator",
   resetTo: function(route) {
     invariant(!!route, 'Must supply route to push');
     this.replaceAtIndex(route, 0, function()  {
-      this.popToRoute(route);
+      // Do not use popToRoute here, because race conditions could prevent the
+      // route from existing at this time. Instead, just go to index 0
+      if (this.state.presentedIndex > 0) {
+        this._popN(this.state.presentedIndex);
+      }
     }.bind(this));
   },
 
@@ -26920,13 +27695,13 @@ var Navigator = React.createClass({displayName: "Navigator",
     return this.state.routeStack;
   },
 
-  _handleItemRef: function(itemId, ref) {
+  _handleItemRef: function(itemId, route, ref) {
     this._itemRefs[itemId] = ref;
     var itemIndex = this.state.idStack.indexOf(itemId);
     if (itemIndex === -1) {
       return;
     }
-    this.props.onItemRef && this.props.onItemRef(ref, itemIndex);
+    this.props.onItemRef && this.props.onItemRef(ref, itemIndex, route);
   },
 
   _cleanScenesPastIndex: function(index) {
@@ -26963,7 +27738,8 @@ var Navigator = React.createClass({displayName: "Navigator",
           React.createElement(View, React.__spread({
             style: styles.transitioner}, 
             this.panGesture.panHandlers, 
-            {onResponderTerminationRequest: 
+            {onTouchStart: this._handleTouchStart, 
+            onResponderTerminationRequest: 
               this._handleResponderTerminationRequest
             }), 
             this.state.routeStack.map(this._renderOptimizedScene)
@@ -27034,7 +27810,7 @@ var Navigator = React.createClass({displayName: "Navigator",
         }.bind(this), 
         style: [styles.baseScene, this.props.sceneStyle, disabledSceneStyle]}, 
         React.cloneElement(child, {
-          ref: this._handleItemRef.bind(null, this.state.idStack[i]),
+          ref: this._handleItemRef.bind(null, this.state.idStack[i], route),
         })
       )
     );
@@ -28844,6 +29620,18 @@ var FadeToTheLeft = {
   },
 };
 
+var FadeToTheRight = Object.assign({},
+  FadeToTheLeft,
+  {transformTranslate: {
+    from: {x: 0, y: 0, z: 0},
+    to: {x: Math.round(SCREEN_WIDTH * 0.3), y: 0, z: 0},
+  },
+  translateX: {
+    from: 0,
+    to: Math.round(SCREEN_WIDTH * 0.3),
+  }
+});
+
 var FadeIn = {
   opacity: {
     from: 0,
@@ -28930,6 +29718,27 @@ var FromTheRight = {
   },
 };
 
+var FromTheLeft = Object.assign({},
+  FromTheRight,
+  {transformTranslate: {
+    from: {x: -SCREEN_WIDTH, y: 0, z: 0},
+    to: {x: 0, y: 0, z: 0},
+    min: 0,
+    max: 1,
+    type: 'linear',
+    extrapolate: true,
+    round: PixelRatio.get(),
+  },
+  translateX: {
+    from: -SCREEN_WIDTH,
+    to: 0,
+    min: 0, 
+    max: 1,
+    type: 'linear',
+    extrapolate: true,
+    round: PixelRatio.get(),
+  }
+});
 
 var ToTheBack = {
   // Rotate *requires* you to break out each individual component of
@@ -29117,6 +29926,13 @@ var NavigatorSceneConfigs = {
     BaseConfig
            
   ),
+  FloatFromLeft: Object.assign({},
+    BaseConfig,
+    {animationInterpolators: {
+      into: buildStyleInterpolator(FromTheLeft),
+      out: buildStyleInterpolator(FadeToTheRight),
+    }
+  }),
   FloatFromBottom: Object.assign({},
     BaseConfig,
     {gestures: {
@@ -29412,7 +30228,7 @@ var PanResponder = {
    * changes* in the centroid of recently moved touches.
    *
    * There is also some nuance with how we handle multiple moved touches in a
-   * single event. With the way `ReactIOSEventEmitter` dispatches touches as
+   * single event. With the way `ReactNativeEventEmitter` dispatches touches as
    * individual events, multiple touches generate two 'move' events, each of
    * them triggering `onResponderMove`. But with the way `PanResponder` works,
    * all of the gesture inference is performed on the first dispatch, since it
@@ -31432,7 +32248,7 @@ var RCTTabBarItem = requireNativeComponent('RCTTabBarItem', TabBarItemIOS);
 
 module.exports = TabBarItemIOS;
 });
-__d('Text',["NativeMethodsMixin","React","ReactIOSViewAttributes","StyleSheetPropType","TextStylePropTypes","Touchable","createReactIOSNativeComponentClass","merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('Text',["NativeMethodsMixin","React","ReactNativeViewAttributes","StyleSheetPropType","TextStylePropTypes","Touchable","createReactNativeComponentClass","merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -31447,19 +32263,19 @@ __d('Text',["NativeMethodsMixin","React","ReactIOSViewAttributes","StyleSheetPro
 
 var NativeMethodsMixin = require('NativeMethodsMixin');
 var React = require('React');
-var ReactIOSViewAttributes = require('ReactIOSViewAttributes');
+var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var StyleSheetPropType = require('StyleSheetPropType');
 var TextStylePropTypes = require('TextStylePropTypes');
 var Touchable = require('Touchable');
 
-var createReactIOSNativeComponentClass =
-  require('createReactIOSNativeComponentClass');
+var createReactNativeComponentClass =
+  require('createReactNativeComponentClass');
 var merge = require('merge');
 
 var stylePropType = StyleSheetPropType(TextStylePropTypes);
 
 var viewConfig = {
-  validAttributes: merge(ReactIOSViewAttributes.UIView, {
+  validAttributes: merge(ReactNativeViewAttributes.UIView, {
     isHighlighted: true,
     numberOfLines: true,
   }),
@@ -31610,7 +32426,6 @@ var Text = React.createClass({displayName: "Text",
     for (var key in this.props) {
       props[key] = this.props[key];
     }
-    props.ref = this.getNodeHandle();
     // Text is accessible by default
     if (props.accessible !== false) {
       props.accessible = true;
@@ -31636,7 +32451,7 @@ var Text = React.createClass({displayName: "Text",
 
 var PRESS_RECT_OFFSET = {top: 20, left: 20, right: 20, bottom: 30};
 
-var RCTText = createReactIOSNativeComponentClass(viewConfig);
+var RCTText = createReactNativeComponentClass(viewConfig);
 
 module.exports = Text;
 });
@@ -32406,7 +33221,7 @@ var TouchEventUtils = {
 
 module.exports = TouchEventUtils;
 });
-__d('queryLayoutByID',["ReactIOSTagHandles","NativeModules"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('queryLayoutByID',["ReactNativeTagHandles","NativeModules"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -32419,7 +33234,7 @@ __d('queryLayoutByID',["ReactIOSTagHandles","NativeModules"],function(global, re
  */
 'use strict';
 
-var ReactIOSTagHandles = require('ReactIOSTagHandles');
+var ReactNativeTagHandles = require('ReactNativeTagHandles');
 var RCTUIManager = require('NativeModules').UIManager;
 
                           
@@ -32460,7 +33275,7 @@ var queryLayoutByID = function(
 )       {
   // Native bridge doesn't *yet* surface errors.
   RCTUIManager.measure(
-    ReactIOSTagHandles.rootNodeIDToTag[rootNodeID],
+    ReactNativeTagHandles.rootNodeIDToTag[rootNodeID],
     onSuccess
   );
 };
@@ -32468,7 +33283,7 @@ var queryLayoutByID = function(
 module.exports = queryLayoutByID;
 
 });
-__d('TextInput',["DocumentSelectionState","EventEmitter","NativeMethodsMixin","NativeModules","Platform","ReactPropTypes","React","ReactChildren","ReactIOSViewAttributes","StyleSheet","Text","TextInputState","react-timer-mixin/TimerMixin","TouchableWithoutFeedback","createReactIOSNativeComponentClass","emptyFunction","invariant","merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('TextInput',["DocumentSelectionState","EventEmitter","NativeMethodsMixin","NativeModules","Platform","ReactPropTypes","React","ReactChildren","ReactNativeViewAttributes","StyleSheet","Text","TextInputState","react-timer-mixin/TimerMixin","TouchableWithoutFeedback","createReactNativeComponentClass","emptyFunction","invariant","merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -32489,14 +33304,14 @@ var Platform = require('Platform');
 var PropTypes = require('ReactPropTypes');
 var React = require('React');
 var ReactChildren = require('ReactChildren');
-var ReactIOSViewAttributes = require('ReactIOSViewAttributes');
+var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var StyleSheet = require('StyleSheet');
 var Text = require('Text');
 var TextInputState = require('TextInputState');
 var TimerMixin = require('react-timer-mixin/TimerMixin');
 var TouchableWithoutFeedback = require('TouchableWithoutFeedback');
 
-var createReactIOSNativeComponentClass = require('createReactIOSNativeComponentClass');
+var createReactNativeComponentClass = require('createReactNativeComponentClass');
 var emptyFunction = require('emptyFunction');
 var invariant = require('invariant');
 var merge = require('merge');
@@ -32505,7 +33320,7 @@ var autoCapitalizeConsts = RCTUIManager.UIText.AutocapitalizationType;
 var keyboardTypeConsts = RCTUIManager.UIKeyboardType;
 var returnKeyTypeConsts = RCTUIManager.UIReturnKeyType;
 
-var RCTTextViewAttributes = merge(ReactIOSViewAttributes.UIView, {
+var RCTTextViewAttributes = merge(ReactNativeViewAttributes.UIView, {
   autoCorrect: true,
   autoCapitalize: true,
   clearTextOnFocus: true,
@@ -32703,6 +33518,10 @@ var TextInput = React.createClass({displayName: "TextInput",
      */
     onSubmitEditing: PropTypes.func,
     /**
+     * Invoked on mount and layout changes with {x, y, width, height}.
+     */
+    onLayout: PropTypes.func,
+    /**
      * If true, the text input obscures the text entered so that sensitive text
      * like passwords stay secure. Default value is false.
      */
@@ -32775,7 +33594,7 @@ var TextInput = React.createClass({displayName: "TextInput",
 
   isFocused: function()          {
     return TextInputState.currentlyFocusedField() ===
-      this.refs.input.getNativeNode();
+      React.findNodeHandle(this.refs.input);
   },
 
   getDefaultProps: function()               {
@@ -32916,6 +33735,7 @@ var TextInput = React.createClass({displayName: "TextInput",
           onEndEditing: this.props.onEndEditing, 
           onSubmitEditing: this.props.onSubmitEditing, 
           onSelectionChangeShouldSetResponder: function()  {return true;}, 
+          onLayout: this.props.onLayout, 
           placeholder: this.props.placeholder, 
           placeholderTextColor: this.props.placeholderTextColor, 
           text: this.state.bufferedValue, 
@@ -32965,6 +33785,7 @@ var TextInput = React.createClass({displayName: "TextInput",
           onSelectionChange: this._onSelectionChange, 
           onTextInput: this._onTextInput, 
           onSelectionChangeShouldSetResponder: emptyFunction.thatReturnsTrue, 
+          onLayout: this.props.onLayout, 
           placeholder: this.props.placeholder, 
           placeholderTextColor: this.props.placeholderTextColor, 
           text: this.state.bufferedValue, 
@@ -33000,6 +33821,7 @@ var TextInput = React.createClass({displayName: "TextInput",
         onChange: this._onChange, 
         onEndEditing: this.props.onEndEditing, 
         onSubmitEditing: this.props.onSubmitEditing, 
+        onLayout: this.props.onLayout, 
         password: this.props.password || this.props.secureTextEntry, 
         placeholder: this.props.placeholder, 
         text: this.state.bufferedValue}
@@ -33052,7 +33874,7 @@ var TextInput = React.createClass({displayName: "TextInput",
     var counter = event.nativeEvent.eventCounter;
     if (counter > this.state.mostRecentEventCounter) {
       this.setState({mostRecentEventCounter: counter});
-    } 
+    }
   },
 });
 
@@ -33062,17 +33884,17 @@ var styles = StyleSheet.create({
   },
 });
 
-var RCTTextView = createReactIOSNativeComponentClass({
+var RCTTextView = createReactNativeComponentClass({
   validAttributes: RCTTextViewAttributes,
   uiViewClassName: 'RCTTextView',
 });
 
-var RCTTextField = createReactIOSNativeComponentClass({
+var RCTTextField = createReactNativeComponentClass({
   validAttributes: RCTTextFieldAttributes,
   uiViewClassName: 'RCTTextField',
 });
 
-var AndroidTextInput = createReactIOSNativeComponentClass({
+var AndroidTextInput = createReactNativeComponentClass({
   validAttributes: AndroidTextInputAttributes,
   uiViewClassName: 'AndroidTextInput',
 });
@@ -33955,7 +34777,7 @@ var TouchableWithoutFeedback = React.createClass({displayName: "TouchableWithout
 
 module.exports = TouchableWithoutFeedback;
 });
-__d('TouchableHighlight',["NativeMethodsMixin","React","ReactIOSViewAttributes","StyleSheet","react-timer-mixin/TimerMixin","Touchable","TouchableWithoutFeedback","View","cloneWithProps","ensureComponentIsNative","keyOf","merge","onlyChild"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('TouchableHighlight',["NativeMethodsMixin","React","ReactNativeViewAttributes","StyleSheet","react-timer-mixin/TimerMixin","Touchable","TouchableWithoutFeedback","View","cloneWithProps","ensureComponentIsNative","keyOf","merge","onlyChild"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -33971,7 +34793,7 @@ __d('TouchableHighlight',["NativeMethodsMixin","React","ReactIOSViewAttributes",
 
 var NativeMethodsMixin = require('NativeMethodsMixin');
 var React = require('React');
-var ReactIOSViewAttributes = require('ReactIOSViewAttributes');
+var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var StyleSheet = require('StyleSheet');
 var TimerMixin = require('react-timer-mixin/TimerMixin');
 var Touchable = require('Touchable');
@@ -34077,7 +34899,7 @@ var TouchableHighlight = React.createClass({displayName: "TouchableHighlight",
 
   viewConfig: {
     uiViewClassName: 'RCTView',
-    validAttributes: ReactIOSViewAttributes.RCTView
+    validAttributes: ReactNativeViewAttributes.RCTView
   },
 
   /**
@@ -34352,7 +35174,7 @@ __d('joinClasses',[],function(global, require, requireDynamic, requireLazy, modu
  * @param {...?string} classes
  * @return {string}
  */
-function joinClasses(className/*, ... */) {
+function joinClasses(className/* ... */) {
   if (!className) {
     className = '';
   }
@@ -34553,7 +35375,7 @@ var CHILD_REF = keyOf({childRef: null});
 
 module.exports = TouchableOpacity;
 });
-__d('POPAnimationMixin',["POPAnimation","invariant","warning"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('POPAnimationMixin',["POPAnimation","React","invariant","warning"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -34567,6 +35389,7 @@ __d('POPAnimationMixin',["POPAnimation","invariant","warning"],function(global, 
 'use strict';
 
 var POPAnimationOrNull = require('POPAnimation');
+var React = require('React');
 
 if (!POPAnimationOrNull) {
   // POP animation isn't available in the OSS fork - this is a temporary
@@ -34638,7 +35461,7 @@ var POPAnimationMixin = {
       'Invalid refKey ' + refKey + ' for anim:\n' + JSON.stringify(anim) +
         '\nvalid refs: ' + JSON.stringify(Object.keys(this.refs))
     );
-    var refNodeHandle = this.refs[refKey].getNodeHandle();
+    var refNodeHandle = React.findNodeHandle(this.refs[refKey]);
     this.startAnimationWithNodeHandle(refNodeHandle, animID, doneCallback);
   },
 
@@ -34747,7 +35570,7 @@ var POPAnimationMixin = {
    */
   stopAnimations: function(refKey        ) {
     invariant(this.refs[refKey], 'invalid ref');
-    this.stopNodeHandleAnimations(this.refs[refKey].getNodeHandle());
+    this.stopNodeHandleAnimations(React.findNodeHandle(this.refs[refKey]));
   },
 
   /**
@@ -34829,7 +35652,9 @@ var RCTPOPAnimationManager = require('NativeModules').POPAnimationManager;
 if (!RCTPOPAnimationManager) {
   // POP animation isn't available in the OSS fork - this is a temporary
   // workaround to enable its availability to be determined at runtime.
-  module.exports = (null         );
+  // For Flow let's pretend like we always export POPAnimation
+  // so all our users don't need to do null checks
+  module.exports = ((null     )                     );
 } else {
 
 var ReactPropTypes = require('ReactPropTypes');
@@ -35036,7 +35861,7 @@ function getObjectValues(obj) {
 
 module.exports = getObjectValues;
 });
-__d('WebView',["ActivityIndicatorIOS","EdgeInsetsPropType","React","ReactIOSViewAttributes","StyleSheet","Text","View","invariant","keyMirror","requireNativeComponent","NativeModules"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('WebView',["ActivityIndicatorIOS","EdgeInsetsPropType","React","ReactNativeViewAttributes","StyleSheet","Text","View","invariant","keyMirror","requireNativeComponent","NativeModules"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -35052,7 +35877,7 @@ __d('WebView',["ActivityIndicatorIOS","EdgeInsetsPropType","React","ReactIOSView
 var ActivityIndicatorIOS = require('ActivityIndicatorIOS');
 var EdgeInsetsPropType = require('EdgeInsetsPropType');
 var React = require('React');
-var ReactIOSViewAttributes = require('ReactIOSViewAttributes');
+var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var StyleSheet = require('StyleSheet');
 var Text = require('Text');
 var View = require('View');
@@ -35227,7 +36052,7 @@ var WebView = React.createClass({displayName: "WebView",
   },
 
   getWebWiewHandle: function()      {
-    return this.refs[RCT_WEBVIEW_REF].getNodeHandle();
+    return React.findNodeHandle(this.refs[RCT_WEBVIEW_REF]);
   },
 
   onLoadingStart: function(event       ) {
@@ -35291,7 +36116,7 @@ var styles = StyleSheet.create({
 
 module.exports = WebView;
 });
-__d('AlertIOS',["NativeModules"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('AlertIOS',["NativeModules","invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -35305,6 +36130,7 @@ __d('AlertIOS',["NativeModules"],function(global, require, requireDynamic, requi
 'use strict';
 
 var RCTAlertManager = require('NativeModules').AlertManager;
+var invariant = require('invariant');
 
 var DEFAULT_BUTTON_TEXT = 'OK';
 var DEFAULT_BUTTON = {
@@ -35340,14 +36166,17 @@ title         ,
     message          ,
     buttons          
                     
-                         
-      
+                          
+      ,
+    type          
   )       {
     var callbacks = [];
     var buttonsSpec = [];
     title = title || '';
     message = message || '';
     buttons = buttons || [DEFAULT_BUTTON];
+    type = type || '';
+
     buttons.forEach(function(btn, index)  {
       callbacks[index] = btn.onPress;
       var btnDef = {};
@@ -35358,12 +36187,50 @@ title         ,
       title:title,
       message:message,
       buttons: buttonsSpec,
-    }, function(id)  {
+      type:type,
+    }, function(id, value)  {
       var cb = callbacks[id];
-      cb && cb();
+      cb && cb(value);
     });
   };
 
+  AlertIOS.prompt=function(
+title        ,
+    value         ,
+    buttons          
+                    
+                          
+      ,
+    callback            
+  )       {
+    if (arguments.length === 2) {
+      if (typeof value === 'object') {
+        buttons = value;
+        value = undefined;
+      } else if (typeof value === 'function') {
+        callback = value;
+        value = undefined;
+      }
+    } else if (arguments.length === 3 && typeof buttons === 'function') {
+      callback = buttons;
+      buttons = undefined;
+    }
+
+    invariant(
+      !(callback && buttons) && (callback || buttons),
+      'Must provide either a button list or a callback, but not both'
+    );
+
+    if (!buttons) {
+      buttons = [{
+        text: 'Cancel',
+      }, {
+        text: 'OK',
+        onPress: callback
+      }];
+    }
+    this.alert(title, value, buttons, 'plain-text');
+  };
 
 
 module.exports = AlertIOS;
@@ -38833,6 +39700,8 @@ var getPhotosReturnChecker = createStrictShapeTypeChecker({
 });
 
 function CameraRoll(){}
+
+                                          
   /**
    * Saves the image with tag `tag` to the camera roll.
    *
@@ -40597,7 +41466,7 @@ for (eventType in topLevelTypes) {
 
 module.exports = ReactTestUtils;
 });
-__d('ReactIOSART',["art/core/color","ARTSerializablePath","art/core/transform","React","ReactIOSViewAttributes","createReactIOSNativeComponentClass","merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ReactNativeART',["art/core/color","ARTSerializablePath","art/core/transform","React","ReactNativeViewAttributes","createReactNativeComponentClass","merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -40605,7 +41474,7 @@ __d('ReactIOSART',["art/core/color","ARTSerializablePath","art/core/transform","
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule ReactIOSART
+ * @providesModule ReactNativeART
  */
 
 "use strict";
@@ -40615,9 +41484,9 @@ var Path = require('ARTSerializablePath');
 var Transform = require('art/core/transform');
 
 var React = require('React');
-var ReactIOSViewAttributes = require('ReactIOSViewAttributes');
+var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 
-var createReactIOSNativeComponentClass = require('createReactIOSNativeComponentClass');
+var createReactNativeComponentClass = require('createReactNativeComponentClass');
 var merge = require('merge');
 
 // Diff Helpers
@@ -40663,7 +41532,7 @@ function fontAndLinesDiffer(a, b) {
 
 // Native Attributes
 
-var SurfaceViewAttributes = merge(ReactIOSViewAttributes.UIView, {
+var SurfaceViewAttributes = merge(ReactNativeViewAttributes.UIView, {
   // This should contain pixel information such as width, height and
   // resolution to know what kind of buffer needs to be allocated.
   // Currently we rely on UIViews and style to figure that out.
@@ -40699,22 +41568,22 @@ var TextAttributes = merge(RenderableAttributes, {
 
 // Native Components
 
-var NativeSurfaceView = createReactIOSNativeComponentClass({
+var NativeSurfaceView = createReactNativeComponentClass({
   validAttributes: SurfaceViewAttributes,
   uiViewClassName: 'ARTSurfaceView',
 });
 
-var NativeGroup = createReactIOSNativeComponentClass({
+var NativeGroup = createReactNativeComponentClass({
   validAttributes: GroupAttributes,
   uiViewClassName: 'ARTGroup',
 });
 
-var NativeShape = createReactIOSNativeComponentClass({
+var NativeShape = createReactNativeComponentClass({
   validAttributes: ShapeAttributes,
   uiViewClassName: 'ARTShape',
 });
 
-var NativeText = createReactIOSNativeComponentClass({
+var NativeText = createReactNativeComponentClass({
   validAttributes: TextAttributes,
   uiViewClassName: 'ARTText',
 });
@@ -41929,12 +42798,12 @@ module.exports = Class({
 
 });
 });
-__d('react-native-camera/Camera.ios',["React","RCTDeviceEventEmitter","NativeModules","ReactIOSViewAttributes","StyleSheet","createReactIOSNativeComponentClass","ReactPropTypes","StyleSheetPropType","NativeMethodsMixin","flattenStyle","merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React = require('React');
+__d('react-native-camera/Camera.ios',["React","RCTDeviceEventEmitter","NativeModules","ReactNativeViewAttributes","StyleSheet","createReactNativeComponentClass","ReactPropTypes","StyleSheetPropType","NativeMethodsMixin","flattenStyle","merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React = require('React');
 var DeviceEventEmitter = require('RCTDeviceEventEmitter');
 var NativeModules = require('NativeModules');
-var ReactIOSViewAttributes = require('ReactIOSViewAttributes');
+var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var StyleSheet = require('StyleSheet');
-var createReactIOSNativeComponentClass = require('createReactIOSNativeComponentClass');
+var createReactNativeComponentClass = require('createReactNativeComponentClass');
 var PropTypes = require('ReactPropTypes');
 var StyleSheetPropType = require('StyleSheetPropType');
 var NativeMethodsMixin = require('NativeMethodsMixin');
@@ -41977,7 +42846,7 @@ var Camera = React.createClass({displayName: "Camera",
 
   viewConfig: {
     uiViewClassName: 'UIView',
-    validAttributes: ReactIOSViewAttributes.UIView
+    validAttributes: ReactNativeViewAttributes.UIView
   },
 
   getDefaultProps:function() {
@@ -42103,8 +42972,8 @@ var Camera = React.createClass({displayName: "Camera",
 
 });
 
-var RCTCamera = createReactIOSNativeComponentClass({
-  validAttributes: merge(ReactIOSViewAttributes.UIView, {
+var RCTCamera = createReactNativeComponentClass({
+  validAttributes: merge(ReactNativeViewAttributes.UIView, {
     aspect: true,
     type: true,
     orientation: true
@@ -42119,15 +42988,15 @@ var styles = StyleSheet.create({
 Camera.constants = constants;
 module.exports = Camera;
 });
-__d('Overlay',["createReactIOSNativeComponentClass","ReactIOSViewAttributes","merge","react-native/Libraries/react-native/react-native"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('Overlay',["createReactNativeComponentClass","ReactNativeViewAttributes","merge","react-native/Libraries/react-native/react-native"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * @providesModule Overlay
  * @flow
  */
 
 'use strict';
 
-var createReactIOSNativeComponentClass = require('createReactIOSNativeComponentClass');
-var ReactIOSViewAttributes = require('ReactIOSViewAttributes');
+var createReactNativeComponentClass = require('createReactNativeComponentClass');
+var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var merge = require('merge');
 
 var React = require('react-native/Libraries/react-native/react-native');
@@ -42165,8 +43034,8 @@ var Overlay = React.createClass({displayName: "Overlay",
   },
 });
 
-var RNOverlay = createReactIOSNativeComponentClass({
-  validAttributes: merge(ReactIOSViewAttributes.UIView, {visible: true, aboveStatusBar: true}),
+var RNOverlay = createReactNativeComponentClass({
+  validAttributes: merge(ReactNativeViewAttributes.UIView, {visible: true, aboveStatusBar: true}),
   uiViewClassName: 'RNOverlay',
 });
 
