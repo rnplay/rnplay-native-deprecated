@@ -18,12 +18,12 @@ var {
   TouchableOpacity
 } = React;
 
-var ReactART = require('ReactIOSART');
+var ReactART = require('ReactNativeART');
 var AppReloader = require('NativeModules').AppReloader;
 var Camera = require('react-native-camera');
 var Overlay = require('react-native-overlay');
 
-var REQUEST_URL = 'http://rnplay.org/plays.json';
+var REQUEST_URL = 'http://rnplay.org/plays/public.json';
 
 var RNPlayNative = React.createClass({
   getInitialState: function() {
