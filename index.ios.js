@@ -23,7 +23,7 @@ var AppReloader = require('NativeModules').AppReloader;
 var Camera = require('react-native-camera');
 var Overlay = require('react-native-overlay');
 
-var REQUEST_URL = 'http://rnplay.org/plays/public.json';
+var REQUEST_URL = 'http://rnplay.org/builds/0.4.4/plays/public.json';
 
 var RNPlayNative = React.createClass({
   getInitialState: function() {
