@@ -53,7 +53,19 @@
   self.window.backgroundColor = [UIColor blackColor];
   [self.window makeKeyAndVisible];
 
+  UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(goToHomeScreen:)];
+  swipeGesture.numberOfTouchesRequired = 2;
+      swipeGesture.direction = (UISwipeGestureRecognizerDirectionUp|UISwipeGestureRecognizerDirectionUp);
+
+  [self.window addGestureRecognizer:swipeGesture];
+
   return YES;
+}
+
+- (void)goToHomeScreen:(UISwipeGestureRecognizer*)swipeGesture {
+  [self.viewController
+             reloadWithJSBundleURL:[NSURL URLWithString:[[[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"] absoluteString]]
+             moduleNamed:@"RNPlayNative"];
 }
 
 @end
