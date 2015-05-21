@@ -1112,7 +1112,7 @@ var AppReloader = require('NativeModules').AppReloader;
 var Camera = require('react-native-camera/Camera.ios');
 var Overlay = require('Overlay');
 
-var REQUEST_URL = 'http://rnplay.org/plays/public.json';
+var REQUEST_URL = 'https://rnplay.org/builds/0.4.4/plays/public.json';
 
 var RNPlayNative = React.createClass({displayName: "RNPlayNative",
   getInitialState: function() {
@@ -1169,14 +1169,20 @@ var RNPlayNative = React.createClass({displayName: "RNPlayNative",
 
   renderApp: function(app) {
     return (
-      React.createElement(TouchableOpacity, {onPress: function()  {return this.selectApp(app);}.bind(this)}, 
-        React.createElement(Text, {style: styles.app}, app.name || app.module_name)
+      React.createElement(View, {style: styles.appContainer}, 
+        React.createElement(TouchableOpacity, {onPress: function()  {return this.selectApp(app);}.bind(this)}, 
+          React.createElement(Text, {style: styles.app}, app.name || app.module_name)
+        ), 
+        React.createElement(View, {style: styles.creator}, 
+          React.createElement(Text, {style: styles.username}, app.creator.username || 'anonymous'), 
+          React.createElement(Image, {style: styles.avatar, source: {uri: app.creator.avatar_url || 'https://facebook.github.io/react-native/img/header_logo.png'}})
+        )
       )
     );
+
   },
 
   selectApp: function(app) {
-    console.log(app);
     AppReloader.reloadAppWithURLString(app.bundle_url, app.module_name);
   },
 
@@ -1210,11 +1216,32 @@ var styles = StyleSheet.create({
     flex: 1,
     paddingTop: 30
   },
+  appContainer: {
+    marginBottom: 20
+  },
+  creator: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  username: {
+    fontSize: 12,
+    opacity: .5
+  },
   cameraButton: {
     height: 60,
     width: 20,
     alignSelf: 'center',
     marginLeft: 5
+  },
+  avatar: {
+    width: 20,
+    height: 20,
+    marginLeft: 5,
+    borderRadius: 10,
+    opacity: .5,
+    marginTop: 3,
+    backgroundColor: "#000"
   },
   cancelButton: {
     color: '#fff',
@@ -43052,6 +43079,6 @@ var styles = StyleSheet.create({
 
 module.exports = Overlay;
 });
-__d('image!photo-camera5',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/brentvatne/coding/RNPlayNative/build/Release-iphonesimulator/RNPlayNative.app/photo-camera5.png","uri":"photo-camera5","width":256,"height":256,"deprecated":true};});
+__d('image!photo-camera5',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/joshua/projects/RNPlayNative/photo-camera5.png","uri":"photo-camera5","width":256,"height":256,"deprecated":true};});
 ;require("RNPlayNative/index.ios");
 //@ sourceMappingURL=/index.ios.map
