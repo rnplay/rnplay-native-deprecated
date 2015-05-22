@@ -9,6 +9,7 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import "RCTLog.h"
 
 @interface AppDelegate()
 
@@ -21,7 +22,6 @@
   NSURL *initialJSBundleURL;
   NSString *initialModuleName;
 
-
   // Example:
   // NSString *suppliedAppId = @"qAFzcA";
   // NSString *suppliedModuleName = @"ParallaxExample";
@@ -31,9 +31,41 @@
    NSString *suppliedAppUrl = [[NSUserDefaults standardUserDefaults] stringForKey:@"bundleUrl"];
    NSString *useUIExplorer = [[NSUserDefaults standardUserDefaults] stringForKey:@"UIExplorer"];
 
+   RCTLogFunction RNPlayRemoteLogger = ^(
+     RCTLogLevel level,
+     NSString *fileName,
+     NSNumber *lineNumber,
+     NSString *message
+   )
+   {
+     NSString *log = RCTFormatLog(
+       [NSDate date], [NSThread currentThread], level, fileName, lineNumber, message
+     );
+
+     NSString *post = [NSString stringWithFormat:@"log_entry=%@", log.UTF8String];
+     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+     NSString *postLength = [NSString stringWithFormat:@"%d",[postData length]];
+     NSString *url = [NSString stringWithFormat:@"https://rnplay.org/plays/%@/log", suppliedAppId];
+
+     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+     [request setHTTPBody:postData];
+     NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+
+     if (conn) {
+       NSLog(@"Connection Successful");
+     } else {
+       NSLog(@"Connection could not be made");
+     }
+
+   };
+
+  [RCTSetLogFunction RNPlayRemoteLogger];
+
   if (suppliedAppId) {
-    initialJSBundleURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", @"http://packager.rnplay.org/", suppliedAppId, @".bundle"]];
-    initialModuleName = suppliedModuleName;
+    // initialJSBundleURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", @"http://packager.rnplay.org/", suppliedAppId, @".bundle"]];
+    // initialModuleName = suppliedModuleName;
   } else if (suppliedAppUrl) {
     initialJSBundleURL = [NSURL URLWithString:suppliedAppUrl];
     initialModuleName = suppliedModuleName;
