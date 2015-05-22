@@ -8,9 +8,12 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "RCTLog.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
+
+extern RCTLogFunction RNPlayRemoteLogger;
 
 @end

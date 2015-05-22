@@ -42,17 +42,17 @@
        [NSDate date], [NSThread currentThread], level, fileName, lineNumber, message
      );
 
-     NSString *post = [NSString stringWithFormat:@"log_entry=%@", log.UTF8String];
+     NSString *post = [NSString stringWithFormat:@"log_entry=%@&play_id=%@", log, @"6"];
      NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
      NSString *postLength = [NSString stringWithFormat:@"%d",[postData length]];
-     NSString *url = [NSString stringWithFormat:@"https://rnplay.org/plays/%@/log", suppliedAppId];
+     NSString *url = @"http://rnplay.ngrok.io/log";
 
      NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+     [request setHTTPMethod:@"POST"];
      [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
      [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
      [request setHTTPBody:postData];
      NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-
      if (conn) {
        NSLog(@"Connection Successful");
      } else {
@@ -61,12 +61,9 @@
 
    };
 
-  [RCTSetLogFunction RNPlayRemoteLogger];
+  RCTAddLogFunction(RNPlayRemoteLogger);
 
-  if (suppliedAppId) {
-    // initialJSBundleURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", @"http://packager.rnplay.org/", suppliedAppId, @".bundle"]];
-    // initialModuleName = suppliedModuleName;
-  } else if (suppliedAppUrl) {
+  if (suppliedAppUrl) {
     initialJSBundleURL = [NSURL URLWithString:suppliedAppUrl];
     initialModuleName = suppliedModuleName;
   } else if (useUIExplorer) {
