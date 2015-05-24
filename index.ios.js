@@ -84,8 +84,8 @@ var RNPlayNative = React.createClass({
           <Text style={styles.app}>{app.name || app.module_name}</Text>
         </TouchableOpacity>
         <View style={styles.creator}>
-          <Text style={styles.username}>{app.creator.username || 'anonymous'}</Text>
           <Image style={styles.avatar} source={{uri: app.creator.avatar_url || 'https://facebook.github.io/react-native/img/header_logo.png'}} />
+          <Text style={styles.username}>{app.creator.username || 'anonymous'}</Text>
         </View>
       </View>
     );
@@ -147,7 +147,7 @@ var styles = StyleSheet.create({
   avatar: {
     width: 20,
     height: 20,
-    marginLeft: 5,
+    marginRight: 5,
     borderRadius: 10,
     opacity: .5,
     marginTop: 3,

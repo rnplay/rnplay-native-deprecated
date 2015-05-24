@@ -1173,8 +1173,8 @@ var RNPlayNative = React.createClass({displayName: "RNPlayNative",
           React.createElement(Text, {style: styles.app}, app.name || app.module_name)
         ), 
         React.createElement(View, {style: styles.creator}, 
-          React.createElement(Text, {style: styles.username}, app.creator.username || 'anonymous'), 
-          React.createElement(Image, {style: styles.avatar, source: {uri: app.creator.avatar_url || 'https://facebook.github.io/react-native/img/header_logo.png'}})
+          React.createElement(Image, {style: styles.avatar, source: {uri: app.creator.avatar_url || 'https://facebook.github.io/react-native/img/header_logo.png'}}), 
+          React.createElement(Text, {style: styles.username}, app.creator.username || 'anonymous')
         )
       )
     );
@@ -1236,7 +1236,7 @@ var styles = StyleSheet.create({
   avatar: {
     width: 20,
     height: 20,
-    marginLeft: 5,
+    marginRight: 5,
     borderRadius: 10,
     opacity: .5,
     marginTop: 3,
