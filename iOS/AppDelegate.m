@@ -42,7 +42,9 @@
        [NSDate date], [NSThread currentThread], level, fileName, lineNumber, message
      );
 
-     NSString *post = [NSString stringWithFormat:@"log_entry=%@&play_id=%@", log, @"6"];
+     NSString *logAppId = (suppliedAppId) ? suppliedAppId : "RNPlayNative";
+
+     NSString *post = [NSString stringWithFormat:@"log_entry=%@&play_id=%@", log, logAppId];
      NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
      NSString *postLength = [NSString stringWithFormat:@"%d",[postData length]];
      NSString *url = @"http://rnplay.ngrok.io/log";
