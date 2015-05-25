@@ -53,11 +53,9 @@
   self.window.backgroundColor = [UIColor blackColor];
   [self.window makeKeyAndVisible];
 
-  UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(goToHomeScreen:)];
-  swipeGesture.numberOfTouchesRequired = 2;
-      swipeGesture.direction = (UISwipeGestureRecognizerDirectionUp|UISwipeGestureRecognizerDirectionUp);
-
-  [self.window addGestureRecognizer:swipeGesture];
+  UITapGestureRecognizer *quadTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToHomeScreen:)];
+  [quadTap setNumberOfTapsRequired:4];
+  [self.window addGestureRecognizer:quadTap];
 
   return YES;
 }
