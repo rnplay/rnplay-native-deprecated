@@ -41395,13 +41395,14 @@ var $__0=
   
   
   
-  React,Navigator=$__0.Navigator,StyleSheet=$__0.StyleSheet,Text=$__0.Text,TouchableOpacity=$__0.TouchableOpacity,View=$__0.View;
+  
+  React,Navigator=$__0.Navigator,StyleSheet=$__0.StyleSheet,Text=$__0.Text,TouchableOpacity=$__0.TouchableOpacity,View=$__0.View,Image=$__0.Image;
 
 var Landing = React.createClass({displayName: "Landing",
-  
+
   renderLogin:function(){
     this.props.navigator.push({
-      id: 'login', 
+      id: 'login',
       sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
       disableGestures: true
     })
@@ -41409,7 +41410,7 @@ var Landing = React.createClass({displayName: "Landing",
 
   renderSignup:function(){
     this.props.navigator.push({
-      id: 'signup', 
+      id: 'signup',
       sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
       disableGestures: true
     })
@@ -41418,6 +41419,11 @@ var Landing = React.createClass({displayName: "Landing",
   render:function(){
     return (
       React.createElement(View, {style: styles.mainContainer}, 
+          React.createElement(Image, {resizeMode: "contain", style: styles.logo, source: {uri: 'https://rnplay.org/assets/header_logo-e96d5680947c01bb1ebe7f56176a9b12fcc5556f294a1e6001275d245705bbd2.png'}}), 
+          React.createElement(Text, {style: styles.title}, "React Native Playground"), 
+          React.createElement(TouchableOpacity, {onPress: function()  {return this.props.navigator.push({id: "home"});}.bind(this)}, 
+            React.createElement(Text, {style: styles.buttonText}, "Browse recent plays")
+          ), 
         React.createElement(View, {style: styles.optionsContainer}, 
           React.createElement(View, {style: styles.options}, 
             React.createElement(TouchableOpacity, {onPress: this.renderSignup}, 
@@ -41438,22 +41444,38 @@ var styles = StyleSheet.create({
     flex: 1,
     marginTop: 20,
     flexDirection: 'column',
-    backgroundColor: 'white'
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'black'
   },
   optionsContainer: {
     width: Dimensions.get('window').width,
     position: 'absolute',
     bottom: 20
   },
+  title: {
+    color: '#eee',
+    marginTop: 20,
+    fontFamily: "Avenir Next",
+    marginBottom: 40,
+    textAlign: 'center',
+    fontSize: 50
+  },
+  logo: {
+    width: 60,
+    height: 60
+  },
+
   options: {
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
   buttonText: {
     fontSize: 16,
+    fontFamily: "Avenir Next",
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#712FA9',
+    color: 'white',
     padding: 10,
   }
 });
@@ -41709,15 +41731,13 @@ var styles = StyleSheet.create({
 
 module.exports = NavigationBar;
 });
-__d('RNPlayNative/App/Api/Core',[],function(global, require, requireDynamic, requireLazy, module, exports) {  var BASE_URL = 'http://rnplay.ka';
+__d('RNPlayNative/App/Api/Core',[],function(global, require, requireDynamic, requireLazy, module, exports) {  //var BASE_URL = 'http://rnplay.ka';
 
-//var BASE_URL = 'https://rnplay.org';
+var BASE_URL = 'https://rnplay.org';
 
 var Api = {
 
   get:function(url) {
-    console.log(BASE_URL+url);
-
     return fetch(BASE_URL + url).then(function(res)  {return res.json();});
   },
   post:function(url, body) {
@@ -41955,7 +41975,7 @@ var Home = React.createClass({displayName: "Home",
   },
 
   fetchApps: function() {
-    Api.get(MY_PLAYS_URL)
+    Api.get(RECENT_PLAYS_URL)
       .then(function(data)  {
         console.log(data);
         if (data.error) {

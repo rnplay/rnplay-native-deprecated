@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 var NavigationBar = require('../Components/NavigationBar');
-var Api = require('../Api/CoreApi');
+var Api = require('../Api/Core');
 
 var {
   ActivityIndicatorIOS,
@@ -17,7 +17,7 @@ var {
 } = React;
 
 var Signup = React.createClass({
-  
+
   getInitialState() {
     return {
       isLoading: false,
@@ -29,11 +29,11 @@ var Signup = React.createClass({
 
   handleSubmit(){
     if(!this.state.email || !this.state.password) {
-      AlertIOS.alert('Error', 'Please fill in all fields',[{text: 'OK'}]) 
+      AlertIOS.alert('Error', 'Please fill in all fields',[{text: 'OK'}])
       return;
     }
     if(this.state.password !== this.state.passwordConfirm) {
-      AlertIOS.alert('Error', 'Passwords do not match.',[{text: 'OK'}]) 
+      AlertIOS.alert('Error', 'Passwords do not match.',[{text: 'OK'}])
       return;
     }
     if(this.state.password.length < 5) {
@@ -42,7 +42,7 @@ var Signup = React.createClass({
     }
 
     this.setState({ isLoading: true });
-    
+
     var params = {
       user: {
         email: this.state.email,
@@ -50,7 +50,7 @@ var Signup = React.createClass({
       }
     };
 
-    Api.post('https://rnplay.org/users', params)
+    Api.post('/users', params)
       .then((res) => {
         if(res.error) {
           this.setState({
@@ -61,20 +61,19 @@ var Signup = React.createClass({
           });
           AlertIOS.alert('Sign Up Failed', this.state.error,[{text: 'OK'}]);
         } else {
-          console.log(res);
           // AppActions.updateProfile();
           this.setState({ isLoading: false, error: false });
-          this.props.navigator.replace({ id: 'home' });   
+          this.props.navigator.replace({ id: 'home' });
         }
     });
   },
- 
+
   render(){
     return (
       <View style={styles.mainContainer}>
-        <NavigationBar 
-          title={'Sign Up'} 
-          onPrev={() => this.props.navigator.pop()} 
+        <NavigationBar
+          title={'Sign Up'}
+          onPrev={() => this.props.navigator.pop()}
           prevTitle={'X'}
         />
         <ScrollView>
@@ -87,8 +86,8 @@ var Signup = React.createClass({
               returnKeyType={'next'}
               onSubmitEditing={() => this.refs.pwField.focus()}
               style={styles.input}
-              onChangeText={(text) => this.setState({email: text})} 
-            />         
+              onChangeText={(text) => this.setState({email: text})}
+            />
           </View>
 
           <View style={styles.inputContainer}>
@@ -99,8 +98,8 @@ var Signup = React.createClass({
               returnKeyType={'next'}
               onSubmitEditing={() => this.refs.pwConfirm.focus()}
               style={styles.input}
-              onChangeText={(text) => this.setState({password: text})} 
-            />             
+              onChangeText={(text) => this.setState({password: text})}
+            />
           </View>
 
            <View style={styles.inputContainer}>
@@ -111,8 +110,8 @@ var Signup = React.createClass({
               returnKeyType={'done'}
               onSubmitEditing={this.handleSubmit}
               style={styles.input}
-              onChangeText={(text) => this.setState({passwordConfirm: text})} 
-            />             
+              onChangeText={(text) => this.setState({passwordConfirm: text})}
+            />
           </View>
 
           <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
@@ -123,7 +122,7 @@ var Signup = React.createClass({
             animating={this.state.isLoading}
             color="#111"
             size="large">
-          </ActivityIndicatorIOS> 
+          </ActivityIndicatorIOS>
         </ScrollView>
       </View>
     )

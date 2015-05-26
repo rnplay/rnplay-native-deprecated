@@ -8,14 +8,15 @@ var {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
+  Image
 } = React;
 
 var Landing = React.createClass({
-  
+
   renderLogin(){
     this.props.navigator.push({
-      id: 'login', 
+      id: 'login',
       sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
       disableGestures: true
     })
@@ -23,7 +24,7 @@ var Landing = React.createClass({
 
   renderSignup(){
     this.props.navigator.push({
-      id: 'signup', 
+      id: 'signup',
       sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
       disableGestures: true
     })
@@ -32,6 +33,11 @@ var Landing = React.createClass({
   render(){
     return (
       <View style={styles.mainContainer}>
+          <Image resizeMode="contain" style={styles.logo} source={{uri: 'https://rnplay.org/assets/header_logo-e96d5680947c01bb1ebe7f56176a9b12fcc5556f294a1e6001275d245705bbd2.png'}} />
+          <Text style={styles.title}>React Native Playground</Text>
+          <TouchableOpacity onPress={() => this.props.navigator.push({id: "home"})}>
+            <Text style={styles.buttonText}>Browse recent plays</Text>
+          </TouchableOpacity>
         <View style={styles.optionsContainer}>
           <View style={styles.options}>
             <TouchableOpacity onPress={this.renderSignup}>
@@ -52,22 +58,38 @@ var styles = StyleSheet.create({
     flex: 1,
     marginTop: 20,
     flexDirection: 'column',
-    backgroundColor: 'white'
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'black'
   },
   optionsContainer: {
     width: Dimensions.get('window').width,
     position: 'absolute',
     bottom: 20
   },
+  title: {
+    color: '#eee',
+    marginTop: 20,
+    fontFamily: "Avenir Next",
+    marginBottom: 40,
+    textAlign: 'center',
+    fontSize: 50
+  },
+  logo: {
+    width: 60,
+    height: 60
+  },
+
   options: {
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
   buttonText: {
     fontSize: 16,
+    fontFamily: "Avenir Next",
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#712FA9',
+    color: 'white',
     padding: 10,
   }
 });
