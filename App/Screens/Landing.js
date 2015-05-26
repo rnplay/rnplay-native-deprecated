@@ -30,12 +30,20 @@ var Landing = React.createClass({
     })
   },
 
+  renderGuest(){
+    this.props.navigator.push({
+      id: 'guest',
+      sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+      disableGestures: true
+    })
+  },
+
   render(){
     return (
       <View style={styles.mainContainer}>
           <Image resizeMode="contain" style={styles.logo} source={{uri: 'https://rnplay.org/assets/header_logo-e96d5680947c01bb1ebe7f56176a9b12fcc5556f294a1e6001275d245705bbd2.png'}} />
           <Text style={styles.title}>React Native Playground</Text>
-          <TouchableOpacity onPress={() => this.props.navigator.push({id: "home"})}>
+          <TouchableOpacity onPress={this.renderGuest}>
             <Text style={styles.buttonText}>Browse recent plays</Text>
           </TouchableOpacity>
         <View style={styles.optionsContainer}>
