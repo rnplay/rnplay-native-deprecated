@@ -17,8 +17,7 @@ var store = createStore({
 
   dispatcherIndex: dispatcher.register((payload) => {
     var action = payload.action;
-    console.log('Profile: store ' + action);
-
+    
     switch(action.actionType) {
       case AppConstants.UPDATE_PROFILE:
         _profile = action.data;

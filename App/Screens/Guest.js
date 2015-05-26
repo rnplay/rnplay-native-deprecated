@@ -45,7 +45,6 @@ var Guest = React.createClass({
   fetchApps() {
     Api.get(RECENT_PLAYS_URL)
       .then((data) => {
-        console.log(data);
         if (data.error) {
           this.navigator.replace({id: "login"});
         }
