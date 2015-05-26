@@ -10,6 +10,7 @@ var Landing = require('./App/Screens/Landing');
 var Login = require('./App/Screens/Login');
 var Signup = require('./App/Screens/Signup');
 var Home = require('./App/Screens/Home');
+var Guest = require('./App/Screens/Guest');
 var ProfileStore = require('./App/Stores/ProfileStore');
 var LocalStorage = require('./App/Stores/LocalStorage');
 var _ = require('lodash');
@@ -40,6 +41,8 @@ var RNPlayNative = React.createClass({
     switch (route.id) {
       case 'home':
         return <Home navigator={nav} />;
+      case 'guest':
+        return <Guest navigator={nav} />;
       case 'landing':
         return <Landing navigator={nav} />;
       case 'login':
@@ -48,7 +51,7 @@ var RNPlayNative = React.createClass({
         return <Signup navigator={nav} />;
       default:
         return (
-          <Home navigator={nav} />
+          <Landing navigator={nav} />
         );
       }
   },
