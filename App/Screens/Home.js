@@ -22,7 +22,10 @@ var AppReloader = require('NativeModules').AppReloader;
 var Camera = require('react-native-camera');
 var Overlay = require('react-native-overlay');
 
-var REQUEST_URL = 'http://rnplay.org/builds/0.5.0-rc1/plays/public.json';
+var Api = require("../Api/Core");
+
+var RECENT_PLAYS_URL = '/builds/0.5.0-rc1/plays/public.json';
+var MY_PLAYS_URL = '/plays.json';
 
 var Home = React.createClass({
   getInitialState: function() {
@@ -40,9 +43,12 @@ var Home = React.createClass({
   },
 
   fetchApps: function() {
-    fetch(REQUEST_URL)
-      .then((response) => response.json())
+    Api.get(RECENT_PLAYS_URL)
       .then((data) => {
+        console.log(data);
+        if (data.error) {
+          this.navigator.replace({id: "login"});
+        }
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(data),
           loaded: true
@@ -77,16 +83,21 @@ var Home = React.createClass({
     );
   },
 
+  renderCreator: function(app) {
+    return app.creator ?
+    <View style={styles.creator}>
+      <Image style={styles.avatar} source={{uri: app.creator.avatar_url || 'https://facebook.github.io/react-native/img/header_logo.png'}} />
+      <Text style={styles.username}>{app.creator.username || 'anonymous'}</Text>
+    </View> : null
+  },
+
   renderApp: function(app) {
     return (
       <View style={styles.appContainer}>
         <TouchableOpacity onPress={() => this.selectApp(app)}>
           <Text style={styles.app}>{app.name || app.module_name}</Text>
         </TouchableOpacity>
-        <View style={styles.creator}>
-          <Image style={styles.avatar} source={{uri: app.creator.avatar_url || 'https://facebook.github.io/react-native/img/header_logo.png'}} />
-          <Text style={styles.username}>{app.creator.username || 'anonymous'}</Text>
-        </View>
+        { this.renderCreator(app) }
       </View>
     );
 
