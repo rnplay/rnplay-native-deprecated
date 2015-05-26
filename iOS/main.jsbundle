@@ -1087,7 +1087,7 @@ if (!String.prototype.repeat) {
   }
 })();
 
-__d('RNPlayNative/index.ios',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Screens/Landing","RNPlayNative/App/Screens/Login","RNPlayNative/App/Screens/Signup","RNPlayNative/App/Screens/Home","lodash/index"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('RNPlayNative/index.ios',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Screens/Landing","RNPlayNative/App/Screens/Login","RNPlayNative/App/Screens/Signup","RNPlayNative/App/Screens/Home","RNPlayNative/App/Stores/ProfileStore","RNPlayNative/App/Stores/LocalStorage","lodash/index"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * React Native Playground
  * https://github.com/jsierles/rnplay
  */
@@ -1099,6 +1099,8 @@ var Landing = require('RNPlayNative/App/Screens/Landing');
 var Login = require('RNPlayNative/App/Screens/Login');
 var Signup = require('RNPlayNative/App/Screens/Signup');
 var Home = require('RNPlayNative/App/Screens/Home');
+var ProfileStore = require('RNPlayNative/App/Stores/ProfileStore');
+var LocalStorage = require('RNPlayNative/App/Stores/LocalStorage');
 var _ = require('lodash/index');
 
 var $__0=
@@ -1109,11 +1111,18 @@ var $__0=
   
   React,AppRegistry=$__0.AppRegistry,Navigator=$__0.Navigator,StyleSheet=$__0.StyleSheet,Text=$__0.Text,View=$__0.View;
 
+var DEFAULT_ROUTE = {id: 'landing'};
 
 var RNPlayNative = React.createClass({displayName: "RNPlayNative",
+  
+  getInitialState:function() {
+    return { 
+      bootstrapped: false 
+    }
+  },
 
   componentDidMount:function() {
-    // this.fetchApps();
+    LocalStorage.bootstrap(function()  {return this.setState({bootstrapped: true});}.bind(this));
   },
 
   renderScene:function(route, nav) {
@@ -1134,7 +1143,15 @@ var RNPlayNative = React.createClass({displayName: "RNPlayNative",
   },
 
   render:function() {
-    var DEFAULT_ROUTE = {id: 'landing' };
+    if (this.state.bootstrapped == false) {
+      return React.createElement(View, null);
+    }
+    if(ProfileStore.getState().id){
+      DEFAULT_ROUTE.id = 'home';
+    } else {
+      DEFAULT_ROUTE.id = 'landing';
+    }
+
     return(
       React.createElement(Navigator, {
         initialRoute: DEFAULT_ROUTE, 
@@ -41482,11 +41499,12 @@ var styles = StyleSheet.create({
 
 module.exports = Landing;
 });
-__d('RNPlayNative/App/Screens/Login',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/NavigationBar","RNPlayNative/App/Api/Core"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+__d('RNPlayNative/App/Screens/Login',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/NavigationBar","RNPlayNative/App/Api/Core","RNPlayNative/App/Actions/AppActions"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 var React = require('react-native/Libraries/react-native/react-native');
 var NavigationBar = require('RNPlayNative/App/Components/NavigationBar');
 var Api = require('RNPlayNative/App/Api/Core');
+var AppActions = require('RNPlayNative/App/Actions/AppActions');
 
 var $__0=
   
@@ -41499,7 +41517,6 @@ var $__0=
   
   
   React,ActivityIndicatorIOS=$__0.ActivityIndicatorIOS,AlertIOS=$__0.AlertIOS,AsyncStorage=$__0.AsyncStorage,ScrollView=$__0.ScrollView,StyleSheet=$__0.StyleSheet,TextInput=$__0.TextInput,Text=$__0.Text,TouchableHighlight=$__0.TouchableHighlight,View=$__0.View;
-
 
 var Login = React.createClass({displayName: "Login",
 
@@ -41542,7 +41559,7 @@ var Login = React.createClass({displayName: "Login",
           });
           AlertIOS.alert('Sign In Failed', this.state.error,[{text: 'OK'}]);
         } else {
-          // AppActions.updateProfile();
+          AppActions.updateProfile(res);
           this.setState({ isLoading: false, error: false });
           this.props.navigator.replace({ id: 'home' });
         }
@@ -41767,11 +41784,33 @@ var Api = {
 
 module.exports = Api;
 });
-__d('RNPlayNative/App/Screens/Signup',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/NavigationBar","RNPlayNative/App/Api/Core"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+__d('RNPlayNative/App/Actions/AppActions',["RNPlayNative/App/Utilities/AppDispatcher","RNPlayNative/App/Constants/AppConstants","RNPlayNative/App/Api/Core"],function(global, require, requireDynamic, requireLazy, module, exports) {  var dispatcher = require('RNPlayNative/App/Utilities/AppDispatcher');
+var AppConstants = require('RNPlayNative/App/Constants/AppConstants');
+var Api = require('RNPlayNative/App/Api/Core');
+
+module.exports = {
+  updateProfile:function(profile) {
+    dispatcher.handleViewAction({
+      actionType: AppConstants.UPDATE_PROFILE,
+      data: profile
+    });
+  },
+}
+});
+__d('RNPlayNative/App/Utilities/AppDispatcher',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = require('flux-util').createDispatcher();
+});
+__d('RNPlayNative/App/Constants/AppConstants',["keyMirror"],function(global, require, requireDynamic, requireLazy, module, exports) {  var keyMirror = require('keyMirror');
+
+module.exports = keyMirror({
+  UPDATE_PROFILE: true,
+});
+});
+__d('RNPlayNative/App/Screens/Signup',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/NavigationBar","RNPlayNative/App/Api/Core","RNPlayNative/App/Actions/AppActions"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 var React = require('react-native/Libraries/react-native/react-native');
 var NavigationBar = require('RNPlayNative/App/Components/NavigationBar');
 var Api = require('RNPlayNative/App/Api/Core');
+var AppActions = require('RNPlayNative/App/Actions/AppActions');
 
 var $__0=
   
@@ -41830,7 +41869,7 @@ var Signup = React.createClass({displayName: "Signup",
           });
           AlertIOS.alert('Sign Up Failed', this.state.error,[{text: 'OK'}]);
         } else {
-          // AppActions.updateProfile();
+          AppActions.updateProfile(res);
           this.setState({ isLoading: false, error: false });
           this.props.navigator.replace({ id: 'home' });
         }
@@ -41948,7 +41987,7 @@ var $__0=
   
   
   
-  React,ActivityIndicatorIOS=$__0.ActivityIndicatorIOS,AppRegistry=$__0.AppRegistry,StyleSheet=$__0.StyleSheet,Text=$__0.Text,ListView=$__0.ListView,View=$__0.View,Image=$__0.Image,TouchableOpacity=$__0.TouchableOpacity;
+  React,ActivityIndicatorIOS=$__0.ActivityIndicatorIOS,AppRegistry=$__0.AppRegistry,Image=$__0.Image,ListView=$__0.ListView,StyleSheet=$__0.StyleSheet,Text=$__0.Text,TouchableOpacity=$__0.TouchableOpacity,View=$__0.View;
 
 var AppReloader = require('NativeModules').AppReloader;
 var Camera = require('react-native-camera/Camera.ios');
@@ -41960,7 +41999,7 @@ var RECENT_PLAYS_URL = '/builds/0.5.0-rc1/plays/public.json';
 var MY_PLAYS_URL = '/plays.json';
 
 var Home = React.createClass({displayName: "Home",
-  getInitialState: function() {
+  getInitialState:function() {
     return {
       loaded: false,
       isModalOpen: false,
@@ -41970,11 +42009,11 @@ var Home = React.createClass({displayName: "Home",
     };
   },
 
-  componentDidMount: function() {
+  componentDidMount:function() {
     this.fetchApps();
   },
 
-  fetchApps: function() {
+  fetchApps:function() {
     Api.get(RECENT_PLAYS_URL)
       .then(function(data)  {
         console.log(data);
@@ -41989,7 +42028,7 @@ var Home = React.createClass({displayName: "Home",
       .done();
   },
 
-  renderAppList: function() {
+  renderAppList:function() {
     return (
       React.createElement(View, {style: styles.container}, 
         React.createElement(Text, {style: styles.header}, "React Native Playground"), 
@@ -42015,7 +42054,7 @@ var Home = React.createClass({displayName: "Home",
     );
   },
 
-  renderCreator: function(app) {
+  renderCreator:function(app) {
     return app.creator ?
     React.createElement(View, {style: styles.creator}, 
       React.createElement(Image, {style: styles.avatar, source: {uri: app.creator.avatar_url || 'https://facebook.github.io/react-native/img/header_logo.png'}}), 
@@ -42023,7 +42062,7 @@ var Home = React.createClass({displayName: "Home",
     ) : null
   },
 
-  renderApp: function(app) {
+  renderApp:function(app) {
     return (
       React.createElement(View, {style: styles.appContainer}, 
         React.createElement(TouchableOpacity, {onPress: function()  {return this.selectApp(app);}.bind(this)}, 
@@ -42035,11 +42074,11 @@ var Home = React.createClass({displayName: "Home",
 
   },
 
-  selectApp: function(app) {
+  selectApp:function(app) {
     AppReloader.reloadAppWithURLString(app.bundle_url, app.module_name);
   },
 
-  renderLoading: function() {
+  renderLoading:function() {
     return (
       React.createElement(View, {style: styles.container}, 
         React.createElement(ActivityIndicatorIOS, {size: "large"})
@@ -42055,7 +42094,7 @@ var Home = React.createClass({displayName: "Home",
     }
   },
 
-  render: function() {
+  render:function() {
     if (!this.state.loaded) {
       return this.renderLoading();
     } else {
@@ -42373,6 +42412,86 @@ var styles = StyleSheet.create({
 module.exports = Overlay;
 });
 __d('image!photo-camera5',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/joshua/projects/RNPlayNative/photo-camera5.png","uri":"photo-camera5","width":256,"height":256,"deprecated":true};});
+__d('RNPlayNative/App/Stores/ProfileStore',["RNPlayNative/App/Utilities/AppDispatcher","RNPlayNative/App/Constants/AppConstants"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+var createStore = require('flux-util').createStore;
+var dispatcher = require('RNPlayNative/App/Utilities/AppDispatcher');
+var AppConstants = require('RNPlayNative/App/Constants/AppConstants');
+
+var _profile = {};
+
+var store = createStore({
+  setState:function(profile) {
+    _profile = profile || {};
+  },
+
+  getState:function() {
+    return _profile;
+  },
+
+  dispatcherIndex: dispatcher.register(function(payload)  {
+    var action = payload.action;
+    console.log('Profile: store ' + action);
+
+    switch(action.actionType) {
+      case AppConstants.UPDATE_PROFILE:
+        _profile = action.data;
+        store.emitChange(action);
+        break;
+    }
+
+    return true;
+  })
+});
+
+module.exports = store;
+});
+__d('RNPlayNative/App/Stores/LocalStorage',["RNPlayNative/App/Utilities/AppDispatcher","RNPlayNative/App/Constants/AppConstants","RNPlayNative/App/Stores/ProfileStore","react-native/Libraries/react-native/react-native"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+var createStore = require('flux-util').createStore;
+var dispatcher = require('RNPlayNative/App/Utilities/AppDispatcher');
+var AppConstants = require('RNPlayNative/App/Constants/AppConstants');
+var ProfileStore = require('RNPlayNative/App/Stores/ProfileStore');
+var React = require('react-native/Libraries/react-native/react-native');
+
+var $__0=
+  
+  
+  React,AsyncStorage=$__0.AsyncStorage,AlertIOS=$__0.AlertIOS;
+
+var PREFIX = '@USER:';
+var PROFILE_KEY = PREFIX + 'profile';
+
+var store = createStore({
+  bootstrap:function(complete) {
+    AsyncStorage.getItem(PROFILE_KEY, function(error, profile)  {
+      if (error) {
+        AlertIOS.alert(error.message);
+        complete();
+      } else {
+        ProfileStore.setState(JSON.parse(profile));
+        complete();
+      }
+    })
+  },
+
+  dispatcherIndex: dispatcher.register(function(payload)  {
+    var action = payload.action;
+
+    switch(action.actionType) {
+      case AppConstants.UPDATE_PROFILE:
+        AsyncStorage.setItem(PROFILE_KEY, JSON.stringify(action.data), function(error)  {
+          store.emitChange(action);
+        });
+      break;
+    }
+
+    return true;
+  })
+});
+
+module.exports = store;
+});
 __d('lodash/index',[],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * @license
  * lodash 3.9.3 (Custom Build) <https://lodash.com/>
