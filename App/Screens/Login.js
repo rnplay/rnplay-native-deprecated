@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 var NavigationBar = require('../Components/NavigationBar');
-var Api = require('../Api/CoreApi');
+var Api = require('../Api/Core');
 
 var {
   ActivityIndicatorIOS,
@@ -18,7 +18,7 @@ var {
 
 
 var Login = React.createClass({
-  
+
   getInitialState() {
     return {
       isLoading: false,
@@ -29,7 +29,7 @@ var Login = React.createClass({
 
   handleSubmit(){
     if(!this.state.email || !this.state.password) {
-      AlertIOS.alert('Error', 'Please fill in all fields',[{text: 'OK'}]) 
+      AlertIOS.alert('Error', 'Please fill in all fields',[{text: 'OK'}])
       return;
     }
 
@@ -39,7 +39,7 @@ var Login = React.createClass({
     }
 
     this.setState({ isLoading: true });
-    
+
     var params = {
       user: {
         email: this.state.email,
@@ -47,7 +47,7 @@ var Login = React.createClass({
       }
     };
 
-    Api.post('https://rnplay.org/users/sign_in', params)
+    Api.post('/users/sign_in', params)
       .then((res) => {
         if(res.error) {
           this.setState({
@@ -58,20 +58,19 @@ var Login = React.createClass({
           });
           AlertIOS.alert('Sign In Failed', this.state.error,[{text: 'OK'}]);
         } else {
-          console.log(res);
           // AppActions.updateProfile();
           this.setState({ isLoading: false, error: false });
-          this.props.navigator.replace({ id: 'home' });   
+          this.props.navigator.replace({ id: 'home' });
         }
     });
   },
- 
+
   render(){
     return (
       <View style={styles.mainContainer}>
-        <NavigationBar 
-          title={'Login'} 
-          onPrev={() => this.props.navigator.pop()} 
+        <NavigationBar
+          title={'Login'}
+          onPrev={() => this.props.navigator.pop()}
           prevTitle={'X'}
         />
         <ScrollView>
@@ -84,8 +83,8 @@ var Login = React.createClass({
               returnKeyType={'next'}
               onSubmitEditing={() => this.refs.pwField.focus()}
               style={styles.input}
-              onChangeText={(text) => this.setState({email: text})} 
-            />         
+              onChangeText={(text) => this.setState({email: text})}
+            />
           </View>
 
           <View style={styles.inputContainer}>
@@ -96,8 +95,8 @@ var Login = React.createClass({
               returnKeyType={'done'}
               onSubmitEditing={this.handleSubmit}
               style={styles.input}
-              onChangeText={(text) => this.setState({password: text})} 
-            />             
+              onChangeText={(text) => this.setState({password: text})}
+            />
           </View>
 
           <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
@@ -108,7 +107,7 @@ var Login = React.createClass({
             animating={this.state.isLoading}
             color="#111"
             size="large">
-          </ActivityIndicatorIOS> 
+          </ActivityIndicatorIOS>
       </ScrollView>
 
         </View>
