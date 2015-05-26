@@ -3,6 +3,7 @@
 var React = require('react-native');
 var NavigationBar = require('../Components/NavigationBar');
 var Api = require('../Api/Core');
+var AppActions = require('../Actions/AppActions');
 
 var {
   ActivityIndicatorIOS,
@@ -15,7 +16,6 @@ var {
   TouchableHighlight,
   View
 } = React;
-
 
 var Login = React.createClass({
 
@@ -58,7 +58,7 @@ var Login = React.createClass({
           });
           AlertIOS.alert('Sign In Failed', this.state.error,[{text: 'OK'}]);
         } else {
-          // AppActions.updateProfile();
+          AppActions.updateProfile(res);
           this.setState({ isLoading: false, error: false });
           this.props.navigator.replace({ id: 'home' });
         }

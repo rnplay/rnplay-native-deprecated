@@ -10,6 +10,8 @@ var Landing = require('./App/Screens/Landing');
 var Login = require('./App/Screens/Login');
 var Signup = require('./App/Screens/Signup');
 var Home = require('./App/Screens/Home');
+var ProfileStore = require('./App/Stores/ProfileStore');
+var LocalStorage = require('./App/Stores/LocalStorage');
 var _ = require('lodash');
 
 var {
@@ -20,11 +22,18 @@ var {
   View,
 } = React;
 
+var DEFAULT_ROUTE = {id: 'landing'};
 
 var RNPlayNative = React.createClass({
+  
+  getInitialState() {
+    return { 
+      bootstrapped: false 
+    }
+  },
 
   componentDidMount() {
-    // this.fetchApps();
+    LocalStorage.bootstrap(() => this.setState({bootstrapped: true}));
   },
 
   renderScene(route, nav) {
@@ -45,7 +54,15 @@ var RNPlayNative = React.createClass({
   },
 
   render() {
-    var DEFAULT_ROUTE = {id: 'landing' };
+    if (this.state.bootstrapped == false) {
+      return <View />;
+    }
+    if(ProfileStore.getState().id){
+      DEFAULT_ROUTE.id = 'home';
+    } else {
+      DEFAULT_ROUTE.id = 'landing';
+    }
+
     return(
       <Navigator
         initialRoute={DEFAULT_ROUTE}
