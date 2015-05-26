@@ -28,7 +28,7 @@ var RECENT_PLAYS_URL = '/builds/0.5.0-rc1/plays/public.json';
 var MY_PLAYS_URL = '/plays.json';
 
 var Home = React.createClass({
-  getInitialState: function() {
+  getInitialState() {
     return {
       loaded: false,
       isModalOpen: false,
@@ -38,11 +38,11 @@ var Home = React.createClass({
     };
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     this.fetchApps();
   },
 
-  fetchApps: function() {
+  fetchApps() {
     Api.get(RECENT_PLAYS_URL)
       .then((data) => {
         console.log(data);
@@ -57,7 +57,7 @@ var Home = React.createClass({
       .done();
   },
 
-  renderAppList: function() {
+  renderAppList() {
     return (
       <View style={styles.container}>
         <Text style={styles.header}>React Native Playground</Text>
@@ -83,7 +83,7 @@ var Home = React.createClass({
     );
   },
 
-  renderCreator: function(app) {
+  renderCreator(app) {
     return app.creator ?
     <View style={styles.creator}>
       <Image style={styles.avatar} source={{uri: app.creator.avatar_url || 'https://facebook.github.io/react-native/img/header_logo.png'}} />
@@ -91,7 +91,7 @@ var Home = React.createClass({
     </View> : null
   },
 
-  renderApp: function(app) {
+  renderApp(app) {
     return (
       <View style={styles.appContainer}>
         <TouchableOpacity onPress={() => this.selectApp(app)}>
@@ -103,11 +103,11 @@ var Home = React.createClass({
 
   },
 
-  selectApp: function(app) {
+  selectApp(app) {
     AppReloader.reloadAppWithURLString(app.bundle_url, app.module_name);
   },
 
-  renderLoading: function() {
+  renderLoading() {
     return (
       <View style={styles.container}>
         <ActivityIndicatorIOS size="large" />
@@ -123,7 +123,7 @@ var Home = React.createClass({
     }
   },
 
-  render: function() {
+  render() {
     if (!this.state.loaded) {
       return this.renderLoading();
     } else {
