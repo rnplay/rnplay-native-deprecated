@@ -59,11 +59,10 @@ var RNPlayNative = React.createClass({
             }
           }
           return Navigator.SceneConfigs.HorizontalSwipeJump;
-        }}      
+        }}
       />
     )
   }
 });
 
 AppRegistry.registerComponent('RNPlayNative', () => RNPlayNative);
-

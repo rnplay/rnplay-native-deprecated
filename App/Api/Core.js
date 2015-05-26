@@ -1,10 +1,14 @@
+//var BASE_URL = 'http://rnplay.ka';
+
+var BASE_URL = 'https://rnplay.org';
+
 var Api = {
-    
+
   get(url) {
-    return fetch(url).then((res) => res.json());
+    return fetch(BASE_URL + url).then((res) => res.json());
   },
   post(url, body) {
-    return fetch(url, {
+    return fetch(BASE_URL + url, {
       method: 'post',
         headers: {
           'Accept': 'application/json',
@@ -14,7 +18,7 @@ var Api = {
     }).then((res) => res.json());
   },
   put(url, body) {
-    return fetch(url, {
+    return fetch(BASE_URL + url, {
       method: 'put',
         headers: {
           'Accept': 'application/json',
@@ -24,7 +28,7 @@ var Api = {
     }).then((res) => res.json());
   },
   delete(url) {
-    return fetch(url, { method: 'delete' }).then((res) => res.json());
+    return fetch(BASE_URL + url, { method: 'delete' }).then((res) => res.json());
   }
 };
 
