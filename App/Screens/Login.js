@@ -22,12 +22,22 @@ var Login = React.createClass({
   getInitialState() {
     return {
       isLoading: false,
+      error: false,
       email: '',
       password: '',
+
     }
   },
 
-  handleSubmit(){
+  renderError() {
+    return (
+      <View style={styles.errorContainer}>
+        <Text>{this.props.error}</Text>
+      </View>
+    )
+  },
+
+  handleSubmit() {
     if(!this.state.email || !this.state.password) {
       AlertIOS.alert('Error', 'Please fill in all fields',[{text: 'OK'}])
       return;
@@ -51,7 +61,7 @@ var Login = React.createClass({
       .then((res) => {
         if(res.error) {
           this.setState({
-            error: res.error,
+            // error: res.error,
             isLoading: false,
             email: this.state.email,
             password: this.state.password
@@ -102,6 +112,8 @@ var Login = React.createClass({
           <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
             <Text style={styles.buttonText}>LOG IN</Text>
           </TouchableHighlight>
+          
+          {this.props.error && this.renderError()}
 
           <ActivityIndicatorIOS
             animating={this.state.isLoading}
@@ -142,6 +154,10 @@ var styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     padding: 10,
+  },
+  errorContainer: {
+    justifyContent: 'center',
+    alignSelf: 'center',
   }
 });
 
