@@ -8,7 +8,7 @@
   "dependencies": {
     "art": "^0.10.0",
     "lodash": "^3.7.0",
-    "react-native": "0.5.0-rc1",
+    "react-native": "0.4.4",
     "react-native-camera": "brentvatne/react-native-camera",
     "react-native-modal": "^0.3.1",
     "react-native-overlay": "^0.2.1"
