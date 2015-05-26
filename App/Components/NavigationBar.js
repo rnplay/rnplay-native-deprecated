@@ -49,9 +49,9 @@ var NavigationBar = React.createClass({
 
     if(this.props.onNext && this.props.nextTitle) {
       return (
-        <TouchableOpacity onPress={onPrev}>
+        <TouchableOpacity onPress={onNext}>
           <Text style={styles.navButton}>
-            {prevTitle}
+            {nextTitle}
           </Text>
         </TouchableOpacity>
       )
