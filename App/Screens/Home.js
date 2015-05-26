@@ -24,7 +24,7 @@ var Overlay = require('react-native-overlay');
 
 var Api = require("../Api/Core");
 
-var RECENT_PLAYS_URL = '/builds/0.5.0-rc1/plays/public.json';
+// var RECENT_PLAYS_URL = '/builds/0.5.0-rc1/plays/public.json';
 var MY_PLAYS_URL = '/plays.json';
 
 var Home = React.createClass({
@@ -43,11 +43,10 @@ var Home = React.createClass({
   },
 
   fetchApps() {
-    Api.get(RECENT_PLAYS_URL)
+    Api.get(MY_PLAYS_URL)
       .then((data) => {
-        console.log(data);
         if (data.error) {
-          this.navigator.replace({id: "login"});
+          this.props.navigator.replace({id: "login", error: data.error});
         }
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(data),

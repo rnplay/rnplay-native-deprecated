@@ -46,7 +46,7 @@ var RNPlayNative = React.createClass({
       case 'landing':
         return <Landing navigator={nav} />;
       case 'login':
-        return <Login navigator={nav} />;
+        return <Login navigator={nav} error={route.error}/>;
       case 'signup':
         return <Signup navigator={nav} />;
       default:
