@@ -29,8 +29,7 @@ var store = createStore({
 
   dispatcherIndex: dispatcher.register((payload) => {
     var action = payload.action;
-    console.log("Local storage " + action)
-    
+
     switch(action.actionType) {
       case AppConstants.UPDATE_PROFILE:
         AsyncStorage.setItem(PROFILE_KEY, JSON.stringify(action.data), (error) => {
