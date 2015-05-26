@@ -10,12 +10,12 @@ var React = require('react-native');
 var {
   ActivityIndicatorIOS,
   AppRegistry,
+  Image,
+  ListView,
   StyleSheet,
   Text,
-  ListView,
-  View,
-  Image,
-  TouchableOpacity
+  TouchableOpacity,
+  View
 } = React;
 
 var AppReloader = require('NativeModules').AppReloader;
