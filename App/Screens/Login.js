@@ -120,9 +120,8 @@ var Login = React.createClass({
             color="#111"
             size="large">
           </ActivityIndicatorIOS>
-      </ScrollView>
-
-        </View>
+        </ScrollView>
+      </View>
     )
   }
 });
