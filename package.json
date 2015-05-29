@@ -11,6 +11,7 @@
     "lodash": "^3.7.0",
     "react-native": "0.4.4",
     "react-native-camera": "brentvatne/react-native-camera",
+    "react-native-icons": "0.0.8",
     "react-native-modal": "^0.3.1",
     "react-native-overlay": "^0.2.1"
   }
