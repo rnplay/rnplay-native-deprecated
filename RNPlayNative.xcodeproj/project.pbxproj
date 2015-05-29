@@ -30,6 +30,7 @@
 		1111D1681B18CC4B007370BA /* foundation-icons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1111D1481B18CB73007370BA /* foundation-icons.ttf */; };
 		1111D1691B18CC4B007370BA /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1111D1491B18CB73007370BA /* ionicons.ttf */; };
 		1111D16A1B18CC4B007370BA /* zocial-regular-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1111D14A1B18CB73007370BA /* zocial-regular-webfont.ttf */; };
+		1111D16C1B18E126007370BA /* Avenir Next.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 1111D16B1B18E126007370BA /* Avenir Next.ttc */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
@@ -189,6 +190,7 @@
 		1111D1481B18CB73007370BA /* foundation-icons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "foundation-icons.ttf"; path = "node_modules/react-native-icons/ios/ReactNativeIcons/Libraries/FontAwesomeKit/foundation-icons.ttf"; sourceTree = "<group>"; };
 		1111D1491B18CB73007370BA /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ionicons.ttf; path = "node_modules/react-native-icons/ios/ReactNativeIcons/Libraries/FontAwesomeKit/ionicons.ttf"; sourceTree = "<group>"; };
 		1111D14A1B18CB73007370BA /* zocial-regular-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zocial-regular-webfont.ttf"; path = "node_modules/react-native-icons/ios/ReactNativeIcons/Libraries/FontAwesomeKit/zocial-regular-webfont.ttf"; sourceTree = "<group>"; };
+		1111D16B1B18E126007370BA /* Avenir Next.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Next.ttc"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* RNPlayNative.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RNPlayNative.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = iOS/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = iOS/AppDelegate.m; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 		1111D15B1B18CB9D007370BA /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				1111D16B1B18E126007370BA /* Avenir Next.ttc */,
 				1111D13C1B18CB72007370BA /* FAKFontAwesome.h */,
 				1111D13D1B18CB73007370BA /* FAKFontAwesome.m */,
 				1111D13E1B18CB73007370BA /* FAKFoundationIcons.h */,
@@ -736,6 +739,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1111D16C1B18E126007370BA /* Avenir Next.ttc in Resources */,
 				1111D15C1B18CC4B007370BA /* FAKFontAwesome.h in Resources */,
 				1111D15D1B18CC4B007370BA /* FAKFontAwesome.m in Resources */,
 				1111D15E1B18CC4B007370BA /* FAKFoundationIcons.h in Resources */,
