@@ -79,11 +79,12 @@ var styles = StyleSheet.create({
   navbarContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#712FA9',
     borderBottomColor: 'rgba(0, 0, 0, 0.5)',
     borderBottomWidth: 1 / PixelRatio.get(),
     justifyContent: 'space-between',
-    padding: 10
+    height: 60,
+    paddingTop: 15,
   },
   navButton: {
     flex: 0.1,
@@ -92,7 +93,10 @@ var styles = StyleSheet.create({
   navTitle: {
     flex: 0.8,
     textAlign: 'center',
-    fontSize: 15,
+    color: 'white',
+    fontFamily: 'Avenir Next',
+    fontSize: 18,
+    fontWeight: '400'
   },
 });
 
