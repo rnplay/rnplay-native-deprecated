@@ -67,16 +67,6 @@ var MyApps = React.createClass({
         <TouchableOpacity onPress={() => this.setState({isModalOpen: true})}>
           <Image style={styles.cameraButton} resizeMode="contain" source={require("image!photo-camera5")} />
         </TouchableOpacity>
-        <Overlay isVisible={this.state.isModalOpen}>
-          <Camera
-            ref="cam"
-            style={styles.container}
-            onBarCodeRead={this.onBarCodeRead}>
-            <TouchableOpacity onPress={() => this.setState({isModalOpen: false})}>
-              <Text style={styles.cancelButton}>X</Text>
-            </TouchableOpacity>
-          </Camera>
-        </Overlay>
       </View>
     );
   },
