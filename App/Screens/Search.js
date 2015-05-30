@@ -9,12 +9,10 @@ var {
   View
 } = React;
 
-var AppList = require("../Components/AppList");
-
 var Explore = React.createClass({
   getInitialState() {
     return {
-      values: ['Picks', 'Search'],
+      values: ['Picks', 'Favorites', 'Search'],
       value: 'Picks',
       selectedIndex: 0
     }
@@ -29,9 +27,7 @@ var Explore = React.createClass({
   },
 
   renderPicks() {
-    return(
-      <AppList url="/plays/picks.json" />
-    );
+    return(<Text>Picks</Text>);
   },
 
   _onChange(event) {
@@ -49,6 +45,7 @@ var Explore = React.createClass({
   render(){
     return (
       <View style={styles.mainContainer}>
+        <NavigationBar title={'Explore'} />
         <View style={styles.segmentContainer}>
           <SegmentedControlIOS
           tintColor={'#712FA9'}
@@ -58,6 +55,7 @@ var Explore = React.createClass({
         </View>
         {this.state.value == 'Picks' && this.renderPicks()}
         {this.state.value == 'Search' && this.renderSearch()}
+        {this.state.value == 'Favorites' && this.renderFavorites()}
       </View>
     )
   }
