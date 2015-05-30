@@ -34,8 +34,21 @@
   self.rootView = [[RCTRootView alloc] initWithBundleURL:JSBundleURL
                                               moduleName:moduleName
                                            launchOptions:self.launchOptions];
+  
+  self.rootView.loadingView = [self spinner];
+  self.rootView.loadingViewFadeDelay = 0.0;
+  self.rootView.loadingViewFadeDuration = 0.15;
+  
   self.rootView.frame = self.view.bounds;
   [self.view addSubview:self.rootView];
+}
+
+- (UIActivityIndicatorView *)spinner {
+  UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] init];
+  [spinner setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+  [spinner setColor:[UIColor colorWithRed:113.0f/255.0f green:47.0f/255.0f blue:169.0f/255.0f alpha:1.0f]];
+  [spinner startAnimating];
+  return spinner;
 }
 
 @end
