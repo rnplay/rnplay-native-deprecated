@@ -23,8 +23,6 @@ var {
   StatusBarIOS
 } = React;
 
-var DEFAULT_ROUTE = {id: 'home'};
-
 var RNPlayNative = React.createClass({
 
   getInitialState() {
@@ -39,44 +37,11 @@ var RNPlayNative = React.createClass({
 
   },
 
-  renderScene(route, nav) {
-    switch (route.id) {
-      case 'home':
-        return <Home navigator={nav} />;
-      case 'guest':
-        return <Guest navigator={nav} />;
-      case 'login':
-        return <Login navigator={nav} error={route.error}/>;
-      case 'signup':
-        return <Signup navigator={nav} />;
-      default:
-        return (
-          <Home navigator={nav} />
-        );
-      }
-  },
-
   render() {
     if (this.state.bootstrapped == false) {
       return <View />;
     }
-
-    return(
-      <Navigator
-        initialRoute={DEFAULT_ROUTE}
-        renderScene={this.renderScene}
-        configureScene={(route) => {
-          if (route.sceneConfig) {
-            if(route.disableGestures) {
-              return _.omit(route.sceneConfig, 'gestures');
-            } else {
-                return route.sceneConfig;
-            }
-          }
-          return Navigator.SceneConfigs.HorizontalSwipeJump;
-        }}
-      />
-    )
+    return <Home />;
   }
 });
 

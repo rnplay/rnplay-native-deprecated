@@ -63,7 +63,7 @@
 
 - (void)goToHomeScreen:(UISwipeGestureRecognizer*)swipeGesture {
   [self.viewController
-             reloadWithJSBundleURL:[NSURL URLWithString:[[[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"] absoluteString]]
+             reloadWithJSBundleURL:[NSURL URLWithString:JSURL]
              moduleNamed:@"RNPlayNative"];
 }
 

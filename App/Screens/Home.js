@@ -7,7 +7,7 @@
 
 var React = require('react-native');
 var Explore = require('./Explore');
-var MyApps = require('./MyApps');
+var My = require('./My');
 var Settings = require('./Settings');
 
 var SMXTabBarIOS = require('SMXTabBarIOS');
@@ -31,7 +31,7 @@ var Home = React.createClass({
       <SMXTabBarIOS
         selectedTab={this.state.selectedTab}
         tintColor={'#712FA9'}
-        barTintColor={'white'}>  
+        barTintColor={'white'}>
         <SMXTabBarItemIOS
           name="explore"
           iconName={'ion|ios-search-strong'}
@@ -58,7 +58,7 @@ var Home = React.createClass({
               selectedTab: 'my-apps',
             });
           }}>
-          <MyApps />
+          <My />
         </SMXTabBarItemIOS>
         <SMXTabBarItemIOS
             name="settings"
