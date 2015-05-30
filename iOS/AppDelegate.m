@@ -9,6 +9,7 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import "JSURL.h"
 
 @interface AppDelegate()
 
@@ -41,7 +42,7 @@
     initialJSBundleURL = [NSURL URLWithString:[[[NSBundle mainBundle] URLForResource:@"uiexplorer" withExtension:@"jsbundle"] absoluteString]];
     initialModuleName = @"UIExplorerApp";
   } else {
-    initialJSBundleURL = [NSURL URLWithString:[[[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"] absoluteString]];
+    initialJSBundleURL = [NSURL URLWithString:JSURL];
     initialModuleName = @"RNPlayNative";
   }
 
