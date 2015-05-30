@@ -6,7 +6,6 @@
 'use strict';
 
 var React = require('react-native');
-var Landing = require('./App/Screens/Landing');
 var Login = require('./App/Screens/Login');
 var Signup = require('./App/Screens/Signup');
 var Home = require('./App/Screens/Home');
@@ -23,7 +22,7 @@ var {
   View,
 } = React;
 
-var DEFAULT_ROUTE = {id: 'landing'};
+var DEFAULT_ROUTE = {id: 'home'};
 
 var RNPlayNative = React.createClass({
 
@@ -43,15 +42,13 @@ var RNPlayNative = React.createClass({
         return <Home navigator={nav} />;
       case 'guest':
         return <Guest navigator={nav} />;
-      case 'landing':
-        return <Landing navigator={nav} />;
       case 'login':
         return <Login navigator={nav} error={route.error}/>;
       case 'signup':
         return <Signup navigator={nav} />;
       default:
         return (
-          <Landing navigator={nav} />
+          <Home navigator={nav} />
         );
       }
   },
@@ -60,8 +57,6 @@ var RNPlayNative = React.createClass({
     if (this.state.bootstrapped == false) {
       return <View />;
     }
-
-    DEFAULT_ROUTE.id = 'home';
 
     return(
       <Navigator
