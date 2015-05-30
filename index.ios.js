@@ -26,10 +26,10 @@ var {
 var DEFAULT_ROUTE = {id: 'landing'};
 
 var RNPlayNative = React.createClass({
-  
+
   getInitialState() {
-    return { 
-      bootstrapped: false 
+    return {
+      bootstrapped: false
     }
   },
 
@@ -60,11 +60,8 @@ var RNPlayNative = React.createClass({
     if (this.state.bootstrapped == false) {
       return <View />;
     }
-    if(ProfileStore.getState().id){
-      DEFAULT_ROUTE.id = 'home';
-    } else {
-      DEFAULT_ROUTE.id = 'landing';
-    }
+
+    DEFAULT_ROUTE.id = 'home';
 
     return(
       <Navigator
