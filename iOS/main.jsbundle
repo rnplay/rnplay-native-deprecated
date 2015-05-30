@@ -41755,11 +41755,12 @@ var styles = StyleSheet.create({
   navbarContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#712FA9',
     borderBottomColor: 'rgba(0, 0, 0, 0.5)',
     borderBottomWidth: 1 / PixelRatio.get(),
     justifyContent: 'space-between',
-    padding: 10
+    height: 60,
+    paddingTop: 15,
   },
   navButton: {
     flex: 0.1,
@@ -41768,7 +41769,10 @@ var styles = StyleSheet.create({
   navTitle: {
     flex: 0.8,
     textAlign: 'center',
-    fontSize: 15,
+    color: 'white',
+    fontFamily: 'Avenir Next',
+    fontSize: 18,
+    fontWeight: '400'
   },
 });
 
@@ -44074,7 +44078,7 @@ var styles = StyleSheet.create({
 
 module.exports = Signup;
 });
-__d('RNPlayNative/App/Screens/Home',["react-native/Libraries/react-native/react-native","NativeModules","react-native-camera/Camera.ios","Overlay","RNPlayNative/App/Api/Core","image!photo-camera5"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('RNPlayNative/App/Screens/Home',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Screens/Explore","RNPlayNative/App/Screens/MyApps","RNPlayNative/App/Screens/Settings","SMXTabBarIOS"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * React Native Playground
  * https://github.com/jsierles/rnplay
  */
@@ -44082,6 +44086,171 @@ __d('RNPlayNative/App/Screens/Home',["react-native/Libraries/react-native/react-
 'use strict';
 
 var React = require('react-native/Libraries/react-native/react-native');
+var Explore = require('RNPlayNative/App/Screens/Explore');
+var MyApps = require('RNPlayNative/App/Screens/MyApps');
+var Settings = require('RNPlayNative/App/Screens/Settings');
+
+var SMXTabBarIOS = require('SMXTabBarIOS');
+var SMXTabBarItemIOS = SMXTabBarIOS.Item;
+
+var $__0=
+  
+  
+  
+  React,AppRegistry=$__0.AppRegistry,StyleSheet=$__0.StyleSheet,Text=$__0.Text;
+
+var Home = React.createClass({displayName: "Home",
+  getInitialState:function() {
+    return {
+      selectedTab: 'explore',
+    };
+  },
+
+  render:function() {
+    return (
+      React.createElement(SMXTabBarIOS, {
+        selectedTab: this.state.selectedTab, 
+        tintColor: '#712FA9', 
+        barTintColor: 'white'}, 
+        React.createElement(SMXTabBarItemIOS, {
+          name: "explore", 
+          iconName: 'ion|ios-search-strong', 
+          title: 'Explore', 
+          iconSize: 32, 
+          accessibilityLabel: "Explore Tab", 
+          selected: this.state.selectedTab === 'explore', 
+          onPress: function()  {
+            this.setState({
+              selectedTab: 'explore',
+            });
+          }.bind(this)}, 
+          React.createElement(Explore, null)
+        ), 
+        React.createElement(SMXTabBarItemIOS, {
+            name: "my-apps", 
+            iconName: 'ion|ios-briefcase-outline', 
+            title: 'My Apps', 
+            iconSize: 32, 
+            accessibilityLabel: "My Apps Tab", 
+            selected: this.state.selectedTab === 'my-apps', 
+            onPress: function()  {
+            this.setState({
+              selectedTab: 'my-apps',
+            });
+          }.bind(this)}, 
+          React.createElement(MyApps, null)
+        ), 
+        React.createElement(SMXTabBarItemIOS, {
+            name: "settings", 
+            iconName: 'ion|gear-a', 
+            title: 'Settings', 
+            iconSize: 32, 
+            accessibilityLabel: "Settings Tab", 
+            selected: this.state.selectedTab === 'settings', 
+            onPress: function()  {
+            this.setState({
+              selectedTab: 'settings',
+            });
+          }.bind(this)}, 
+          React.createElement(Settings, null)
+        )
+      )
+    )
+  }
+});
+
+module.exports = Home;
+});
+__d('RNPlayNative/App/Screens/Explore',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/NavigationBar"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+var React = require('react-native/Libraries/react-native/react-native');
+var NavigationBar = require('RNPlayNative/App/Components/NavigationBar');
+
+var $__0=
+  
+  
+  
+  
+  React,SegmentedControlIOS=$__0.SegmentedControlIOS,StyleSheet=$__0.StyleSheet,Text=$__0.Text,View=$__0.View;
+
+var Explore = React.createClass({displayName: "Explore",
+  getInitialState:function() {
+    return {
+      values: ['Picks', 'Favorites', 'Search'],
+      value: 'Picks',
+      selectedIndex: 0
+    }
+  },
+
+  renderSearch:function() {
+    return(React.createElement(Text, null, "Search"));
+  },
+
+  renderFavorites:function() {
+    return(React.createElement(Text, null, "Favorites"));
+  },
+
+  renderPicks:function() {
+    return(React.createElement(Text, null, "Picks"));
+  },
+
+  _onChange:function(event) {
+    this.setState({
+      selectedIndex: event.nativeEvent.selectedIndex,
+    });
+  },
+
+  _onValueChange:function(value) {
+    this.setState({
+      value: value,
+    });
+  },
+
+  render:function(){
+    return (
+      React.createElement(View, {style: styles.mainContainer}, 
+        React.createElement(NavigationBar, {title: 'Explore'}), 
+        React.createElement(View, {style: styles.segmentContainer}, 
+          React.createElement(SegmentedControlIOS, {
+          tintColor: '#712FA9', 
+          values: this.state.values, 
+          selectedIndex: this.state.selectedIndex, 
+          onValueChange: this._onValueChange})
+        ), 
+        this.state.value == 'Picks' && this.renderPicks(), 
+        this.state.value == 'Search' && this.renderSearch(), 
+        this.state.value == 'Favorites' && this.renderFavorites()
+      )
+    )
+  }
+});
+
+var styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'white'
+  },
+  segmentContainer: {
+    margin: 20,
+  },
+});
+
+module.exports = Explore;
+});
+__d('RNPlayNative/App/Screens/MyApps',["react-native/Libraries/react-native/react-native","NativeModules","react-native-camera/Camera.ios","Overlay","RNPlayNative/App/Api/Core","RNPlayNative/App/Components/NavigationBar","image!photo-camera5"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+ * React Native Playground
+ * https://github.com/jsierles/rnplay
+ */
+
+'use strict';
+
+var React = require('react-native/Libraries/react-native/react-native');
+var AppReloader = require('NativeModules').AppReloader;
+var Camera = require('react-native-camera/Camera.ios');
+var Overlay = require('Overlay');
+var Api = require("RNPlayNative/App/Api/Core");
+var NavigationBar = require('RNPlayNative/App/Components/NavigationBar');
 
 var $__0=
   
@@ -44094,16 +44263,10 @@ var $__0=
   
   React,ActivityIndicatorIOS=$__0.ActivityIndicatorIOS,AppRegistry=$__0.AppRegistry,Image=$__0.Image,ListView=$__0.ListView,StyleSheet=$__0.StyleSheet,Text=$__0.Text,TouchableOpacity=$__0.TouchableOpacity,View=$__0.View;
 
-var AppReloader = require('NativeModules').AppReloader;
-var Camera = require('react-native-camera/Camera.ios');
-var Overlay = require('Overlay');
+var RECENT_PLAYS_URL = '/builds/0.5.0-rc1/plays/public.json';
+// var MY_PLAYS_URL = '/plays.json';
 
-var Api = require("RNPlayNative/App/Api/Core");
-
-// var RECENT_PLAYS_URL = '/builds/0.5.0-rc1/plays/public.json';
-var MY_PLAYS_URL = '/plays.json';
-
-var Home = React.createClass({displayName: "Home",
+var MyApps = React.createClass({displayName: "MyApps",
   getInitialState:function() {
     return {
       loaded: false,
@@ -44119,7 +44282,7 @@ var Home = React.createClass({displayName: "Home",
   },
 
   fetchApps:function() {
-    Api.get(MY_PLAYS_URL)
+    Api.get(RECENT_PLAYS_URL)
       .then(function(data)  {
         if (data.error) {
           this.props.navigator.replace({id: "login", error: data.error});
@@ -44135,7 +44298,7 @@ var Home = React.createClass({displayName: "Home",
   renderAppList:function() {
     return (
       React.createElement(View, {style: styles.container}, 
-        React.createElement(Text, {style: styles.header}, "React Native Playground"), 
+        React.createElement(NavigationBar, {title: 'My Apps'}), 
         React.createElement(ListView, {
           dataSource: this.state.dataSource, 
           renderRow: this.renderApp, 
@@ -44210,7 +44373,6 @@ var Home = React.createClass({displayName: "Home",
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 30
   },
   appContainer: {
     marginBottom: 20
@@ -44259,7 +44421,7 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = Home;
+module.exports = MyApps;
 });
 __d('react-native-camera/Camera.ios',["React","RCTDeviceEventEmitter","NativeModules","ReactNativeViewAttributes","StyleSheet","createReactNativeComponentClass","ReactPropTypes","StyleSheetPropType","NativeMethodsMixin","flattenStyle","merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React = require('React');
 var DeviceEventEmitter = require('RCTDeviceEventEmitter');
@@ -44516,6 +44678,187 @@ var styles = StyleSheet.create({
 module.exports = Overlay;
 });
 __d('image!photo-camera5',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/joshua/projects/RNPlayNative/photo-camera5.png","uri":"photo-camera5","width":256,"height":256,"deprecated":true};});
+__d('RNPlayNative/App/Screens/Settings',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/NavigationBar"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+var React = require('react-native/Libraries/react-native/react-native');
+var NavigationBar = require('RNPlayNative/App/Components/NavigationBar');
+
+var $__0=
+  
+  
+  
+  React,StyleSheet=$__0.StyleSheet,Text=$__0.Text,View=$__0.View;
+
+var Settings = React.createClass({displayName: "Settings",
+
+  render:function(){
+    return (
+      React.createElement(View, {style: styles.mainContainer}, 
+        React.createElement(NavigationBar, {title: 'Settings'})
+      )
+    )
+  }
+});
+
+var styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'white'
+  },
+
+});
+
+module.exports = Settings;
+});
+__d('SMXTabBarIOS',["React","ReactNativeViewAttributes","SMXTabBarItemIOS","StyleSheet","merge","createReactNativeComponentClass"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+ *
+ * @providesModule SMXTabBarIOS
+ * @flow
+ */
+'use strict';
+
+var React = require('React');
+var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
+var SMXTabBarIconItemIOS = require('SMXTabBarItemIOS');
+var StyleSheet = require('StyleSheet');
+var merge = require('merge');
+
+var createReactNativeComponentClass = require('createReactNativeComponentClass');
+
+var SMXTabBarIOS = React.createClass({displayName: "SMXTabBarIOS",
+  statics: {
+    Item: SMXTabBarIconItemIOS,
+  },
+  render: function () {
+    var NativeProps = {
+      tintColor : this.props.tintColor,
+      barTintColor : this.props.barTintColor,
+      translucent : this.props.translucent
+    };
+    return (
+      React.createElement(SMXIconTabBar, React.__spread({style: [styles.tabGroup, this.props.style]},  NativeProps), 
+        this.props.children
+      )
+    );
+  }
+});
+
+var styles = StyleSheet.create({
+  tabGroup: {
+    flex: 1
+  }
+});
+
+var config = {
+  validAttributes: merge(ReactNativeViewAttributes.UIView, {
+    tintColor: true,
+    barTintColor: true,
+    translucent: true
+  }),
+  uiViewClassName: 'SMXTabBar',
+};
+var SMXIconTabBar = createReactNativeComponentClass(config);
+
+module.exports = SMXTabBarIOS;
+});
+__d('SMXTabBarItemIOS',["Image","React","ReactNativeViewAttributes","Dimensions","StaticContainer.react","StyleSheet","View","createReactNativeComponentClass","merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+ *
+ * @providesModule SMXTabBarItemIOS
+ * @flow
+ */
+'use strict';
+
+var Image = require('Image');
+var React = require('React');
+var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
+var Dimensions = require('Dimensions');
+var StaticContainer = require('StaticContainer.react');
+var StyleSheet = require('StyleSheet');
+var View = require('View');
+
+var createReactNativeComponentClass = require('createReactNativeComponentClass');
+var merge = require('merge');
+
+var SmixxTabBarItemIOS = React.createClass({displayName: "SmixxTabBarItemIOS",
+  propTypes: {
+    //icon: Image.propTypes.source.isRequired,
+    onPress: React.PropTypes.func.isRequired,
+    selected: React.PropTypes.bool.isRequired,
+    badgeValue: React.PropTypes.string,
+    title: React.PropTypes.string,
+    style: View.propTypes.style,
+  },
+
+  getInitialState: function() {
+    return {
+      hasBeenSelected: false,
+    };
+  },
+
+  componentWillMount: function() {
+    if (this.props.selected) {
+      this.setState({hasBeenSelected: true});
+    }
+  },
+
+  componentWillReceiveProps: function(nextProps                       ) {
+  if (this.state.hasBeenSelected || nextProps.selected) {
+    this.setState({hasBeenSelected: true});
+  }
+},
+
+render: function() {
+  var tabContents = null;
+  // if the tab has already been shown once, always continue to show it so we
+  // preserve state between tab transitions
+  if (this.state.hasBeenSelected) {
+    tabContents =
+      React.createElement(StaticContainer, {shouldUpdate: this.props.selected}, 
+          this.props.children
+      );
+  } else {
+    tabContents = React.createElement(View, null);
+  }
+
+  var icon = {name : this.props.iconName, size: this.props.iconSize ? this.props.iconSize : 28};
+
+  return (
+    React.createElement(SmixxTabBarItem, {
+      icon: icon, 
+      selectedIcon: icon, 
+      onPress: this.props.onPress, 
+      selected: this.props.selected, 
+      badgeValue: this.props.badgeValue, 
+      title: this.props.title, 
+      style: [styles.tab, this.props.style]}, 
+        tabContents
+    )
+  );
+}
+});
+
+var styles = StyleSheet.create({
+  tab: {
+    position: 'absolute',
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  }
+});
+
+var SmixxTabBarItem = createReactNativeComponentClass({
+  validAttributes: merge(ReactNativeViewAttributes.UIView, {
+    title: true,
+    icon: true,
+    selectedIcon: true,
+    selected: true,
+    badgeValue: true,
+  }),
+  uiViewClassName: 'SMXTabBarItem'
+});
+
+module.exports = SmixxTabBarItemIOS;
+});
 __d('RNPlayNative/App/Screens/Guest',["react-native/Libraries/react-native/react-native","NativeModules","react-native-camera/Camera.ios","Overlay","RNPlayNative/App/Api/Core","image!photo-camera5"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * React Native Playground
  * https://github.com/jsierles/rnplay
