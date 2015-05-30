@@ -20,6 +20,7 @@ var {
   StyleSheet,
   Text,
   View,
+  StatusBarIOS
 } = React;
 
 var DEFAULT_ROUTE = {id: 'home'};
@@ -33,7 +34,9 @@ var RNPlayNative = React.createClass({
   },
 
   componentDidMount() {
+    StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
     LocalStorage.bootstrap(() => this.setState({bootstrapped: true}));
+
   },
 
   renderScene(route, nav) {
