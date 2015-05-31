@@ -33,12 +33,13 @@
 		1111D16C1B18E126007370BA /* Avenir Next.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 1111D16B1B18E126007370BA /* Avenir Next.ttc */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
+		13B07FBD1A68108700A75B9A /* LaunchScreenPurple.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreenPurple.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		42F2283C1AF7E25B00A26CF9 /* photo-camera5.png in Resources */ = {isa = PBXBuildFile; fileRef = 42F2283B1AF7E25B00A26CF9 /* photo-camera5.png */; };
 		42F228431AF7E4D000A26CF9 /* libRNOverlay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F228421AF7E4BE00A26CF9 /* libRNOverlay.a */; };
+		551EAB191B1A87B4009233AF /* LaunchScreenWhite.xib in Resources */ = {isa = PBXBuildFile; fileRef = 551EAB171B1A87B4009233AF /* LaunchScreenWhite.xib */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		BB0C0AEC1B02ACF800BDEA30 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB0C0ADF1B02ACE900BDEA30 /* libART.a */; };
 		BB0C0AF81B02FF7F00BDEA30 /* uiexplorer.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = BB0C0AF71B02FF7F00BDEA30 /* uiexplorer.jsbundle */; };
@@ -194,13 +195,14 @@
 		13B07F961A680F5B00A75B9A /* RNPlayNative.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RNPlayNative.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = iOS/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = iOS/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreenPurple.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iOS/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = iOS/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = iOS/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		42F2283B1AF7E25B00A26CF9 /* photo-camera5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-camera5.png"; sourceTree = "<group>"; };
 		42F2283D1AF7E4BE00A26CF9 /* RNOverlay.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNOverlay.xcodeproj; path = "node_modules/react-native-overlay/RNOverlay.xcodeproj"; sourceTree = "<group>"; };
+		551EAB181B1A87B4009233AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iOS/Base.lproj/LaunchScreenWhite.xib; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		BB0C0ADA1B02ACE900BDEA30 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
@@ -362,7 +364,8 @@
 				EE49F76E1AFA1F8D002F30A8 /* ViewController.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
+				13B07FB11A68108700A75B9A /* LaunchScreenPurple.xib */,
+				551EAB171B1A87B4009233AF /* LaunchScreenWhite.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = RNPlayNative;
@@ -751,6 +754,7 @@
 				1111D1641B18CC4B007370BA /* FAKZocial.h in Resources */,
 				1111D1651B18CC4B007370BA /* FAKZocial.m in Resources */,
 				1111D1661B18CC4B007370BA /* FontAwesome.otf in Resources */,
+				551EAB191B1A87B4009233AF /* LaunchScreenWhite.xib in Resources */,
 				1111D1671B18CC4B007370BA /* FontAwesomeKit.h in Resources */,
 				1111D1681B18CC4B007370BA /* foundation-icons.ttf in Resources */,
 				1111D1691B18CC4B007370BA /* ionicons.ttf in Resources */,
@@ -759,7 +763,7 @@
 				BB0C0AF81B02FF7F00BDEA30 /* uiexplorer.jsbundle in Resources */,
 				BBA8F26A1B0D267C009C7EB9 /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				13B07FBD1A68108700A75B9A /* LaunchScreenPurple.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -811,13 +815,21 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		13B07FB11A68108700A75B9A /* LaunchScreen.xib */ = {
+		13B07FB11A68108700A75B9A /* LaunchScreenPurple.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				13B07FB21A68108700A75B9A /* Base */,
 			);
-			name = LaunchScreen.xib;
+			name = LaunchScreenPurple.xib;
 			path = iOS;
+			sourceTree = "<group>";
+		};
+		551EAB171B1A87B4009233AF /* LaunchScreenWhite.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				551EAB181B1A87B4009233AF /* Base */,
+			);
+			name = LaunchScreenWhite.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -867,7 +879,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../React/**",
 					"$(SRCROOT)/node_modules/react-native/React/**",
+					"$(SRCROOT)/../react-native/React/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -883,7 +897,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../React/**",
 					"$(SRCROOT)/node_modules/react-native/React/**",
+					"$(SRCROOT)/../react-native/React/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
