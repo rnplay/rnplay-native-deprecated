@@ -83,7 +83,7 @@ var AppList = React.createClass({
   renderLoading() {
     return (
       <View style={styles.container}>
-        <ActivityIndicatorIOS size="large" />
+        <ActivityIndicatorIOS color={'#712FA9'} style={styles.spinner} size="large" />
       </View>
     );
   },
@@ -145,7 +145,10 @@ var styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
     color: '#712FA9'
-  }
+  },
+  spinner: {
+    flex: 1,
+  },
 });
 
 module.exports = AppList;
