@@ -28,7 +28,8 @@ var {
   Text,
   TouchableOpacity,
   View,
-  Navigator
+  Navigator,
+  StatusBarIOS,
 } = React;
 
 var My = React.createClass({
@@ -47,6 +48,8 @@ var My = React.createClass({
   },
 
   render() {
+    StatusBarIOS.setStyle(StatusBarIOS.Style.darkContent);
+
     if(ProfileStore.getState().id){
       DEFAULT_ROUTE.id = 'my_apps';
     } else {

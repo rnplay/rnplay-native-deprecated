@@ -6,7 +6,8 @@ var {
   SegmentedControlIOS,
   StyleSheet,
   Text,
-  View
+  View,
+  StatusBarIOS,
 } = React;
 
 var AppList = require("../Components/AppList");
@@ -47,6 +48,7 @@ var Explore = React.createClass({
   },
 
   render(){
+    StatusBarIOS.setStyle(StatusBarIOS.Style.darkContent);
     return (
       <View style={styles.mainContainer}>
         <View style={styles.segmentContainer}>
@@ -65,6 +67,7 @@ var Explore = React.createClass({
 
 var styles = StyleSheet.create({
   mainContainer: {
+    marginTop: 20,
     flex: 1,
     flexDirection: 'column',
     backgroundColor: 'white'
