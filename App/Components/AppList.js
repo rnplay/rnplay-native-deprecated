@@ -144,7 +144,7 @@ var styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
-    color: '#2B608A'
+    color: '#712FA9'
   }
 });
 
