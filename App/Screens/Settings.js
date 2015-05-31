@@ -6,12 +6,14 @@ var NavigationBar = require('../Components/NavigationBar');
 var {
   StyleSheet,
   Text,
-  View
+  View,
+  StatusBarIOS,
 } = React;
 
 var Settings = React.createClass({
 
   render(){
+    StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
     return (
       <View style={styles.mainContainer}>
         <NavigationBar title={'Settings'} />
