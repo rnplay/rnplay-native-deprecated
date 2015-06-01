@@ -8,13 +8,25 @@ var {
   View,
 } = React;
 
+var Accordion = require('react-native-accordion');
+
 var About = React.createClass({
   render() {
     return (
       <View>
-        <Text style={styles.aboutTitle}>React Native Playground</Text>
-        <Text style={styles.aboutText}>What is this app?</Text>
-        <Text style={styles.aboutText}>How do I exit loaded apps?</Text>
+        <Accordion
+           underlayColor="#3a3638"
+           header=<Text style={styles.aboutText}>What's this app for?</Text>
+           content=<Text style={styles.aboutText}>Running React Natibe apps from rnplay.org directly on your device.</Text>
+           easing="easeOutCubic"
+         />
+
+         <Accordion
+            underlayColor="#3a3638"
+            header=<Text style={styles.aboutText}>How do I exit a loaded app?</Text>
+            content=<Text style={styles.aboutText}>Tap the same spot four times, quickly.</Text>
+            easing="easeOutCubic"
+          />
       </View>
     );
   }
