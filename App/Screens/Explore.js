@@ -104,18 +104,20 @@ var Explore = React.createClass({
 
 var styles = StyleSheet.create({
   mainContainer: {
-    marginTop: 20,
+    marginTop: 30,
     flex: 1,
     flexDirection: 'column',
     backgroundColor: 'white'
   },
   topContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginBottom: 10
   },
   segmentContainer: {
     flex: 2,
-    margin: 20,
-    marginRight: 0,
+    marginRight: 10,
+    marginLeft: 10,
+    marginTop: 4,
   },
   infoButton: {
     flex: 1,
@@ -125,7 +127,7 @@ var styles = StyleSheet.create({
     width: 35,
     height: 35,
     marginLeft: 10,
-    marginRight: 10,
+    marginRight: 17,
   },
 });
 
