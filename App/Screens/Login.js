@@ -50,8 +50,6 @@ var Login = React.createClass({
 
     this.setState({ isLoading: true });
 
-    console.log("Sign in")
-
     var params = {
       user: {
         email: this.state.email,
@@ -59,14 +57,10 @@ var Login = React.createClass({
       }
     };
 
-    console.log("Sign in")
     Api.post('/users/sign_in', params)
       .then((res) => {
-        console.log(res)
-
         if(res.error) {
           this.setState({
-            // error: res.error,
             isLoading: false,
             email: this.state.email,
             password: this.state.password
@@ -75,7 +69,6 @@ var Login = React.createClass({
         } else {
           AppActions.updateProfile(res);
           this.setState({ isLoading: false, error: false });
-          console.log(this.props.navigator);
           this.props.navigator.replace({ id: 'my_apps' });
         }
     });
@@ -111,7 +104,7 @@ var Login = React.createClass({
           </View>
 
           <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
-            <Text style={styles.buttonText}>LOG IN</Text>
+            <Text style={styles.buttonText}>SIGN IN</Text>
           </TouchableHighlight>
 
           {this.props.error && this.renderError()}
