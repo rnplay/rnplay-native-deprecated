@@ -35,7 +35,7 @@ var AppList = React.createClass({
       .then((data) => {
         if (data.error) {
           // TODO: check for 401 Unauthorized
-          this.props.navigator.replace({id: "login", error: data.error});
+          Navigator.getContext(this).replace({id: "login", error: data.error});
         }
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(data),
