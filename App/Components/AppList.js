@@ -11,7 +11,8 @@ var {
   Text,
   TouchableOpacity,
   View,
-  Navigator
+  Navigator,
+  PixelRatio
 } = React;
 
 var AppReloader = require('NativeModules').AppReloader;
@@ -104,10 +105,18 @@ var styles = StyleSheet.create({
     flex: 1,
   },
   appContainer: {
-    marginBottom: 20
+    marginBottom: 20,
+    flexDirection: 'row',
+    flex: 1,
+    paddingBottom: 10,
+    borderBottomWidth: 1 / PixelRatio.get(),
+    borderBottomColor: "#eee"
   },
   creator: {
-    flexDirection: 'row',
+    position: 'absolute',
+    right: 0,
+    width: 70,
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -122,12 +131,10 @@ var styles = StyleSheet.create({
     marginLeft: 5
   },
   avatar: {
-    width: 20,
-    height: 20,
-    marginRight: 5,
-    borderRadius: 10,
-    opacity: .5,
-    marginTop: 3,
+    width: 30,
+    height: 30,
+    marginBottom: 5,
+    borderRadius: 15,
     backgroundColor: "#000"
   },
   cancelButton: {
