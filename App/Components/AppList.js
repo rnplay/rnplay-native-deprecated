@@ -35,7 +35,9 @@ var AppList = React.createClass({
       .then((data) => {
         if (data.error) {
           // TODO: check for 401 Unauthorized
-          Navigator.getContext(this).replace({id: "login", error: data.error});
+          if (Navigator.getContext(this)) {
+            Navigator.getContext(this).replace({id: "login", error: data.error});
+          }
         }
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(data),
@@ -60,7 +62,7 @@ var AppList = React.createClass({
   renderCreator(app) {
     return app.creator ?
     <View style={styles.creator}>
-      <Image style={styles.avatar} source={{uri: app.creator.avatar_url || 'https://facebook.github.io/react-native/img/header_logo.png'}} />
+      <Image style={styles.avatar} resizeMode="contain" source={{uri: 'https://rnplay.org'+app.creator.avatar_url }} />
       <Text style={styles.username}>{app.creator.username || 'anonymous'}</Text>
     </View> : null
   },

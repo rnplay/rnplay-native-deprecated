@@ -13,6 +13,7 @@
     "react-native-camera": "brentvatne/react-native-camera",
     "react-native-icons": "0.0.8",
     "react-native-modal": "^0.3.6",
-    "react-native-overlay": "^0.2.5"
+    "react-native-overlay": "^0.2.5",
+    "react-native-accordion": "0.1.1"
   }
 }
