@@ -6,7 +6,8 @@ var {
   SegmentedControlIOS,
   StyleSheet,
   Text,
-  View
+  View,
+  ListView
 } = React;
 
 var Explore = React.createClass({

@@ -41562,8 +41562,6 @@ return;}
 
 this.setState({isLoading:true});
 
-console.log('Sign in');
-
 var params={
 user:{
 email:this.state.email, 
@@ -41571,14 +41569,10 @@ password:this.state.password}};
 
 
 
-console.log('Sign in');
 Api.post('/users/sign_in', params).
 then(function(res){
-console.log(res);
-
 if(res.error){
 _this.setState({
-
 isLoading:false, 
 email:_this.state.email, 
 password:_this.state.password});
@@ -41587,7 +41581,6 @@ AlertIOS.alert('Sign In Failed', _this.state.error, [{text:'OK'}]);}else
 {
 AppActions.updateProfile(res);
 _this.setState({isLoading:false, error:false});
-console.log(_this.props.navigator);
 _this.props.navigator.replace({id:'my_apps'});}});}, 
 
 
@@ -41623,7 +41616,7 @@ onChangeText:function(text){return _this2.setState({password:text});}})),
 
 
 React.createElement(TouchableHighlight, {style:styles.button, onPress:this.handleSubmit}, 
-React.createElement(Text, {style:styles.buttonText}, 'LOG IN')), 
+React.createElement(Text, {style:styles.buttonText}, 'SIGN IN')), 
 
 
 this.props.error && this.renderError(), 
@@ -44142,7 +44135,7 @@ React.createElement(Settings, null))));}});
 
 
 module.exports = Home;});
-__d('RNPlayNative/App/Screens/Explore',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/AppList"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+__d('RNPlayNative/App/Screens/Explore',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/AppList","RNPlayNative/App/Screens/About","FAKIconImage","Modal","Dimensions"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native');var 
 
@@ -44151,11 +44144,20 @@ SegmentedControlIOS=
 
 
 
-React.SegmentedControlIOS;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;
+
+
+React.SegmentedControlIOS;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;var StatusBarIOS=React.StatusBarIOS;var TouchableOpacity=React.TouchableOpacity;
 
 var AppList=require('RNPlayNative/App/Components/AppList');
+var About=require('RNPlayNative/App/Screens/About');
+var Icon=require('FAKIconImage');
+
+var Modal=require('Modal');
+var DeviceHeight=require('Dimensions').get('window').height;
 
 var Explore=React.createClass({displayName:'Explore', 
+mixins:[Modal.Mixin], 
+
 getInitialState:function(){
 return {
 values:['Picks', 'Search'], 
@@ -44190,9 +44192,21 @@ value:value});},
 
 
 
-render:function(){
+showModalTransition:function(transition){
+transition('opacity', {duration:200, begin:0, end:1});
+transition('height', {duration:200, begin:DeviceHeight * 2, end:DeviceHeight});}, 
+
+
+hideModalTransition:function(transition){
+transition('height', {duration:200, begin:DeviceHeight, end:DeviceHeight * 2, reset:true});
+transition('opacity', {duration:200, begin:1, end:0});}, 
+
+
+render:function(){var _this=this;
+StatusBarIOS.setStyle(StatusBarIOS.Style.darkContent);
 return (
 React.createElement(View, {style:styles.mainContainer}, 
+React.createElement(View, {style:styles.topContainer}, 
 React.createElement(View, {style:styles.segmentContainer}, 
 React.createElement(SegmentedControlIOS, {
 tintColor:'#712FA9', 
@@ -44200,8 +44214,26 @@ values:this.state.values,
 selectedIndex:this.state.selectedIndex, 
 onValueChange:this._onValueChange})), 
 
+React.createElement(TouchableOpacity, {onPress:function(){return _this.openModal();}, style:styles.infoButton}, 
+React.createElement(Icon, {
+name:'ion|ios-help', 
+size:25, 
+color:'#712FA9', 
+style:styles.infoIcon}))), 
+
+
 this.state.value == 'Picks' && this.renderPicks(), 
-this.state.value == 'Search' && this.renderSearch()));}});
+this.state.value == 'Search' && this.renderSearch(), 
+React.createElement(Modal, {
+backdropType:'blur', 
+backdropBlur:'dark', 
+isVisible:this.state.isModalOpen, 
+forceToFront:true, 
+customShowHandler:this.showModalTransition, 
+customHideHandler:this.hideModalTransition, 
+onPressBackdrop:function(){return _this.closeModal();}}, 
+React.createElement(About, null))));}});
+
 
 
 
@@ -44209,12 +44241,28 @@ this.state.value == 'Search' && this.renderSearch()));}});
 
 var styles=StyleSheet.create({
 mainContainer:{
+marginTop:20, 
 flex:1, 
 flexDirection:'column', 
 backgroundColor:'white'}, 
 
+topContainer:{
+flexDirection:'row'}, 
+
 segmentContainer:{
-margin:20}});
+flex:2, 
+margin:20, 
+marginRight:0}, 
+
+infoButton:{
+flex:1}, 
+
+infoIcon:{
+alignSelf:'center', 
+width:35, 
+height:35, 
+marginLeft:10, 
+marginRight:10}});
 
 
 
@@ -44256,7 +44304,9 @@ Api.get(this.props.url).
 then(function(data){
 if(data.error){
 
-_this.props.navigator.replace({id:'login', error:data.error});}
+if(Navigator.getContext(_this)){
+Navigator.getContext(_this).replace({id:'login', error:data.error});}}
+
 
 _this.setState({
 dataSource:_this.state.dataSource.cloneWithRows(data), 
@@ -44281,7 +44331,7 @@ style:styles.listView})));},
 renderCreator:function(app){
 return app.creator?
 React.createElement(View, {style:styles.creator}, 
-React.createElement(Image, {style:styles.avatar, source:{uri:app.creator.avatar_url || 'https://facebook.github.io/react-native/img/header_logo.png'}}), 
+React.createElement(Image, {style:styles.avatar, resizeMode:'contain', source:{uri:'https://rnplay.org' + app.creator.avatar_url}}), 
 React.createElement(Text, {style:styles.username}, app.creator.username || 'anonymous')):
 null;}, 
 
@@ -44304,7 +44354,7 @@ AppReloader.reloadAppWithURLString(app.bundle_url, app.module_name);},
 renderLoading:function(){
 return (
 React.createElement(View, {style:styles.container}, 
-React.createElement(ActivityIndicatorIOS, {size:'large'})));}, 
+React.createElement(ActivityIndicatorIOS, {color:'#712FA9', style:styles.spinner, size:'large'})));}, 
 
 
 
@@ -44323,10 +44373,17 @@ container:{
 flex:1}, 
 
 appContainer:{
-marginBottom:20}, 
+marginBottom:20, 
+flexDirection:'row', 
+flex:1, 
+paddingBottom:10}, 
 
 creator:{
-flexDirection:'row', 
+
+position:'absolute', 
+right:0, 
+width:70, 
+flexDirection:'column', 
 justifyContent:'center', 
 alignItems:'center'}, 
 
@@ -44341,12 +44398,10 @@ alignSelf:'center',
 marginLeft:5}, 
 
 avatar:{
-width:20, 
-height:20, 
-marginRight:5, 
-borderRadius:10, 
-opacity:0.5, 
-marginTop:3, 
+width:40, 
+height:40, 
+marginBottom:5, 
+borderRadius:20, 
 backgroundColor:'#000'}, 
 
 cancelButton:{
@@ -44365,11 +44420,1124 @@ app:{
 fontSize:20, 
 textAlign:'center', 
 margin:10, 
-color:'#2B608A'}});
+color:'#712FA9'}, 
+
+spinner:{
+flex:1}});
 
 
 
 module.exports = AppList;});
+__d('RNPlayNative/App/Screens/About',["react-native/Libraries/react-native/react-native","react-native-accordion/index.ios"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+var React=require('react-native/Libraries/react-native/react-native');var 
+
+
+StyleSheet=
+
+
+React.StyleSheet;var Text=React.Text;var View=React.View;
+
+var Accordion=require('react-native-accordion/index.ios');
+
+var About=React.createClass({displayName:'About', 
+render:function(){
+return (
+React.createElement(View, null, 
+React.createElement(Accordion, {
+underlayColor:'#3a3638', 
+header:React.createElement(Text, {style:styles.aboutText}, 'What\'s this app for?'), 
+content:React.createElement(Text, {style:styles.aboutText}, 'Running React Natibe apps from rnplay.org directly on your device.'), 
+easing:'easeOutCubic'}), 
+
+
+React.createElement(Accordion, {
+underlayColor:'#3a3638', 
+header:React.createElement(Text, {style:styles.aboutText}, 'How do I exit a loaded app?'), 
+content:React.createElement(Text, {style:styles.aboutText}, 'Tap the same spot four times, quickly.'), 
+easing:'easeOutCubic'})));}});
+
+
+
+
+
+
+var styles=StyleSheet.create({
+aboutTitle:{
+fontSize:18}, 
+
+aboutText:{
+marginTop:15, 
+fontSize:14, 
+textAlign:'left', 
+color:'#3a3638', 
+opacity:0.8}});
+
+
+
+module.exports = About;});
+__d('react-native-accordion/index.ios',["react-native-accordion/src/index"],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = require('react-native-accordion/src/index');});
+__d('react-native-accordion/src/index',["react-native/Libraries/react-native/react-native","react-tween-state/index"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+var React=require('react-native/Libraries/react-native/react-native');
+var tweenState=require('react-tween-state/index');var 
+
+
+StyleSheet=
+
+
+
+React.StyleSheet;var TouchableHighlight=React.TouchableHighlight;var View=React.View;var Text=React.Text;
+
+var Accordion=React.createClass({displayName:'Accordion', 
+mixins:[tweenState.Mixin], 
+
+propTypes:{
+activeOpacity:React.PropTypes.number, 
+animationDuration:React.PropTypes.number, 
+content:React.PropTypes.element.isRequired, 
+easing:React.PropTypes.string, 
+header:React.PropTypes.element.isRequired, 
+underlayColor:React.PropTypes.string, 
+style:React.PropTypes.object}, 
+
+
+getDefaultProps:function(){
+return {
+activeOpacity:1, 
+animationDuration:300, 
+easing:'linear', 
+underlayColor:'#000', 
+style:{}};}, 
+
+
+
+getInitialState:function(){
+return {
+is_visible:false, 
+height:0, 
+content_height:0};}, 
+
+
+
+_toggleAccordion:function(){
+this.state.is_visible = !this.state.is_visible;
+
+this.tweenState('height', {
+easing:tweenState.easingTypes[this.props.easing], 
+duration:this.props.animationDuration, 
+endValue:this.state.height === 0?this.state.content_height:0});}, 
+
+
+
+_getContentHeight:function(){var _this=this;
+this.refs.AccordionContent.measure(function(ox, oy, width, height, px, py){
+
+_this.setState({content_height:height});});}, 
+
+
+
+componentDidMount:function(){
+
+
+
+setTimeout(this._getContentHeight);}, 
+
+
+render:function(){
+return (
+
+React.createElement(View, {
+style:{
+overflow:'hidden'}}, 
+
+
+React.createElement(TouchableHighlight, {
+ref:'AccordionHeader', 
+onPress:this._toggleAccordion, 
+underlayColor:this.props.underlayColor, 
+style:this.props.style}, 
+
+this.props.header), 
+
+React.createElement(View, {
+ref:'AccordionContentWrapper', 
+style:{
+height:this.getTweeningValue('height')}}, 
+
+
+React.createElement(View, {ref:'AccordionContent'}, 
+this.props.content))));}});
+
+
+
+
+
+
+
+
+module.exports = Accordion;});
+__d('react-tween-state/index',["tween-functions/index"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+var easingTypes=require('tween-functions/index');
+
+
+
+
+var DEFAULT_STACK_BEHAVIOR='ADDITIVE';
+var DEFAULT_EASING=easingTypes.easeInOutQuad;
+var DEFAULT_DURATION=300;
+var DEFAULT_DELAY=0;
+
+
+function returnState(state){
+return state;}
+
+
+var tweenState={
+easingTypes:easingTypes, 
+stackBehavior:{
+ADDITIVE:'ADDITIVE', 
+DESTRUCTIVE:'DESTRUCTIVE'}};
+
+
+
+tweenState.Mixin = {
+getInitialState:function(){
+return {
+tweenQueue:[]};}, 
+
+
+
+tweenState:function(a, b, c){
+
+
+
+
+
+
+
+
+if(typeof a === 'string'){
+c = b;
+b = a;
+a = returnState;}
+
+this._tweenState(a, b, c);}, 
+
+
+_tweenState:function(stateRefFunc, stateName, config){
+
+
+var state=this._pendingState || this.state;
+var stateRef=stateRefFunc(state);
+
+
+var newConfig={
+easing:config.easing || DEFAULT_EASING, 
+duration:config.duration == null?DEFAULT_DURATION:config.duration, 
+delay:config.delay == null?DEFAULT_DELAY:config.delay, 
+beginValue:config.beginValue == null?stateRef[stateName]:config.beginValue, 
+endValue:config.endValue, 
+onEnd:config.onEnd, 
+stackBehavior:config.stackBehavior || DEFAULT_STACK_BEHAVIOR};
+
+
+var newTweenQueue=state.tweenQueue;
+if(newConfig.stackBehavior === tweenState.stackBehavior.DESTRUCTIVE){
+newTweenQueue = state.tweenQueue.filter(function(item){
+return item.stateName !== stateName || item.stateRefFunc(state) !== stateRef;});}
+
+
+
+newTweenQueue.push({
+stateRefFunc:stateRefFunc, 
+stateName:stateName, 
+config:newConfig, 
+initTime:Date.now() + newConfig.delay});
+
+
+
+
+stateRef[stateName] = newConfig.endValue;
+
+this.setState({tweenQueue:newTweenQueue});
+
+if(newTweenQueue.length === 1){
+this.startRaf();}}, 
+
+
+
+getTweeningValue:function(a, b){
+
+if(typeof a === 'string'){
+b = a;
+a = returnState;}
+
+return this._getTweeningValue(a, b);}, 
+
+
+_getTweeningValue:function(stateRefFunc, stateName){
+var state=this.state;
+var stateRef=stateRefFunc(state);
+var tweeningValue=stateRef[stateName];
+var now=Date.now();
+
+for(var i=0; i < state.tweenQueue.length; i++) {
+var item=state.tweenQueue[i];
+var itemStateRef=item.stateRefFunc(state);
+if(item.stateName !== stateName || itemStateRef !== stateRef){
+continue;}
+
+
+var progressTime=now - item.initTime > item.config.duration?
+item.config.duration:
+Math.max(0, now - item.initTime);
+
+
+
+var contrib=-item.config.endValue + item.config.easing(
+progressTime, 
+item.config.beginValue, 
+item.config.endValue, 
+item.config.duration);
+
+
+tweeningValue += contrib;}
+
+
+return tweeningValue;}, 
+
+
+_rafCb:function(){
+var state=this.state;
+if(state.tweenQueue.length === 0){
+return;}
+
+
+var now=Date.now();
+var newTweenQueue=[];
+
+for(var i=0; i < state.tweenQueue.length; i++) {
+var item=state.tweenQueue[i];
+if(now - item.initTime < item.config.duration){
+newTweenQueue.push(item);}else 
+{
+item.config.onEnd && item.config.onEnd();}}
+
+
+
+
+if(!this.isMounted()){
+return;}
+
+
+this.setState({
+tweenQueue:newTweenQueue});
+
+
+requestAnimationFrame(this._rafCb);}, 
+
+
+startRaf:function(){
+requestAnimationFrame(this._rafCb);}};
+
+
+
+
+module.exports = tweenState;});
+__d('tween-functions/index',[],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+
+var tweenFunctions={
+linear:function(t, b, _c, d){
+var c=_c - b;
+return c * t / d + b;}, 
+
+easeInQuad:function(t, b, _c, d){
+var c=_c - b;
+return c * (t /= d) * t + b;}, 
+
+easeOutQuad:function(t, b, _c, d){
+var c=_c - b;
+return -c * (t /= d) * (t - 2) + b;}, 
+
+easeInOutQuad:function(t, b, _c, d){
+var c=_c - b;
+if((t /= d / 2) < 1){
+return c / 2 * t * t + b;}else 
+{
+return -c / 2 * (--t * (t - 2) - 1) + b;}}, 
+
+
+easeInCubic:function(t, b, _c, d){
+var c=_c - b;
+return c * (t /= d) * t * t + b;}, 
+
+easeOutCubic:function(t, b, _c, d){
+var c=_c - b;
+return c * ((t = t / d - 1) * t * t + 1) + b;}, 
+
+easeInOutCubic:function(t, b, _c, d){
+var c=_c - b;
+if((t /= d / 2) < 1){
+return c / 2 * t * t * t + b;}else 
+{
+return c / 2 * ((t -= 2) * t * t + 2) + b;}}, 
+
+
+easeInQuart:function(t, b, _c, d){
+var c=_c - b;
+return c * (t /= d) * t * t * t + b;}, 
+
+easeOutQuart:function(t, b, _c, d){
+var c=_c - b;
+return -c * ((t = t / d - 1) * t * t * t - 1) + b;}, 
+
+easeInOutQuart:function(t, b, _c, d){
+var c=_c - b;
+if((t /= d / 2) < 1){
+return c / 2 * t * t * t * t + b;}else 
+{
+return -c / 2 * ((t -= 2) * t * t * t - 2) + b;}}, 
+
+
+easeInQuint:function(t, b, _c, d){
+var c=_c - b;
+return c * (t /= d) * t * t * t * t + b;}, 
+
+easeOutQuint:function(t, b, _c, d){
+var c=_c - b;
+return c * ((t = t / d - 1) * t * t * t * t + 1) + b;}, 
+
+easeInOutQuint:function(t, b, _c, d){
+var c=_c - b;
+if((t /= d / 2) < 1){
+return c / 2 * t * t * t * t * t + b;}else 
+{
+return c / 2 * ((t -= 2) * t * t * t * t + 2) + b;}}, 
+
+
+easeInSine:function(t, b, _c, d){
+var c=_c - b;
+return -c * Math.cos(t / d * (Math.PI / 2)) + c + b;}, 
+
+easeOutSine:function(t, b, _c, d){
+var c=_c - b;
+return c * Math.sin(t / d * (Math.PI / 2)) + b;}, 
+
+easeInOutSine:function(t, b, _c, d){
+var c=_c - b;
+return -c / 2 * (Math.cos(Math.PI * t / d) - 1) + b;}, 
+
+easeInExpo:function(t, b, _c, d){
+var c=_c - b;
+var _ref;
+return (_ref = t === 0) !== null?_ref:{
+b:c * Math.pow(2, 10 * (t / d - 1)) + b};}, 
+
+
+easeOutExpo:function(t, b, _c, d){
+var c=_c - b;
+var _ref;
+return (_ref = t === d) !== null?_ref:b + {
+c:c * (-Math.pow(2, -10 * t / d) + 1) + b};}, 
+
+
+easeInOutExpo:function(t, b, _c, d){
+var c=_c - b;
+if(t === 0){
+b;}
+
+if(t === d){
+b + c;}
+
+if((t /= d / 2) < 1){
+return c / 2 * Math.pow(2, 10 * (t - 1)) + b;}else 
+{
+return c / 2 * (-Math.pow(2, -10 * --t) + 2) + b;}}, 
+
+
+easeInCirc:function(t, b, _c, d){
+var c=_c - b;
+return -c * (Math.sqrt(1 - (t /= d) * t) - 1) + b;}, 
+
+easeOutCirc:function(t, b, _c, d){
+var c=_c - b;
+return c * Math.sqrt(1 - (t = t / d - 1) * t) + b;}, 
+
+easeInOutCirc:function(t, b, _c, d){
+var c=_c - b;
+if((t /= d / 2) < 1){
+return -c / 2 * (Math.sqrt(1 - t * t) - 1) + b;}else 
+{
+return c / 2 * (Math.sqrt(1 - (t -= 2) * t) + 1) + b;}}, 
+
+
+easeInElastic:function(t, b, _c, d){
+var c=_c - b;
+var a, p, s;
+s = 1.70158;
+p = 0;
+a = c;
+if(t === 0){
+b;}else 
+if((t /= d) === 1){
+b + c;}
+
+if(!p){
+p = d * 0.3;}
+
+if(a < Math.abs(c)){
+a = c;
+s = p / 4;}else 
+{
+s = p / (2 * Math.PI) * Math.asin(c / a);}
+
+return -(a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;}, 
+
+easeOutElastic:function(t, b, _c, d){
+var c=_c - b;
+var a, p, s;
+s = 1.70158;
+p = 0;
+a = c;
+if(t === 0){
+b;}else 
+if((t /= d) === 1){
+b + c;}
+
+if(!p){
+p = d * 0.3;}
+
+if(a < Math.abs(c)){
+a = c;
+s = p / 4;}else 
+{
+s = p / (2 * Math.PI) * Math.asin(c / a);}
+
+return a * Math.pow(2, -10 * t) * Math.sin((t * d - s) * (2 * Math.PI) / p) + c + b;}, 
+
+easeInOutElastic:function(t, b, _c, d){
+var c=_c - b;
+var a, p, s;
+s = 1.70158;
+p = 0;
+a = c;
+if(t === 0){
+b;}else 
+if((t /= d / 2) === 2){
+b + c;}
+
+if(!p){
+p = d * (0.3 * 1.5);}
+
+if(a < Math.abs(c)){
+a = c;
+s = p / 4;}else 
+{
+s = p / (2 * Math.PI) * Math.asin(c / a);}
+
+if(t < 1){
+return -0.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;}else 
+{
+return a * Math.pow(2, -10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p) * 0.5 + c + b;}}, 
+
+
+easeInBack:function(t, b, _c, d, s){
+var c=_c - b;
+if(s === void 0){
+s = 1.70158;}
+
+return c * (t /= d) * t * ((s + 1) * t - s) + b;}, 
+
+easeOutBack:function(t, b, _c, d, s){
+var c=_c - b;
+if(s === void 0){
+s = 1.70158;}
+
+return c * ((t = t / d - 1) * t * ((s + 1) * t + s) + 1) + b;}, 
+
+easeInOutBack:function(t, b, _c, d, s){
+var c=_c - b;
+if(s === void 0){
+s = 1.70158;}
+
+if((t /= d / 2) < 1){
+return c / 2 * (t * t * (((s *= 1.525) + 1) * t - s)) + b;}else 
+{
+return c / 2 * ((t -= 2) * t * (((s *= 1.525) + 1) * t + s) + 2) + b;}}, 
+
+
+easeInBounce:function(t, b, _c, d){
+var c=_c - b;
+var v;
+v = tweenFunctions.easeOutBounce(d - t, 0, c, d);
+return c - v + b;}, 
+
+easeOutBounce:function(t, b, _c, d){
+var c=_c - b;
+if((t /= d) < 1 / 2.75){
+return c * (7.5625 * t * t) + b;}else 
+if(t < 2 / 2.75){
+return c * (7.5625 * (t -= 1.5 / 2.75) * t + 0.75) + b;}else 
+if(t < 2.5 / 2.75){
+return c * (7.5625 * (t -= 2.25 / 2.75) * t + 0.9375) + b;}else 
+{
+return c * (7.5625 * (t -= 2.625 / 2.75) * t + 0.984375) + b;}}, 
+
+
+easeInOutBounce:function(t, b, _c, d){
+var c=_c - b;
+var v;
+if(t < d / 2){
+v = tweenFunctions.easeInBounce(t * 2, 0, c, d);
+return v * 0.5 + b;}else 
+{
+v = tweenFunctions.easeOutBounce(t * 2 - d, 0, c, d);
+return v * 0.5 + c * 0.5 + b;}}};
+
+
+
+
+module.exports = tweenFunctions;});
+__d('FAKIconImage',["EdgeInsetsPropType","NativeMethodsMixin","NativeModules","ReactPropTypes","ImageResizeMode","ImageStylePropTypes","React","ReactNativeViewAttributes","StyleSheet","StyleSheetPropType","createReactNativeComponentClass","flattenStyle","insetsDiffer","invariant","merge","warning","deepDiffer"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+
+
+
+
+
+var EdgeInsetsPropType=require('EdgeInsetsPropType');
+var NativeMethodsMixin=require('NativeMethodsMixin');
+var NativeModules=require('NativeModules');
+var PropTypes=require('ReactPropTypes');
+var ImageResizeMode=require('ImageResizeMode');
+var ImageStylePropTypes=require('ImageStylePropTypes');
+var React=require('React');
+var ReactNativeViewAttributes=require('ReactNativeViewAttributes');
+var StyleSheet=require('StyleSheet');
+var StyleSheetPropType=require('StyleSheetPropType');
+
+var createReactNativeComponentClass=require('createReactNativeComponentClass');
+var flattenStyle=require('flattenStyle');
+var insetsDiffer=require('insetsDiffer');
+var invariant=require('invariant');
+var merge=require('merge');
+var warning=require('warning');
+var deepDiffer=require('deepDiffer');
+
+var FAKIconImage=React.createClass({displayName:'FAKIconImage', 
+propTypes:{
+name:PropTypes.string, 
+size:PropTypes.number, 
+color:PropTypes.string, 
+
+
+
+
+
+accessible:PropTypes.bool, 
+
+
+
+accessibilityLabel:PropTypes.string, 
+
+style:StyleSheetPropType(ImageStylePropTypes), 
+
+
+
+
+testID:PropTypes.string}, 
+
+
+mixins:[NativeMethodsMixin], 
+
+
+
+
+
+viewConfig:{
+uiViewClassName:'UIView', 
+validAttributes:ReactNativeViewAttributes.UIView}, 
+
+
+render:function(){
+
+var style=flattenStyle([styles.base, this.props.style]);
+invariant(style, 'style must be initialized');
+
+var name=this.props.name;
+invariant(name, 'name must be initialized');
+
+var size=this.props.size;
+invariant(size, 'size must be initialized');
+
+var color=this.props.color;
+
+
+var nativeProps=merge(this.props, {
+style:style, 
+icon:{
+name:name, 
+size:size, 
+color:color}});
+
+
+return React.createElement(FAKIconImageView, nativeProps);}});
+
+
+
+var styles=StyleSheet.create({
+base:{
+overflow:'hidden'}});
+
+
+
+var CommonImageViewAttributes=merge(ReactNativeViewAttributes.UIView, {
+accessible:true, 
+accessibilityLabel:true, 
+icon:{diff:deepDiffer}, 
+testID:PropTypes.string});
+
+
+var FAKIconImageView=createReactNativeComponentClass({
+validAttributes:CommonImageViewAttributes, 
+uiViewClassName:'FAKIconImage'});
+
+
+module.exports = FAKIconImage;});
+__d('Modal',["merge","react-native/Libraries/react-native/react-native","react-native-modal/Transitions","react-native-modal/Style","Overlay","react-native-blur/index"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+
+
+
+
+
+var merge=require('merge');
+
+var React=require('react-native/Libraries/react-native/react-native');var 
+
+View=
+
+
+
+
+React.View;var Text=React.Text;var TouchableOpacity=React.TouchableOpacity;var TouchableWithoutFeedback=React.TouchableWithoutFeedback;var PropTypes=React.PropTypes;
+
+var Transitions=require('react-native-modal/Transitions');
+var DefaultStyles=require('react-native-modal/Style');
+var Overlay=require('Overlay');
+var BlurView=require('react-native-blur/index').BlurView;
+var noop=function(){};
+
+var ModalMixin={
+getInitialState:function(){
+return {isModalOpen:false};}, 
+
+
+openModal:function(){
+this.setState({isModalOpen:true});}, 
+
+
+closeModal:function(){
+this.setState({isModalOpen:false});}};
+
+
+
+var Modal=React.createClass({displayName:'Modal', 
+mixins:[Transitions.Mixin], 
+
+statics:{
+transitionEasings:Transitions.Easings, 
+Mixin:ModalMixin, 
+DefaultStyles:DefaultStyles}, 
+
+
+propTypes:{
+isVisible:PropTypes.bool, 
+hideCloseButton:PropTypes.bool, 
+backdropType:PropTypes.string, 
+onClose:PropTypes.func, 
+onPressBackdrop:PropTypes.func, 
+customCloseButton:PropTypes.node, 
+customShowHandler:PropTypes.func, 
+customHideHandler:PropTypes.func, 
+forceToFront:PropTypes.bool, 
+containerPointerEvents:PropTypes.string}, 
+
+
+getDefaultProps:function(){
+return {
+isVisible:false, 
+hideCloseButton:false, 
+onClose:noop, 
+onPressBackdrop:noop, 
+backdropType:'plain', 
+backdropBlur:'light', 
+forceToFront:false, 
+containerPointerEvents:'auto'};}, 
+
+
+
+componentWillReceiveProps:function(nextProps){
+var willBeVisible=nextProps.isVisible;var _props=
+
+
+
+
+this.props;var isVisible=_props.isVisible;var customShowHandler=_props.customShowHandler;var customHideHandler=_props.customHideHandler;
+
+if(willBeVisible !== isVisible){
+var fadeIn=function(t){return t('opacity', {duration:300, begin:0, end:1});};
+var fadeOut=function(t){return t('opacity', {duration:300, end:0});};
+
+if(willBeVisible){
+var showHandler=customShowHandler || fadeIn;
+showHandler(this.transition);}else 
+{
+var hideHandler=customHideHandler || fadeOut;
+hideHandler(this.transition);}}}, 
+
+
+
+
+renderCloseButton:function(){var _props2=
+
+
+
+
+this.props;var customCloseButton=_props2.customCloseButton;var hideCloseButton=_props2.hideCloseButton;var onClose=_props2.onClose;
+
+var styles=this.props.style || DefaultStyles;
+
+if(customCloseButton){
+return React.addons.cloneWithProps(customCloseButton, null);}else 
+if(!hideCloseButton && onClose){
+return (
+React.createElement(View, {style:styles.closeButton}, 
+React.createElement(TouchableOpacity, {onPress:onClose}, 
+React.createElement(Text, {style:styles.closeButtonText}, 'Close'))));}}, 
+
+
+
+
+
+
+renderBody:function(){
+var styles=this.props.style || DefaultStyles;
+
+var responderProps=this.extractResponderProps();
+
+return (
+React.createElement(View, responderProps, 
+this.renderCloseButton(), 
+React.createElement(View, {style:styles.modal, pointerEvents:this.props.containerPointerEvents}, 
+React.Children.map(this.props.children, React.addons.cloneWithProps))));}, 
+
+
+
+
+
+extractResponderProps:function(){
+var responderProps={};
+if(this.props.onMoveShouldSetResponder)responderProps.onMoveShouldSetResponder = this.props.onMoveShouldSetResponder;
+if(this.props.onMoveShouldSetResponderCapture)responderProps.onMoveShouldSetResponderCapture = this.props.onMoveShouldSetResponderCapture;
+if(this.props.onResponderEnd)responderProps.onResponderEnd = this.props.onResponderEnd;
+if(this.props.onResponderGrant)responderProps.onResponderGrant = this.props.onResponderGrant;
+if(this.props.onResponderMove)responderProps.onResponderMove = this.props.onResponderMove;
+if(this.props.onResponderReject)responderProps.onResponderReject = this.props.onResponderReject;
+if(this.props.onResponderRelease)responderProps.onResponderRelease = this.props.onResponderRelease;
+if(this.props.onResponderStart)responderProps.onResponderStart = this.props.onResponderStart;
+if(this.props.onResponderTerminate)responderProps.onResponderTerminate = this.props.onResponderTerminate;
+if(this.props.onResponderTerminationRequest)responderProps.onResponderTerminationRequest = this.props.onResponderTerminationRequest;
+if(this.props.onStartShouldSetResponder)responderProps.onStartShouldSetResponder = this.props.onStartShouldSetResponder;
+if(this.props.onStartShouldSetResponderCapture)responderProps.onStartShouldSetResponderCapture = this.props.onStartShouldSetResponderCapture;
+return responderProps;}, 
+
+
+renderModal:function(){var _props3=
+
+
+
+
+this.props;var onPressBackdrop=_props3.onPressBackdrop;var backdropType=_props3.backdropType;var backdropBlur=_props3.backdropBlur;
+
+var styles=this.props.style || DefaultStyles;
+var body=this.renderBody();
+
+if(backdropType == 'plain'){
+return (
+React.createElement(View, {style:[styles.container, this.transitionStyles()]}, 
+React.createElement(TouchableWithoutFeedback, {onPress:onPressBackdrop}, 
+React.createElement(View, {style:styles.backdrop})), 
+
+body));}else 
+
+
+if(backdropType === 'none'){
+return (
+React.createElement(View, {style:[styles.container, this.transitionStyles()]}, 
+body));}else 
+
+
+{
+return (
+React.createElement(TouchableWithoutFeedback, {onPress:onPressBackdrop}, 
+React.createElement(BlurView, {blurType:backdropBlur, style:[styles.container, this.transitionStyles()]}, 
+body)));}}, 
+
+
+
+
+
+
+render:function(){
+var styles=this.props.style || DefaultStyles;var _props4=
+this.props;var isVisible=_props4.isVisible;var forceToFront=_props4.forceToFront;
+
+if(!isVisible && !this.state.isTransitioning){
+return React.createElement(View, null);}
+
+
+if(forceToFront){
+return (
+React.createElement(Overlay, {isVisible:true, aboveStatusBar:true, style:styles.container}, 
+this.renderModal()));}else 
+
+
+{
+return (
+React.createElement(View, {style:styles.container}, this.renderModal()));}}});
+
+
+
+
+
+module.exports = Modal;});
+__d('react-native-modal/Transitions',["react-tween-state/index"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';var _require=
+
+require('react-tween-state/index');var Mixin=_require.Mixin;var easingTypes=_require.easingTypes;
+
+var Transitions=Object.assign(Mixin, {
+getInitialState:function(){
+return {
+isTransitioning:false, 
+tweenQueue:[], 
+tweenProperties:[]};}, 
+
+
+
+transition:function(property, options){var _this=this;
+this.setState({isTransitioning:true});
+
+
+if(this.state.tweenProperties.indexOf(property) === -1){
+
+
+this.state.tweenProperties.push(property);}
+
+
+
+var begin=typeof options.begin === 'undefined'?this.state[property]:options.begin;
+this.tweenState(property, {
+easing:options.easing || easingTypes.easeInOutQuad, 
+duration:options.duration || 300, 
+delay:options.delay, 
+beginValue:begin, 
+endValue:options.end, 
+onEnd:function(){
+
+requestAnimationFrame(function(){
+
+if(!_this.state.tweenQueue.length){
+_this.setState({isTransitioning:false});}
+
+
+
+if(options.reset){
+if(options.reset){
+_this.state[property] = begin;}else 
+{
+_this.state[property] = options.reset;}}
+
+
+
+
+if(options.onEnd){
+options.onEnd();}});}});}, 
+
+
+
+
+
+
+transitionStyles:function(propertySet){var _this2=this;
+if(typeof propertySet === 'undefined'){
+propertySet = [];}
+
+var result={};
+
+this.state.tweenProperties.forEach(function(property){
+if(propertySet.length === 0 || propertySet.indexOf(property) > -1){
+var value, tweeningValue=_this2.getTweeningValue(property);
+
+if(typeof tweeningValue === 'undefined' || tweeningValue === null){
+value = _this2.state[property];}else 
+{
+value = tweeningValue;}
+
+
+result[property] = value;}});
+
+
+
+return result;}});
+
+
+
+module.exports = {
+Mixin:Transitions, 
+Easings:easingTypes};});
+__d('react-native-modal/Style',["react-native/Libraries/react-native/react-native"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+var StyleSheet=require('react-native/Libraries/react-native/react-native').StyleSheet;
+
+module.exports = StyleSheet.create({
+container:{
+position:'absolute', 
+top:0, 
+bottom:0, 
+left:0, 
+right:0, 
+backgroundColor:'transparent', 
+justifyContent:'center'}, 
+
+backdrop:{
+position:'absolute', 
+top:0, 
+bottom:0, 
+left:0, 
+right:0, 
+backgroundColor:'#000000', 
+opacity:0.5}, 
+
+closeButton:{
+position:'absolute', 
+borderColor:'#ffffff', 
+borderRadius:2, 
+borderWidth:1, 
+right:20, 
+top:20, 
+paddingLeft:10, 
+paddingRight:10, 
+paddingTop:5, 
+paddingBottom:5}, 
+
+closeButtonText:{
+color:'#ffffff'}, 
+
+modal:{
+margin:20, 
+backgroundColor:'#ffffff', 
+borderRadius:3, 
+padding:20}});});
+__d('Overlay',["react-native/Libraries/react-native/react-native"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+
+
+
+
+
+var React=require('react-native/Libraries/react-native/react-native');var 
+
+View=
+
+
+
+React.View;var PropTypes=React.PropTypes;var StyleSheet=React.StyleSheet;var requireNativeComponent=React.requireNativeComponent;
+
+
+
+
+
+var Overlay=React.createClass({displayName:'Overlay', 
+propTypes:{
+
+
+
+
+aboveStatusBar:React.PropTypes.bool, 
+
+
+
+
+
+isVisible:React.PropTypes.bool}, 
+
+
+getDefaultProps:function(){
+return {
+aboveStatusBar:false, 
+isVisible:false};}, 
+
+
+
+render:function(){var 
+
+isVisible=
+this.props.isVisible;
+
+if(this.props.isVisible){
+return (
+React.createElement(RNOverlay, {isVisible:true, style:styles.container, pointerEvents:'none', aboveStatusBar:this.props.aboveStatusBar}, 
+React.Children.map(this.props.children, React.addons.cloneWithProps)));}else 
+
+
+{
+return React.createElement(View, null);}}});
+
+
+
+
+var RNOverlay=requireNativeComponent('RNOverlay', Overlay);
+
+var styles=StyleSheet.create({
+container:{
+position:'absolute', 
+top:0, 
+bottom:0, 
+left:0, 
+right:0, 
+backgroundColor:'transparent'}});
+
+
+
+module.exports = Overlay;});
+__d('react-native-blur/index',["createReactNativeComponentClass","ReactNativeViewAttributes","merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  var createComponent=require('createReactNativeComponentClass');
+var ReactNativeViewAttributes=require('ReactNativeViewAttributes');
+var merge=require('merge');
+
+var validAttributes=merge(
+ReactNativeViewAttributes.UIView, {
+blurType:true});
+
+
+var BlurView=createComponent({
+validAttributes:validAttributes, 
+uiViewClassName:'BlurView'});
+
+
+var VibrancyView=createComponent({
+validAttributes:validAttributes, 
+uiViewClassName:'VibrancyView'});
+
+
+
+
+module.exports = {
+BlurView:BlurView, 
+VibrancyView:VibrancyView};});
 __d('RNPlayNative/App/Screens/My',["react-native/Libraries/react-native/react-native","NativeModules","react-native-camera/Camera.ios","Overlay","RNPlayNative/App/Api/Core","RNPlayNative/App/Components/NavigationBar","RNPlayNative/App/Stores/ProfileStore","RNPlayNative/App/Stores/LocalStorage","RNPlayNative/App/Screens/Login","RNPlayNative/App/Screens/Signup","RNPlayNative/App/Screens/MyApps"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 
@@ -44401,7 +45569,8 @@ ActivityIndicatorIOS=
 
 
 
-React.ActivityIndicatorIOS;var AppRegistry=React.AppRegistry;var Image=React.Image;var ListView=React.ListView;var StyleSheet=React.StyleSheet;var Text=React.Text;var TouchableOpacity=React.TouchableOpacity;var View=React.View;var Navigator=React.Navigator;
+
+React.ActivityIndicatorIOS;var AppRegistry=React.AppRegistry;var Image=React.Image;var ListView=React.ListView;var StyleSheet=React.StyleSheet;var Text=React.Text;var TouchableOpacity=React.TouchableOpacity;var View=React.View;var Navigator=React.Navigator;var StatusBarIOS=React.StatusBarIOS;
 
 var My=React.createClass({displayName:'My', 
 
@@ -44419,6 +45588,8 @@ this.renderAppList();}},
 
 
 render:function(){
+StatusBarIOS.setStyle(StatusBarIOS.Style.darkContent);
+
 if(ProfileStore.getState().id){
 DEFAULT_ROUTE.id = 'my_apps';}else 
 {
@@ -44684,69 +45855,6 @@ base:{}});
 
 Camera.constants = constants;
 module.exports = Camera;});
-__d('Overlay',["createReactNativeComponentClass","ReactNativeViewAttributes","merge","react-native/Libraries/react-native/react-native"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
-
-
-
-
-
-
-var createReactNativeComponentClass=require('createReactNativeComponentClass');
-var ReactNativeViewAttributes=require('ReactNativeViewAttributes');
-var merge=require('merge');
-
-var React=require('react-native/Libraries/react-native/react-native');var 
-
-View=
-
-
-React.View;var PropTypes=React.PropTypes;var StyleSheet=React.StyleSheet;
-
-
-
-
-
-var Overlay=React.createClass({displayName:'Overlay', 
-getDefaultProps:function(){
-return {
-isVisible:false};}, 
-
-
-
-render:function(){var 
-
-isVisible=
-this.props.isVisible;
-
-if(this.props.isVisible){
-return (
-React.createElement(RNOverlay, {visible:true, style:styles.container, pointerEvents:'none', aboveStatusBar:this.props.aboveStatusBar}, 
-React.Children.map(this.props.children, React.addons.cloneWithProps)));}else 
-
-
-{
-return React.createElement(View, null);}}});
-
-
-
-
-var RNOverlay=createReactNativeComponentClass({
-validAttributes:merge(ReactNativeViewAttributes.UIView, {visible:true, aboveStatusBar:true}), 
-uiViewClassName:'RNOverlay'});
-
-
-var styles=StyleSheet.create({
-container:{
-position:'absolute', 
-top:0, 
-bottom:0, 
-left:0, 
-right:0, 
-backgroundColor:'transparent'}});
-
-
-
-module.exports = Overlay;});
 __d('RNPlayNative/App/Stores/ProfileStore',["flux-util/lib/flux-util","RNPlayNative/App/Utilities/AppDispatcher","RNPlayNative/App/Constants/AppConstants"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 var createStore=require('flux-util/lib/flux-util').createStore;
@@ -44824,7 +45932,7 @@ return true;})});
 
 
 module.exports = store;});
-__d('RNPlayNative/App/Screens/MyApps',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Api/Core","RNPlayNative/App/Components/NavigationBar","image!photo-camera5"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+__d('RNPlayNative/App/Screens/MyApps',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/AppList"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native');var 
 
@@ -44840,146 +45948,15 @@ ActivityIndicatorIOS=
 
 React.ActivityIndicatorIOS;var AppRegistry=React.AppRegistry;var Image=React.Image;var ListView=React.ListView;var StyleSheet=React.StyleSheet;var Text=React.Text;var TouchableOpacity=React.TouchableOpacity;var View=React.View;var Navigator=React.Navigator;
 
-var Api=require('RNPlayNative/App/Api/Core');
-var NavigationBar=require('RNPlayNative/App/Components/NavigationBar');
+var AppList=require('RNPlayNative/App/Components/AppList');
+
 var MyApps=React.createClass({displayName:'MyApps', 
-getInitialState:function(){
-return {
-loaded:false, 
-isModalOpen:false, 
-dataSource:new ListView.DataSource({
-rowHasChanged:function(row1, row2){return row1 !== row2;}})};}, 
-
-
-
-
-componentDidMount:function(){
-this.fetchApps();}, 
-
-
-fetchApps:function(){var _this=this;
-Api.get('/plays.json').
-then(function(data){
-if(data.error){
-_this.props.navigator.replace({id:'login', error:data.error});}
-
-_this.setState({
-dataSource:_this.state.dataSource.cloneWithRows(data), 
-loaded:true});}).
-
-
-done();}, 
-
-
-renderAppList:function(){var _this2=this;
-return (
-React.createElement(View, {style:styles.container}, 
-React.createElement(NavigationBar, {title:'My Apps'}), 
-React.createElement(ListView, {
-dataSource:this.state.dataSource, 
-renderRow:this.renderApp, 
-style:styles.listView}), 
-
-React.createElement(TouchableOpacity, {onPress:function(){return _this2.setState({isModalOpen:true});}}, 
-React.createElement(Image, {style:styles.cameraButton, resizeMode:'contain', source:require('image!photo-camera5')}))));}, 
-
-
-
-
-
-renderCreator:function(app){
-return app.creator?
-React.createElement(View, {style:styles.creator}, 
-React.createElement(Image, {style:styles.avatar, source:{uri:app.creator.avatar_url || 'https://facebook.github.io/react-native/img/header_logo.png'}}), 
-React.createElement(Text, {style:styles.username}, app.creator.username || 'anonymous')):
-null;}, 
-
-
-renderApp:function(app){var _this3=this;
-return (
-React.createElement(View, {style:styles.appContainer}, 
-React.createElement(TouchableOpacity, {onPress:function(){return _this3.selectApp(app);}}, 
-React.createElement(Text, {style:styles.app}, app.name || app.module_name)), 
-
-this.renderCreator(app)));}, 
-
-
-
-
-selectApp:function(app){
-AppReloader.reloadAppWithURLString(app.bundle_url, app.module_name);}, 
-
-
-renderLoading:function(){
-return (
-React.createElement(View, {style:styles.container}, 
-React.createElement(ActivityIndicatorIOS, {size:'large'})));}, 
-
-
-
-
 render:function(){
-if(!this.state.loaded){
-return this.renderLoading();}else 
-{
-return this.renderAppList();}}});
-
-
-
-
-var styles=StyleSheet.create({
-container:{
-flex:1}, 
-
-appContainer:{
-marginBottom:20}, 
-
-creator:{
-flexDirection:'row', 
-justifyContent:'center', 
-alignItems:'center'}, 
-
-username:{
-fontSize:12, 
-opacity:0.5}, 
-
-cameraButton:{
-height:60, 
-width:20, 
-alignSelf:'center', 
-marginLeft:5}, 
-
-avatar:{
-width:20, 
-height:20, 
-marginRight:5, 
-borderRadius:10, 
-opacity:0.5, 
-marginTop:3, 
-backgroundColor:'#000'}, 
-
-cancelButton:{
-color:'#fff', 
-flex:1, 
-fontSize:25, 
-marginLeft:20}, 
-
-header:{
-textAlign:'center', 
-fontSize:25, 
-paddingBottom:20, 
-color:'#888'}, 
-
-app:{
-fontSize:20, 
-textAlign:'center', 
-margin:10, 
-color:'#2B608A'}});
+return React.createElement(AppList, {url:'/plays.json'});}});
 
 
 
 module.exports = MyApps;});
-__d('image!photo-camera5',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/joshua/projects/RNPlayNative/photo-camera5.png","uri":"photo-camera5","width":256,"height":256,"deprecated":true};});
 __d('RNPlayNative/App/Screens/Settings',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/NavigationBar"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native');
@@ -44989,11 +45966,13 @@ var NavigationBar=require('RNPlayNative/App/Components/NavigationBar');var
 StyleSheet=
 
 
-React.StyleSheet;var Text=React.Text;var View=React.View;
+
+React.StyleSheet;var Text=React.Text;var View=React.View;var StatusBarIOS=React.StatusBarIOS;
 
 var Settings=React.createClass({displayName:'Settings', 
 
 render:function(){
+StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
 return (
 React.createElement(View, {style:styles.mainContainer}, 
 React.createElement(NavigationBar, {title:'Settings'})));}});
@@ -45344,6 +46323,7 @@ color:'#2B608A'}});
 
 
 module.exports = Guest;});
+__d('image!photo-camera5',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/joshua/projects/RNPlayNative/photo-camera5.png","uri":"photo-camera5","width":256,"height":256,"deprecated":true};});
 __d('lodash/index',[],function(global, require, requireDynamic, requireLazy, module, exports) {  ;
 
 
