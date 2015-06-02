@@ -26,7 +26,6 @@ var {
   StatusBarIOS
 } = React;
 
-global.initialLaunch = true;
 var RNPlayNative = React.createClass({
 
   getInitialState() {
@@ -40,13 +39,10 @@ var RNPlayNative = React.createClass({
     LocalStorage.bootstrap(() => this.setState({bootstrapped: true}));
     LinkingIOS.addEventListener('url', this._processURL);
 
-    console.log(LinkingIOS.popInitialURL());
-    console.log(LinkingIOS.popInitialURL());
-    console.log(LinkingIOS.popInitialURL());
-    // var url = LinkingIOS.popInitialURL();
-    // if (url) {
-    //   this._processURL({url});
-    // }
+    var url = LinkingIOS.popInitialURL();
+    if (url) {
+      this._processURL({url});
+    }
   },
 
   componentWillUnmount() {
