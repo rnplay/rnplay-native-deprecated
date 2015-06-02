@@ -13,13 +13,10 @@
 #import "RCTRootView.h"
 #import "RCTLinkingManager.h"
 
-@interface AppDelegate()
-@end
-
 @implementation AppDelegate
 
-float const kTransitionDuration = 0.4f;
-int const kTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
+float const kFlipTransitionDuration = 0.4f;
+int const kFlipTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
@@ -56,10 +53,12 @@ int const kTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
   
   UIViewController *mainViewController = [[UIViewController alloc] init];
   [mainViewController setView:rootView];
+  
+  UIColor *purple = [UIColor colorWithRed:113.0f/255.0f green:47.0f/255.0f blue:169.0f/255.0f alpha:1.0f];
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   self.window.rootViewController = mainViewController;
-  self.window.backgroundColor = [UIColor blackColor];
+  self.window.backgroundColor = purple;
   [self.window makeKeyAndVisible];
 
   UITapGestureRecognizer *quadTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToHomeScreen:)];
@@ -83,51 +82,13 @@ int const kTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
   
   if ([topView isKindOfClass:[RCTRootView class]]) {
     [UIView transitionWithView:self.window.rootViewController.view
-                      duration:kTransitionDuration
-                       options:kTransitionType
+                      duration:kFlipTransitionDuration
+                       options:kFlipTransitionType
                     animations:^{
                       [topView removeFromSuperview];
                     }
                     completion:NULL];
   }
-}
-
-@end
-
-#import "RCTBridgeModule.h"
-
-@interface AppReloader : NSObject <RCTBridgeModule>
-@end
-
-@implementation AppReloader
-
-RCT_EXPORT_MODULE()
-
--(dispatch_queue_t)methodQueue
-{
-  return dispatch_get_main_queue();
-}
-
-/**
- *  var AppReloader = require('NativeModules').AppReloader;
- *  AppReloader.reloadAppWithURLString('https://example.com/index.ios.bundle', 'App')
- */
-RCT_EXPORT_METHOD(reloadAppWithURLString:(NSString *)URLString moduleNamed:(NSString *)moduleName) {
-  AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-  NSURL *JSBundleURL = [NSURL URLWithString:URLString];
-  
-  ViewController *appViewController = [[ViewController alloc] init];
-  [appViewController reloadWithJSBundleURL:JSBundleURL moduleNamed:moduleName];
-  
-  UIView *baseView = delegate.window.rootViewController.view;
-  
-  [UIView transitionWithView:baseView
-                    duration:kTransitionDuration
-                     options:kTransitionType
-                  animations:^{
-                    [baseView addSubview:appViewController.view];
-                  }
-                  completion:NULL];
 }
 
 @end
