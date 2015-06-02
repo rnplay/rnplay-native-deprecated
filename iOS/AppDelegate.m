@@ -72,13 +72,22 @@
 }
 
 - (void)goToHomeScreen:(UISwipeGestureRecognizer*)swipeGesture {
-  [UIView transitionWithView:self.window.rootViewController.view
-                    duration:0.4
-                     options:UIViewAnimationOptionTransitionFlipFromRight
-                  animations:^{
-                    [[[self.window.rootViewController.view subviews] lastObject] removeFromSuperview];
-                  }
-                  completion:NULL];
+  id topView = [[self.window.rootViewController.view subviews] lastObject];
+  
+  /**
+   * The last object on the view stack will be a RCTRootView class if it is from the AppLoader. It is a
+   * RCTRootContentView if it is the Main app. This feels a little hacky though, seems like it could break easily...
+   */
+  
+  if ([topView isKindOfClass:[RCTRootView class]]) {
+    [UIView transitionWithView:self.window.rootViewController.view
+                      duration:kTransitionDuration
+                       options:kTransitionType
+                    animations:^{
+                      [topView removeFromSuperview];
+                    }
+                    completion:NULL];
+  }
 }
 
 @end
