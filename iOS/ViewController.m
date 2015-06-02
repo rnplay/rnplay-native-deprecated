@@ -41,7 +41,7 @@
   
   self.rootView.frame = self.view.bounds;
   
-  [self.view addSubview:self.rootView];
+  [self setView:self.rootView];
 }
 
 - (UIActivityIndicatorView *)spinner {
