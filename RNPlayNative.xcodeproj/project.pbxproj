@@ -42,6 +42,7 @@
 		551EAB191B1A87B4009233AF /* LaunchScreenWhite.xib in Resources */ = {isa = PBXBuildFile; fileRef = 551EAB171B1A87B4009233AF /* LaunchScreenWhite.xib */; };
 		551EAC151B1B4DE6009233AF /* BlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 551EAC121B1B4DE6009233AF /* BlurView.m */; };
 		551EAC161B1B4DE6009233AF /* BlurViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 551EAC141B1B4DE6009233AF /* BlurViewManager.m */; };
+		55B8F8881B1E4F24002F65B0 /* AppReloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8F8871B1E4F24002F65B0 /* AppReloader.m */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		BB0C0AEC1B02ACF800BDEA30 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB0C0ADF1B02ACE900BDEA30 /* libART.a */; };
 		BB0C0AF81B02FF7F00BDEA30 /* uiexplorer.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = BB0C0AF71B02FF7F00BDEA30 /* uiexplorer.jsbundle */; };
@@ -195,8 +196,8 @@
 		1111D14A1B18CB73007370BA /* zocial-regular-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zocial-regular-webfont.ttf"; path = "node_modules/react-native-icons/ios/ReactNativeIcons/Libraries/FontAwesomeKit/zocial-regular-webfont.ttf"; sourceTree = "<group>"; };
 		1111D16B1B18E126007370BA /* Avenir Next.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Next.ttc"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* RNPlayNative.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RNPlayNative.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = iOS/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = iOS/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = AppDelegate.h; path = iOS/AppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = AppDelegate.m; path = iOS/AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreenPurple.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iOS/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = iOS/Info.plist; sourceTree = "<group>"; };
@@ -209,6 +210,8 @@
 		551EAC121B1B4DE6009233AF /* BlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlurView.m; sourceTree = "<group>"; };
 		551EAC131B1B4DE6009233AF /* BlurViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlurViewManager.h; sourceTree = "<group>"; };
 		551EAC141B1B4DE6009233AF /* BlurViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlurViewManager.m; sourceTree = "<group>"; };
+		55B8F8861B1E4F24002F65B0 /* AppReloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppReloader.h; sourceTree = "<group>"; };
+		55B8F8871B1E4F24002F65B0 /* AppReloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppReloader.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		BB0C0ADA1B02ACE900BDEA30 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
@@ -366,6 +369,8 @@
 				BB0C0AF71B02FF7F00BDEA30 /* uiexplorer.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				55B8F8861B1E4F24002F65B0 /* AppReloader.h */,
+				55B8F8871B1E4F24002F65B0 /* AppReloader.m */,
 				EE49F76D1AFA1F8D002F30A8 /* ViewController.h */,
 				EE49F76E1AFA1F8D002F30A8 /* ViewController.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -822,6 +827,7 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				551EAC161B1B4DE6009233AF /* BlurViewManager.m in Sources */,
+				55B8F8881B1E4F24002F65B0 /* AppReloader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
