@@ -24,13 +24,13 @@
   }
   return self;
 }
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor blackColor];
 }
+
 - (void)reloadWithJSBundleURL:(NSURL *)JSBundleURL moduleNamed:(NSString *)moduleName {
-  [self.rootView removeFromSuperview];
-  self.rootView = nil;
   self.rootView = [[RCTRootView alloc] initWithBundleURL:JSBundleURL
                                               moduleName:moduleName
                                            launchOptions:self.launchOptions];
@@ -41,13 +41,7 @@
   
   self.rootView.frame = self.view.bounds;
   
-  [UIView transitionWithView:self.view
-                    duration:0.5
-                     options:UIViewAnimationOptionTransitionFlipFromRight
-                  animations:^{
-                    [self.view addSubview:self.rootView];
-                  }
-                  completion:NULL];
+  [self.view addSubview:self.rootView];
 }
 
 - (UIActivityIndicatorView *)spinner {
