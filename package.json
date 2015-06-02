@@ -9,11 +9,12 @@
     "art": "^0.10.0",
     "flux-util": "^0.1.1",
     "lodash": "^3.7.0",
+    "qs": "^3.1.0",
     "react-native": "facebook/react-native",
+    "react-native-accordion": "0.1.1",
     "react-native-camera": "brentvatne/react-native-camera",
     "react-native-icons": "0.0.8",
     "react-native-modal": "^0.3.6",
-    "react-native-overlay": "^0.2.5",
-    "react-native-accordion": "0.1.1"
+    "react-native-overlay": "^0.2.5"
   }
 }

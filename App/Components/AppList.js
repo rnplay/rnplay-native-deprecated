@@ -48,6 +48,7 @@ var AppList = React.createClass({
             Navigator.getContext(this).replace({id: "login", error: data.error});
           }
         }
+        console.log(data);
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(data),
           loaded: true
