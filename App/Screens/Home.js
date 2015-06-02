@@ -9,6 +9,7 @@ var React = require('react-native');
 var Explore = require('./Explore');
 var My = require('./My');
 var Settings = require('./Settings');
+var Help = require('./Help');
 
 var SMXTabBarIOS = require('SMXTabBarIOS');
 var SMXTabBarItemIOS = SMXTabBarIOS.Item;
@@ -73,6 +74,20 @@ var Home = React.createClass({
             });
           }}>
           <Settings />
+        </SMXTabBarItemIOS>
+        <SMXTabBarItemIOS
+          name="help"
+          iconName={'ion|ios-help-outline'}
+          title={'Help'}
+          iconSize={32}
+          accessibilityLabel="Help Tab"
+          selected={this.state.selectedTab === 'help'}
+          onPress={() => {
+            this.setState({
+              selectedTab: 'help',
+            });
+          }}>
+          <Help />
         </SMXTabBarItemIOS>
       </SMXTabBarIOS>
     )
