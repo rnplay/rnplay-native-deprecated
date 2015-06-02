@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import "JSURL.h"
+#import "RCTRootView.h"
 
 @interface AppDelegate()
 
@@ -19,18 +20,18 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  
   NSURL *initialJSBundleURL;
   NSString *initialModuleName;
 
-
-  // Example:
-  // NSString *suppliedAppId = @"qAFzcA";
-  // NSString *suppliedModuleName = @"ParallaxExample";
-
-   NSString *suppliedAppId = [[NSUserDefaults standardUserDefaults] stringForKey:@"appId"];
-   NSString *suppliedModuleName = [[NSUserDefaults standardUserDefaults] stringForKey:@"moduleName"];
-   NSString *suppliedAppUrl = [[NSUserDefaults standardUserDefaults] stringForKey:@"bundleUrl"];
-   NSString *useUIExplorer = [[NSUserDefaults standardUserDefaults] stringForKey:@"UIExplorer"];
+//   Example:
+//   NSString *suppliedAppId = @"qAFzcA";
+//   NSString *suppliedModuleName = @"ParallaxExample";
+  
+  NSString *suppliedAppId = [[NSUserDefaults standardUserDefaults] stringForKey:@"appId"];
+  NSString *suppliedModuleName = [[NSUserDefaults standardUserDefaults] stringForKey:@"moduleName"];
+  NSString *suppliedAppUrl = [[NSUserDefaults standardUserDefaults] stringForKey:@"bundleUrl"];
+  NSString *useUIExplorer = [[NSUserDefaults standardUserDefaults] stringForKey:@"UIExplorer"];
 
   if (suppliedAppId) {
     initialJSBundleURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", @"http://packager.rnplay.org/", suppliedAppId, @".bundle"]];
@@ -45,12 +46,16 @@
     initialJSBundleURL = [NSURL URLWithString:JSURL];
     initialModuleName = @"RNPlayNative";
   }
-
-  self.viewController = [[ViewController alloc] initWithLaunchOptions:launchOptions];
-  [self.viewController reloadWithJSBundleURL:initialJSBundleURL moduleNamed:initialModuleName];
+  
+  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:initialJSBundleURL
+                                                      moduleName:initialModuleName
+                                                   launchOptions:launchOptions];
+  
+  UIViewController *mainViewController = [[UIViewController alloc] init];
+  [mainViewController setView:rootView];
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  self.window.rootViewController = self.viewController;
+  self.window.rootViewController = mainViewController;
   self.window.backgroundColor = [UIColor blackColor];
   [self.window makeKeyAndVisible];
 
@@ -62,9 +67,13 @@
 }
 
 - (void)goToHomeScreen:(UISwipeGestureRecognizer*)swipeGesture {
-  [self.viewController
-             reloadWithJSBundleURL:[NSURL URLWithString:JSURL]
-             moduleNamed:@"RNPlayNative"];
+  [UIView transitionWithView:self.window.rootViewController.view
+                    duration:0.4
+                     options:UIViewAnimationOptionTransitionFlipFromRight
+                  animations:^{
+                    [[[self.window.rootViewController.view subviews] lastObject] removeFromSuperview];
+                  }
+                  completion:NULL];
 }
 
 @end
@@ -89,9 +98,18 @@ RCT_EXPORT_MODULE()
  */
 RCT_EXPORT_METHOD(reloadAppWithURLString:(NSString *)URLString moduleNamed:(NSString *)moduleName) {
   AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-
   NSURL *JSBundleURL = [NSURL URLWithString:URLString];
-  [delegate.viewController reloadWithJSBundleURL:JSBundleURL moduleNamed:moduleName];
+  
+  ViewController *appViewController = [[ViewController alloc] init];
+  [appViewController reloadWithJSBundleURL:JSBundleURL moduleNamed:moduleName];
+  
+  [UIView transitionWithView:delegate.window.rootViewController.view
+                    duration:0.4
+                     options:UIViewAnimationOptionTransitionFlipFromRight
+                  animations:^{
+                    [delegate.window.rootViewController.view addSubview:appViewController.view];
+                  }
+                  completion:NULL];
 }
 
 @end
