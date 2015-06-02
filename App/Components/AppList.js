@@ -17,6 +17,7 @@ var {
 
 var AppReloader = require('NativeModules').AppReloader;
 var Api = require("../Api/Core");
+var NoResults = require('../Components/NoResults');
 
 var AppList = React.createClass({
   getInitialState() {
@@ -29,6 +30,13 @@ var AppList = React.createClass({
 
   componentDidMount() {
     this.fetchApps();
+  },
+
+  componentDidUpdate: function(prevProps) {
+    if (prevProps.url !== this.props.url) {
+      this.setState({ loaded: false });
+      this.fetchApps();
+    }
   },
 
   fetchApps() {
@@ -85,9 +93,15 @@ var AppList = React.createClass({
 
   renderLoading() {
     return (
-      <View style={styles.container}>
+      <View style={styles.loadingContainer}>
         <ActivityIndicatorIOS color={'#712FA9'} style={styles.spinner} size="large" />
       </View>
+    );
+  },
+
+  renderNoResults() {
+    return(
+      <NoResults />
     );
   },
 
@@ -95,7 +109,12 @@ var AppList = React.createClass({
     if (!this.state.loaded) {
       return this.renderLoading();
     } else {
-      return this.renderAppList();
+      if (this.state.dataSource.getRowCount() > 0) {
+        return this.renderAppList();
+      }
+      else {
+        return this.renderNoResults();
+      }
     }
   }
 });
@@ -103,6 +122,10 @@ var AppList = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  loadingContainer: {
+    flex: 1,
+    paddingBottom: 44,
   },
   appContainer: {
     marginBottom: 20,
