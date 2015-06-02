@@ -40,13 +40,13 @@ var RNPlayNative = React.createClass({
     LocalStorage.bootstrap(() => this.setState({bootstrapped: true}));
     LinkingIOS.addEventListener('url', this._processURL);
 
-    if (global.initialLaunch) {
-      global.initialLaunch = false;
-      var url = LinkingIOS.popInitialURL();
-      if (url) {
-        this._processURL({url});
-      }
-    }
+    console.log(LinkingIOS.popInitialURL());
+    console.log(LinkingIOS.popInitialURL());
+    console.log(LinkingIOS.popInitialURL());
+    // var url = LinkingIOS.popInitialURL();
+    // if (url) {
+    //   this._processURL({url});
+    // }
   },
 
   componentWillUnmount() {
