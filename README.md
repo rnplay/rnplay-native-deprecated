@@ -4,10 +4,6 @@ iOS app for running React Native apps from the [React Native
 Playground](http://rnplay.org). This is also the app that powers the
 in-browser simulators on the site.
 
-Use your Phone camera to read a QR code from the site and run the
-associated the app code. QR codes will only work on a device at the
-moment, as simulators don't have cameras.
-
 ### Try it out live
 
 Here are some direct links to apps that are hosted on the web and run
@@ -28,12 +24,4 @@ through [Appetize.io](http://www.appetize.io) in the browser via RNPlay.
 
 ### Usage
 
-Point the camera at a [play listed here](http://rnplay.org/plays) or
-[create one](http://rnplay.org/plays/new). The app should load on your
-phone.
-
-You can start over by shaking the phone and hitting Reload, or quitting
-and starting the app again.
-
-
-#### This release is alpha/experimental. Suggestions welcome!
+Just run the app and explore. To exit a running app, tap four times in the same spot.
