@@ -53,12 +53,10 @@ int const kFlipTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
   
   UIViewController *mainViewController = [[UIViewController alloc] init];
   [mainViewController setView:rootView];
-  
-  UIColor *purple = [UIColor colorWithRed:113.0f/255.0f green:47.0f/255.0f blue:169.0f/255.0f alpha:1.0f];
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   self.window.rootViewController = mainViewController;
-  self.window.backgroundColor = purple;
+  self.window.backgroundColor = [UIColor blackColor];
   [self.window makeKeyAndVisible];
 
   UITapGestureRecognizer *quadTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToHomeScreen:)];
