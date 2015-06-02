@@ -9,39 +9,19 @@
 #import "ViewController.h"
 #import "RCTRootView.h"
 
-@interface ViewController ()
-
-@property (nonatomic, strong) NSDictionary *launchOptions;
-@property (nonatomic, strong) RCTRootView *rootView;
-
-@end
-
 @implementation ViewController
 
-- (instancetype)initWithLaunchOptions:(NSDictionary *)launchOptions {
-  if ((self = [super initWithNibName:nil bundle:nil])) {
-    self.launchOptions = launchOptions;
-  }
-  return self;
-}
-
-- (void)viewDidLoad {
-  [super viewDidLoad];
-  self.view.backgroundColor = [UIColor blackColor];
-}
-
 - (void)reloadWithJSBundleURL:(NSURL *)JSBundleURL moduleNamed:(NSString *)moduleName {
-  self.rootView = [[RCTRootView alloc] initWithBundleURL:JSBundleURL
-                                              moduleName:moduleName
-                                           launchOptions:self.launchOptions];
+  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:JSBundleURL
+                                                      moduleName:moduleName
+                                                   launchOptions:nil];
   
-  self.rootView.loadingView = [self spinner];
-  self.rootView.loadingViewFadeDelay = 0.0;
-  self.rootView.loadingViewFadeDuration = 0.15;
+  rootView.loadingView = [self spinner];
+  rootView.loadingViewFadeDelay = 0.0;
+  rootView.loadingViewFadeDuration = 0.15;
+  rootView.frame = self.view.bounds;
   
-  self.rootView.frame = self.view.bounds;
-  
-  [self setView:self.rootView];
+  [self setView:rootView];
 }
 
 - (UIActivityIndicatorView *)spinner {
