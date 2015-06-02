@@ -1,62 +1,67 @@
 'use strict';
 
 var React = require('react-native');
+var AppList = require("../Components/AppList");
+var NoResults = require('../Components/NoResults');
 
 var {
-  SegmentedControlIOS,
   StyleSheet,
   Text,
   View,
-  ListView
+  ListView,
+  TextInput,
 } = React;
 
 var Explore = React.createClass({
   getInitialState() {
     return {
-      values: ['Picks', 'Favorites', 'Search'],
-      value: 'Picks',
-      selectedIndex: 0
+      searchText: '',
+      showAppList: false
     }
   },
 
-  renderSearch() {
-    return(<Text>Search</Text>);
-  },
-
-  renderFavorites() {
-    return(<Text>Favorites</Text>);
-  },
-
-  renderPicks() {
-    return(<Text>Picks</Text>);
-  },
-
-  _onChange(event) {
+  _handleSearch() {
     this.setState({
-      selectedIndex: event.nativeEvent.selectedIndex,
+      showAppList: false,
+      searchUrl: `/plays/search.json?name=${this.state.searchText}`
     });
+
+    if (this.state.searchText !== '') {
+      this.setState({ showAppList: true });
+    }
   },
 
-  _onValueChange(value) {
-    this.setState({
-      value: value,
-    });
+  renderList() {
+    return(
+      <AppList url={this.state.searchUrl} />
+    );
+  },
+
+  renderNoResults() {
+    return(
+      <NoResults />
+    );
   },
 
   render(){
     return (
       <View style={styles.mainContainer}>
-        <NavigationBar title={'Explore'} />
-        <View style={styles.segmentContainer}>
-          <SegmentedControlIOS
-          tintColor={'#712FA9'}
-          values={this.state.values}
-          selectedIndex={this.state.selectedIndex}
-          onValueChange={this._onValueChange} />
+        <View style={styles.searchRow}>
+          <View style={styles.inputContainer}>
+            <TextInput
+              autoCapitalize="none"
+              autoCorrect={false}
+              autoFocus={true}
+              clearButtonMode="always"
+              returnKeyType={'search'}
+              placeholder="SEARCH..."
+              style={styles.input}
+              onChangeText={(text) => this.setState({searchText: text})}
+              onSubmitEditing={this._handleSearch}
+            />
+          </View>
         </View>
-        {this.state.value == 'Picks' && this.renderPicks()}
-        {this.state.value == 'Search' && this.renderSearch()}
-        {this.state.value == 'Favorites' && this.renderFavorites()}
+        {this.state.showAppList ? this.renderList() : this.renderNoResults()}
       </View>
     )
   }
@@ -65,11 +70,22 @@ var Explore = React.createClass({
 var styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'white'
   },
-  segmentContainer: {
-    margin: 20,
+  searchRow: {
+    backgroundColor: '#f3f3f3',
+    padding: 10,
+  },
+  input: {
+    height: 40,
+    padding: 5,
+    fontSize: 14,
+    color: 'black',
+  },
+  inputContainer: {
+    borderBottomWidth: 1,
+    borderColor: '#ccc',
+    margin: 5,
+    marginTop: 0,
   },
 });
 

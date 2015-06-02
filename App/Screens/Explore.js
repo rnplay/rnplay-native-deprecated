@@ -13,6 +13,8 @@ var {
 
 var AppList = require("../Components/AppList");
 var About = require('../Screens/About');
+var Search = require('../Screens/Search');
+
 var Icon = require('FAKIconImage');
 
 var Modal = require('react-native-modal');
@@ -30,7 +32,7 @@ var Explore = React.createClass({
   },
 
   renderSearch() {
-    return(<Text>Search</Text>);
+    return(<Search />);
   },
 
   renderFavorites() {
