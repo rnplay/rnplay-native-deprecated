@@ -40,7 +40,14 @@
   self.rootView.loadingViewFadeDuration = 0.15;
   
   self.rootView.frame = self.view.bounds;
-  [self.view addSubview:self.rootView];
+  
+  [UIView transitionWithView:self.view
+                    duration:0.5
+                     options:UIViewAnimationOptionTransitionFlipFromRight
+                  animations:^{
+                    [self.view addSubview:self.rootView];
+                  }
+                  completion:NULL];
 }
 
 - (UIActivityIndicatorView *)spinner {
