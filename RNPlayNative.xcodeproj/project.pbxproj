@@ -800,7 +800,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "/bin/bash -l";
-			shellScript = "if which -s katon\nthen\n  APP_NAME=`echo $PROJECT_NAME | tr '[:upper:]' '[:lower:]'`\n  katon add 'node_modules/react-native/packager/packager.sh --port $PORT' $APP_NAME\n  JS_URL=\"http://${APP_NAME}.`ipconfig getifaddr en0`.xip.io\"\n    echo \"#define JSURL @\\\"$JS_URL/index.ios.bundle\\\"\" > ${SRCROOT}/iOS/JSUrl.h\nelse\n  echo \"#define JSURL @\\\"http://localhost:8081/index.ios.bundle\\\"\" > ${SRCROOT}/iOS/JSUrl.h\n  if nc -w 5 -z localhost 8081 ; then\n    if ! curl -s \"http://localhost:8081/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port 8081 already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open $SRCROOT/../packager/launchPackager.command || echo \"Can't start packager automatically\"\n  fi\nfi";
+			shellScript = "if which -s katon\n  then\n    APP_NAME=`echo $PROJECT_NAME | tr '[:upper:]' '[:lower:]'`\n    katon add 'node_modules/react-native/packager/packager.sh --port $PORT' $APP_NAME\n    JS_URL=\"http://${APP_NAME}.`ipconfig getifaddr en0`.xip.io\"\n    echo \"#define JSURL @\\\"$JS_URL/index.ios.bundle\\\"\" > ${SRCROOT}/iOS/JSUrl.h\n  else\n    echo \"#define JSURL @\\\"http://localhost:8081/index.ios.bundle\\\"\" > ${SRCROOT}/iOS/JSUrl.h\n  if nc -w 5 -z localhost 8081 ; then\n    if ! curl -s \"http://localhost:8081/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port 8081 already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open $SRCROOT/../packager/launchPackager.command || echo \"Can't start packager automatically\"\n  fi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -902,6 +902,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../React/**",
 					"$(SRCROOT)/node_modules/react-native/React/**",
+					"$(SRCROOT)/node_modules/react-native/Libraries/**",
 					"$(SRCROOT)/../react-native/React/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
@@ -920,6 +921,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../React/**",
 					"$(SRCROOT)/node_modules/react-native/React/**",
+					"$(SRCROOT)/node_modules/react-native/Libraries/**",
 					"$(SRCROOT)/../react-native/React/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
