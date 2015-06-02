@@ -10,7 +10,6 @@
 
 @interface ViewController : UIViewController
 
-- (instancetype)initWithLaunchOptions:(NSDictionary *)launchOptions;
 - (void)reloadWithJSBundleURL:(NSURL *)JSBundleURL moduleNamed:(NSString *)moduleName;
 
 @end
