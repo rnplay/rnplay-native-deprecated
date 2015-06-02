@@ -14,11 +14,12 @@
 #import "RCTLinkingManager.h"
 
 @interface AppDelegate()
-
-@property (nonatomic, strong) ViewController *viewController;
-
 @end
+
 @implementation AppDelegate
+
+float const kTransitionDuration = 0.4f;
+int const kTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
@@ -117,11 +118,13 @@ RCT_EXPORT_METHOD(reloadAppWithURLString:(NSString *)URLString moduleNamed:(NSSt
   ViewController *appViewController = [[ViewController alloc] init];
   [appViewController reloadWithJSBundleURL:JSBundleURL moduleNamed:moduleName];
   
-  [UIView transitionWithView:delegate.window.rootViewController.view
-                    duration:0.4
-                     options:UIViewAnimationOptionTransitionFlipFromRight
+  UIView *baseView = delegate.window.rootViewController.view;
+  
+  [UIView transitionWithView:baseView
+                    duration:kTransitionDuration
+                     options:kTransitionType
                   animations:^{
-                    [delegate.window.rootViewController.view addSubview:appViewController.view];
+                    [baseView addSubview:appViewController.view];
                   }
                   completion:NULL];
 }
