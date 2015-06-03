@@ -82,13 +82,13 @@ var AppList = React.createClass({
       <TouchableHighlight underlayColor="#F5F5F5" onPress={() => this.selectApp(app)}>
         <View style={styles.appContainer}>
           <View style={styles.appTextDescription}>
-            <Text style={styles.app}>{app.name || app.module_name}</Text>
+            <Text style={styles.appTitle} numberOfLines={1}>{app.name || app.module_name}</Text>
             <View style={styles.targetBuild}>
-              <Text>Targets <Text>{app.build_name}</Text></Text>
+              <Text style={styles.targetBuildText}>Targets <Text>{app.build_name}</Text></Text>
             </View>
 
             <View style={styles.viewCount}>
-              <Text>{app.view_count} <Text>views</Text></Text>
+              <Text style={styles.viewCountText}>{app.view_count} <Text>views</Text></Text>
             </View>
           </View>
 
@@ -159,6 +159,14 @@ var styles = StyleSheet.create({
   viewCount: {
     opacity: 0.4,
   },
+  targetBuildText: {
+    fontSize: 12,
+    fontFamily: 'Avenir Next',
+  },
+  viewCountText: {
+    fontSize: 12,
+    fontFamily: 'Avenir Next',
+  },
   creator: {
     position: 'absolute',
     right: 0,
@@ -190,11 +198,12 @@ var styles = StyleSheet.create({
     paddingBottom: 20,
     color: '#888'
   },
-  app: {
+  appTitle: {
     fontSize: 18,
     fontFamily: 'Avenir Next',
-    textAlign: 'center',
-    color: '#712FA9'
+    color: '#712FA9',
+    width: 280,
+    flex: 1,
   },
   spinner: {
     flex: 1,
