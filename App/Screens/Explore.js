@@ -53,6 +53,7 @@ var Explore = React.createClass({
 
   render(){
     StatusBarIOS.setStyle(StatusBarIOS.Style.darkContent);
+
     return (
       <View style={styles.mainContainer}>
         <View style={styles.topContainer}>
@@ -65,6 +66,7 @@ var Explore = React.createClass({
               onValueChange={this._onValueChange} />
           </View>
         </View>
+
         {this.state.value == 'Picks' && this.renderPicks()}
         {this.state.value == 'Popular' && this.renderPopular()}
         {this.state.value == 'Search' && this.renderSearch()}
@@ -75,14 +77,19 @@ var Explore = React.createClass({
 
 var styles = StyleSheet.create({
   mainContainer: {
-    marginTop: 30,
+    marginTop: 25,
     flex: 1,
     flexDirection: 'column',
     backgroundColor: 'white'
   },
   topContainer: {
     flexDirection: 'row',
-    marginBottom: 10
+    paddingBottom: 15,
+    marginBottom: 0,
+    shadowColor: 'black',
+    shadowOpacity: 0.1,
+    shadowOffset: {width: 0, height: 3},
+    shadowRadius: 3,
   },
   segmentContainer: {
     flex: 1,
