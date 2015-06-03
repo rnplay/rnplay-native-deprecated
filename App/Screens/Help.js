@@ -20,7 +20,7 @@ var Help = React.createClass({
             <Text style={styles.aboutTitle}>What's this app for?</Text>
             <Text style={styles.aboutText}>Running React Native apps from rnplay.org directly on your device.</Text>
             <Text style={styles.aboutTitle}>How do I exit a loaded app?</Text>
-            <Text style={styles.aboutText}>Tap the same spot four times, quickly.</Text>
+            <Text style={styles.aboutText}>Tap the screen with two fingers simultaneously and hold for 1.5 seconds.</Text>
         </View>
       </View>
     );
