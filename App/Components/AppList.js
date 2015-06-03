@@ -12,7 +12,8 @@ var {
   TouchableHighlight,
   View,
   Navigator,
-  PixelRatio
+  PixelRatio,
+  ScrollView,
 } = React;
 
 var AppReloader = require('NativeModules').AppReloader;
@@ -80,7 +81,17 @@ var AppList = React.createClass({
     return (
       <TouchableHighlight underlayColor="#F5F5F5" onPress={() => this.selectApp(app)}>
         <View style={styles.appContainer}>
-          <Text style={styles.app}>{app.name || app.module_name}</Text>
+          <View style={styles.appTextDescription}>
+            <Text style={styles.app}>{app.name || app.module_name}</Text>
+            <View style={styles.targetBuild}>
+              <Text>Targets <Text>{app.build_name}</Text></Text>
+            </View>
+
+            <View style={styles.viewCount}>
+              <Text>{app.view_count} <Text>views</Text></Text>
+            </View>
+          </View>
+
           { this.renderCreator(app) }
         </View>
       </TouchableHighlight>
@@ -122,19 +133,31 @@ var AppList = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: -10,
+    backgroundColor: 'transparent',
   },
   loadingContainer: {
     flex: 1,
     paddingBottom: 44,
   },
-
   appContainer: {
     flexDirection: 'row',
     flex: 1,
-    paddingBottom: 30,
-    paddingTop: 20,
+    paddingBottom: 20,
+    paddingTop: 10,
     borderBottomWidth: 1 / PixelRatio.get(),
     borderBottomColor: "#eee"
+  },
+  appTextDescription: {
+    flexDirection: 'column',
+    marginLeft: 10,
+  },
+  targetBuild: {
+    opacity: 0.4,
+    paddingBottom: 2,
+  },
+  viewCount: {
+    opacity: 0.4,
   },
   creator: {
     position: 'absolute',
@@ -171,7 +194,6 @@ var styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Avenir Next',
     textAlign: 'center',
-    marginLeft: 10,
     color: '#712FA9'
   },
   spinner: {
