@@ -63,20 +63,6 @@ var Home = React.createClass({
           <My />
         </SMXTabBarItemIOS>
         <SMXTabBarItemIOS
-            name="settings"
-            iconName={'ion|gear-a'}
-            title={'Settings'}
-            iconSize={32}
-            accessibilityLabel="Settings Tab"
-            selected={this.state.selectedTab === 'settings'}
-            onPress={() => {
-            this.setState({
-              selectedTab: 'settings',
-            });
-          }}>
-          <Settings />
-        </SMXTabBarItemIOS>
-        <SMXTabBarItemIOS
           name="about"
           iconName={'ion|ios-help-outline'}
           title={'About'}
@@ -89,6 +75,20 @@ var Home = React.createClass({
             });
           }}>
           <About />
+        </SMXTabBarItemIOS>
+        <SMXTabBarItemIOS
+            name="settings"
+            iconName={'ion|gear-a'}
+            title={'Settings'}
+            iconSize={32}
+            accessibilityLabel="Settings Tab"
+            selected={this.state.selectedTab === 'settings'}
+            onPress={() => {
+            this.setState({
+              selectedTab: 'settings',
+            });
+          }}>
+          <Settings />
         </SMXTabBarItemIOS>
       </SMXTabBarIOS>
     )

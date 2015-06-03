@@ -69,31 +69,38 @@ var AppList = React.createClass({
   },
 
   renderCreator(app) {
-    return app.creator ?
-    <View style={styles.creator}>
-      <Image style={styles.avatar} resizeMode="contain" source={{uri: 'https://rnplay.org'+app.creator.avatar_url }} />
-      <Text style={styles.username}>{app.creator.username || 'anonymous'}</Text>
-    </View> : null
+    if (app.creator) {
+      var avatarUrl = 'https://rnplay.org/' + app.creator.avatar_url;
+
+      return (
+        <View style={styles.creator}>
+          <Image style={styles.avatar} resizeMode="contain" source={{uri: avatarUrl}} />
+          <Text style={styles.username} numberOfLines={1}>{app.creator.username || 'guest'}</Text>
+        </View>
+      )
+    }
   },
 
   renderApp(app) {
     return (
-      <TouchableHighlight underlayColor="#F5F5F5" onPress={() => this.selectApp(app)}>
-        <View style={styles.appContainer}>
-          <View style={styles.appTextDescription}>
-            <Text style={styles.appTitle} numberOfLines={1}>{app.name || app.module_name}</Text>
-            <View style={styles.targetBuild}>
-              <Text style={styles.targetBuildText}>Targets <Text>{app.build_name}</Text></Text>
+      <View style={{marginBottom: 15}}>
+        <TouchableHighlight underlayColor="#F5F5F5" onPress={() => this.selectApp(app)}>
+          <View style={styles.appContainer}>
+            <View style={styles.appTextDescription}>
+              <Text style={styles.appTitle} numberOfLines={1}>{app.name || app.module_name}</Text>
+              <View style={styles.targetBuild}>
+                <Text style={styles.targetBuildText}>Targets <Text>{app.build_name}</Text></Text>
+              </View>
+
+              <View style={styles.viewCount}>
+                <Text style={styles.viewCountText}>{app.view_count} <Text>views</Text></Text>
+              </View>
             </View>
 
-            <View style={styles.viewCount}>
-              <Text style={styles.viewCountText}>{app.view_count} <Text>views</Text></Text>
-            </View>
+            { this.renderCreator(app) }
           </View>
-
-          { this.renderCreator(app) }
-        </View>
-      </TouchableHighlight>
+        </TouchableHighlight>
+      </View>
     );
   },
 
@@ -129,22 +136,28 @@ var AppList = React.createClass({
   }
 });
 
+var deviceWidth = require('Dimensions').get('window').width;
+
 var styles = StyleSheet.create({
+  listView: {
+    marginTop: -9,
+    paddingTop: 0,
+  },
   container: {
     flex: 1,
-    marginTop: -10,
     backgroundColor: 'transparent',
   },
   loadingContainer: {
     flex: 1,
-    paddingBottom: 44,
+    paddingBottom: 80,
   },
   appContainer: {
+    marginTop: -18,
     flexDirection: 'row',
     flex: 1,
-    paddingBottom: 20,
-    paddingTop: 10,
-    borderBottomWidth: 1 / PixelRatio.get(),
+    paddingBottom: 8,
+    paddingTop: 15,
+    borderBottomWidth: 3 / PixelRatio.get(),
     borderBottomColor: "#eee"
   },
   appTextDescription: {
@@ -172,11 +185,13 @@ var styles = StyleSheet.create({
     width: 70,
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   username: {
-    fontSize: 12,
-    opacity: .5
+    fontSize: 11,
+    opacity: 0.4,
+    width: 50,
+    textAlign: 'center',
   },
   avatar: {
     width: 30,
@@ -191,27 +206,15 @@ var styles = StyleSheet.create({
     fontSize: 25,
     marginLeft: 20
   },
-  header: {
-    textAlign: "center",
-    fontSize: 25,
-    paddingBottom: 20,
-    color: '#888'
-  },
   appTitle: {
     fontSize: 18,
     fontFamily: 'Avenir Next',
     color: '#712FA9',
-    width: 280,
+    width: deviceWidth - 70,
     flex: 1,
   },
   spinner: {
     flex: 1,
-  },
-  cameraButton: {
-    height: 60,
-    width: 20,
-    alignSelf: 'center',
-    marginLeft: 5
   },
 });
 

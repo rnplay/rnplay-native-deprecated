@@ -30,13 +30,17 @@ var Explore = React.createClass({
 
   renderPopular() {
     return (
-      <AppList url="/plays/popular.json" />
+      <View style={styles.contentContainer}>
+        <AppList url="/plays/popular.json" />
+      </View>
     )
   },
 
   renderPicks() {
     return (
-      <AppList url="/plays/picks.json" />
+      <View style={styles.contentContainer}>
+        <AppList url="/plays/picks.json" />
+      </View>
     );
   },
 
@@ -81,6 +85,10 @@ var Explore = React.createClass({
 var deviceWidth = require('Dimensions').get('window').width;
 
 var styles = StyleSheet.create({
+  contentContainer: {
+    flex: 1,
+    paddingTop: 15,
+  },
   mainContainer: {
     marginTop: 25,
     flex: 1,
@@ -96,7 +104,7 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     paddingTop: 10,
     paddingBottom: 15,
-    marginBottom: 0,
+    marginBottom: 10,
     backgroundColor: '#fff',
     shadowColor: 'black',
     shadowOpacity: 0.1,

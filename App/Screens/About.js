@@ -28,17 +28,22 @@ var Help = React.createClass({
             <Text style={styles.aboutText}>Running React Native apps from rnplay.org directly on your device.</Text>
             <View style={styles.separator} />
             <Text style={styles.aboutTitle}>How do I exit a loaded app?</Text>
-            <Text style={styles.aboutText}>Tap the screen with two fingers simultaneously and hold for 1.5 seconds.</Text>
+            <Text style={styles.aboutText}>Tap and hold the screen with two fingers simultaneously for 1.5 seconds.</Text>
             <View style={styles.separator} />
             <Text style={styles.aboutTitle}>What does target mean?</Text>
             <Text style={styles.aboutText}>Target refers to the React Native build version that a given play is intended for.</Text>
             <View style={styles.separator} />
-            <Text style={styles.aboutTitle}>What build version of React Native is this app compatible with?</Text>
-            <Text style={styles.aboutText}>This app is currently built against React Native <Text style={styles.buildVersionText}>0.5.0</Text>, released Friday, June 5th, 2015.</Text>
+            <Text style={styles.aboutTitle} numberOfLines={2}>
+              What React Native version is this app built with?
+            </Text>
+            <Text style={styles.aboutText} numberOfLines={2}>
+              This app is currently built against React Native
+              <Text style={styles.buildVersionText}> 0.5.0</Text>, released Friday, June 5th, 2015.
+            </Text>
             <View style={styles.separator} />
             <View style={styles.otherQuestions}>
               <Text style={styles.otherQuestionsText}>
-                If you would like to get in touch with us for any reason, we can be reached at:
+                If you would like to get in touch with us for any reason, we can be reached by email.
               </Text>
               <View style={{paddingTop: 5}}>
                 <TouchableOpacity onPress={this._sendEmail}>
@@ -54,15 +59,19 @@ var Help = React.createClass({
 
 var styles = StyleSheet.create({
   contentContainer: {
+    marginTop: -10,
     paddingBottom: 20,
     flex: 1,
   },
   sendEmailText: {
     color: '#712FA9',
+    fontSize: 13,
+    marginTop: -2,
   },
   aboutTitle: {
     fontSize: 18,
-    marginBottom: 5,
+    marginBottom: 0,
+    lineHeight: 20,
     fontFamily: 'Avenir Next',
     paddingLeft: 15,
     paddingRight: 15,
@@ -70,8 +79,8 @@ var styles = StyleSheet.create({
   aboutText: {
     paddingRight: 15,
     paddingLeft: 15,
-    marginBottom: 15,
-    fontSize: 14,
+    marginBottom: 12,
+    fontSize: 13,
     textAlign: 'left',
     color: '#3a3638',
     opacity: 0.5,
@@ -80,18 +89,20 @@ var styles = StyleSheet.create({
     flex: 1,
     height: 1,
     backgroundColor: "rgba(0,0,0,0.07)",
-    marginBottom: 15,
+    marginBottom: 14,
   },
   buildVersionText: {
     fontWeight: 'bold',
   },
   otherQuestionsText: {
     opacity: 0.4,
+    fontSize: 13,
   },
   otherQuestions: {
-    paddingTop: 5,
+    paddingTop: 0,
     paddingLeft: 15,
     paddingRight: 15,
+    paddingBottom: 23,
   }
 });
 
