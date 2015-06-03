@@ -6,18 +6,25 @@ var NavigationBar = require('../Components/NavigationBar');
 var {
   StyleSheet,
   Text,
+  ScrollView,
   View,
   StatusBarIOS,
+  LinkingIOS,
+  TouchableOpacity,
 } = React;
 
 var Help = React.createClass({
+  _sendEmail() {
+    LinkingIOS.openURL('mailto:info@rnplay.org');
+  },
+
   render() {
     StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
     return (
-      <View>
+      <View style={{flex: 1}}>
         <NavigationBar title={'About'} />
-        <View style={styles.contentContainer}>
-            <Text style={styles.aboutTitle}>What's this app for?</Text>
+        <ScrollView style={styles.contentContainer}>
+            <Text style={styles.aboutTitle}>What is this app for?</Text>
             <Text style={styles.aboutText}>Running React Native apps from rnplay.org directly on your device.</Text>
             <View style={styles.separator} />
             <Text style={styles.aboutTitle}>How do I exit a loaded app?</Text>
@@ -29,7 +36,17 @@ var Help = React.createClass({
             <Text style={styles.aboutTitle}>What build version of React Native is this app compatible with?</Text>
             <Text style={styles.aboutText}>This app is currently built against React Native <Text style={styles.buildVersionText}>0.5.0</Text>, released Friday, June 5th, 2015.</Text>
             <View style={styles.separator} />
-        </View>
+            <View style={styles.otherQuestions}>
+              <Text style={styles.otherQuestionsText}>
+                If you would like to get in touch with us for any reason, we can be reached at:
+              </Text>
+              <View style={{paddingTop: 5}}>
+                <TouchableOpacity onPress={this._sendEmail}>
+                  <Text style={styles.sendEmailText}>info@rnplay.org</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+        </ScrollView>
       </View>
     );
   }
@@ -37,8 +54,11 @@ var Help = React.createClass({
 
 var styles = StyleSheet.create({
   contentContainer: {
-    paddingTop: 20,
     paddingBottom: 20,
+    flex: 1,
+  },
+  sendEmailText: {
+    color: '#712FA9',
   },
   aboutTitle: {
     fontSize: 18,
@@ -65,6 +85,14 @@ var styles = StyleSheet.create({
   buildVersionText: {
     fontWeight: 'bold',
   },
+  otherQuestionsText: {
+    opacity: 0.4,
+  },
+  otherQuestions: {
+    paddingTop: 5,
+    paddingLeft: 15,
+    paddingRight: 15,
+  }
 });
 
 module.exports = Help;
