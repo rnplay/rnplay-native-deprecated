@@ -9,7 +9,7 @@ var {
   ListView,
   StyleSheet,
   Text,
-  TouchableOpacity,
+  TouchableHighlight,
   View,
   Navigator,
   PixelRatio
@@ -78,12 +78,12 @@ var AppList = React.createClass({
 
   renderApp(app) {
     return (
-      <View style={styles.appContainer}>
-        <TouchableOpacity onPress={() => this.selectApp(app)}>
+      <TouchableHighlight underlayColor="#F5F5F5" onPress={() => this.selectApp(app)}>
+        <View style={styles.appContainer}>
           <Text style={styles.app}>{app.name || app.module_name}</Text>
-        </TouchableOpacity>
-        { this.renderCreator(app) }
-      </View>
+          { this.renderCreator(app) }
+        </View>
+      </TouchableHighlight>
     );
   },
 
@@ -127,11 +127,12 @@ var styles = StyleSheet.create({
     flex: 1,
     paddingBottom: 44,
   },
+
   appContainer: {
-    marginBottom: 20,
     flexDirection: 'row',
     flex: 1,
-    paddingBottom: 10,
+    paddingBottom: 30,
+    paddingTop: 20,
     borderBottomWidth: 1 / PixelRatio.get(),
     borderBottomColor: "#eee"
   },
@@ -146,12 +147,6 @@ var styles = StyleSheet.create({
   username: {
     fontSize: 12,
     opacity: .5
-  },
-  cameraButton: {
-    height: 60,
-    width: 20,
-    alignSelf: 'center',
-    marginLeft: 5
   },
   avatar: {
     width: 30,
@@ -173,13 +168,20 @@ var styles = StyleSheet.create({
     color: '#888'
   },
   app: {
-    fontSize: 20,
+    fontSize: 18,
+    fontFamily: 'Avenir Next',
     textAlign: 'center',
-    margin: 10,
+    marginLeft: 10,
     color: '#712FA9'
   },
   spinner: {
     flex: 1,
+  },
+  cameraButton: {
+    height: 60,
+    width: 20,
+    alignSelf: 'center',
+    marginLeft: 5
   },
 });
 

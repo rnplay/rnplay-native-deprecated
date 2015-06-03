@@ -24,6 +24,11 @@
 # Ignore jest
 .*/react-native/node_modules/jest-cli/.*
 
+.*/node_modules/react-native/Examples/.*
+.*/node_modules/react-native/node_modules/babel/.*
+.*/node_modules/react-native/node_modules/jstransform/.*
+.*/node_modules/flux-util/node_modules/flux/lib/invariant.js
+
 [include]
 
 [libs]

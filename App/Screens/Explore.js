@@ -17,22 +17,24 @@ var Search = require('../Screens/Search');
 var Explore = React.createClass({
   getInitialState() {
     return {
-      values: ['Picks', 'Search'],
+      values: ['Picks', 'Popular', 'Search'],
       value: 'Picks',
       selectedIndex: 0
     }
   },
 
   renderSearch() {
-    return(<Search />);
+    return <Search />;
   },
 
-  renderFavorites() {
-    return(<Text>Favorites</Text>);
+  renderPopular() {
+    return (
+      <AppList url="/plays/popular.json" />
+    )
   },
 
   renderPicks() {
-    return(
+    return (
       <AppList url="/plays/picks.json" />
     );
   },
@@ -58,11 +60,13 @@ var Explore = React.createClass({
             <SegmentedControlIOS
               tintColor={'#712FA9'}
               values={this.state.values}
+              style={styles.exploreViewPicker}
               selectedIndex={this.state.selectedIndex}
               onValueChange={this._onValueChange} />
           </View>
         </View>
         {this.state.value == 'Picks' && this.renderPicks()}
+        {this.state.value == 'Popular' && this.renderPopular()}
         {this.state.value == 'Search' && this.renderSearch()}
       </View>
     )
@@ -82,9 +86,12 @@ var styles = StyleSheet.create({
   },
   segmentContainer: {
     flex: 1,
-    marginRight: 10,
-    marginLeft: 10,
-    marginTop: 4,
+    marginRight: 30,
+    marginLeft: 30,
+    marginTop: 10,
+  },
+  exploreViewPicker: {
+    transform: [{scaleX: 1.1}, {scaleY: 1.1}],
   },
 });
 
