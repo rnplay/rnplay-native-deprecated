@@ -56,6 +56,12 @@ var Explore = React.createClass({
 
     return (
       <View style={styles.mainContainer}>
+        <View style={{flex: 1, backgroundColor: 'transparent',}}>
+          {this.state.value == 'Picks' && this.renderPicks()}
+          {this.state.value == 'Popular' && this.renderPopular()}
+          {this.state.value == 'Search' && this.renderSearch()}
+        </View>
+
         <View style={styles.topContainer}>
           <View style={styles.segmentContainer}>
             <SegmentedControlIOS
@@ -66,10 +72,6 @@ var Explore = React.createClass({
               onValueChange={this._onValueChange} />
           </View>
         </View>
-
-        {this.state.value == 'Picks' && this.renderPicks()}
-        {this.state.value == 'Popular' && this.renderPopular()}
-        {this.state.value == 'Search' && this.renderSearch()}
       </View>
     )
   }
@@ -80,12 +82,19 @@ var styles = StyleSheet.create({
     marginTop: 25,
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    paddingTop: 50,
   },
   topContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
     flexDirection: 'row',
+    paddingTop: 10,
     paddingBottom: 15,
     marginBottom: 0,
+    backgroundColor: '#fff',
     shadowColor: 'black',
     shadowOpacity: 0.1,
     shadowOffset: {width: 0, height: 3},
@@ -95,7 +104,6 @@ var styles = StyleSheet.create({
     flex: 1,
     marginRight: 30,
     marginLeft: 30,
-    marginTop: 10,
   },
   exploreViewPicker: {
     transform: [{scaleX: 1.1}, {scaleY: 1.1}],
