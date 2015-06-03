@@ -56,21 +56,10 @@ var My = React.createClass({
       DEFAULT_ROUTE.id = 'login';
     }
 
-      return (
-        <Navigator
-        initialRoute={DEFAULT_ROUTE}
-        renderScene={this.renderScene}
-        configureScene={(route) => {
-          if (route.sceneConfig) {
-            if(route.disableGestures) {
-              return _.omit(route.sceneConfig, 'gestures');
-            } else {
-                return route.sceneConfig;
-            }
-          }
-          return Navigator.SceneConfigs.HorizontalSwipeJump;
-        }}
-      />);
+    return (
+      <Navigator initialRoute={DEFAULT_ROUTE}
+                 renderScene={this.renderScene} />
+    );
   }
 });
 
