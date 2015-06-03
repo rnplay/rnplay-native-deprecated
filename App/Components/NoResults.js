@@ -22,12 +22,13 @@ var styles = StyleSheet.create({
   noResultsContainer: {
     flex: 1,
     justifyContent: 'center',
-    paddingBottom: 44,
+    paddingBottom: 60,
   },
   noResultsText: {
     fontSize: 20,
     textAlign: 'center',
     color: '#ccc',
+    fontFamily: 'Avenir Next',
   },
 });
 

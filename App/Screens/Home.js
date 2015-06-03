@@ -9,7 +9,7 @@ var React = require('react-native');
 var Explore = require('./Explore');
 var My = require('./My');
 var Settings = require('./Settings');
-var Help = require('./Help');
+var About = require('./About');
 
 var SMXTabBarIOS = require('SMXTabBarIOS');
 var SMXTabBarItemIOS = SMXTabBarIOS.Item;
@@ -32,6 +32,7 @@ var Home = React.createClass({
       <SMXTabBarIOS
         selectedTab={this.state.selectedTab}
         tintColor={'#712FA9'}
+        style={styles.tabBar}
         barTintColor={'white'}>
         <SMXTabBarItemIOS
           name="explore"
@@ -76,21 +77,26 @@ var Home = React.createClass({
           <Settings />
         </SMXTabBarItemIOS>
         <SMXTabBarItemIOS
-          name="help"
+          name="about"
           iconName={'ion|ios-help-outline'}
-          title={'Help'}
+          title={'About'}
           iconSize={32}
-          accessibilityLabel="Help Tab"
-          selected={this.state.selectedTab === 'help'}
+          accessibilityLabel="About Tab"
+          selected={this.state.selectedTab === 'about'}
           onPress={() => {
             this.setState({
-              selectedTab: 'help',
+              selectedTab: 'about',
             });
           }}>
-          <Help />
+          <About />
         </SMXTabBarItemIOS>
       </SMXTabBarIOS>
     )
+  }
+});
+
+var styles = StyleSheet.create({
+  tabBar: {
   }
 });
 
