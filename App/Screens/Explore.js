@@ -8,6 +8,7 @@ var {
   Text,
   View,
   StatusBarIOS,
+  ScrollView,
   TouchableOpacity,
 } = React;
 
@@ -51,16 +52,15 @@ var Explore = React.createClass({
     });
   },
 
-  render(){
+
+  render() {
     StatusBarIOS.setStyle(StatusBarIOS.Style.darkContent);
 
     return (
       <View style={styles.mainContainer}>
-        <View style={{flex: 1, backgroundColor: 'transparent',}}>
-          {this.state.value == 'Picks' && this.renderPicks()}
-          {this.state.value == 'Popular' && this.renderPopular()}
-          {this.state.value == 'Search' && this.renderSearch()}
-        </View>
+        {this.state.value == 'Picks' && this.renderPicks()}
+        {this.state.value == 'Popular' && this.renderPopular()}
+        {this.state.value == 'Search' && this.renderSearch()}
 
         <View style={styles.topContainer}>
           <View style={styles.segmentContainer}>
@@ -76,6 +76,9 @@ var Explore = React.createClass({
     )
   }
 });
+
+
+var deviceWidth = require('Dimensions').get('window').width;
 
 var styles = StyleSheet.create({
   mainContainer: {

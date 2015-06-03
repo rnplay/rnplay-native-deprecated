@@ -59,9 +59,11 @@ int const kFlipTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
   self.window.backgroundColor = [UIColor blackColor];
   [self.window makeKeyAndVisible];
 
-  UITapGestureRecognizer *quadTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToHomeScreen:)];
-  [quadTap setNumberOfTapsRequired:4];
-  [self.window addGestureRecognizer:quadTap];
+  UILongPressGestureRecognizer *exitGesture = [[UILongPressGestureRecognizer alloc]
+    initWithTarget:self action:@selector(goToHomeScreen:)];
+  [exitGesture setMinimumPressDuration:1.5f];
+  [exitGesture setNumberOfTouchesRequired:2];
+  [self.window addGestureRecognizer:exitGesture];
 
   return YES;
 }
