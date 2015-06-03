@@ -11,14 +11,23 @@ var {
   Text,
   TouchableOpacity,
   View,
-  Navigator
+  Navigator,
+  StatusBarIOS,
 } = React;
 
 var AppList = require("../Components/AppList");
+var NavigationBar = require('../Components/NavigationBar');
 
 var MyApps = React.createClass({
   render() {
-    return <AppList url="/plays.json" />;
+    StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
+
+    return (
+      <View style={{flex: 1}}>
+        <NavigationBar title={'My Apps'} />
+        <AppList url="/plays.json" />
+      </View>
+    )
   }
 });
 

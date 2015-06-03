@@ -13,7 +13,6 @@ var {
   View,
   Navigator,
   PixelRatio,
-  ScrollView,
 } = React;
 
 var AppReloader = require('NativeModules').AppReloader;
