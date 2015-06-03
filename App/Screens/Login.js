@@ -14,7 +14,8 @@ var {
   TextInput,
   Text,
   TouchableHighlight,
-  View
+  View,
+  StatusBarIOS,
 } = React;
 
 var Login = React.createClass({
@@ -32,7 +33,7 @@ var Login = React.createClass({
   renderError() {
     return (
       <View style={styles.errorContainer}>
-        <Text>{this.props.error}</Text>
+        <Text style={styles.errorText}>{this.props.error}</Text>
       </View>
     )
   },
@@ -75,8 +76,11 @@ var Login = React.createClass({
   },
 
   render(){
+    StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
+
     return (
       <View style={styles.mainContainer}>
+        <NavigationBar title={'Account Required'} />
         <ScrollView>
           <View style={styles.inputContainer}>
             <TextInput
@@ -123,7 +127,6 @@ var Login = React.createClass({
 var styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    marginTop: 20,
     flexDirection: 'column',
     backgroundColor: 'white'
   },
@@ -147,11 +150,15 @@ var styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     padding: 10,
+    fontFamily: 'Avenir Next',
   },
   errorContainer: {
     justifyContent: 'center',
     alignSelf: 'center',
-  }
+  },
+  errorText: {
+    opacity: 0.6,
+  },
 });
 
 module.exports = Login;
