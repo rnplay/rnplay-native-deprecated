@@ -24,8 +24,8 @@ var Overlay = require('react-native-overlay');
 
 var Api = require("../Api/Core");
 
-var RECENT_PLAYS_URL = '/builds/0.5.0-rc1/plays/public.json';
-var MY_PLAYS_URL = '/plays.json';
+var RECENT_PLAYS_URL = '/builds/0.5.0-rc1/apps/public.json';
+var MY_PLAYS_URL = '/apps.json';
 
 var Guest = React.createClass({
   getInitialState() {

@@ -23,7 +23,7 @@ var Explore = React.createClass({
   _handleSearch() {
     this.setState({
       showAppList: false,
-      searchUrl: `/plays/search.json?name=${this.state.searchText}`
+      searchUrl: `/apps/search.json?name=${this.state.searchText}`
     });
 
     if (this.state.searchText !== '') {
