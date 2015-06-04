@@ -25,7 +25,7 @@ var MyApps = React.createClass({
     return (
       <View style={{flex: 1}}>
         <NavigationBar title={'My Apps'} />
-        <AppList url="/plays.json" />
+        <AppList url="/plays.json" hideCreator={true} />
       </View>
     )
   }

@@ -69,7 +69,7 @@ var AppList = React.createClass({
   },
 
   renderCreator(app) {
-    if (app.creator) {
+    if (app.creator && !this.props.hideCreator) {
       var avatarUrl = 'https://rnplay.org/' + app.creator.avatar_url;
 
       return (
