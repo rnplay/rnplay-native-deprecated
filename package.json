@@ -10,7 +10,7 @@
     "flux-util": "^0.1.1",
     "lodash": "^3.7.0",
     "qs": "^3.1.0",
-    "react-native": "facebook/react-native",
+    "react-native": "facebook/react-native#a76647334fca806f600b737e8c843f0616ebddce",
     "react-native-accordion": "0.1.1",
     "react-native-camera": "brentvatne/react-native-camera",
     "react-native-icons": "0.0.8",
