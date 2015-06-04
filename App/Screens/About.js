@@ -43,7 +43,7 @@ var Help = React.createClass({
             <View style={styles.separator} />
             <View style={styles.otherQuestions}>
               <Text style={styles.otherQuestionsText}>
-                If you would like to get in touch with us for any reason, we can be reached by email.
+                More questions? Pleaes get in touch with us by email.
               </Text>
               <View style={{paddingTop: 5}}>
                 <TouchableOpacity onPress={this._sendEmail}>
@@ -70,7 +70,7 @@ var styles = StyleSheet.create({
   },
   aboutTitle: {
     fontSize: 18,
-    marginBottom: 0,
+    marginBottom: 10,
     lineHeight: 20,
     fontFamily: 'Avenir Next',
     paddingLeft: 15,
