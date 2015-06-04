@@ -128,7 +128,6 @@ var AppList = React.createClass({
   },
 
   selectApp(app) {
-    console.log(generateAppURL(app));
     AppReloader.reloadAppWithURLString(generateAppURL(app), app.module_name);
   },
 
