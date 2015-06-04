@@ -1073,7 +1073,7 @@ throw new TypeError(
 
 var index=findIndex.call(this, predicate, context);
 return index === -1?undefined:this[index];}});}})();
-__d('RNPlayNative/index.ios',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Screens/Login","RNPlayNative/App/Screens/Signup","RNPlayNative/App/Screens/Home","RNPlayNative/App/Screens/Guest","RNPlayNative/App/Stores/ProfileStore","RNPlayNative/App/Stores/LocalStorage","lodash/index"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+__d('RNPlayNative/index.ios',["react-native/Libraries/react-native/react-native","qs/index","LinkingIOS","NativeModules","RNPlayNative/App/Screens/Login","RNPlayNative/App/Screens/Signup","RNPlayNative/App/Screens/Home","RNPlayNative/App/Screens/Guest","RNPlayNative/App/Stores/ProfileStore","RNPlayNative/App/Stores/LocalStorage","lodash/index"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 
 
@@ -1081,6 +1081,9 @@ __d('RNPlayNative/index.ios',["react-native/Libraries/react-native/react-native"
 
 
 var React=require('react-native/Libraries/react-native/react-native');
+var qs=require('qs/index');
+var LinkingIOS=require('LinkingIOS');
+var AppReloader=require('NativeModules').AppReloader;
 var Login=require('RNPlayNative/App/Screens/Login');
 var Signup=require('RNPlayNative/App/Screens/Signup');
 var Home=require('RNPlayNative/App/Screens/Home');
@@ -1108,12 +1111,30 @@ bootstrapped:false};},
 
 componentDidMount:function(){var _this=this;
 StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
-LocalStorage.bootstrap(function(){return _this.setState({bootstrapped:true});});}, 
+LocalStorage.bootstrap(function(){return _this.setState({bootstrapped:true});});
+LinkingIOS.addEventListener('url', this._processURL);
+
+var url=LinkingIOS.popInitialURL();
+if(url){
+this._processURL({url:url});}}, 
+
+
+
+componentWillUnmount:function(){
+LinkingIOS.removeEventListener('url', this._processURL);}, 
+
+
+_processURL:function(e){
+var url=e.url.replace('rnplay://', '');var _qs$parse=
+qs.parse(url);var bundle_url=_qs$parse.bundle_url;var module_name=_qs$parse.module_name;
+
+if(bundle_url && module_name){
+AppReloader.reloadAppWithURLString(bundle_url, module_name);}}, 
 
 
 
 render:function(){
-if(this.state.bootstrapped == false){
+if(this.state.bootstrapped === false){
 return React.createElement(View, null);}
 
 return React.createElement(Home, null);}});
@@ -6410,7 +6431,7 @@ if(typeof window === 'undefined'){
 window = GLOBAL;}
 
 
-function handleErrorWithRedBox(e, isFatal){
+function handleError(e, isFatal){
 try{
 require('ExceptionsManager').handleException(e, isFatal);}
 catch(ee) {
@@ -6420,7 +6441,7 @@ console.log('Failed to print error: ', ee.message);}}
 
 function setUpRedBoxErrorHandler(){
 var ErrorUtils=require('ErrorUtils');
-ErrorUtils.setGlobalHandler(handleErrorWithRedBox);}
+ErrorUtils.setGlobalHandler(handleError);}
 
 
 function setUpRedBoxConsoleErrorHandler(){
@@ -6954,17 +6975,10 @@ if(RCTExceptionsManager){
 if(!stack){
 stack = parseErrorStack(e);}
 
-if(!RCTExceptionsManager.reportFatalException || 
-!RCTExceptionsManager.reportSoftException){
-
-
-RCTExceptionsManager.reportUnhandledException(e.message, stack);}else 
-{
 if(isFatal){
 RCTExceptionsManager.reportFatalException(e.message, stack);}else 
 {
-RCTExceptionsManager.reportSoftException(e.message, stack);}}
-
+RCTExceptionsManager.reportSoftException(e.message, stack);}
 
 if(__DEV__){
 (sourceMapPromise = sourceMapPromise || loadSourceMap()).
@@ -7235,7 +7249,7 @@ return result;}
 
 
 module.exports = mapObject;});
-__d('MessageQueue',["ErrorUtils","ReactUpdates","invariant","warning","JSTimersExecution"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+__d('MessageQueue',["ErrorUtils","ReactUpdates","invariant","warning","BridgeProfiling","JSTimersExecution"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 
 
@@ -7254,6 +7268,7 @@ var ReactUpdates=require('ReactUpdates');
 var invariant=require('invariant');
 var warning=require('warning');
 
+var BridgeProfiling=require('BridgeProfiling');
 var JSTimersExecution=require('JSTimersExecution');
 
 var INTERNAL_ERROR='Error in MessageQueue implementation';
@@ -7514,7 +7529,9 @@ cbID);
 if(DEBUG_SPY_MODE){
 console.log('N->JS: Callback#' + cbID + '(' + JSON.stringify(args) + ')');}
 
-cb.apply(scope, args);}
+BridgeProfiling.profile('Callback#' + cbID + '(' + JSON.stringify(args) + ')');
+cb.apply(scope, args);
+BridgeProfiling.profileEnd();}
 catch(ie_requires_catch) {
 throw ie_requires_catch;}finally 
 {
@@ -7548,7 +7565,9 @@ console.log(
 'N->JS: ' + moduleName + '.' + methodName + 
 '(' + JSON.stringify(params) + ')');}
 
+BridgeProfiling.profile(moduleName + '.' + methodName + '(' + JSON.stringify(params) + ')');
 var ret=jsCall(this._requireFunc(moduleName), methodName, params);
+BridgeProfiling.profileEnd();
 
 return ret;}, 
 
@@ -7567,7 +7586,8 @@ this);},
 
 processBatch:function(batch){
 var self=this;
-return guardReturn(function(){
+BridgeProfiling.profile('MessageQueue.processBatch()');
+var flushedQueue=guardReturn(function(){
 ReactUpdates.batchedUpdates(function(){
 batch.forEach(function(call){
 invariant(
@@ -7580,11 +7600,15 @@ if(call.method === 'invokeCallbackAndReturnFlushedQueue'){
 self._invokeCallback.apply(self, call.args);}else 
 {
 throw new Error(
-'Unrecognized method called on BatchedBridge: ' + call.method);}});});}, 
+'Unrecognized method called on BatchedBridge: ' + call.method);}});
 
 
+BridgeProfiling.profile('React.batchedUpdates()');});
 
-null, this._flushedQueueUnguarded, this);}, 
+BridgeProfiling.profileEnd();}, 
+null, this._flushedQueueUnguarded, this);
+BridgeProfiling.profileEnd();
+return flushedQueue;}, 
 
 
 setLoggingEnabled:function(enabled){
@@ -7709,8 +7733,10 @@ return guardReturn(null, null, this._flushedQueueUnguarded, this);},
 
 
 _flushedQueueUnguarded:function(){
+BridgeProfiling.profile('JSTimersExecution.callImmediates()');
 
 JSTimersExecution.callImmediates();
+BridgeProfiling.profileEnd();
 
 var currentOutgoingItems=this._outgoingItems;
 this._swapAndReinitializeBuffer();
@@ -7768,6 +7794,43 @@ return total;}};
 
 Object.assign(MessageQueue.prototype, MessageQueueMixin);
 module.exports = MessageQueue;});
+__d('BridgeProfiling',[],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+
+
+
+
+
+
+
+
+
+
+
+var GLOBAL=GLOBAL || this;
+
+var BridgeProfiling={
+profile:function(profileName, args){
+if(GLOBAL.__BridgeProfilingIsProfiling){
+if(args){
+try{
+args = JSON.stringify(args);}
+catch(err) {
+args = err.message;}}
+
+
+console.profile(profileName, args);}}, 
+
+
+
+profileEnd:function(){
+if(GLOBAL.__BridgeProfilingIsProfiling){
+console.profileEnd();}}};
+
+
+
+
+module.exports = BridgeProfiling;});
 __d('JSTimersExecution',["invariant","keyMirror","performanceNow","warning","JSTimers","JSTimers"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 
@@ -8058,14 +8121,10 @@ var newID=JSTimersExecution.GUID++;
 var freeIndex=JSTimers._getFreeIndex();
 JSTimersExecution.timerIDs[freeIndex] = newID;
 JSTimersExecution.callbacks[freeIndex] = function(){
-var startTime=Date.now();
-var ret=func.apply(undefined, args);
-var endTime=Date.now();
-RCTTiming.createTimer(newID, Math.max(0, duration - (endTime - startTime)), endTime, false);
-return ret;};
+return func.apply(undefined, args);};
 
 JSTimersExecution.types[freeIndex] = JSTimersExecution.Type.setInterval;
-RCTTiming.createTimer(newID, duration, Date.now(), false);
+RCTTiming.createTimer(newID, duration, Date.now(), true);
 return newID;}, 
 
 
@@ -10990,7 +11049,7 @@ OS:'ios'};
 
 
 module.exports = Platform;});
-__d('XMLHttpRequest',["NativeModules","crc32","XMLHttpRequestBase"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target, props){for(var i=0; i < props.length; i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function(Constructor, protoProps, staticProps){if(protoProps)defineProperties(Constructor.prototype, protoProps);if(staticProps)defineProperties(Constructor, staticProps);return Constructor;};})();function _classCallCheck(instance, Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass, superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, {constructor:{value:subClass, enumerable:false, writable:true, configurable:true}});if(superClass)subClass.__proto__ = superClass;}
+__d('XMLHttpRequest',["NativeModules","XMLHttpRequestBase"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target, props){for(var i=0; i < props.length; i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function(Constructor, protoProps, staticProps){if(protoProps)defineProperties(Constructor.prototype, protoProps);if(staticProps)defineProperties(Constructor, staticProps);return Constructor;};})();function _classCallCheck(instance, Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass, superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, {constructor:{value:subClass, enumerable:false, writable:true, configurable:true}});if(superClass)subClass.__proto__ = superClass;}
 
 
 
@@ -11005,13 +11064,11 @@ __d('XMLHttpRequest',["NativeModules","crc32","XMLHttpRequestBase"],function(glo
 
 var RCTDataManager=require('NativeModules').DataManager;
 
-var crc32=require('crc32');
-
 var XMLHttpRequestBase=require('XMLHttpRequestBase');var 
 
 XMLHttpRequest=(function(_XMLHttpRequestBase){function XMLHttpRequest(){_classCallCheck(this, XMLHttpRequest);if(_XMLHttpRequestBase != null){_XMLHttpRequestBase.apply(this, arguments);}}_inherits(XMLHttpRequest, _XMLHttpRequestBase);_createClass(XMLHttpRequest, [{key:'sendImpl', value:
 
-function sendImpl(method, url, headers, data){var _this=this;
+function sendImpl(method, url, headers, data){
 RCTDataManager.queryData(
 'http', 
 {
@@ -11020,12 +11077,7 @@ url:url,
 data:data, 
 headers:headers}, 
 
-
-'h' + crc32(method + '|' + url + '|' + data), 
-function(result){
-result = JSON.parse(result);
-_this.callback(result.status, result.responseHeaders, result.responseText);});}}, {key:'abortImpl', value:
-
+this.callback.bind(this));}}, {key:'abortImpl', value:
 
 
 
@@ -11038,98 +11090,6 @@ console.warn(
 
 
 module.exports = XMLHttpRequest;});
-__d('crc32',[],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-table=[
-0, 1996959894, 3993919788, 2567524794, 124634137, 1886057615, 
-3915621685, 2657392035, 249268274, 2044508324, 3772115230, 2547177864, 
-162941995, 2125561021, 3887607047, 2428444049, 498536548, 1789927666, 
-4089016648, 2227061214, 450548861, 1843258603, 4107580753, 2211677639, 
-325883990, 1684777152, 4251122042, 2321926636, 335633487, 1661365465, 
-4195302755, 2366115317, 997073096, 1281953886, 3579855332, 2724688242, 
-1006888145, 1258607687, 3524101629, 2768942443, 901097722, 1119000684, 
-3686517206, 2898065728, 853044451, 1172266101, 3705015759, 2882616665, 
-651767980, 1373503546, 3369554304, 3218104598, 565507253, 1454621731, 
-3485111705, 3099436303, 671266974, 1594198024, 3322730930, 2970347812, 
-795835527, 1483230225, 3244367275, 3060149565, 1994146192, 31158534, 
-2563907772, 4023717930, 1907459465, 112637215, 2680153253, 3904427059, 
-2013776290, 251722036, 2517215374, 3775830040, 2137656763, 141376813, 
-2439277719, 3865271297, 1802195444, 476864866, 2238001368, 4066508878, 
-1812370925, 453092731, 2181625025, 4111451223, 1706088902, 314042704, 
-2344532202, 4240017532, 1658658271, 366619977, 2362670323, 4224994405, 
-1303535960, 984961486, 2747007092, 3569037538, 1256170817, 1037604311, 
-2765210733, 3554079995, 1131014506, 879679996, 2909243462, 3663771856, 
-1141124467, 855842277, 2852801631, 3708648649, 1342533948, 654459306, 
-3188396048, 3373015174, 1466479909, 544179635, 3110523913, 3462522015, 
-1591671054, 702138776, 2966460450, 3352799412, 1504918807, 783551873, 
-3082640443, 3233442989, 3988292384, 2596254646, 62317068, 1957810842, 
-3939845945, 2647816111, 81470997, 1943803523, 3814918930, 2489596804, 
-225274430, 2053790376, 3826175755, 2466906013, 167816743, 2097651377, 
-4027552580, 2265490386, 503444072, 1762050814, 4150417245, 2154129355, 
-426522225, 1852507879, 4275313526, 2312317920, 282753626, 1742555852, 
-4189708143, 2394877945, 397917763, 1622183637, 3604390888, 2714866558, 
-953729732, 1340076626, 3518719985, 2797360999, 1068828381, 1219638859, 
-3624741850, 2936675148, 906185462, 1090812512, 3747672003, 2825379669, 
-829329135, 1181335161, 3412177804, 3160834842, 628085408, 1382605366, 
-3423369109, 3138078467, 570562233, 1426400815, 3317316542, 2998733608, 
-733239954, 1555261956, 3268935591, 3050360625, 752459403, 1541320221, 
-2607071920, 3965973030, 1969922972, 40735498, 2617837225, 3943577151, 
-1913087877, 83908371, 2512341634, 3803740692, 2075208622, 213261112, 
-2463272603, 3855990285, 2094854071, 198958881, 2262029012, 4057260610, 
-1759359992, 534414190, 2176718541, 4139329115, 1873836001, 414664567, 
-2282248934, 4279200368, 1711684554, 285281116, 2405801727, 4167216745, 
-1634467795, 376229701, 2685067896, 3608007406, 1308918612, 956543938, 
-2808555105, 3495958263, 1231636301, 1047427035, 2932959818, 3654703836, 
-1088359270, 936918000, 2847714899, 3736837829, 1202900863, 817233897, 
-3183342108, 3401237130, 1404277552, 615818150, 3134207493, 3453421203, 
-1423857449, 601450431, 3009837614, 3294710456, 1567103746, 711928724, 
-3020668471, 3272380065, 1510334235, 755167117];
-
-
-if(global.Int32Array !== undefined){
-table = new Int32Array(table);}
-
-
-
-
-
-function crc32(str){
-var crc=-1;
-for(var i=0, len=str.length; i < len; i++) {
-crc = crc >>> 8 ^ table[(crc ^ str.charCodeAt(i)) & 255];}
-
-return ~crc;}
-
-
-module.exports = crc32;});
 __d('XMLHttpRequestBase',[],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target, props){for(var i=0; i < props.length; i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function(Constructor, protoProps, staticProps){if(protoProps)defineProperties(Constructor.prototype, protoProps);if(staticProps)defineProperties(Constructor, staticProps);return Constructor;};})();function _classCallCheck(instance, Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}var 
 
 
@@ -18108,6 +18068,7 @@ this.previousFlattenedStyle = null;};
 
 Constructor.displayName = viewConfig.uiViewClassName;
 Constructor.prototype = new ReactNativeBaseComponent(viewConfig);
+Constructor.prototype.constructor = Constructor;
 
 return Constructor;};
 
@@ -23008,7 +22969,8 @@ var assetDir=getBasePath(asset);
 return (assetDir + '/' + asset.name).
 toLowerCase().
 replace(/\//g, '_').
-replace(/([^a-z0-9_])/g, '');}else 
+replace(/([^a-z0-9_])/g, '').
+replace(/^assets_/, '');}else 
 {
 
 return getScaledAssetPath(asset);}}
@@ -23172,7 +23134,21 @@ PixelRatio=(function(){function PixelRatio(){_classCallCheck(this, PixelRatio);}
 
 
 function get(){
-return Dimensions.get('window').scale;}}, {key:'getPixelSizeForLayoutSize', value:
+return Dimensions.get('window').scale;}}, {key:'getFontScale', value:
+
+
+
+
+
+
+
+
+
+
+
+
+function getFontScale(){
+return Dimensions.get('window').fontScale || PixelRatio.get();}}, {key:'getPixelSizeForLayoutSize', value:
 
 
 
@@ -23219,7 +23195,8 @@ var windowPhysicalPixels=dimensions.windowPhysicalPixels;
 dimensions.window = {
 width:windowPhysicalPixels.width / windowPhysicalPixels.scale, 
 height:windowPhysicalPixels.height / windowPhysicalPixels.scale, 
-scale:windowPhysicalPixels.scale};
+scale:windowPhysicalPixels.scale, 
+fontScale:windowPhysicalPixels.fontScale};
 
 
 
@@ -23304,7 +23281,6 @@ var DEFAULT_INITIAL_ROWS=10;
 var DEFAULT_SCROLL_RENDER_AHEAD=1000;
 var DEFAULT_END_REACHED_THRESHOLD=1000;
 var DEFAULT_SCROLL_CALLBACK_THROTTLE=50;
-var RENDER_INTERVAL=20;
 var SCROLLVIEW_REF='listviewscroll';
 
 
@@ -23516,8 +23492,7 @@ componentDidMount:function(){var _this=this;
 
 
 this.requestAnimationFrame(function(){
-_this._measureAndUpdateScrollProps();
-_this.setInterval(_this._renderMoreRowsIfNeeded, RENDER_INTERVAL);});}, 
+_this._measureAndUpdateScrollProps();});}, 
 
 
 
@@ -23655,7 +23630,8 @@ this.scrollProperties.contentHeight = height;},
 
 _setScrollVisibleHeight:function(left, top, width, height){
 this.scrollProperties.visibleHeight = height;
-this._updateVisibleRows();}, 
+this._updateVisibleRows();
+this._renderMoreRowsIfNeeded();}, 
 
 
 _renderMoreRowsIfNeeded:function(){
@@ -23702,8 +23678,8 @@ return;}
 
 var updatedFrames=e && e.nativeEvent.updatedChildFrames;
 if(updatedFrames){
-updatedFrames.forEach(function(frame){
-_this3._childFrames[frame.index] = merge(frame);});}
+updatedFrames.forEach(function(newFrame){
+_this3._childFrames[newFrame.index] = merge(newFrame);});}
 
 
 var dataSource=this.props.dataSource;
@@ -27622,7 +27598,7 @@ React.createElement(View, {
 key:this.state.idStack[i], 
 ref:'scene_' + i, 
 onStartShouldSetResponderCapture:function(){
-return i !== _this13.state.presentedIndex;}, 
+return !!_this13.state.transitionFromIndex || !!_this13.state.activeGesture;}, 
 
 style:[styles.baseScene, this.props.sceneStyle, disabledSceneStyle]}, 
 React.cloneElement(child, {
@@ -36139,7 +36115,9 @@ JSON.stringify(appParameters) + '. ' +
 
 invariant(
 runnables[appKey] && runnables[appKey].run, 
-'Application ' + appKey + ' has not been registered.');
+'Application ' + appKey + ' has not been registered. This ' + 
+'is either due to a require() error during initialization ' + 
+'or failure to call AppRegistry.registerComponent.');
 
 runnables[appKey].run(appParameters);}};
 
@@ -36299,7 +36277,7 @@ var justifyContent=distanceToTop > distanceToBottom?
 'flex-start':
 'flex-end';
 
-content.push(React.createElement(View, {style:[styles.frame, this.state.frame]}));
+content.push(React.createElement(View, {pointerEvents:'none', style:[styles.frame, this.state.frame]}));
 content.push(React.createElement(ElementProperties, {hierarchy:this.state.hierarchy}));}
 
 return (
@@ -39678,8 +39656,16 @@ var GROUP_TYPES_OPTIONS=[
 'SavedPhotos'];
 
 
+var ASSET_TYPE_OPTIONS=[
+'All', 
+'Videos', 
+'Photos'];
+
+
+
 
 deepFreezeAndThrowOnMutationInDev(GROUP_TYPES_OPTIONS);
+deepFreezeAndThrowOnMutationInDev(ASSET_TYPE_OPTIONS);
 
 
 
@@ -39706,7 +39692,12 @@ groupTypes:ReactPropTypes.oneOf(GROUP_TYPES_OPTIONS),
 
 
 
-groupName:ReactPropTypes.string});
+groupName:ReactPropTypes.string, 
+
+
+
+
+assetType:ReactPropTypes.oneOf(ASSET_TYPE_OPTIONS)});
 
 
 
@@ -39741,6 +39732,7 @@ isRequired});var
 
 
 CameraRoll=(function(){function CameraRoll(){_classCallCheck(this, CameraRoll);}_createClass(CameraRoll, null, [{key:'saveImageWithTag', value:
+
 
 
 
@@ -39803,6 +39795,7 @@ RCTCameraRollManager.getPhotos(params, metaCallback, errorCallback);}}]);return 
 
 
 CameraRoll.GroupTypesOptions = GROUP_TYPES_OPTIONS;
+CameraRoll.AssetTypeOptions = ASSET_TYPE_OPTIONS;
 
 module.exports = CameraRoll;});
 __d('LinkingIOS',["RCTDeviceEventEmitter","NativeModules","invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target, props){for(var i=0; i < props.length; i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function(Constructor, protoProps, staticProps){if(protoProps)defineProperties(Constructor.prototype, protoProps);if(staticProps)defineProperties(Constructor, staticProps);return Constructor;};})();function _classCallCheck(instance, Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}
@@ -40078,7 +40071,7 @@ springDamping:0.4}}}};
 
 
 module.exports = LayoutAnimation;});
-__d('NetInfo',["NativeModules","RCTDeviceEventEmitter"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+__d('NetInfo',["NativeModules","Platform","RCTDeviceEventEmitter"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 
 
@@ -40092,8 +40085,14 @@ __d('NetInfo',["NativeModules","RCTDeviceEventEmitter"],function(global, require
 
 
 var NativeModules=require('NativeModules');
+var Platform=require('Platform');
 var RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');
-var RCTReachability=NativeModules.Reachability;
+
+if(Platform.OS === 'ios'){
+var RCTNetInfo=NativeModules.Reachability;}else 
+if(Platform.OS === 'android'){
+var RCTNetInfo=NativeModules.NetInfo;}
+
 
 var DEVICE_REACHABILITY_EVENT='reachabilityDidChange';
 
@@ -40161,21 +40160,67 @@ var DEVICE_REACHABILITY_EVENT='reachabilityDidChange';
 
 
 
-var NetInfo={};
-
-if(RCTReachability){
 
 
 
 
-var _reachabilitySubscriptions={};
 
-NetInfo.reachabilityIOS = {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _subscriptions={};
+
+var NetInfo={
 addEventListener:function(
 eventName, 
 handler)
 {
-_reachabilitySubscriptions[handler] = RCTDeviceEventEmitter.addListener(
+_subscriptions[handler] = RCTDeviceEventEmitter.addListener(
 DEVICE_REACHABILITY_EVENT, 
 function(appStateData){
 handler(appStateData.network_reachability);});}, 
@@ -40187,43 +40232,55 @@ removeEventListener:function(
 eventName, 
 handler)
 {
-if(!_reachabilitySubscriptions[handler]){
+if(!_subscriptions[handler]){
 return;}
 
-_reachabilitySubscriptions[handler].remove();
-_reachabilitySubscriptions[handler] = null;}, 
+_subscriptions[handler].remove();
+_subscriptions[handler] = null;}, 
 
 
 fetch:function(){
 return new Promise(function(resolve, reject){
-RCTReachability.getCurrentReachability(
+RCTNetInfo.getCurrentReachability(
 function(resp){
 resolve(resp.network_reachability);}, 
 
-reject);});}};
+reject);});}, 
 
 
+
+
+isConnected:{}, 
+
+isConnectionMetered:{}};
+
+
+if(Platform.OS === 'ios'){
+var _isConnected=function(
+reachability)
+{
+return reachability !== 'none' && 
+reachability !== 'unknown';};}else 
+
+if(Platform.OS === 'android'){
+var _isConnected=function(
+connectionType)
+{
+return connectionType !== 'NONE' && connectionType !== 'UNKNOWN';};}
 
 
 
 var _isConnectedSubscriptions={};
-
-var _iosReachabilityIsConnected=function(
-reachability)
-{
-return reachability !== 'none' && 
-reachability !== 'unknown';};
-
 
 NetInfo.isConnected = {
 addEventListener:function(
 eventName, 
 handler)
 {
-_isConnectedSubscriptions[handler] = function(reachability){
-handler(_iosReachabilityIsConnected(reachability));};
+_isConnectedSubscriptions[handler] = function(connection){
+handler(_isConnected(connection));};
 
-NetInfo.reachabilityIOS.addEventListener(
+NetInfo.addEventListener(
 eventName, 
 _isConnectedSubscriptions[handler]);}, 
 
@@ -40233,16 +40290,23 @@ removeEventListener:function(
 eventName, 
 handler)
 {
-NetInfo.reachabilityIOS.removeEventListener(
+NetInfo.removeEventListener(
 eventName, 
 _isConnectedSubscriptions[handler]);}, 
 
 
 
 fetch:function(){
-return NetInfo.reachabilityIOS.fetch().then(
-function(reachability){return _iosReachabilityIsConnected(reachability);});}};}
+return NetInfo.fetch().then(
+function(connection){return _isConnected(connection);});}};
 
+
+
+
+if(Platform.OS === 'android'){
+NetInfo.isConnectionMetered = function(callback){
+RCTNetInfo.isConnectionMetered(function(_isMetered){
+callback(_isMetered);});};}
 
 
 
@@ -41510,6 +41574,391 @@ makeNativeSimulator(eventType);}
 
 
 module.exports = ReactTestUtils;});
+__d('qs/index',[],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
+
+
+
+toString=Object.prototype.toString;
+
+
+
+
+
+var hasOwnProperty=Object.prototype.hasOwnProperty;
+
+
+
+
+
+var indexOf=typeof Array.prototype.indexOf === 'function'?
+function(arr, el){return arr.indexOf(el);}:
+function(arr, el){
+for(var i=0; i < arr.length; i++) {
+if(arr[i] === el)return i;}
+
+return -1;};
+
+
+
+
+
+
+var isArray=Array.isArray || function(arr){
+return toString.call(arr) == '[object Array]';};
+
+
+
+
+
+
+var objectKeys=Object.keys || function(obj){
+var ret=[];
+for(var key in obj) ret.push(key);
+return ret;};
+
+
+
+
+
+
+var forEach=typeof Array.prototype.forEach === 'function'?
+function(arr, fn){return arr.forEach(fn);}:
+function(arr, fn){
+for(var i=0; i < arr.length; i++) fn(arr[i]);};
+
+
+
+
+
+
+var reduce=function(arr, fn, initial){
+if(typeof arr.reduce === 'function')return arr.reduce(fn, initial);
+var res=initial;
+for(var i=0; i < arr.length; i++) res = fn(res, arr[i]);
+return res;};
+
+
+
+
+
+
+function createObject(){
+return Object.create?
+Object.create(null):
+{};}
+
+
+
+
+
+
+var isint=/^[0-9]+$/;
+
+function promote(parent, key){
+if(parent[key].length == 0)return parent[key] = createObject();
+var t=createObject();
+for(var i in parent[key]) {
+if(hasOwnProperty.call(parent[key], i)){
+t[i] = parent[key][i];}}
+
+
+parent[key] = t;
+return t;}
+
+
+function parse(parts, parent, key, val){
+var part=parts.shift();
+
+if(!part){
+if(isArray(parent[key])){
+parent[key].push(val);}else 
+if('object' == typeof parent[key]){
+parent[key] = val;}else 
+if('undefined' == typeof parent[key]){
+parent[key] = val;}else 
+{
+parent[key] = [parent[key], val];}}else 
+
+
+{
+var obj=parent[key] = parent[key] || [];
+if(']' == part){
+if(isArray(obj)){
+if('' != val)obj.push(val);}else 
+if('object' == typeof obj){
+obj[objectKeys(obj).length] = val;}else 
+{
+obj = parent[key] = [parent[key], val];}}else 
+
+
+if(~indexOf(part, ']')){
+part = part.substr(0, part.length - 1);
+if(!isint.test(part) && isArray(obj))obj = promote(parent, key);
+parse(parts, obj, part, val);}else 
+
+{
+if(!isint.test(part) && isArray(obj))obj = promote(parent, key);
+parse(parts, obj, part, val);}}}
+
+
+
+
+
+
+
+
+function merge(parent, key, val){
+if(~indexOf(key, ']')){
+var parts=key.split('['), 
+len=parts.length, 
+last=len - 1;
+parse(parts, parent, 'base', val);}else 
+
+{
+if(!isint.test(key) && isArray(parent.base)){
+var t=createObject();
+for(var k in parent.base) t[k] = parent.base[k];
+parent.base = t;}
+
+set(parent.base, key, val);}
+
+
+return parent;}
+
+
+
+
+
+
+function compact(obj){
+if('object' != typeof obj)return obj;
+
+if(isArray(obj)){
+var ret=[];
+
+for(var i in obj) {
+if(hasOwnProperty.call(obj, i)){
+ret.push(obj[i]);}}
+
+
+
+return ret;}
+
+
+for(var key in obj) {
+obj[key] = compact(obj[key]);}
+
+
+return obj;}
+
+
+
+
+
+
+
+function restoreProto(obj){
+if(!Object.create)return obj;
+if(isArray(obj))return obj;
+if(obj && 'object' != typeof obj)return obj;
+
+for(var key in obj) {
+if(hasOwnProperty.call(obj, key)){
+obj[key] = restoreProto(obj[key]);}}
+
+
+
+obj.__proto__ = Object.prototype;
+return obj;}
+
+
+
+
+
+
+function parseObject(obj){
+var ret={base:{}};
+
+forEach(objectKeys(obj), function(name){
+merge(ret, name, obj[name]);});
+
+
+return compact(ret.base);}
+
+
+
+
+
+
+function parseString(str){
+var ret=reduce(String(str).split('&'), function(ret, pair){
+var eql=indexOf(pair, '='), 
+brace=lastBraceInKey(pair), 
+key=pair.substr(0, brace || eql), 
+val=pair.substr(brace || eql, pair.length), 
+val=val.substr(indexOf(val, '=') + 1, val.length);
+
+
+if('' == key)key = pair, val = '';
+if('' == key)return ret;
+
+return merge(ret, decode(key), decode(val));}, 
+{base:createObject()}).base;
+
+return restoreProto(compact(ret));}
+
+
+
+
+
+
+
+
+
+
+exports.parse = function(str){
+if(null == str || '' == str)return {};
+return 'object' == typeof str?
+parseObject(str):
+parseString(str);};
+
+
+
+
+
+
+
+
+
+
+var stringify=exports.stringify = function(obj, prefix){
+if(isArray(obj)){
+return stringifyArray(obj, prefix);}else 
+if('[object Object]' == toString.call(obj)){
+return stringifyObject(obj, prefix);}else 
+if('string' == typeof obj){
+return stringifyString(obj, prefix);}else 
+{
+return prefix + '=' + encodeURIComponent(String(obj));}};
+
+
+
+
+
+
+
+
+
+
+
+
+function stringifyString(str, prefix){
+if(!prefix)throw new TypeError('stringify expects an object');
+return prefix + '=' + encodeURIComponent(str);}
+
+
+
+
+
+
+
+
+
+
+
+function stringifyArray(arr, prefix){
+var ret=[];
+if(!prefix)throw new TypeError('stringify expects an object');
+for(var i=0; i < arr.length; i++) {
+ret.push(stringify(arr[i], prefix + '[' + i + ']'));}
+
+return ret.join('&');}
+
+
+
+
+
+
+
+
+
+
+
+function stringifyObject(obj, prefix){
+var ret=[], 
+keys=objectKeys(obj), 
+key;
+
+for(var i=0, len=keys.length; i < len; ++i) {
+key = keys[i];
+if('' == key)continue;
+if(null == obj[key]){
+ret.push(encodeURIComponent(key) + '=');}else 
+{
+ret.push(stringify(obj[key], prefix?
+prefix + '[' + encodeURIComponent(key) + ']':
+encodeURIComponent(key)));}}
+
+
+
+return ret.join('&');}
+
+
+
+
+
+
+
+
+
+
+
+
+
+function set(obj, key, val){
+var v=obj[key];
+if(undefined === v){
+obj[key] = val;}else 
+if(isArray(v)){
+v.push(val);}else 
+{
+obj[key] = [v, val];}}
+
+
+
+
+
+
+
+
+
+
+
+function lastBraceInKey(str){
+var len=str.length, 
+brace, 
+c;
+for(var i=0; i < len; ++i) {
+c = str[i];
+if(']' == c)brace = false;
+if('[' == c)brace = true;
+if('=' == c && !brace)return i;}}
+
+
+
+
+
+
+
+
+
+
+
+function decode(str){
+try{
+return decodeURIComponent(str.replace(/\+/g, ' '));}
+catch(err) {
+return str;}}});
 __d('RNPlayNative/App/Screens/Login',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/NavigationBar","RNPlayNative/App/Api/Core","RNPlayNative/App/Actions/AppActions"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native');
@@ -41527,7 +41976,8 @@ ActivityIndicatorIOS=
 
 
 
-React.ActivityIndicatorIOS;var AlertIOS=React.AlertIOS;var AsyncStorage=React.AsyncStorage;var ScrollView=React.ScrollView;var StyleSheet=React.StyleSheet;var TextInput=React.TextInput;var Text=React.Text;var TouchableHighlight=React.TouchableHighlight;var View=React.View;
+
+React.ActivityIndicatorIOS;var AlertIOS=React.AlertIOS;var AsyncStorage=React.AsyncStorage;var ScrollView=React.ScrollView;var StyleSheet=React.StyleSheet;var TextInput=React.TextInput;var Text=React.Text;var TouchableHighlight=React.TouchableHighlight;var View=React.View;var StatusBarIOS=React.StatusBarIOS;
 
 var Login=React.createClass({displayName:'Login', 
 
@@ -41541,10 +41991,10 @@ password:''};},
 
 
 
-renderError:function(){
-return (
-React.createElement(View, {style:styles.errorContainer}, 
-React.createElement(Text, null, this.props.error)));}, 
+renderError:function(){}, 
+
+
+
 
 
 
@@ -41587,8 +42037,11 @@ _this.props.navigator.replace({id:'my_apps'});}});},
 
 
 render:function(){var _this2=this;
+StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
+
 return (
 React.createElement(View, {style:styles.mainContainer}, 
+React.createElement(NavigationBar, {title:'Account Required'}), 
 React.createElement(ScrollView, null, 
 React.createElement(View, {style:styles.inputContainer}, 
 React.createElement(TextInput, {
@@ -41635,7 +42088,6 @@ size:'large'}))));}});
 var styles=StyleSheet.create({
 mainContainer:{
 flex:1, 
-marginTop:20, 
 flexDirection:'column', 
 backgroundColor:'white'}, 
 
@@ -41658,11 +42110,15 @@ buttonText:{
 fontSize:18, 
 textAlign:'center', 
 color:'white', 
-padding:10}, 
+padding:10, 
+fontFamily:'Avenir Next'}, 
 
 errorContainer:{
 justifyContent:'center', 
-alignSelf:'center'}});
+alignSelf:'center'}, 
+
+errorText:{
+opacity:0.6}});
 
 
 
@@ -41753,6 +42209,7 @@ borderBottomColor:'rgba(0, 0, 0, 0.5)',
 borderBottomWidth:1 / PixelRatio.get(), 
 justifyContent:'space-between', 
 height:60, 
+marginBottom:9, 
 paddingTop:15}, 
 
 navButton:{
@@ -44053,7 +44510,7 @@ padding:10}});
 
 
 module.exports = Signup;});
-__d('RNPlayNative/App/Screens/Home',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Screens/Explore","RNPlayNative/App/Screens/My","RNPlayNative/App/Screens/Settings","SMXTabBarIOS"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+__d('RNPlayNative/App/Screens/Home',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Screens/Explore","RNPlayNative/App/Screens/MyAppsContainer","RNPlayNative/App/Screens/Settings","RNPlayNative/App/Screens/About","RNPlayNative/App/Screens/QRCodeReader","SMXTabBarIOS"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 
 
@@ -44062,8 +44519,10 @@ __d('RNPlayNative/App/Screens/Home',["react-native/Libraries/react-native/react-
 
 var React=require('react-native/Libraries/react-native/react-native');
 var Explore=require('RNPlayNative/App/Screens/Explore');
-var My=require('RNPlayNative/App/Screens/My');
+var MyAppsContainer=require('RNPlayNative/App/Screens/MyAppsContainer');
 var Settings=require('RNPlayNative/App/Screens/Settings');
+var About=require('RNPlayNative/App/Screens/About');
+var QRCodeReader=require('RNPlayNative/App/Screens/QRCodeReader');
 
 var SMXTabBarIOS=require('SMXTabBarIOS');
 var SMXTabBarItemIOS=SMXTabBarIOS.Item;var 
@@ -44072,7 +44531,8 @@ var SMXTabBarItemIOS=SMXTabBarIOS.Item;var
 AppRegistry=
 
 
-React.AppRegistry;var StyleSheet=React.StyleSheet;var Text=React.Text;
+
+React.AppRegistry;var StyleSheet=React.StyleSheet;var Text=React.Text;var TouchableOpacity=React.TouchableOpacity;
 
 var Home=React.createClass({displayName:'Home', 
 getInitialState:function(){
@@ -44086,6 +44546,7 @@ return (
 React.createElement(SMXTabBarIOS, {
 selectedTab:this.state.selectedTab, 
 tintColor:'#712FA9', 
+style:styles.tabBar, 
 barTintColor:'white'}, 
 React.createElement(SMXTabBarItemIOS, {
 name:'explore', 
@@ -44094,11 +44555,7 @@ title:'Explore',
 iconSize:32, 
 accessibilityLabel:'Explore Tab', 
 selected:this.state.selectedTab === 'explore', 
-onPress:function(){
-_this.setState({
-selectedTab:'explore'});}}, 
-
-
+onPress:function(){_this.setState({selectedTab:'explore'});}}, 
 React.createElement(Explore, null)), 
 
 React.createElement(SMXTabBarItemIOS, {
@@ -44108,12 +44565,18 @@ title:'My Apps',
 iconSize:32, 
 accessibilityLabel:'My Apps Tab', 
 selected:this.state.selectedTab === 'my-apps', 
-onPress:function(){
-_this.setState({
-selectedTab:'my-apps'});}}, 
+onPress:function(){_this.setState({selectedTab:'my-apps'});}}, 
+React.createElement(MyAppsContainer, null)), 
 
-
-React.createElement(My, null)), 
+React.createElement(SMXTabBarItemIOS, {
+name:'about', 
+iconName:'ion|ios-help-outline', 
+title:'About', 
+iconSize:32, 
+accessibilityLabel:'About Tab', 
+selected:this.state.selectedTab === 'about', 
+onPress:function(){_this.setState({selectedTab:'about'});}}, 
+React.createElement(About, null)), 
 
 React.createElement(SMXTabBarItemIOS, {
 name:'settings', 
@@ -44122,20 +44585,31 @@ title:'Settings',
 iconSize:32, 
 accessibilityLabel:'Settings Tab', 
 selected:this.state.selectedTab === 'settings', 
-onPress:function(){
-_this.setState({
-selectedTab:'settings'});}}, 
+onPress:function(){_this.setState({selectedTab:'settings'});}}, 
+React.createElement(Settings, null)), 
+
+React.createElement(SMXTabBarItemIOS, {
+name:'qr_code_reader', 
+iconName:'ion|camera', 
+title:'QR Code', 
+iconSize:32, 
+accessibilityLabel:'QR Code Reader', 
+selected:this.state.selectedTab === 'qr_code_reader', 
+onPress:function(){_this.setState({selectedTab:'qr_code_reader'});}}, 
+React.createElement(QRCodeReader, null))));}});
 
 
-React.createElement(Settings, null))));}});
 
 
 
+
+var styles=StyleSheet.create({
+tabBar:{}});
 
 
 
 module.exports = Home;});
-__d('RNPlayNative/App/Screens/Explore',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/AppList","RNPlayNative/App/Screens/About","FAKIconImage","Modal","Dimensions"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+__d('RNPlayNative/App/Screens/Explore',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/AppList","RNPlayNative/App/Screens/Search","Dimensions"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native');var 
 
@@ -44146,37 +44620,38 @@ SegmentedControlIOS=
 
 
 
-React.SegmentedControlIOS;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;var StatusBarIOS=React.StatusBarIOS;var TouchableOpacity=React.TouchableOpacity;
+
+React.SegmentedControlIOS;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;var StatusBarIOS=React.StatusBarIOS;var ScrollView=React.ScrollView;var TouchableOpacity=React.TouchableOpacity;
 
 var AppList=require('RNPlayNative/App/Components/AppList');
-var About=require('RNPlayNative/App/Screens/About');
-var Icon=require('FAKIconImage');
-
-var Modal=require('Modal');
-var DeviceHeight=require('Dimensions').get('window').height;
+var Search=require('RNPlayNative/App/Screens/Search');
 
 var Explore=React.createClass({displayName:'Explore', 
-mixins:[Modal.Mixin], 
-
 getInitialState:function(){
 return {
-values:['Picks', 'Search'], 
+values:['Picks', 'Popular', 'Search'], 
 value:'Picks', 
 selectedIndex:0};}, 
 
 
 
 renderSearch:function(){
-return React.createElement(Text, null, 'Search');}, 
+return React.createElement(Search, null);}, 
 
 
-renderFavorites:function(){
-return React.createElement(Text, null, 'Favorites');}, 
+renderPopular:function(){
+return (
+React.createElement(View, {style:styles.contentContainer}, 
+React.createElement(AppList, {url:'/apps/popular.json'})));}, 
+
+
 
 
 renderPicks:function(){
 return (
-React.createElement(AppList, {url:'/plays/picks.json'}));}, 
+React.createElement(View, {style:styles.contentContainer}, 
+React.createElement(AppList, {url:'/apps/picks.json'})));}, 
+
 
 
 
@@ -44192,82 +44667,73 @@ value:value});},
 
 
 
-showModalTransition:function(transition){
-transition('opacity', {duration:200, begin:0, end:1});
-transition('height', {duration:200, begin:DeviceHeight * 2, end:DeviceHeight});}, 
 
-
-hideModalTransition:function(transition){
-transition('height', {duration:200, begin:DeviceHeight, end:DeviceHeight * 2, reset:true});
-transition('opacity', {duration:200, begin:1, end:0});}, 
-
-
-render:function(){var _this=this;
+render:function(){
 StatusBarIOS.setStyle(StatusBarIOS.Style.darkContent);
+
 return (
 React.createElement(View, {style:styles.mainContainer}, 
+this.state.value == 'Picks' && this.renderPicks(), 
+this.state.value == 'Popular' && this.renderPopular(), 
+this.state.value == 'Search' && this.renderSearch(), 
+
 React.createElement(View, {style:styles.topContainer}, 
 React.createElement(View, {style:styles.segmentContainer}, 
 React.createElement(SegmentedControlIOS, {
 tintColor:'#712FA9', 
 values:this.state.values, 
+style:styles.exploreViewPicker, 
 selectedIndex:this.state.selectedIndex, 
-onValueChange:this._onValueChange})), 
-
-React.createElement(TouchableOpacity, {onPress:function(){return _this.openModal();}, style:styles.infoButton}, 
-React.createElement(Icon, {
-name:'ion|ios-help', 
-size:25, 
-color:'#712FA9', 
-style:styles.infoIcon}))), 
-
-
-this.state.value == 'Picks' && this.renderPicks(), 
-this.state.value == 'Search' && this.renderSearch(), 
-React.createElement(Modal, {
-backdropType:'blur', 
-backdropBlur:'dark', 
-isVisible:this.state.isModalOpen, 
-forceToFront:true, 
-customShowHandler:this.showModalTransition, 
-customHideHandler:this.hideModalTransition, 
-onPressBackdrop:function(){return _this.closeModal();}}, 
-React.createElement(About, null))));}});
+onValueChange:this._onValueChange})))));}});
 
 
 
 
 
+
+
+
+var deviceWidth=require('Dimensions').get('window').width;
 
 var styles=StyleSheet.create({
+contentContainer:{
+flex:1, 
+paddingTop:15}, 
+
 mainContainer:{
-marginTop:20, 
+marginTop:25, 
 flex:1, 
 flexDirection:'column', 
-backgroundColor:'white'}, 
+backgroundColor:'white', 
+paddingTop:50}, 
 
 topContainer:{
-flexDirection:'row'}, 
+position:'absolute', 
+top:0, 
+left:0, 
+right:0, 
+flexDirection:'row', 
+paddingTop:10, 
+paddingBottom:15, 
+marginBottom:10, 
+backgroundColor:'#fff', 
+shadowColor:'black', 
+shadowOpacity:0.1, 
+shadowOffset:{width:0, height:3}, 
+shadowRadius:3}, 
 
 segmentContainer:{
-flex:2, 
-margin:20, 
-marginRight:0}, 
+flex:1, 
+marginRight:30, 
+marginLeft:30}, 
 
-infoButton:{
-flex:1}, 
-
-infoIcon:{
-alignSelf:'center', 
-width:35, 
-height:35, 
-marginLeft:10, 
-marginRight:10}});
+exploreViewPicker:{
+transform:[{scaleX:1.1}, {scaleY:1.1}]}});
 
 
 
 module.exports = Explore;});
-__d('RNPlayNative/App/Components/AppList',["react-native/Libraries/react-native/react-native","NativeModules","RNPlayNative/App/Api/Core"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+__d('RNPlayNative/App/Components/AppList',["react-native/Libraries/react-native/react-native","NativeModules","RNPlayNative/App/Api/Core","RNPlayNative/App/Components/NoResults","RNPlayNative/App/Utilities/generateAppURL","Dimensions"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native');var 
 
@@ -44281,14 +44747,19 @@ ActivityIndicatorIOS=
 
 
 
-React.ActivityIndicatorIOS;var AppRegistry=React.AppRegistry;var Image=React.Image;var ListView=React.ListView;var StyleSheet=React.StyleSheet;var Text=React.Text;var TouchableOpacity=React.TouchableOpacity;var View=React.View;var Navigator=React.Navigator;
+
+React.ActivityIndicatorIOS;var AppRegistry=React.AppRegistry;var Image=React.Image;var ListView=React.ListView;var StyleSheet=React.StyleSheet;var Text=React.Text;var TouchableHighlight=React.TouchableHighlight;var View=React.View;var Navigator=React.Navigator;var PixelRatio=React.PixelRatio;
 
 var AppReloader=require('NativeModules').AppReloader;
 var Api=require('RNPlayNative/App/Api/Core');
+var NoResults=require('RNPlayNative/App/Components/NoResults');
+var generateAppURL=require('RNPlayNative/App/Utilities/generateAppURL');
 
 var AppList=React.createClass({displayName:'AppList', 
 getInitialState:function(){
 return {
+page:1, 
+data:[], 
 dataSource:new ListView.DataSource({
 rowHasChanged:function(row1, row2){return row1 !== row2;}})};}, 
 
@@ -44299,21 +44770,48 @@ componentDidMount:function(){
 this.fetchApps();}, 
 
 
+componentDidUpdate:function(prevProps){
+if(prevProps.url !== this.props.url){
+this.setState({loaded:false});
+this.fetchApps();}}, 
+
+
+
 fetchApps:function(){var _this=this;
-Api.get(this.props.url).
+if(!this.requestInFlight){
+this.requestInFlight = true;
+var separator=this.props.url.indexOf('?') !== -1?
+'&':
+'?';
+var url='' + this.props.url + '' + separator + 'page=' + this.state.page;
+
+Api.get(url).
 then(function(data){
 if(data.error){
 
 if(Navigator.getContext(_this)){
-Navigator.getContext(_this).replace({id:'login', error:data.error});}}
+Navigator.getContext(_this).replace({id:'login', error:data.error});}
 
 
+return;}
+
+
+var page=data.length?
+_this.state.page + 1:
+_this.state.page;
+
+var newData=_this.state.data.concat(data);
 _this.setState({
-dataSource:_this.state.dataSource.cloneWithRows(data), 
-loaded:true});}).
+data:newData, 
+page:page, 
+dataSource:_this.state.dataSource.cloneWithRows(newData), 
+loaded:true});
+
+_this.requestInFlight = false;}).
+
+done();}}, 
 
 
-done();}, 
 
 
 renderAppList:function(){
@@ -44322,40 +44820,63 @@ React.createElement(View, {style:styles.container},
 React.createElement(ListView, {
 dataSource:this.state.dataSource, 
 renderRow:this.renderApp, 
+onEndReached:this.fetchApps, 
 style:styles.listView})));}, 
 
 
 
 
-
 renderCreator:function(app){
-return app.creator?
+if(app.creator && !this.props.hideCreator){
+var avatarUrl='https://rnplay.org/' + app.creator.avatar_url + '?v=1';
+
+return (
 React.createElement(View, {style:styles.creator}, 
-React.createElement(Image, {style:styles.avatar, resizeMode:'contain', source:{uri:'https://rnplay.org' + app.creator.avatar_url}}), 
-React.createElement(Text, {style:styles.username}, app.creator.username || 'anonymous')):
-null;}, 
+React.createElement(Image, {style:styles.avatar, resizeMode:'contain', source:{uri:avatarUrl}}), 
+React.createElement(Text, {style:styles.username, numberOfLines:1}, app.creator.username || 'guest')));}}, 
+
+
+
 
 
 renderApp:function(app){var _this2=this;
 return (
+React.createElement(View, {style:{marginBottom:15}}, 
+React.createElement(TouchableHighlight, {underlayColor:'#F5F5F5', onPress:function(){return _this2.selectApp(app);}}, 
 React.createElement(View, {style:styles.appContainer}, 
-React.createElement(TouchableOpacity, {onPress:function(){return _this2.selectApp(app);}}, 
-React.createElement(Text, {style:styles.app}, app.name || app.module_name)), 
+React.createElement(View, {style:styles.appTextDescription}, 
+React.createElement(Text, {style:styles.appTitle, numberOfLines:1}, app.name || app.module_name), 
+React.createElement(View, {style:styles.targetBuild}, 
+React.createElement(Text, {style:styles.targetBuildText}, 'Targets ', React.createElement(Text, null, app.build_name))), 
 
-this.renderCreator(app)));}, 
+
+React.createElement(View, {style:styles.viewCount}, 
+React.createElement(Text, {style:styles.viewCountText}, app.view_count, ' ', React.createElement(Text, null, 'views')))), 
+
+
+
+this.renderCreator(app)))));}, 
+
+
 
 
 
 
 selectApp:function(app){
-AppReloader.reloadAppWithURLString(app.bundle_url, app.module_name);}, 
+AppReloader.reloadAppWithURLString(generateAppURL(app), app.module_name);}, 
 
 
 renderLoading:function(){
 return (
-React.createElement(View, {style:styles.container}, 
+React.createElement(View, {style:styles.loadingContainer}, 
 React.createElement(ActivityIndicatorIOS, {color:'#712FA9', style:styles.spinner, size:'large'})));}, 
 
+
+
+
+renderNoResults:function(){
+return (
+React.createElement(NoResults, null));}, 
 
 
 
@@ -44363,7 +44884,318 @@ render:function(){
 if(!this.state.loaded){
 return this.renderLoading();}else 
 {
-return this.renderAppList();}}});
+if(this.state.dataSource.getRowCount() > 0){
+return this.renderAppList();}else 
+
+{
+return this.renderNoResults();}}}});
+
+
+
+
+
+var deviceWidth=require('Dimensions').get('window').width;
+
+var styles=StyleSheet.create({
+listView:{
+marginTop:-9, 
+paddingTop:0}, 
+
+container:{
+flex:1, 
+backgroundColor:'transparent'}, 
+
+loadingContainer:{
+flex:1, 
+paddingBottom:80}, 
+
+appContainer:{
+marginTop:-18, 
+flexDirection:'row', 
+flex:1, 
+paddingBottom:8, 
+paddingTop:15, 
+borderBottomWidth:3 / PixelRatio.get(), 
+borderBottomColor:'#eee'}, 
+
+appTextDescription:{
+flexDirection:'column', 
+marginLeft:10}, 
+
+targetBuild:{
+opacity:0.4, 
+paddingBottom:2}, 
+
+viewCount:{
+opacity:0.4}, 
+
+targetBuildText:{
+fontSize:12, 
+fontFamily:'Avenir Next'}, 
+
+viewCountText:{
+fontSize:12, 
+fontFamily:'Avenir Next'}, 
+
+creator:{
+position:'absolute', 
+right:0, 
+width:70, 
+flexDirection:'column', 
+justifyContent:'center', 
+alignItems:'center'}, 
+
+username:{
+fontSize:11, 
+opacity:0.4, 
+width:50, 
+textAlign:'center'}, 
+
+avatar:{
+width:30, 
+height:30, 
+marginBottom:5, 
+borderRadius:15, 
+backgroundColor:'#000'}, 
+
+cancelButton:{
+color:'#fff', 
+flex:1, 
+fontSize:25, 
+marginLeft:20}, 
+
+appTitle:{
+fontSize:18, 
+fontFamily:'Avenir Next', 
+color:'#712FA9', 
+width:deviceWidth - 70, 
+flex:1}, 
+
+spinner:{
+flex:1}});
+
+
+
+module.exports = AppList;});
+__d('RNPlayNative/App/Components/NoResults',["react-native/Libraries/react-native/react-native"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+var React=require('react-native/Libraries/react-native/react-native');var 
+
+
+Text=
+
+
+React.Text;var View=React.View;var StyleSheet=React.StyleSheet;
+
+var NoResults=React.createClass({displayName:'NoResults', 
+render:function(){
+return (
+React.createElement(View, {style:styles.noResultsContainer}, 
+React.createElement(Text, {style:styles.noResultsText}, 'No Results')));}});
+
+
+
+
+
+var styles=StyleSheet.create({
+noResultsContainer:{
+flex:1, 
+justifyContent:'center', 
+paddingBottom:60}, 
+
+noResultsText:{
+fontSize:20, 
+textAlign:'center', 
+color:'#ccc', 
+fontFamily:'Avenir Next'}});
+
+
+
+module.exports = NoResults;});
+__d('RNPlayNative/App/Utilities/generateAppURL',["RNPlayNative/package.json"],function(global, require, requireDynamic, requireLazy, module, exports) {  var RN_VERSION=require('RNPlayNative/package.json').dependencies['react-native'];
+var githubPrefix='facebook/react-native#';
+if(RN_VERSION.indexOf(githubPrefix) === 0){
+RN_VERSION = RN_VERSION.replace(githubPrefix, '').substring(0, 6);}else 
+{
+RN_VERSION = RN_VERSION.replace(/\./g, '').replace(/-/g, '');}
+
+
+console.log(RN_VERSION);
+module.exports = function(app){
+return 'http://packager' + RN_VERSION + '.rnplay.org/' + app.url_token + '.bundle';};});
+__d('RNPlayNative/package.json',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {
+  "name": "RNPlayNative",
+  "version": "0.1.1",
+  "private": true,
+  "scripts": {
+    "start": "node_modules/react-native/packager/packager.sh"
+  },
+  "dependencies": {
+    "art": "^0.10.0",
+    "flux-util": "^0.1.1",
+    "lodash": "^3.9.3",
+    "qs": "^3.1.0",
+    "react-native": "facebook/react-native#8b93b99",
+    "react-native-accordion": "0.1.1",
+    "react-native-camera": "rnplay/react-native-camera",
+    "react-native-icons": "0.0.8",
+    "react-native-modal": "^0.3.6",
+    "react-native-overlay": "^0.2.5"
+  }
+}
+;});
+__d('RNPlayNative/App/Screens/Search',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/AppList","RNPlayNative/App/Components/NoResults"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+var React=require('react-native/Libraries/react-native/react-native');
+var AppList=require('RNPlayNative/App/Components/AppList');
+var NoResults=require('RNPlayNative/App/Components/NoResults');var 
+
+
+StyleSheet=
+
+
+
+
+React.StyleSheet;var Text=React.Text;var View=React.View;var ListView=React.ListView;var TextInput=React.TextInput;
+
+var Explore=React.createClass({displayName:'Explore', 
+getInitialState:function(){
+return {
+searchText:'', 
+showAppList:false};}, 
+
+
+
+_handleSearch:function(){
+this.setState({
+showAppList:false, 
+searchUrl:'/apps/search.json?name=' + this.state.searchText});
+
+
+if(this.state.searchText !== ''){
+this.setState({showAppList:true});}}, 
+
+
+
+renderList:function(){
+return (
+React.createElement(AppList, {url:this.state.searchUrl}));}, 
+
+
+
+renderNoResults:function(){
+return (
+React.createElement(NoResults, null));}, 
+
+
+
+render:function(){var _this=this;
+return (
+React.createElement(View, {style:styles.mainContainer}, 
+React.createElement(View, {style:styles.searchRow}, 
+React.createElement(View, {style:styles.inputContainer}, 
+React.createElement(TextInput, {
+autoCapitalize:'none', 
+autoCorrect:false, 
+autoFocus:true, 
+clearButtonMode:'always', 
+returnKeyType:'search', 
+placeholder:'SEARCH...', 
+style:styles.input, 
+onChangeText:function(text){return _this.setState({searchText:text});}, 
+onSubmitEditing:this._handleSearch}))), 
+
+
+
+this.state.showAppList?this.renderList():this.renderNoResults()));}});
+
+
+
+
+
+var styles=StyleSheet.create({
+mainContainer:{
+flex:1}, 
+
+searchRow:{
+backgroundColor:'#f3f3f3', 
+padding:10}, 
+
+input:{
+height:40, 
+padding:5, 
+fontSize:14, 
+color:'black'}, 
+
+inputContainer:{
+borderBottomWidth:1, 
+borderColor:'#ccc', 
+margin:5, 
+marginTop:0}});
+
+
+
+module.exports = Explore;});
+__d('RNPlayNative/App/Screens/MyAppsContainer',["react-native/Libraries/react-native/react-native","NativeModules","react-native-camera/Camera.ios","Overlay","RNPlayNative/App/Api/Core","RNPlayNative/App/Components/NavigationBar","RNPlayNative/App/Stores/ProfileStore","RNPlayNative/App/Stores/LocalStorage","RNPlayNative/App/Screens/Login","RNPlayNative/App/Screens/Signup","RNPlayNative/App/Screens/MyApps"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+
+
+
+
+
+var React=require('react-native/Libraries/react-native/react-native');
+var AppReloader=require('NativeModules').AppReloader;
+var Camera=require('react-native-camera/Camera.ios');
+var Overlay=require('Overlay');
+var Api=require('RNPlayNative/App/Api/Core');
+var NavigationBar=require('RNPlayNative/App/Components/NavigationBar');
+var ProfileStore=require('RNPlayNative/App/Stores/ProfileStore');
+var LocalStorage=require('RNPlayNative/App/Stores/LocalStorage');
+var Login=require('RNPlayNative/App/Screens/Login');
+var Signup=require('RNPlayNative/App/Screens/Signup');
+var MyApps=require('RNPlayNative/App/Screens/MyApps');
+
+var DEFAULT_ROUTE={id:'my_apps'};var 
+
+
+ActivityIndicatorIOS=
+
+
+
+
+
+
+
+
+
+React.ActivityIndicatorIOS;var AppRegistry=React.AppRegistry;var Image=React.Image;var ListView=React.ListView;var StyleSheet=React.StyleSheet;var Text=React.Text;var TouchableOpacity=React.TouchableOpacity;var View=React.View;var Navigator=React.Navigator;var StatusBarIOS=React.StatusBarIOS;
+
+var MyAppsContainer=React.createClass({displayName:'MyAppsContainer', 
+renderScene:function(route, nav){
+switch(route.id){
+case 'my_apps':
+return React.createElement(MyApps, {navigator:nav});
+case 'login':
+return React.createElement(Login, {navigator:nav, error:route.error});
+case 'signup':
+return React.createElement(Signup, {navigator:nav});
+default:
+this.renderAppList();}}, 
+
+
+
+render:function(){
+StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
+
+if(ProfileStore.getState().id){
+DEFAULT_ROUTE.id = 'my_apps';}else 
+{
+DEFAULT_ROUTE.id = 'login';}
+
+
+return (
+React.createElement(Navigator, {initialRoute:DEFAULT_ROUTE, 
+renderScene:this.renderScene}));}});
 
 
 
@@ -44373,17 +45205,10 @@ container:{
 flex:1}, 
 
 appContainer:{
-marginBottom:20, 
-flexDirection:'row', 
-flex:1, 
-paddingBottom:10}, 
+marginBottom:20}, 
 
 creator:{
-
-position:'absolute', 
-right:0, 
-width:70, 
-flexDirection:'column', 
+flexDirection:'row', 
 justifyContent:'center', 
 alignItems:'center'}, 
 
@@ -44398,10 +45223,12 @@ alignSelf:'center',
 marginLeft:5}, 
 
 avatar:{
-width:40, 
-height:40, 
-marginBottom:5, 
-borderRadius:20, 
+width:20, 
+height:20, 
+marginRight:5, 
+borderRadius:10, 
+opacity:0.5, 
+marginTop:3, 
 backgroundColor:'#000'}, 
 
 cancelButton:{
@@ -44420,42 +45247,485 @@ app:{
 fontSize:20, 
 textAlign:'center', 
 margin:10, 
-color:'#712FA9'}, 
-
-spinner:{
-flex:1}});
+color:'#2B608A'}});
 
 
 
-module.exports = AppList;});
-__d('RNPlayNative/App/Screens/About',["react-native/Libraries/react-native/react-native","react-native-accordion/index.ios"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+module.exports = MyAppsContainer;});
+__d('react-native-camera/Camera.ios',["React","RCTDeviceEventEmitter","NativeModules","ReactNativeViewAttributes","StyleSheet","createReactNativeComponentClass","ReactPropTypes","StyleSheetPropType","NativeMethodsMixin","flattenStyle","merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('React');
+var DeviceEventEmitter=require('RCTDeviceEventEmitter');
+var NativeModules=require('NativeModules');
+var ReactNativeViewAttributes=require('ReactNativeViewAttributes');
+var StyleSheet=require('StyleSheet');
+var createReactNativeComponentClass=require('createReactNativeComponentClass');
+var PropTypes=require('ReactPropTypes');
+var StyleSheetPropType=require('StyleSheetPropType');
+var NativeMethodsMixin=require('NativeMethodsMixin');
+var flattenStyle=require('flattenStyle');
+var merge=require('merge');
+
+var constants={
+Aspect:NativeModules.CameraManager.Aspect, 
+Type:NativeModules.CameraManager.Type, 
+CaptureMode:NativeModules.CameraManager.CaptureMode, 
+CaptureTarget:NativeModules.CameraManager.CaptureTarget, 
+Orientation:NativeModules.CameraManager.Orientation, 
+FlashMode:NativeModules.CameraManager.FlashMode};
+
+
+var Camera=React.createClass({displayName:'Camera', 
+propTypes:{
+aspect:PropTypes.oneOfType([
+PropTypes.string, 
+PropTypes.number]), 
+
+captureMode:PropTypes.oneOfType([
+PropTypes.string, 
+PropTypes.number]), 
+
+captureTarget:PropTypes.oneOfType([
+PropTypes.string, 
+PropTypes.number]), 
+
+type:PropTypes.oneOfType([
+PropTypes.string, 
+PropTypes.number]), 
+
+orientation:PropTypes.oneOfType([
+PropTypes.string, 
+PropTypes.number]), 
+
+flashMode:PropTypes.oneOfType([
+PropTypes.string, 
+PropTypes.number])}, 
+
+
+
+mixins:[NativeMethodsMixin], 
+
+viewConfig:{
+uiViewClassName:'UIView', 
+validAttributes:ReactNativeViewAttributes.UIView}, 
+
+
+getDefaultProps:function(){
+return {
+aspect:constants.Aspect.fill, 
+type:constants.Type.back, 
+orientation:constants.Orientation.auto, 
+captureMode:constants.CaptureMode.still, 
+captureTarget:constants.CaptureTarget.memory, 
+flashMode:constants.FlashMode.off};}, 
+
+
+
+getInitialState:function(){
+return {
+isAuthorized:false};}, 
+
+
+
+componentWillMount:function(){
+NativeModules.CameraManager.checkDeviceAuthorizationStatus((function(err, isAuthorized){
+this.state.isAuthorized = isAuthorized;
+this.setState(this.state);}).
+bind(this));
+this.cameraBarCodeReadListener = DeviceEventEmitter.addListener('CameraBarCodeRead', this._onBarCodeRead);}, 
+
+
+componentWillUnmount:function(){
+this.cameraBarCodeReadListener.remove();}, 
+
+
+render:function(){
+var style=flattenStyle([styles.base, this.props.style]);
+
+var aspect=this.props.aspect, 
+type=this.props.type, 
+orientation=this.props.orientation, 
+flashMode=this.props.flashMode;
+
+var legacyProps={
+aspect:{
+Fill:'fill', 
+Fit:'fit', 
+Stretch:'stretch'}, 
+
+orientation:{
+LandscapeLeft:'landscapeLeft', 
+LandscapeRight:'landscapeRight', 
+Portrait:'portrait', 
+PortraitUpsideDown:'portraitUpsideDown'}, 
+
+type:{
+Front:'front', 
+Back:'back'}, 
+
+flashMode:{
+Off:'off', 
+On:'on', 
+Auto:'auto'}};
+
+
+
+var foundLegacyAspect=legacyProps.aspect[aspect];
+var foundLegacyOrientation=legacyProps.orientation[orientation];
+var foundLegacyType=legacyProps.type[type];
+var foundLegacyFlashMode=legacyProps.flashMode[flashMode];
+
+if(__DEV__){
+if(foundLegacyAspect){
+console.log('RCTCamera: aspect="' + aspect + '" is deprecated, use aspect={Camera.constants.Aspect.' + foundLegacyAspect + '} instead.');
+aspect = constants.Aspect[foundLegacyAspect];}
+
+if(foundLegacyOrientation){
+console.log('RCTCamera: orientation="' + orientation + '" is deprecated, use orientation={Camera.constants.Orientation.' + foundLegacyOrientation + '} instead.');
+orientation = constants.Orientation[foundLegacyOrientation];}
+
+if(foundLegacyType){
+console.log('RCTCamera: type="' + type + '" is deprecated, use type={Camera.constants.Type.' + foundLegacyType + '} instead.');
+type = constants.Type[foundLegacyType];}}
+
+
+
+if(typeof aspect === 'string'){
+aspect = constants.Aspect[aspect];}
+
+
+if(typeof orientation === 'string'){
+orientation = constants.Orientation[orientation];}
+
+
+if(typeof type === 'string'){
+type = constants.Type[type];}
+
+
+var nativeProps=merge(this.props, {
+style:style, 
+aspect:aspect, 
+type:type, 
+orientation:orientation, 
+flashMode:flashMode});
+
+
+return React.createElement(RCTCamera, nativeProps);}, 
+
+
+_onBarCodeRead:function(e){
+this.props.onBarCodeRead && this.props.onBarCodeRead(e);}, 
+
+
+capture:function(options, cb){
+
+if(arguments.length == 1){
+cb = options;
+options = {};}
+
+
+options = Object.assign({}, {
+mode:this.props.captureMode, 
+target:this.props.captureTarget}, 
+options);
+
+if(typeof options.mode === 'string'){
+options.mode = constants.CaptureMode[options.mode];}
+
+
+if(typeof options.target === 'string'){
+options.target = constants.CaptureTarget[options.target];}
+
+
+NativeModules.CameraManager.capture(options, cb);}});
+
+
+
+
+var RCTCamera=createReactNativeComponentClass({
+validAttributes:merge(ReactNativeViewAttributes.UIView, {
+aspect:true, 
+type:true, 
+orientation:true, 
+flashMode:true}), 
+
+uiViewClassName:'RCTCamera'});
+
+
+var styles=StyleSheet.create({
+base:{}});
+
+
+Camera.constants = constants;
+module.exports = Camera;});
+__d('Overlay',["react-native/Libraries/react-native/react-native"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+
+
+
+
 
 var React=require('react-native/Libraries/react-native/react-native');var 
+
+View=
+
+
+
+React.View;var PropTypes=React.PropTypes;var StyleSheet=React.StyleSheet;var requireNativeComponent=React.requireNativeComponent;
+
+
+
+
+
+var Overlay=React.createClass({displayName:'Overlay', 
+propTypes:{
+
+
+
+
+aboveStatusBar:React.PropTypes.bool, 
+
+
+
+
+
+isVisible:React.PropTypes.bool}, 
+
+
+getDefaultProps:function(){
+return {
+aboveStatusBar:false, 
+isVisible:false};}, 
+
+
+
+render:function(){var 
+
+isVisible=
+this.props.isVisible;
+
+if(this.props.isVisible){
+return (
+React.createElement(RNOverlay, {isVisible:true, style:styles.container, pointerEvents:'none', aboveStatusBar:this.props.aboveStatusBar}, 
+React.Children.map(this.props.children, React.addons.cloneWithProps)));}else 
+
+
+{
+return React.createElement(View, null);}}});
+
+
+
+
+var RNOverlay=requireNativeComponent('RNOverlay', Overlay);
+
+var styles=StyleSheet.create({
+container:{
+position:'absolute', 
+top:0, 
+bottom:0, 
+left:0, 
+right:0, 
+backgroundColor:'transparent'}});
+
+
+
+module.exports = Overlay;});
+__d('RNPlayNative/App/Stores/ProfileStore',["flux-util/lib/flux-util","RNPlayNative/App/Utilities/AppDispatcher","RNPlayNative/App/Constants/AppConstants"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+var createStore=require('flux-util/lib/flux-util').createStore;
+var dispatcher=require('RNPlayNative/App/Utilities/AppDispatcher');
+var AppConstants=require('RNPlayNative/App/Constants/AppConstants');
+
+var _profile={};
+
+var store=createStore({
+setState:function(profile){
+_profile = profile || {};}, 
+
+
+getState:function(){
+return _profile;}, 
+
+
+dispatcherIndex:dispatcher.register(function(payload){
+var action=payload.action;
+
+switch(action.actionType){
+case AppConstants.UPDATE_PROFILE:
+_profile = action.data;
+store.emitChange(action);
+break;}
+
+
+return true;})});
+
+
+
+module.exports = store;});
+__d('RNPlayNative/App/Stores/LocalStorage',["flux-util/lib/flux-util","RNPlayNative/App/Utilities/AppDispatcher","RNPlayNative/App/Constants/AppConstants","RNPlayNative/App/Stores/ProfileStore","react-native/Libraries/react-native/react-native"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+var createStore=require('flux-util/lib/flux-util').createStore;
+var dispatcher=require('RNPlayNative/App/Utilities/AppDispatcher');
+var AppConstants=require('RNPlayNative/App/Constants/AppConstants');
+var ProfileStore=require('RNPlayNative/App/Stores/ProfileStore');
+var React=require('react-native/Libraries/react-native/react-native');var 
+
+
+AsyncStorage=
+
+React.AsyncStorage;var AlertIOS=React.AlertIOS;
+
+var PREFIX='@USER:';
+var PROFILE_KEY=PREFIX + 'profile';
+
+var store=createStore({
+bootstrap:function(complete){
+AsyncStorage.getItem(PROFILE_KEY, function(error, profile){
+if(error){
+AlertIOS.alert(error.message);
+complete();}else 
+{
+ProfileStore.setState(JSON.parse(profile));
+complete();}});}, 
+
+
+
+
+dispatcherIndex:dispatcher.register(function(payload){
+var action=payload.action;
+
+switch(action.actionType){
+case AppConstants.UPDATE_PROFILE:
+AsyncStorage.setItem(PROFILE_KEY, JSON.stringify(action.data), function(error){
+store.emitChange(action);});
+
+break;}
+
+
+return true;})});
+
+
+
+module.exports = store;});
+__d('RNPlayNative/App/Screens/MyApps',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/AppList","RNPlayNative/App/Components/NavigationBar"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+var React=require('react-native/Libraries/react-native/react-native');var 
+
+
+ActivityIndicatorIOS=
+
+
+
+
+
+
+
+
+
+React.ActivityIndicatorIOS;var AppRegistry=React.AppRegistry;var Image=React.Image;var ListView=React.ListView;var StyleSheet=React.StyleSheet;var Text=React.Text;var TouchableOpacity=React.TouchableOpacity;var View=React.View;var Navigator=React.Navigator;var StatusBarIOS=React.StatusBarIOS;
+
+var AppList=require('RNPlayNative/App/Components/AppList');
+var NavigationBar=require('RNPlayNative/App/Components/NavigationBar');
+
+var MyApps=React.createClass({displayName:'MyApps', 
+render:function(){
+StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
+
+return (
+React.createElement(View, {style:{flex:1}}, 
+React.createElement(NavigationBar, {title:'My Apps'}), 
+React.createElement(AppList, {url:'/apps.json', hideCreator:true})));}});
+
+
+
+
+
+module.exports = MyApps;});
+__d('RNPlayNative/App/Screens/Settings',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/NavigationBar"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+var React=require('react-native/Libraries/react-native/react-native');
+var NavigationBar=require('RNPlayNative/App/Components/NavigationBar');var 
 
 
 StyleSheet=
 
 
-React.StyleSheet;var Text=React.Text;var View=React.View;
 
-var Accordion=require('react-native-accordion/index.ios');
+React.StyleSheet;var Text=React.Text;var View=React.View;var StatusBarIOS=React.StatusBarIOS;
 
-var About=React.createClass({displayName:'About', 
+var Settings=React.createClass({displayName:'Settings', 
+
 render:function(){
+StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
 return (
-React.createElement(View, null, 
-React.createElement(Accordion, {
-underlayColor:'#3a3638', 
-header:React.createElement(Text, {style:styles.aboutText}, 'What\'s this app for?'), 
-content:React.createElement(Text, {style:styles.aboutText}, 'Running React Natibe apps from rnplay.org directly on your device.'), 
-easing:'easeOutCubic'}), 
+React.createElement(View, {style:styles.mainContainer}, 
+React.createElement(NavigationBar, {title:'Settings'})));}});
 
 
-React.createElement(Accordion, {
-underlayColor:'#3a3638', 
-header:React.createElement(Text, {style:styles.aboutText}, 'How do I exit a loaded app?'), 
-content:React.createElement(Text, {style:styles.aboutText}, 'Tap the same spot four times, quickly.'), 
-easing:'easeOutCubic'})));}});
+
+
+
+var styles=StyleSheet.create({
+mainContainer:{
+flex:1, 
+flexDirection:'column', 
+backgroundColor:'white'}});
+
+
+
+
+module.exports = Settings;});
+__d('RNPlayNative/App/Screens/About',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/NavigationBar"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+var React=require('react-native/Libraries/react-native/react-native');
+var NavigationBar=require('RNPlayNative/App/Components/NavigationBar');var 
+
+
+StyleSheet=
+
+
+
+
+
+
+React.StyleSheet;var Text=React.Text;var ScrollView=React.ScrollView;var View=React.View;var StatusBarIOS=React.StatusBarIOS;var LinkingIOS=React.LinkingIOS;var TouchableOpacity=React.TouchableOpacity;
+
+var Help=React.createClass({displayName:'Help', 
+_sendEmail:function(){
+LinkingIOS.openURL('mailto:info@rnplay.org');}, 
+
+
+render:function(){
+StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
+return (
+React.createElement(View, {style:{flex:1}}, 
+React.createElement(NavigationBar, {title:'About'}), 
+React.createElement(ScrollView, {style:styles.contentContainer}, 
+React.createElement(Text, {style:styles.aboutTitle}, 'What is this app for?'), 
+React.createElement(Text, {style:styles.aboutText}, 'Running React Native apps from rnplay.org directly on your device.'), 
+React.createElement(View, {style:styles.separator}), 
+React.createElement(Text, {style:styles.aboutTitle}, 'How do I exit a loaded app?'), 
+React.createElement(Text, {style:styles.aboutText}, 'Tap and hold the screen with two fingers simultaneously for 1.5 seconds.'), 
+React.createElement(View, {style:styles.separator}), 
+React.createElement(Text, {style:styles.aboutTitle}, 'What does target mean?'), 
+React.createElement(Text, {style:styles.aboutText}, 'Target refers to the React Native build version that a given play is intended for.'), 
+React.createElement(View, {style:styles.separator}), 
+React.createElement(Text, {style:styles.aboutTitle, numberOfLines:2}, 'What React Native version is this app built with?'), 
+
+
+React.createElement(Text, {style:styles.aboutText, numberOfLines:2}, 'This app is currently built against React Native', 
+
+React.createElement(Text, {style:styles.buildVersionText}, ' 0.5.0'), ', released Friday, June 5th, 2015.'), 
+
+React.createElement(View, {style:styles.separator}), 
+React.createElement(View, {style:styles.otherQuestions}, 
+React.createElement(Text, {style:styles.otherQuestionsText}, 'More questions? Pleaes get in touch with us by email.'), 
+
+
+React.createElement(View, {style:{paddingTop:5}}, 
+React.createElement(TouchableOpacity, {onPress:this._sendEmail}, 
+React.createElement(Text, {style:styles.sendEmailText}, 'info@rnplay.org')))))));}});
+
+
+
 
 
 
@@ -44463,544 +45733,142 @@ easing:'easeOutCubic'})));}});
 
 
 var styles=StyleSheet.create({
+contentContainer:{
+marginTop:-10, 
+paddingBottom:20, 
+flex:1}, 
+
+sendEmailText:{
+color:'#712FA9', 
+fontSize:13, 
+marginTop:-2}, 
+
 aboutTitle:{
-fontSize:18}, 
+fontSize:18, 
+marginBottom:10, 
+lineHeight:20, 
+fontFamily:'Avenir Next', 
+paddingLeft:15, 
+paddingRight:15}, 
 
 aboutText:{
-marginTop:15, 
-fontSize:14, 
+paddingRight:15, 
+paddingLeft:15, 
+marginBottom:12, 
+fontSize:13, 
 textAlign:'left', 
 color:'#3a3638', 
-opacity:0.8}});
+opacity:0.5}, 
+
+separator:{
+flex:1, 
+height:1, 
+backgroundColor:'rgba(0,0,0,0.07)', 
+marginBottom:14}, 
+
+buildVersionText:{
+fontWeight:'bold'}, 
+
+otherQuestionsText:{
+opacity:0.4, 
+fontSize:13}, 
+
+otherQuestions:{
+paddingTop:0, 
+paddingLeft:15, 
+paddingRight:15, 
+paddingBottom:23}});
 
 
 
-module.exports = About;});
-__d('react-native-accordion/index.ios',["react-native-accordion/src/index"],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = require('react-native-accordion/src/index');});
-__d('react-native-accordion/src/index',["react-native/Libraries/react-native/react-native","react-tween-state/index"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+module.exports = Help;});
+__d('RNPlayNative/App/Screens/QRCodeReader',["react-native/Libraries/react-native/react-native","react-native-camera/Camera.ios","RNPlayNative/App/Utilities/generateAppURL","NativeModules","FAKIconImage"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native');
-var tweenState=require('react-tween-state/index');var 
+var Camera=require('react-native-camera/Camera.ios');
+var generateAppURL=require('RNPlayNative/App/Utilities/generateAppURL');var 
 
 
 StyleSheet=
 
 
 
-React.StyleSheet;var TouchableHighlight=React.TouchableHighlight;var View=React.View;var Text=React.Text;
 
-var Accordion=React.createClass({displayName:'Accordion', 
-mixins:[tweenState.Mixin], 
+React.StyleSheet;var Text=React.Text;var View=React.View;var StatusBarIOS=React.StatusBarIOS;var TouchableOpacity=React.TouchableOpacity;
 
-propTypes:{
-activeOpacity:React.PropTypes.number, 
-animationDuration:React.PropTypes.number, 
-content:React.PropTypes.element.isRequired, 
-easing:React.PropTypes.string, 
-header:React.PropTypes.element.isRequired, 
-underlayColor:React.PropTypes.string, 
-style:React.PropTypes.object}, 
+var AppReloader=require('NativeModules').AppReloader;
+var Icon=require('FAKIconImage');
 
-
-getDefaultProps:function(){
-return {
-activeOpacity:1, 
-animationDuration:300, 
-easing:'linear', 
-underlayColor:'#000', 
-style:{}};}, 
-
-
+var QRCodeReader=React.createClass({displayName:'QRCodeReader', 
 
 getInitialState:function(){
 return {
-is_visible:false, 
-height:0, 
-content_height:0};}, 
+cameraOpen:false};}, 
 
 
 
-_toggleAccordion:function(){
-this.state.is_visible = !this.state.is_visible;
-
-this.tweenState('height', {
-easing:tweenState.easingTypes[this.props.easing], 
-duration:this.props.animationDuration, 
-endValue:this.state.height === 0?this.state.content_height:0});}, 
+onBarCodeRead:function(e){
+var app=JSON.parse(e.data);
+AppReloader.reloadAppWithURLString(generateAppURL(app), app.module_name);}, 
 
 
-
-_getContentHeight:function(){var _this=this;
-this.refs.AccordionContent.measure(function(ox, oy, width, height, px, py){
-
-_this.setState({content_height:height});});}, 
-
-
-
-componentDidMount:function(){
-
-
-
-setTimeout(this._getContentHeight);}, 
-
-
-render:function(){
+render:function(){var _this=this;
+StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
 return (
+this.state.cameraOpen?
+React.createElement(Camera, {
+ref:'cam', 
+style:styles.camera, 
+onBarCodeRead:this.onBarCodeRead}, 
+React.createElement(Icon, {name:'ion|close', 
+size:50, 
+style:styles.cameraButton, 
+color:'#000'})):
 
-React.createElement(View, {
-style:{
-overflow:'hidden'}}, 
+React.createElement(View, {style:styles.container}, 
+React.createElement(Text, {style:styles.text}, 'For apps on rnplay.org, click on \'Run on device\', then open the camera and point it at the QR code.'), 
 
 
-React.createElement(TouchableHighlight, {
-ref:'AccordionHeader', 
-onPress:this._toggleAccordion, 
-underlayColor:this.props.underlayColor, 
-style:this.props.style}, 
+React.createElement(TouchableOpacity, {onPress:function(){return _this.setState({cameraOpen:true});}}, 
+React.createElement(Icon, {
+name:'ion|camera', 
+size:80, 
+style:styles.cameraButton, 
+color:'#000'}))));}});
 
-this.props.header), 
 
-React.createElement(View, {
-ref:'AccordionContentWrapper', 
-style:{
-height:this.getTweeningValue('height')}}, 
 
 
-React.createElement(View, {ref:'AccordionContent'}, 
-this.props.content))));}});
 
 
 
+var styles=StyleSheet.create({
+container:{
+flex:1, 
+justifyContent:'center', 
+alignItems:'center'}, 
 
+camera:{
+flex:1}, 
 
+text:{
+fontSize:20, 
+padding:10, 
+marginBottom:20}, 
 
+cameraButton:{
+width:80, 
+height:80}, 
 
+closebutton:{
+width:50, 
+height:50, 
+backgroundColor:'#aaa'}});
 
-module.exports = Accordion;});
-__d('react-tween-state/index',["tween-functions/index"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
-var easingTypes=require('tween-functions/index');
 
 
-
-
-var DEFAULT_STACK_BEHAVIOR='ADDITIVE';
-var DEFAULT_EASING=easingTypes.easeInOutQuad;
-var DEFAULT_DURATION=300;
-var DEFAULT_DELAY=0;
-
-
-function returnState(state){
-return state;}
-
-
-var tweenState={
-easingTypes:easingTypes, 
-stackBehavior:{
-ADDITIVE:'ADDITIVE', 
-DESTRUCTIVE:'DESTRUCTIVE'}};
-
-
-
-tweenState.Mixin = {
-getInitialState:function(){
-return {
-tweenQueue:[]};}, 
-
-
-
-tweenState:function(a, b, c){
-
-
-
-
-
-
-
-
-if(typeof a === 'string'){
-c = b;
-b = a;
-a = returnState;}
-
-this._tweenState(a, b, c);}, 
-
-
-_tweenState:function(stateRefFunc, stateName, config){
-
-
-var state=this._pendingState || this.state;
-var stateRef=stateRefFunc(state);
-
-
-var newConfig={
-easing:config.easing || DEFAULT_EASING, 
-duration:config.duration == null?DEFAULT_DURATION:config.duration, 
-delay:config.delay == null?DEFAULT_DELAY:config.delay, 
-beginValue:config.beginValue == null?stateRef[stateName]:config.beginValue, 
-endValue:config.endValue, 
-onEnd:config.onEnd, 
-stackBehavior:config.stackBehavior || DEFAULT_STACK_BEHAVIOR};
-
-
-var newTweenQueue=state.tweenQueue;
-if(newConfig.stackBehavior === tweenState.stackBehavior.DESTRUCTIVE){
-newTweenQueue = state.tweenQueue.filter(function(item){
-return item.stateName !== stateName || item.stateRefFunc(state) !== stateRef;});}
-
-
-
-newTweenQueue.push({
-stateRefFunc:stateRefFunc, 
-stateName:stateName, 
-config:newConfig, 
-initTime:Date.now() + newConfig.delay});
-
-
-
-
-stateRef[stateName] = newConfig.endValue;
-
-this.setState({tweenQueue:newTweenQueue});
-
-if(newTweenQueue.length === 1){
-this.startRaf();}}, 
-
-
-
-getTweeningValue:function(a, b){
-
-if(typeof a === 'string'){
-b = a;
-a = returnState;}
-
-return this._getTweeningValue(a, b);}, 
-
-
-_getTweeningValue:function(stateRefFunc, stateName){
-var state=this.state;
-var stateRef=stateRefFunc(state);
-var tweeningValue=stateRef[stateName];
-var now=Date.now();
-
-for(var i=0; i < state.tweenQueue.length; i++) {
-var item=state.tweenQueue[i];
-var itemStateRef=item.stateRefFunc(state);
-if(item.stateName !== stateName || itemStateRef !== stateRef){
-continue;}
-
-
-var progressTime=now - item.initTime > item.config.duration?
-item.config.duration:
-Math.max(0, now - item.initTime);
-
-
-
-var contrib=-item.config.endValue + item.config.easing(
-progressTime, 
-item.config.beginValue, 
-item.config.endValue, 
-item.config.duration);
-
-
-tweeningValue += contrib;}
-
-
-return tweeningValue;}, 
-
-
-_rafCb:function(){
-var state=this.state;
-if(state.tweenQueue.length === 0){
-return;}
-
-
-var now=Date.now();
-var newTweenQueue=[];
-
-for(var i=0; i < state.tweenQueue.length; i++) {
-var item=state.tweenQueue[i];
-if(now - item.initTime < item.config.duration){
-newTweenQueue.push(item);}else 
-{
-item.config.onEnd && item.config.onEnd();}}
-
-
-
-
-if(!this.isMounted()){
-return;}
-
-
-this.setState({
-tweenQueue:newTweenQueue});
-
-
-requestAnimationFrame(this._rafCb);}, 
-
-
-startRaf:function(){
-requestAnimationFrame(this._rafCb);}};
-
-
-
-
-module.exports = tweenState;});
-__d('tween-functions/index',[],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
-
-
-var tweenFunctions={
-linear:function(t, b, _c, d){
-var c=_c - b;
-return c * t / d + b;}, 
-
-easeInQuad:function(t, b, _c, d){
-var c=_c - b;
-return c * (t /= d) * t + b;}, 
-
-easeOutQuad:function(t, b, _c, d){
-var c=_c - b;
-return -c * (t /= d) * (t - 2) + b;}, 
-
-easeInOutQuad:function(t, b, _c, d){
-var c=_c - b;
-if((t /= d / 2) < 1){
-return c / 2 * t * t + b;}else 
-{
-return -c / 2 * (--t * (t - 2) - 1) + b;}}, 
-
-
-easeInCubic:function(t, b, _c, d){
-var c=_c - b;
-return c * (t /= d) * t * t + b;}, 
-
-easeOutCubic:function(t, b, _c, d){
-var c=_c - b;
-return c * ((t = t / d - 1) * t * t + 1) + b;}, 
-
-easeInOutCubic:function(t, b, _c, d){
-var c=_c - b;
-if((t /= d / 2) < 1){
-return c / 2 * t * t * t + b;}else 
-{
-return c / 2 * ((t -= 2) * t * t + 2) + b;}}, 
-
-
-easeInQuart:function(t, b, _c, d){
-var c=_c - b;
-return c * (t /= d) * t * t * t + b;}, 
-
-easeOutQuart:function(t, b, _c, d){
-var c=_c - b;
-return -c * ((t = t / d - 1) * t * t * t - 1) + b;}, 
-
-easeInOutQuart:function(t, b, _c, d){
-var c=_c - b;
-if((t /= d / 2) < 1){
-return c / 2 * t * t * t * t + b;}else 
-{
-return -c / 2 * ((t -= 2) * t * t * t - 2) + b;}}, 
-
-
-easeInQuint:function(t, b, _c, d){
-var c=_c - b;
-return c * (t /= d) * t * t * t * t + b;}, 
-
-easeOutQuint:function(t, b, _c, d){
-var c=_c - b;
-return c * ((t = t / d - 1) * t * t * t * t + 1) + b;}, 
-
-easeInOutQuint:function(t, b, _c, d){
-var c=_c - b;
-if((t /= d / 2) < 1){
-return c / 2 * t * t * t * t * t + b;}else 
-{
-return c / 2 * ((t -= 2) * t * t * t * t + 2) + b;}}, 
-
-
-easeInSine:function(t, b, _c, d){
-var c=_c - b;
-return -c * Math.cos(t / d * (Math.PI / 2)) + c + b;}, 
-
-easeOutSine:function(t, b, _c, d){
-var c=_c - b;
-return c * Math.sin(t / d * (Math.PI / 2)) + b;}, 
-
-easeInOutSine:function(t, b, _c, d){
-var c=_c - b;
-return -c / 2 * (Math.cos(Math.PI * t / d) - 1) + b;}, 
-
-easeInExpo:function(t, b, _c, d){
-var c=_c - b;
-var _ref;
-return (_ref = t === 0) !== null?_ref:{
-b:c * Math.pow(2, 10 * (t / d - 1)) + b};}, 
-
-
-easeOutExpo:function(t, b, _c, d){
-var c=_c - b;
-var _ref;
-return (_ref = t === d) !== null?_ref:b + {
-c:c * (-Math.pow(2, -10 * t / d) + 1) + b};}, 
-
-
-easeInOutExpo:function(t, b, _c, d){
-var c=_c - b;
-if(t === 0){
-b;}
-
-if(t === d){
-b + c;}
-
-if((t /= d / 2) < 1){
-return c / 2 * Math.pow(2, 10 * (t - 1)) + b;}else 
-{
-return c / 2 * (-Math.pow(2, -10 * --t) + 2) + b;}}, 
-
-
-easeInCirc:function(t, b, _c, d){
-var c=_c - b;
-return -c * (Math.sqrt(1 - (t /= d) * t) - 1) + b;}, 
-
-easeOutCirc:function(t, b, _c, d){
-var c=_c - b;
-return c * Math.sqrt(1 - (t = t / d - 1) * t) + b;}, 
-
-easeInOutCirc:function(t, b, _c, d){
-var c=_c - b;
-if((t /= d / 2) < 1){
-return -c / 2 * (Math.sqrt(1 - t * t) - 1) + b;}else 
-{
-return c / 2 * (Math.sqrt(1 - (t -= 2) * t) + 1) + b;}}, 
-
-
-easeInElastic:function(t, b, _c, d){
-var c=_c - b;
-var a, p, s;
-s = 1.70158;
-p = 0;
-a = c;
-if(t === 0){
-b;}else 
-if((t /= d) === 1){
-b + c;}
-
-if(!p){
-p = d * 0.3;}
-
-if(a < Math.abs(c)){
-a = c;
-s = p / 4;}else 
-{
-s = p / (2 * Math.PI) * Math.asin(c / a);}
-
-return -(a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;}, 
-
-easeOutElastic:function(t, b, _c, d){
-var c=_c - b;
-var a, p, s;
-s = 1.70158;
-p = 0;
-a = c;
-if(t === 0){
-b;}else 
-if((t /= d) === 1){
-b + c;}
-
-if(!p){
-p = d * 0.3;}
-
-if(a < Math.abs(c)){
-a = c;
-s = p / 4;}else 
-{
-s = p / (2 * Math.PI) * Math.asin(c / a);}
-
-return a * Math.pow(2, -10 * t) * Math.sin((t * d - s) * (2 * Math.PI) / p) + c + b;}, 
-
-easeInOutElastic:function(t, b, _c, d){
-var c=_c - b;
-var a, p, s;
-s = 1.70158;
-p = 0;
-a = c;
-if(t === 0){
-b;}else 
-if((t /= d / 2) === 2){
-b + c;}
-
-if(!p){
-p = d * (0.3 * 1.5);}
-
-if(a < Math.abs(c)){
-a = c;
-s = p / 4;}else 
-{
-s = p / (2 * Math.PI) * Math.asin(c / a);}
-
-if(t < 1){
-return -0.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;}else 
-{
-return a * Math.pow(2, -10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p) * 0.5 + c + b;}}, 
-
-
-easeInBack:function(t, b, _c, d, s){
-var c=_c - b;
-if(s === void 0){
-s = 1.70158;}
-
-return c * (t /= d) * t * ((s + 1) * t - s) + b;}, 
-
-easeOutBack:function(t, b, _c, d, s){
-var c=_c - b;
-if(s === void 0){
-s = 1.70158;}
-
-return c * ((t = t / d - 1) * t * ((s + 1) * t + s) + 1) + b;}, 
-
-easeInOutBack:function(t, b, _c, d, s){
-var c=_c - b;
-if(s === void 0){
-s = 1.70158;}
-
-if((t /= d / 2) < 1){
-return c / 2 * (t * t * (((s *= 1.525) + 1) * t - s)) + b;}else 
-{
-return c / 2 * ((t -= 2) * t * (((s *= 1.525) + 1) * t + s) + 2) + b;}}, 
-
-
-easeInBounce:function(t, b, _c, d){
-var c=_c - b;
-var v;
-v = tweenFunctions.easeOutBounce(d - t, 0, c, d);
-return c - v + b;}, 
-
-easeOutBounce:function(t, b, _c, d){
-var c=_c - b;
-if((t /= d) < 1 / 2.75){
-return c * (7.5625 * t * t) + b;}else 
-if(t < 2 / 2.75){
-return c * (7.5625 * (t -= 1.5 / 2.75) * t + 0.75) + b;}else 
-if(t < 2.5 / 2.75){
-return c * (7.5625 * (t -= 2.25 / 2.75) * t + 0.9375) + b;}else 
-{
-return c * (7.5625 * (t -= 2.625 / 2.75) * t + 0.984375) + b;}}, 
-
-
-easeInOutBounce:function(t, b, _c, d){
-var c=_c - b;
-var v;
-if(t < d / 2){
-v = tweenFunctions.easeInBounce(t * 2, 0, c, d);
-return v * 0.5 + b;}else 
-{
-v = tweenFunctions.easeOutBounce(t * 2 - d, 0, c, d);
-return v * 0.5 + c * 0.5 + b;}}};
-
-
-
-
-module.exports = tweenFunctions;});
+module.exports = QRCodeReader;});
 __d('FAKIconImage',["EdgeInsetsPropType","NativeMethodsMixin","NativeModules","ReactPropTypes","ImageResizeMode","ImageStylePropTypes","React","ReactNativeViewAttributes","StyleSheet","StyleSheetPropType","createReactNativeComponentClass","flattenStyle","insetsDiffer","invariant","merge","warning","deepDiffer"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 
@@ -45107,890 +45975,6 @@ uiViewClassName:'FAKIconImage'});
 
 
 module.exports = FAKIconImage;});
-__d('Modal',["merge","react-native/Libraries/react-native/react-native","react-native-modal/Transitions","react-native-modal/Style","Overlay","react-native-blur/index"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
-
-
-
-
-
-
-var merge=require('merge');
-
-var React=require('react-native/Libraries/react-native/react-native');var 
-
-View=
-
-
-
-
-React.View;var Text=React.Text;var TouchableOpacity=React.TouchableOpacity;var TouchableWithoutFeedback=React.TouchableWithoutFeedback;var PropTypes=React.PropTypes;
-
-var Transitions=require('react-native-modal/Transitions');
-var DefaultStyles=require('react-native-modal/Style');
-var Overlay=require('Overlay');
-var BlurView=require('react-native-blur/index').BlurView;
-var noop=function(){};
-
-var ModalMixin={
-getInitialState:function(){
-return {isModalOpen:false};}, 
-
-
-openModal:function(){
-this.setState({isModalOpen:true});}, 
-
-
-closeModal:function(){
-this.setState({isModalOpen:false});}};
-
-
-
-var Modal=React.createClass({displayName:'Modal', 
-mixins:[Transitions.Mixin], 
-
-statics:{
-transitionEasings:Transitions.Easings, 
-Mixin:ModalMixin, 
-DefaultStyles:DefaultStyles}, 
-
-
-propTypes:{
-isVisible:PropTypes.bool, 
-hideCloseButton:PropTypes.bool, 
-backdropType:PropTypes.string, 
-onClose:PropTypes.func, 
-onPressBackdrop:PropTypes.func, 
-customCloseButton:PropTypes.node, 
-customShowHandler:PropTypes.func, 
-customHideHandler:PropTypes.func, 
-forceToFront:PropTypes.bool, 
-containerPointerEvents:PropTypes.string}, 
-
-
-getDefaultProps:function(){
-return {
-isVisible:false, 
-hideCloseButton:false, 
-onClose:noop, 
-onPressBackdrop:noop, 
-backdropType:'plain', 
-backdropBlur:'light', 
-forceToFront:false, 
-containerPointerEvents:'auto'};}, 
-
-
-
-componentWillReceiveProps:function(nextProps){
-var willBeVisible=nextProps.isVisible;var _props=
-
-
-
-
-this.props;var isVisible=_props.isVisible;var customShowHandler=_props.customShowHandler;var customHideHandler=_props.customHideHandler;
-
-if(willBeVisible !== isVisible){
-var fadeIn=function(t){return t('opacity', {duration:300, begin:0, end:1});};
-var fadeOut=function(t){return t('opacity', {duration:300, end:0});};
-
-if(willBeVisible){
-var showHandler=customShowHandler || fadeIn;
-showHandler(this.transition);}else 
-{
-var hideHandler=customHideHandler || fadeOut;
-hideHandler(this.transition);}}}, 
-
-
-
-
-renderCloseButton:function(){var _props2=
-
-
-
-
-this.props;var customCloseButton=_props2.customCloseButton;var hideCloseButton=_props2.hideCloseButton;var onClose=_props2.onClose;
-
-var styles=this.props.style || DefaultStyles;
-
-if(customCloseButton){
-return React.addons.cloneWithProps(customCloseButton, null);}else 
-if(!hideCloseButton && onClose){
-return (
-React.createElement(View, {style:styles.closeButton}, 
-React.createElement(TouchableOpacity, {onPress:onClose}, 
-React.createElement(Text, {style:styles.closeButtonText}, 'Close'))));}}, 
-
-
-
-
-
-
-renderBody:function(){
-var styles=this.props.style || DefaultStyles;
-
-var responderProps=this.extractResponderProps();
-
-return (
-React.createElement(View, responderProps, 
-this.renderCloseButton(), 
-React.createElement(View, {style:styles.modal, pointerEvents:this.props.containerPointerEvents}, 
-React.Children.map(this.props.children, React.addons.cloneWithProps))));}, 
-
-
-
-
-
-extractResponderProps:function(){
-var responderProps={};
-if(this.props.onMoveShouldSetResponder)responderProps.onMoveShouldSetResponder = this.props.onMoveShouldSetResponder;
-if(this.props.onMoveShouldSetResponderCapture)responderProps.onMoveShouldSetResponderCapture = this.props.onMoveShouldSetResponderCapture;
-if(this.props.onResponderEnd)responderProps.onResponderEnd = this.props.onResponderEnd;
-if(this.props.onResponderGrant)responderProps.onResponderGrant = this.props.onResponderGrant;
-if(this.props.onResponderMove)responderProps.onResponderMove = this.props.onResponderMove;
-if(this.props.onResponderReject)responderProps.onResponderReject = this.props.onResponderReject;
-if(this.props.onResponderRelease)responderProps.onResponderRelease = this.props.onResponderRelease;
-if(this.props.onResponderStart)responderProps.onResponderStart = this.props.onResponderStart;
-if(this.props.onResponderTerminate)responderProps.onResponderTerminate = this.props.onResponderTerminate;
-if(this.props.onResponderTerminationRequest)responderProps.onResponderTerminationRequest = this.props.onResponderTerminationRequest;
-if(this.props.onStartShouldSetResponder)responderProps.onStartShouldSetResponder = this.props.onStartShouldSetResponder;
-if(this.props.onStartShouldSetResponderCapture)responderProps.onStartShouldSetResponderCapture = this.props.onStartShouldSetResponderCapture;
-return responderProps;}, 
-
-
-renderModal:function(){var _props3=
-
-
-
-
-this.props;var onPressBackdrop=_props3.onPressBackdrop;var backdropType=_props3.backdropType;var backdropBlur=_props3.backdropBlur;
-
-var styles=this.props.style || DefaultStyles;
-var body=this.renderBody();
-
-if(backdropType == 'plain'){
-return (
-React.createElement(View, {style:[styles.container, this.transitionStyles()]}, 
-React.createElement(TouchableWithoutFeedback, {onPress:onPressBackdrop}, 
-React.createElement(View, {style:styles.backdrop})), 
-
-body));}else 
-
-
-if(backdropType === 'none'){
-return (
-React.createElement(View, {style:[styles.container, this.transitionStyles()]}, 
-body));}else 
-
-
-{
-return (
-React.createElement(TouchableWithoutFeedback, {onPress:onPressBackdrop}, 
-React.createElement(BlurView, {blurType:backdropBlur, style:[styles.container, this.transitionStyles()]}, 
-body)));}}, 
-
-
-
-
-
-
-render:function(){
-var styles=this.props.style || DefaultStyles;var _props4=
-this.props;var isVisible=_props4.isVisible;var forceToFront=_props4.forceToFront;
-
-if(!isVisible && !this.state.isTransitioning){
-return React.createElement(View, null);}
-
-
-if(forceToFront){
-return (
-React.createElement(Overlay, {isVisible:true, aboveStatusBar:true, style:styles.container}, 
-this.renderModal()));}else 
-
-
-{
-return (
-React.createElement(View, {style:styles.container}, this.renderModal()));}}});
-
-
-
-
-
-module.exports = Modal;});
-__d('react-native-modal/Transitions',["react-tween-state/index"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';var _require=
-
-require('react-tween-state/index');var Mixin=_require.Mixin;var easingTypes=_require.easingTypes;
-
-var Transitions=Object.assign(Mixin, {
-getInitialState:function(){
-return {
-isTransitioning:false, 
-tweenQueue:[], 
-tweenProperties:[]};}, 
-
-
-
-transition:function(property, options){var _this=this;
-this.setState({isTransitioning:true});
-
-
-if(this.state.tweenProperties.indexOf(property) === -1){
-
-
-this.state.tweenProperties.push(property);}
-
-
-
-var begin=typeof options.begin === 'undefined'?this.state[property]:options.begin;
-this.tweenState(property, {
-easing:options.easing || easingTypes.easeInOutQuad, 
-duration:options.duration || 300, 
-delay:options.delay, 
-beginValue:begin, 
-endValue:options.end, 
-onEnd:function(){
-
-requestAnimationFrame(function(){
-
-if(!_this.state.tweenQueue.length){
-_this.setState({isTransitioning:false});}
-
-
-
-if(options.reset){
-if(options.reset){
-_this.state[property] = begin;}else 
-{
-_this.state[property] = options.reset;}}
-
-
-
-
-if(options.onEnd){
-options.onEnd();}});}});}, 
-
-
-
-
-
-
-transitionStyles:function(propertySet){var _this2=this;
-if(typeof propertySet === 'undefined'){
-propertySet = [];}
-
-var result={};
-
-this.state.tweenProperties.forEach(function(property){
-if(propertySet.length === 0 || propertySet.indexOf(property) > -1){
-var value, tweeningValue=_this2.getTweeningValue(property);
-
-if(typeof tweeningValue === 'undefined' || tweeningValue === null){
-value = _this2.state[property];}else 
-{
-value = tweeningValue;}
-
-
-result[property] = value;}});
-
-
-
-return result;}});
-
-
-
-module.exports = {
-Mixin:Transitions, 
-Easings:easingTypes};});
-__d('react-native-modal/Style',["react-native/Libraries/react-native/react-native"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
-
-var StyleSheet=require('react-native/Libraries/react-native/react-native').StyleSheet;
-
-module.exports = StyleSheet.create({
-container:{
-position:'absolute', 
-top:0, 
-bottom:0, 
-left:0, 
-right:0, 
-backgroundColor:'transparent', 
-justifyContent:'center'}, 
-
-backdrop:{
-position:'absolute', 
-top:0, 
-bottom:0, 
-left:0, 
-right:0, 
-backgroundColor:'#000000', 
-opacity:0.5}, 
-
-closeButton:{
-position:'absolute', 
-borderColor:'#ffffff', 
-borderRadius:2, 
-borderWidth:1, 
-right:20, 
-top:20, 
-paddingLeft:10, 
-paddingRight:10, 
-paddingTop:5, 
-paddingBottom:5}, 
-
-closeButtonText:{
-color:'#ffffff'}, 
-
-modal:{
-margin:20, 
-backgroundColor:'#ffffff', 
-borderRadius:3, 
-padding:20}});});
-__d('Overlay',["react-native/Libraries/react-native/react-native"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
-
-
-
-
-
-
-var React=require('react-native/Libraries/react-native/react-native');var 
-
-View=
-
-
-
-React.View;var PropTypes=React.PropTypes;var StyleSheet=React.StyleSheet;var requireNativeComponent=React.requireNativeComponent;
-
-
-
-
-
-var Overlay=React.createClass({displayName:'Overlay', 
-propTypes:{
-
-
-
-
-aboveStatusBar:React.PropTypes.bool, 
-
-
-
-
-
-isVisible:React.PropTypes.bool}, 
-
-
-getDefaultProps:function(){
-return {
-aboveStatusBar:false, 
-isVisible:false};}, 
-
-
-
-render:function(){var 
-
-isVisible=
-this.props.isVisible;
-
-if(this.props.isVisible){
-return (
-React.createElement(RNOverlay, {isVisible:true, style:styles.container, pointerEvents:'none', aboveStatusBar:this.props.aboveStatusBar}, 
-React.Children.map(this.props.children, React.addons.cloneWithProps)));}else 
-
-
-{
-return React.createElement(View, null);}}});
-
-
-
-
-var RNOverlay=requireNativeComponent('RNOverlay', Overlay);
-
-var styles=StyleSheet.create({
-container:{
-position:'absolute', 
-top:0, 
-bottom:0, 
-left:0, 
-right:0, 
-backgroundColor:'transparent'}});
-
-
-
-module.exports = Overlay;});
-__d('react-native-blur/index',["createReactNativeComponentClass","ReactNativeViewAttributes","merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  var createComponent=require('createReactNativeComponentClass');
-var ReactNativeViewAttributes=require('ReactNativeViewAttributes');
-var merge=require('merge');
-
-var validAttributes=merge(
-ReactNativeViewAttributes.UIView, {
-blurType:true});
-
-
-var BlurView=createComponent({
-validAttributes:validAttributes, 
-uiViewClassName:'BlurView'});
-
-
-var VibrancyView=createComponent({
-validAttributes:validAttributes, 
-uiViewClassName:'VibrancyView'});
-
-
-
-
-module.exports = {
-BlurView:BlurView, 
-VibrancyView:VibrancyView};});
-__d('RNPlayNative/App/Screens/My',["react-native/Libraries/react-native/react-native","NativeModules","react-native-camera/Camera.ios","Overlay","RNPlayNative/App/Api/Core","RNPlayNative/App/Components/NavigationBar","RNPlayNative/App/Stores/ProfileStore","RNPlayNative/App/Stores/LocalStorage","RNPlayNative/App/Screens/Login","RNPlayNative/App/Screens/Signup","RNPlayNative/App/Screens/MyApps"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
-
-
-
-
-
-
-var React=require('react-native/Libraries/react-native/react-native');
-var AppReloader=require('NativeModules').AppReloader;
-var Camera=require('react-native-camera/Camera.ios');
-var Overlay=require('Overlay');
-var Api=require('RNPlayNative/App/Api/Core');
-var NavigationBar=require('RNPlayNative/App/Components/NavigationBar');
-var ProfileStore=require('RNPlayNative/App/Stores/ProfileStore');
-var LocalStorage=require('RNPlayNative/App/Stores/LocalStorage');
-var Login=require('RNPlayNative/App/Screens/Login');
-var Signup=require('RNPlayNative/App/Screens/Signup');
-var MyApps=require('RNPlayNative/App/Screens/MyApps');
-
-var DEFAULT_ROUTE={id:'my_apps'};var 
-
-
-ActivityIndicatorIOS=
-
-
-
-
-
-
-
-
-
-React.ActivityIndicatorIOS;var AppRegistry=React.AppRegistry;var Image=React.Image;var ListView=React.ListView;var StyleSheet=React.StyleSheet;var Text=React.Text;var TouchableOpacity=React.TouchableOpacity;var View=React.View;var Navigator=React.Navigator;var StatusBarIOS=React.StatusBarIOS;
-
-var My=React.createClass({displayName:'My', 
-
-renderScene:function(route, nav){
-switch(route.id){
-case 'my_apps':
-return React.createElement(MyApps, {navigator:nav});
-case 'login':
-return React.createElement(Login, {navigator:nav, error:route.error});
-case 'signup':
-return React.createElement(Signup, {navigator:nav});
-default:
-this.renderAppList();}}, 
-
-
-
-render:function(){
-StatusBarIOS.setStyle(StatusBarIOS.Style.darkContent);
-
-if(ProfileStore.getState().id){
-DEFAULT_ROUTE.id = 'my_apps';}else 
-{
-DEFAULT_ROUTE.id = 'login';}
-
-
-return (
-React.createElement(Navigator, {
-initialRoute:DEFAULT_ROUTE, 
-renderScene:this.renderScene, 
-configureScene:function(route){
-if(route.sceneConfig){
-if(route.disableGestures){
-return _.omit(route.sceneConfig, 'gestures');}else 
-{
-return route.sceneConfig;}}
-
-
-return Navigator.SceneConfigs.HorizontalSwipeJump;}}));}});
-
-
-
-
-
-var styles=StyleSheet.create({
-container:{
-flex:1}, 
-
-appContainer:{
-marginBottom:20}, 
-
-creator:{
-flexDirection:'row', 
-justifyContent:'center', 
-alignItems:'center'}, 
-
-username:{
-fontSize:12, 
-opacity:0.5}, 
-
-cameraButton:{
-height:60, 
-width:20, 
-alignSelf:'center', 
-marginLeft:5}, 
-
-avatar:{
-width:20, 
-height:20, 
-marginRight:5, 
-borderRadius:10, 
-opacity:0.5, 
-marginTop:3, 
-backgroundColor:'#000'}, 
-
-cancelButton:{
-color:'#fff', 
-flex:1, 
-fontSize:25, 
-marginLeft:20}, 
-
-header:{
-textAlign:'center', 
-fontSize:25, 
-paddingBottom:20, 
-color:'#888'}, 
-
-app:{
-fontSize:20, 
-textAlign:'center', 
-margin:10, 
-color:'#2B608A'}});
-
-
-
-module.exports = My;});
-__d('react-native-camera/Camera.ios',["React","RCTDeviceEventEmitter","NativeModules","ReactNativeViewAttributes","StyleSheet","createReactNativeComponentClass","ReactPropTypes","StyleSheetPropType","NativeMethodsMixin","flattenStyle","merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('React');
-var DeviceEventEmitter=require('RCTDeviceEventEmitter');
-var NativeModules=require('NativeModules');
-var ReactNativeViewAttributes=require('ReactNativeViewAttributes');
-var StyleSheet=require('StyleSheet');
-var createReactNativeComponentClass=require('createReactNativeComponentClass');
-var PropTypes=require('ReactPropTypes');
-var StyleSheetPropType=require('StyleSheetPropType');
-var NativeMethodsMixin=require('NativeMethodsMixin');
-var flattenStyle=require('flattenStyle');
-var merge=require('merge');
-
-var constants={
-Aspect:NativeModules.CameraManager.Aspect, 
-Type:NativeModules.CameraManager.Type, 
-CaptureMode:NativeModules.CameraManager.CaptureMode, 
-CaptureTarget:NativeModules.CameraManager.CaptureTarget, 
-Orientation:NativeModules.CameraManager.Orientation};
-
-
-var Camera=React.createClass({displayName:'Camera', 
-propTypes:{
-aspect:PropTypes.oneOfType([
-PropTypes.string, 
-PropTypes.number]), 
-
-captureMode:PropTypes.oneOfType([
-PropTypes.string, 
-PropTypes.number]), 
-
-captureTarget:PropTypes.oneOfType([
-PropTypes.string, 
-PropTypes.number]), 
-
-type:PropTypes.oneOfType([
-PropTypes.string, 
-PropTypes.number]), 
-
-orientation:PropTypes.oneOfType([
-PropTypes.string, 
-PropTypes.number])}, 
-
-
-
-mixins:[NativeMethodsMixin], 
-
-viewConfig:{
-uiViewClassName:'UIView', 
-validAttributes:ReactNativeViewAttributes.UIView}, 
-
-
-getDefaultProps:function(){
-return {
-aspect:constants.Aspect.fill, 
-type:constants.Type.back, 
-orientation:constants.Orientation.auto, 
-captureMode:constants.CaptureMode.still, 
-captureTarget:constants.CaptureTarget.memory};}, 
-
-
-
-getInitialState:function(){
-return {
-isAuthorized:false};}, 
-
-
-
-componentWillMount:function(){
-NativeModules.CameraManager.checkDeviceAuthorizationStatus((function(err, isAuthorized){
-this.state.isAuthorized = isAuthorized;
-this.setState(this.state);}).
-bind(this));
-this.cameraBarCodeReadListener = DeviceEventEmitter.addListener('CameraBarCodeRead', this._onBarCodeRead);}, 
-
-
-componentWillUnmount:function(){
-this.cameraBarCodeReadListener.remove();}, 
-
-
-render:function(){
-var style=flattenStyle([styles.base, this.props.style]);
-
-var aspect=this.props.aspect, 
-type=this.props.type, 
-orientation=this.props.orientation;
-
-var legacyProps={
-aspect:{
-Fill:'fill', 
-Fit:'fit', 
-Stretch:'stretch'}, 
-
-orientation:{
-LandscapeLeft:'landscapeLeft', 
-LandscapeRight:'landscapeRight', 
-Portrait:'portrait', 
-PortraitUpsideDown:'portraitUpsideDown'}, 
-
-type:{
-Front:'front', 
-Back:'back'}};
-
-
-
-var foundLegacyAspect=legacyProps.aspect[aspect];
-var foundLegacyOrientation=legacyProps.orientation[orientation];
-var foundLegacyType=legacyProps.type[type];
-
-if(__DEV__){
-if(foundLegacyAspect){
-console.log('RCTCamera: aspect="' + aspect + '" is deprecated, use aspect={Camera.constants.Aspect.' + foundLegacyAspect + '} instead.');
-aspect = constants.Aspect[foundLegacyAspect];}
-
-if(foundLegacyOrientation){
-console.log('RCTCamera: orientation="' + orientation + '" is deprecated, use orientation={Camera.constants.Orientation.' + foundLegacyOrientation + '} instead.');
-orientation = constants.Orientation[foundLegacyOrientation];}
-
-if(foundLegacyType){
-console.log('RCTCamera: type="' + type + '" is deprecated, use type={Camera.constants.Type.' + foundLegacyType + '} instead.');
-type = constants.Type[foundLegacyType];}}
-
-
-
-if(typeof aspect === 'string'){
-aspect = constants.Aspect[aspect];}
-
-
-if(typeof orientation === 'string'){
-orientation = constants.Orientation[orientation];}
-
-
-if(typeof type === 'string'){
-type = constants.Type[type];}
-
-
-var nativeProps=merge(this.props, {
-style:style, 
-aspect:aspect, 
-type:type, 
-orientation:orientation});
-
-
-return React.createElement(RCTCamera, nativeProps);}, 
-
-
-_onBarCodeRead:function(e){
-this.props.onBarCodeRead && this.props.onBarCodeRead(e);}, 
-
-
-capture:function(options, cb){
-
-if(arguments.length == 1){
-cb = options;
-options = {};}
-
-
-options = Object.assign({}, {
-mode:this.props.captureMode, 
-target:this.props.captureTarget}, 
-options);
-
-if(typeof options.mode === 'string'){
-options.mode = constants.CaptureMode[options.mode];}
-
-
-if(typeof options.target === 'string'){
-options.target = constants.CaptureTarget[options.target];}
-
-
-NativeModules.CameraManager.capture(options, cb);}});
-
-
-
-
-var RCTCamera=createReactNativeComponentClass({
-validAttributes:merge(ReactNativeViewAttributes.UIView, {
-aspect:true, 
-type:true, 
-orientation:true}), 
-
-uiViewClassName:'RCTCamera'});
-
-
-var styles=StyleSheet.create({
-base:{}});
-
-
-Camera.constants = constants;
-module.exports = Camera;});
-__d('RNPlayNative/App/Stores/ProfileStore',["flux-util/lib/flux-util","RNPlayNative/App/Utilities/AppDispatcher","RNPlayNative/App/Constants/AppConstants"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
-
-var createStore=require('flux-util/lib/flux-util').createStore;
-var dispatcher=require('RNPlayNative/App/Utilities/AppDispatcher');
-var AppConstants=require('RNPlayNative/App/Constants/AppConstants');
-
-var _profile={};
-
-var store=createStore({
-setState:function(profile){
-_profile = profile || {};}, 
-
-
-getState:function(){
-return _profile;}, 
-
-
-dispatcherIndex:dispatcher.register(function(payload){
-var action=payload.action;
-
-switch(action.actionType){
-case AppConstants.UPDATE_PROFILE:
-_profile = action.data;
-store.emitChange(action);
-break;}
-
-
-return true;})});
-
-
-
-module.exports = store;});
-__d('RNPlayNative/App/Stores/LocalStorage',["flux-util/lib/flux-util","RNPlayNative/App/Utilities/AppDispatcher","RNPlayNative/App/Constants/AppConstants","RNPlayNative/App/Stores/ProfileStore","react-native/Libraries/react-native/react-native"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
-
-var createStore=require('flux-util/lib/flux-util').createStore;
-var dispatcher=require('RNPlayNative/App/Utilities/AppDispatcher');
-var AppConstants=require('RNPlayNative/App/Constants/AppConstants');
-var ProfileStore=require('RNPlayNative/App/Stores/ProfileStore');
-var React=require('react-native/Libraries/react-native/react-native');var 
-
-
-AsyncStorage=
-
-React.AsyncStorage;var AlertIOS=React.AlertIOS;
-
-var PREFIX='@USER:';
-var PROFILE_KEY=PREFIX + 'profile';
-
-var store=createStore({
-bootstrap:function(complete){
-AsyncStorage.getItem(PROFILE_KEY, function(error, profile){
-if(error){
-AlertIOS.alert(error.message);
-complete();}else 
-{
-ProfileStore.setState(JSON.parse(profile));
-complete();}});}, 
-
-
-
-
-dispatcherIndex:dispatcher.register(function(payload){
-var action=payload.action;
-
-switch(action.actionType){
-case AppConstants.UPDATE_PROFILE:
-AsyncStorage.setItem(PROFILE_KEY, JSON.stringify(action.data), function(error){
-store.emitChange(action);});
-
-break;}
-
-
-return true;})});
-
-
-
-module.exports = store;});
-__d('RNPlayNative/App/Screens/MyApps',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/AppList"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
-
-var React=require('react-native/Libraries/react-native/react-native');var 
-
-
-ActivityIndicatorIOS=
-
-
-
-
-
-
-
-
-React.ActivityIndicatorIOS;var AppRegistry=React.AppRegistry;var Image=React.Image;var ListView=React.ListView;var StyleSheet=React.StyleSheet;var Text=React.Text;var TouchableOpacity=React.TouchableOpacity;var View=React.View;var Navigator=React.Navigator;
-
-var AppList=require('RNPlayNative/App/Components/AppList');
-
-var MyApps=React.createClass({displayName:'MyApps', 
-render:function(){
-return React.createElement(AppList, {url:'/plays.json'});}});
-
-
-
-module.exports = MyApps;});
-__d('RNPlayNative/App/Screens/Settings',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/NavigationBar"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
-
-var React=require('react-native/Libraries/react-native/react-native');
-var NavigationBar=require('RNPlayNative/App/Components/NavigationBar');var 
-
-
-StyleSheet=
-
-
-
-React.StyleSheet;var Text=React.Text;var View=React.View;var StatusBarIOS=React.StatusBarIOS;
-
-var Settings=React.createClass({displayName:'Settings', 
-
-render:function(){
-StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
-return (
-React.createElement(View, {style:styles.mainContainer}, 
-React.createElement(NavigationBar, {title:'Settings'})));}});
-
-
-
-
-
-var styles=StyleSheet.create({
-mainContainer:{
-flex:1, 
-flexDirection:'column', 
-backgroundColor:'white'}});
-
-
-
-
-module.exports = Settings;});
 __d('SMXTabBarIOS',["React","ReactNativeViewAttributes","SMXTabBarItemIOS","StyleSheet","merge","createReactNativeComponentClass"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1; i < arguments.length; i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source, key)){target[key] = source[key];}}}return target;};
 
 
@@ -46163,8 +46147,8 @@ var Overlay=require('Overlay');
 
 var Api=require('RNPlayNative/App/Api/Core');
 
-var RECENT_PLAYS_URL='/builds/0.5.0-rc1/plays/public.json';
-var MY_PLAYS_URL='/plays.json';
+var RECENT_PLAYS_URL='/builds/0.5.0-rc1/apps/public.json';
+var MY_PLAYS_URL='/apps.json';
 
 var Guest=React.createClass({displayName:'Guest', 
 getInitialState:function(){
@@ -46323,7 +46307,7 @@ color:'#2B608A'}});
 
 
 module.exports = Guest;});
-__d('image!photo-camera5',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/joshua/projects/RNPlayNative/photo-camera5.png","uri":"photo-camera5","width":256,"height":256,"deprecated":true};});
+__d('image!photo-camera5',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/joshua/projects/rnplay-ios/photo-camera5.png","uri":"photo-camera5","width":256,"height":256,"deprecated":true};});
 __d('lodash/index',[],function(global, require, requireDynamic, requireLazy, module, exports) {  ;
 
 
