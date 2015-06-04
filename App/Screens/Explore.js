@@ -31,7 +31,7 @@ var Explore = React.createClass({
   renderPopular() {
     return (
       <View style={styles.contentContainer}>
-        <AppList url="/plays/popular.json" />
+        <AppList url="/apps/popular.json" />
       </View>
     )
   },
@@ -39,7 +39,7 @@ var Explore = React.createClass({
   renderPicks() {
     return (
       <View style={styles.contentContainer}>
-        <AppList url="/plays/picks.json" />
+        <AppList url="/apps/picks.json" />
       </View>
     );
   },
