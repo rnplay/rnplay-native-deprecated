@@ -92,6 +92,7 @@ int const kFlipTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
 - (void)goToHomeScreen:(UISwipeGestureRecognizer*)swipeGesture {
   
   if (self.appViewController) {
+    self.appViewController = nil;
     shouldRotate = NO;
 
     [UIView transitionWithView:self.window
@@ -100,11 +101,7 @@ int const kFlipTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
                     animations:^{
                       self.window.rootViewController = mainViewController;
                     }
-                    completion:^(BOOL finished) {
-                      if (finished) {
-                        self.appViewController = nil;
-                      }
-                    }];
+                    completion:nil];
   }
 }
 
