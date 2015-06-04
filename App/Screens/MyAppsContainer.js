@@ -1,6 +1,6 @@
 /**
  * React Native Playground
- * https://github.com/jsierles/rnplay
+ * https://github.com/rnplay/rnplay-ios
  */
 
 'use strict';
@@ -32,8 +32,7 @@ var {
   StatusBarIOS,
 } = React;
 
-var My = React.createClass({
-
+var MyAppsContainer = React.createClass({
   renderScene(route, nav) {
     switch (route.id) {
       case 'my_apps':
@@ -114,4 +113,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = My;
+module.exports = MyAppsContainer;

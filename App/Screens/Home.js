@@ -7,7 +7,7 @@
 
 var React = require('react-native');
 var Explore = require('./Explore');
-var My = require('./My');
+var MyAppsContainer = require('./MyAppsContainer');
 var Settings = require('./Settings');
 var About = require('./About');
 
@@ -41,11 +41,7 @@ var Home = React.createClass({
           iconSize={32}
           accessibilityLabel="Explore Tab"
           selected={this.state.selectedTab === 'explore'}
-          onPress={() => {
-            this.setState({
-              selectedTab: 'explore',
-            });
-          }}>
+          onPress={() => { this.setState({ selectedTab: 'explore', }); }}>
           <Explore />
         </SMXTabBarItemIOS>
         <SMXTabBarItemIOS
@@ -55,12 +51,8 @@ var Home = React.createClass({
             iconSize={32}
             accessibilityLabel="My Apps Tab"
             selected={this.state.selectedTab === 'my-apps'}
-            onPress={() => {
-            this.setState({
-              selectedTab: 'my-apps',
-            });
-          }}>
-          <My />
+            onPress={() => { this.setState({selectedTab: 'my-apps',}); }}>
+          <MyAppsContainer />
         </SMXTabBarItemIOS>
         <SMXTabBarItemIOS
           name="about"
@@ -69,11 +61,7 @@ var Home = React.createClass({
           iconSize={32}
           accessibilityLabel="About Tab"
           selected={this.state.selectedTab === 'about'}
-          onPress={() => {
-            this.setState({
-              selectedTab: 'about',
-            });
-          }}>
+          onPress={() => { this.setState({ selectedTab: 'about', }); }}>
           <About />
         </SMXTabBarItemIOS>
         <SMXTabBarItemIOS
@@ -83,11 +71,7 @@ var Home = React.createClass({
             iconSize={32}
             accessibilityLabel="Settings Tab"
             selected={this.state.selectedTab === 'settings'}
-            onPress={() => {
-            this.setState({
-              selectedTab: 'settings',
-            });
-          }}>
+            onPress={() => { this.setState({ selectedTab: 'settings', }); }}>
           <Settings />
         </SMXTabBarItemIOS>
       </SMXTabBarIOS>
