@@ -70,11 +70,11 @@ var styles = StyleSheet.create({
   },
   aboutTitle: {
     fontSize: 18,
-    marginBottom: 10,
+    marginBottom: 4,
     lineHeight: 20,
     fontFamily: 'Avenir Next',
     paddingLeft: 15,
-    paddingRight: 15,
+    paddingRight: 20,
   },
   aboutText: {
     paddingRight: 15,
