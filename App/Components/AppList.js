@@ -16,6 +16,8 @@ var {
   PixelRatio,
 } = React;
 
+var ActionSheetIOS = require('ActionSheetIOS');
+
 var AppReloader = require('NativeModules').AppReloader;
 var Api = require("../Api/Core");
 var NoResults = require('../Components/NoResults');
@@ -127,10 +129,22 @@ var AppList = React.createClass({
     }
   },
 
+  shareApp(app) {
+    var url = 'https://rnplay.org/plays/' + app.url_token;
+    var message = '"' + (app.name || app.module_name) + '" on rnplay.org';
+
+    ActionSheetIOS.showShareActionSheetWithOptions(
+      {url: url, message: message},
+      (error) => console.log(error),
+      (success) => console.log(success)
+    );
+  },
+
   renderApp(app) {
     return (
       <View style={{marginBottom: 15}}>
-        <TouchableHighlight underlayColor="#F5F5F5" onPress={() => this.selectApp(app)}>
+        <TouchableHighlight underlayColor="#F5F5F5" onLongPress={() => this.shareApp(app)}
+                                                    onPress={() => this.selectApp(app)}>
           <View style={styles.appContainer}>
             <View style={styles.appTextDescription}>
               <Text style={styles.appTitle} numberOfLines={1}>{app.name || app.module_name}</Text>
