@@ -48,7 +48,7 @@ var My = React.createClass({
   },
 
   render() {
-    StatusBarIOS.setStyle(StatusBarIOS.Style.darkContent);
+    StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
 
     if(ProfileStore.getState().id){
       DEFAULT_ROUTE.id = 'my_apps';
