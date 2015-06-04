@@ -28,18 +28,31 @@ RCT_EXPORT_METHOD(reloadAppWithURLString:(NSString *)URLString moduleNamed:(NSSt
   AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
   NSURL *JSBundleURL = [NSURL URLWithString:URLString];
   
-  ViewController *appViewController = [[ViewController alloc] init];
-  [appViewController reloadWithJSBundleURL:JSBundleURL moduleNamed:moduleName];
-  
-  UIView *baseView = delegate.window.rootViewController.view;
-  
-  [UIView transitionWithView:baseView
-                    duration:kFlipTransitionDuration
-                     options:kFlipTransitionType
-                  animations:^{
-                    [baseView addSubview:appViewController.view];
-                  }
-                  completion:NULL];
+  @try {
+    ViewController *appViewController = [[ViewController alloc] init];
+    [appViewController reloadWithJSBundleURL:JSBundleURL moduleNamed:moduleName];
+    
+    delegate.appViewController = appViewController;
+    delegate.shouldRotate = YES;
+    
+    [UIView transitionWithView:delegate.window
+                      duration:kFlipTransitionDuration
+                       options:kFlipTransitionType
+                    animations:^{
+                      delegate.window.rootViewController = appViewController;
+                    }
+                    completion:NULL];
+  }
+  @catch (NSException *exception) {
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error!"
+                                                    message:@"Sorry, this app doesn't work! Looks like someone needs to brush up on their JavaScript! :p"
+                                                   delegate:nil
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:@"OK", nil];
+    
+    [alert show];
+  }
 }
 
 @end

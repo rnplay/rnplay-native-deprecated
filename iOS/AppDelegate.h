@@ -14,6 +14,9 @@ extern int const kFlipTransitionType;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
+@property (nonatomic) bool shouldRotate;
 @property (nonatomic, strong) UIWindow *window;
+@property (nonatomic, strong) UIViewController *mainViewController;
+@property (nonatomic, strong) UIViewController *appViewController;
 
 @end
