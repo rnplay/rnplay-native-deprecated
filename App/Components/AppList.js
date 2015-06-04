@@ -62,8 +62,7 @@ var AppList = React.createClass({
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderApp}
-          style={styles.listView}
-        />
+          style={styles.listView} />
       </View>
     );
   },
