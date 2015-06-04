@@ -22,6 +22,8 @@ var NoResults = require('../Components/NoResults');
 var AppList = React.createClass({
   getInitialState() {
     return {
+      page: 1,
+      data: [],
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
@@ -40,20 +42,40 @@ var AppList = React.createClass({
   },
 
   fetchApps() {
-    Api.get(this.props.url)
-      .then((data) => {
-        if (data.error) {
-          // TODO: check for 401 Unauthorized
-          if (Navigator.getContext(this)) {
-            Navigator.getContext(this).replace({id: "login", error: data.error});
+    if (!this.requestInFlight) {
+      this.requestInFlight = true;
+      var separator = this.props.url.indexOf('?') !== -1 ?
+        '&' :
+        '?';
+      var url = `${this.props.url}${separator}page=${this.state.page}`;
+      console.log(url);
+      Api.get(url)
+        .then((data) => {
+          if (data.error) {
+            // TODO: check for 401 Unauthorized
+            if (Navigator.getContext(this)) {
+              Navigator.getContext(this).replace({id: "login", error: data.error});
+            }
+
+            return;
           }
-        }
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(data),
-          loaded: true
-        });
-      })
-      .done();
+
+          var page = data.length ?
+            this.state.page + 1:
+            this.state.page;
+
+          var newData = this.state.data.concat(data);
+          this.setState({
+            data: newData,
+            page,
+            dataSource: this.state.dataSource.cloneWithRows(newData),
+            loaded: true
+          });
+          this.requestInFlight = false;
+        })
+        .done();
+
+    }
   },
 
   renderAppList() {
@@ -62,6 +84,7 @@ var AppList = React.createClass({
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderApp}
+          onEndReached={this.fetchApps}
           style={styles.listView} />
       </View>
     );
