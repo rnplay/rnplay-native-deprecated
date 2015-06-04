@@ -31,11 +31,11 @@ var Login = React.createClass({
   },
 
   renderError() {
-    return (
-      <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>{this.props.error}</Text>
-      </View>
-    )
+    // return (
+    //   <View style={styles.errorContainer}>
+    //     <Text style={styles.errorText}>{this.props.error}</Text>
+    //   </View>
+    // )
   },
 
   handleSubmit() {
