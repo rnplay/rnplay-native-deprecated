@@ -1,7 +1,7 @@
 //var BASE_URL = 'http://rnplay.ka';
 
 var BASE_URL = 'https://rnplay.org';
-https://rnplay.org/apps/popular.json?page=1
+
 var Api = {
 
   get(url) {
