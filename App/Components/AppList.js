@@ -168,9 +168,26 @@ var AppList = React.createClass({
     );
   },
 
+  renderRetry() {
+    return (
+      <View style={styles.retryButtonWrapper}>
+        <TouchableHighlight
+          style={styles.retryButtonHighlight}
+          onPress={() => this.fetchApps()}
+        >
+          <View style={styles.retryButtonView}>
+            <Text style={styles.retryButtonText}>retry loading</Text>
+          </View>
+        </TouchableHighlight>
+      </View>
+    );
+  },
+
   render() {
     if (!this.state.loaded && !this.state.hasError) {
       return this.renderLoading();
+    } else if (this.state.hasError && !this.state.data.length) {
+      return this.renderRetry();
     } else {
       if (this.state.dataSource.getRowCount() > 0) {
         return this.renderAppList();
@@ -185,6 +202,27 @@ var AppList = React.createClass({
 var deviceWidth = require('Dimensions').get('window').width;
 
 var styles = StyleSheet.create({
+  retryButtonWrapper: {
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center'
+  },
+  retryButtonHighlight: {
+    borderRadius: 7,
+    overflow:'hidden'
+  },
+  retryButtonView: {
+    height:40,
+    backgroundColor:'#712FA9'
+  },
+  retryButtonText: {
+    padding:10,
+    paddingLeft: 20,
+    paddingRight: 20,
+    color:'#fff',
+    textAlign:'center',
+    fontWeight:'700'
+  },
   listView: {
     marginTop: -9,
     paddingTop: 0,
