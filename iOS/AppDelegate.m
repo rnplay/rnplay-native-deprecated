@@ -15,8 +15,25 @@
 
 @implementation AppDelegate
 
+@synthesize mainViewController;
+@synthesize appViewController;
+@synthesize shouldRotate;
+
 float const kFlipTransitionDuration = 0.4f;
 int const kFlipTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
+
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+  NSUInteger orientations;
+  
+  orientations = UIInterfaceOrientationMaskPortrait;
+  
+  if (appViewController && shouldRotate == YES) {
+    
+    orientations = UIInterfaceOrientationMaskAllButUpsideDown;
+  }
+  
+  return orientations;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
@@ -51,7 +68,7 @@ int const kFlipTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
                                                       moduleName:initialModuleName
                                                    launchOptions:launchOptions];
   
-  UIViewController *mainViewController = [[UIViewController alloc] init];
+  mainViewController = [[UIViewController alloc] init];
   [mainViewController setView:rootView];
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -73,21 +90,21 @@ int const kFlipTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
 }
 
 - (void)goToHomeScreen:(UISwipeGestureRecognizer*)swipeGesture {
-  id topView = [[self.window.rootViewController.view subviews] lastObject];
   
-  /**
-   * The last object on the view stack will be a RCTRootView class if it is from the AppLoader. It is a
-   * RCTRootContentView if it is the Main app. This feels a little hacky though, seems like it could break easily...
-   */
-  
-  if ([topView isKindOfClass:[RCTRootView class]]) {
-    [UIView transitionWithView:self.window.rootViewController.view
+  if (self.appViewController) {
+    shouldRotate = NO;
+
+    [UIView transitionWithView:self.window
                       duration:kFlipTransitionDuration
                        options:kFlipTransitionType
                     animations:^{
-                      [topView removeFromSuperview];
+                      self.window.rootViewController = mainViewController;
                     }
-                    completion:NULL];
+                    completion:^(BOOL finished) {
+                      if (finished) {
+                        self.appViewController = nil;
+                      }
+                    }];
   }
 }
 
