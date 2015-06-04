@@ -27,7 +27,7 @@ var {
 } = React;
 
 // globals are bad, we make an exception here for now
-var RN_VERSION = require('../../package.json').dependencies['react-native'];
+var RN_VERSION = require('./package.json').dependencies['react-native'];
 var githubPrefix = 'facebook/react-native#';
 if (RN_VERSION.indexOf(githubPrefix) === 0) {
   RN_VERSION = RN_VERSION.replace(githubPrefix, '');
