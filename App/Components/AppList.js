@@ -5,6 +5,7 @@ var React = require('react-native');
 var {
   ActivityIndicatorIOS,
   AppRegistry,
+  AlertIOS,
   Image,
   ListView,
   StyleSheet,
@@ -44,6 +45,10 @@ var AppList = React.createClass({
 
   fetchApps() {
     if (!this.requestInFlight) {
+      this.setState({
+        hasError: false
+      });
+
       this.requestInFlight = true;
       var separator = this.props.url.indexOf('?') !== -1 ?
         '&' :
@@ -70,8 +75,26 @@ var AppList = React.createClass({
             data: newData,
             page,
             dataSource: this.state.dataSource.cloneWithRows(newData),
-            loaded: true
+            loaded: true,
+            hasError: false
           });
+        })
+        .catch((e) => {
+          AlertIOS.alert(
+            'Aww :(',
+            e.message,
+            [
+              {text: 'ok'},
+              {text: 'retry', onPress: () => this.fetchApps()},
+            ]
+          );
+
+          this.setState({
+            hasError: true
+          });
+
+        })
+        .finally(() => {
           this.requestInFlight = false;
         })
         .done();
@@ -146,7 +169,7 @@ var AppList = React.createClass({
   },
 
   render() {
-    if (!this.state.loaded) {
+    if (!this.state.loaded && !this.state.hasError) {
       return this.renderLoading();
     } else {
       if (this.state.dataSource.getRowCount() > 0) {
