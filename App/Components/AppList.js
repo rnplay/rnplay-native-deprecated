@@ -18,6 +18,7 @@ var {
 var AppReloader = require('NativeModules').AppReloader;
 var Api = require("../Api/Core");
 var NoResults = require('../Components/NoResults');
+var generateAppURL = require('../Utilities/generateAppURL');
 
 var AppList = React.createClass({
   getInitialState() {
@@ -48,7 +49,7 @@ var AppList = React.createClass({
         '&' :
         '?';
       var url = `${this.props.url}${separator}page=${this.state.page}`;
-      console.log(url);
+
       Api.get(url)
         .then((data) => {
           if (data.error) {
@@ -127,7 +128,8 @@ var AppList = React.createClass({
   },
 
   selectApp(app) {
-    AppReloader.reloadAppWithURLString(app.bundle_url, app.module_name);
+    console.log(generateAppURL(app));
+    AppReloader.reloadAppWithURLString(generateAppURL(app), app.module_name);
   },
 
   renderLoading() {
