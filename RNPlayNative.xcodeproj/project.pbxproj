@@ -33,13 +33,11 @@
 		1111D16C1B18E126007370BA /* Avenir Next.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 1111D16B1B18E126007370BA /* Avenir Next.ttc */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		13B07FBD1A68108700A75B9A /* LaunchScreenPurple.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreenPurple.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		42F2283C1AF7E25B00A26CF9 /* photo-camera5.png in Resources */ = {isa = PBXBuildFile; fileRef = 42F2283B1AF7E25B00A26CF9 /* photo-camera5.png */; };
 		42F228431AF7E4D000A26CF9 /* libRNOverlay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F228421AF7E4BE00A26CF9 /* libRNOverlay.a */; };
-		551EAB191B1A87B4009233AF /* LaunchScreenWhite.xib in Resources */ = {isa = PBXBuildFile; fileRef = 551EAB171B1A87B4009233AF /* LaunchScreenWhite.xib */; };
 		551EAC151B1B4DE6009233AF /* BlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 551EAC121B1B4DE6009233AF /* BlurView.m */; };
 		551EAC161B1B4DE6009233AF /* BlurViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 551EAC141B1B4DE6009233AF /* BlurViewManager.m */; };
 		55B8F8881B1E4F24002F65B0 /* AppReloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8F8871B1E4F24002F65B0 /* AppReloader.m */; };
@@ -198,14 +196,12 @@
 		13B07F961A680F5B00A75B9A /* RNPlayNative.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RNPlayNative.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = AppDelegate.h; path = iOS/AppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = AppDelegate.m; path = iOS/AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreenPurple.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iOS/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = iOS/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = iOS/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		42F2283B1AF7E25B00A26CF9 /* photo-camera5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-camera5.png"; sourceTree = "<group>"; };
 		42F2283D1AF7E4BE00A26CF9 /* RNOverlay.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNOverlay.xcodeproj; path = "node_modules/react-native-overlay/RNOverlay.xcodeproj"; sourceTree = "<group>"; };
-		551EAB181B1A87B4009233AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iOS/Base.lproj/LaunchScreenWhite.xib; sourceTree = "<group>"; };
 		551EAC111B1B4DE6009233AF /* BlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlurView.h; sourceTree = "<group>"; };
 		551EAC121B1B4DE6009233AF /* BlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlurView.m; sourceTree = "<group>"; };
 		551EAC131B1B4DE6009233AF /* BlurViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlurViewManager.h; sourceTree = "<group>"; };
@@ -375,8 +371,6 @@
 				EE49F76E1AFA1F8D002F30A8 /* ViewController.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				13B07FB11A68108700A75B9A /* LaunchScreenPurple.xib */,
-				551EAB171B1A87B4009233AF /* LaunchScreenWhite.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = RNPlayNative;
@@ -778,7 +772,6 @@
 				1111D1641B18CC4B007370BA /* FAKZocial.h in Resources */,
 				1111D1651B18CC4B007370BA /* FAKZocial.m in Resources */,
 				1111D1661B18CC4B007370BA /* FontAwesome.otf in Resources */,
-				551EAB191B1A87B4009233AF /* LaunchScreenWhite.xib in Resources */,
 				1111D1671B18CC4B007370BA /* FontAwesomeKit.h in Resources */,
 				1111D1681B18CC4B007370BA /* foundation-icons.ttf in Resources */,
 				1111D1691B18CC4B007370BA /* ionicons.ttf in Resources */,
@@ -787,7 +780,6 @@
 				BB0C0AF81B02FF7F00BDEA30 /* uiexplorer.jsbundle in Resources */,
 				BBA8F26A1B0D267C009C7EB9 /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				13B07FBD1A68108700A75B9A /* LaunchScreenPurple.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -840,26 +832,6 @@
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		13B07FB11A68108700A75B9A /* LaunchScreenPurple.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				13B07FB21A68108700A75B9A /* Base */,
-			);
-			name = LaunchScreenPurple.xib;
-			path = iOS;
-			sourceTree = "<group>";
-		};
-		551EAB171B1A87B4009233AF /* LaunchScreenWhite.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				551EAB181B1A87B4009233AF /* Base */,
-			);
-			name = LaunchScreenWhite.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
