@@ -82,19 +82,7 @@ var AppList = React.createClass({
           });
         })
         .catch((e) => {
-          AlertIOS.alert(
-            'Aww :(',
-            e.message,
-            [
-              {text: 'ok'},
-              {text: 'retry', onPress: () => this.fetchApps()},
-            ]
-          );
-
-          this.setState({
-            hasError: true
-          });
-
+          this.setState({hasError: true});
         })
         .finally(() => {
           this.requestInFlight = false;
@@ -110,6 +98,9 @@ var AppList = React.createClass({
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderApp}
+          initialPageSize={10}
+          pageSize={5}
+          onEndReachedThreshold={1200}
           onEndReached={this.fetchApps}
           style={styles.listView} />
       </View>
@@ -185,12 +176,12 @@ var AppList = React.createClass({
   renderRetry() {
     return (
       <View style={styles.retryButtonWrapper}>
+        <Image source={require("image!network_error")} style={{opacity: 0.9, marginBottom: 30}} />
         <TouchableHighlight
           style={styles.retryButtonHighlight}
-          onPress={() => this.fetchApps()}
-        >
+          onPress={() => this.fetchApps()}>
           <View style={styles.retryButtonView}>
-            <Text style={styles.retryButtonText}>retry loading</Text>
+            <Text style={styles.retryButtonText}>Connection failed. Retry?</Text>
           </View>
         </TouchableHighlight>
       </View>
@@ -217,18 +208,22 @@ var deviceWidth = require('Dimensions').get('window').width;
 
 var styles = StyleSheet.create({
   retryButtonWrapper: {
-    flex:1,
-    alignItems:'center',
-    justifyContent:'center'
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 80,
   },
+
   retryButtonHighlight: {
     borderRadius: 7,
-    overflow:'hidden'
+    overflow: 'hidden',
   },
+
   retryButtonView: {
-    height:40,
-    backgroundColor:'#712FA9'
+    height: 40,
+    backgroundColor:'#712FA9',
   },
+
   retryButtonText: {
     padding:10,
     paddingLeft: 20,
@@ -237,19 +232,24 @@ var styles = StyleSheet.create({
     textAlign:'center',
     fontWeight:'700'
   },
+
   listView: {
     marginTop: -9,
     paddingTop: 0,
   },
+
   container: {
     flex: 1,
     backgroundColor: 'transparent',
   },
+
   loadingContainer: {
     flex: 1,
     paddingBottom: 80,
   },
+
   appContainer: {
+    overflow: 'hidden',
     marginTop: -18,
     flexDirection: 'row',
     flex: 1,
@@ -258,25 +258,31 @@ var styles = StyleSheet.create({
     borderBottomWidth: 3 / PixelRatio.get(),
     borderBottomColor: "#eee"
   },
+
   appTextDescription: {
     flexDirection: 'column',
     marginLeft: 10,
   },
+
   targetBuild: {
     opacity: 0.4,
     paddingBottom: 2,
   },
+
   viewCount: {
     opacity: 0.4,
   },
+
   targetBuildText: {
     fontSize: 12,
     fontFamily: 'Avenir Next',
   },
+
   viewCountText: {
     fontSize: 12,
     fontFamily: 'Avenir Next',
   },
+
   creator: {
     position: 'absolute',
     right: 0,
@@ -285,12 +291,14 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   username: {
     fontSize: 11,
     opacity: 0.4,
     width: 50,
     textAlign: 'center',
   },
+
   avatar: {
     width: 30,
     height: 30,
@@ -298,12 +306,14 @@ var styles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: "#000"
   },
+
   cancelButton: {
     color: '#fff',
     flex: 1,
     fontSize: 25,
     marginLeft: 20
   },
+
   appTitle: {
     fontSize: 18,
     fontFamily: 'Avenir Next',
@@ -311,6 +321,7 @@ var styles = StyleSheet.create({
     width: deviceWidth - 70,
     flex: 1,
   },
+
   spinner: {
     flex: 1,
   },

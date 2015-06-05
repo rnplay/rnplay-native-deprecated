@@ -1,5 +1,3 @@
-//var BASE_URL = 'http://rnplay.ka';
-
 var BASE_URL = 'https://rnplay.org';
 
 var Api = {
