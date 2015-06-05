@@ -12,6 +12,9 @@
 #import "JSURL.h"
 #import "RCTRootView.h"
 #import "RCTLinkingManager.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @implementation AppDelegate
 
@@ -21,6 +24,16 @@
 
 float const kFlipTransitionDuration = 0.4f;
 int const kFlipTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
+
+// Google Analytics configuration constants
+
+static NSString *const kGANPropertyId = @"UA-63760955-1";
+static NSTimeInterval const kGANDispatchInterval = 120.0;
+#if DEBUG
+static GAILogLevel const kGANLogLevel = kGAILogLevelVerbose;
+#else
+static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
+#endif
 
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
   NSUInteger orientations;
@@ -36,6 +49,8 @@ int const kFlipTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  
+  [self initializeGoogleAnalytics];
   
   NSURL *initialJSBundleURL;
   NSString *initialModuleName;
@@ -79,6 +94,8 @@ int const kFlipTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
   self.window.rootViewController = mainViewController;
   self.window.backgroundColor = [UIColor blackColor];
   [self.window makeKeyAndVisible];
+  
+  [self trackMainScreeView];
 
   UILongPressGestureRecognizer *exitGesture = [[UILongPressGestureRecognizer alloc]
     initWithTarget:self action:@selector(goToHomeScreen:)];
@@ -115,6 +132,19 @@ int const kFlipTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
   [spinner setColor:[UIColor colorWithRed:113.0f/255.0f green:47.0f/255.0f blue:169.0f/255.0f alpha:1.0f]];
   [spinner startAnimating];
   return spinner;
+}
+
+- (void)initializeGoogleAnalytics {
+  [GAI sharedInstance].trackUncaughtExceptions = YES;
+  [GAI sharedInstance].dispatchInterval = kGANDispatchInterval;
+  [GAI sharedInstance].logger.logLevel = kGANLogLevel;
+  [[GAI sharedInstance] trackerWithTrackingId:kGANPropertyId];
+}
+
+- (void)trackMainScreeView {
+  id tracker = [[GAI sharedInstance] defaultTracker];
+  [tracker set:kGAIScreenName value:@"Main"];
+  [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 @end
