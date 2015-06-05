@@ -57,6 +57,16 @@ var Home = React.createClass({
           <MyAppsContainer />
         </SMXTabBarItemIOS>
         <SMXTabBarItemIOS
+            name="qr_code_reader"
+            iconName={'ion|camera'}
+            title={'Scan Code'}
+            iconSize={32}
+            accessibilityLabel="QR Code Reader"
+            selected={this.state.selectedTab === 'qr_code_reader'}
+            onPress={() => { this.setState({ selectedTab: 'qr_code_reader', }); }}>
+          <QRCodeReader />
+        </SMXTabBarItemIOS>
+        <SMXTabBarItemIOS
           name="about"
           iconName={'ion|ios-help-outline'}
           title={'About'}
@@ -75,16 +85,6 @@ var Home = React.createClass({
             selected={this.state.selectedTab === 'settings'}
             onPress={() => { this.setState({ selectedTab: 'settings', }); }}>
           <Settings />
-        </SMXTabBarItemIOS>
-        <SMXTabBarItemIOS
-            name="qr_code_reader"
-            iconName={'ion|camera'}
-            title={'QR Code'}
-            iconSize={32}
-            accessibilityLabel="QR Code Reader"
-            selected={this.state.selectedTab === 'qr_code_reader'}
-            onPress={() => { this.setState({ selectedTab: 'qr_code_reader', }); }}>
-          <QRCodeReader />
         </SMXTabBarItemIOS>
       </SMXTabBarIOS>
     )
