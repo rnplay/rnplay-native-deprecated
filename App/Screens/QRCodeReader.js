@@ -36,10 +36,12 @@ var QRCodeReader = React.createClass({
         ref="cam"
         style={styles.camera}
         onBarCodeRead={this.onBarCodeRead}>
-        <Icon name='ion|close'
-          size={50}
-          style={styles.cameraButton}
-          color='#000' />
+        <TouchableOpacity onPress={() => this.setState({cameraOpen: false})} >
+          <Icon name='ion|close'
+            size={30}
+            style={styles.cameraButton}
+            color='#eee' />
+        </TouchableOpacity>
       </Camera>  :
        <View style={styles.container}>
          <Text style={styles.text}>
@@ -50,7 +52,7 @@ var QRCodeReader = React.createClass({
              name='ion|camera'
              size={80}
              style={styles.cameraButton}
-             color='#000'
+             color='#777'
            />
          </TouchableOpacity>
        </View>
@@ -74,7 +76,9 @@ var styles = StyleSheet.create({
   },
   cameraButton: {
     width: 80,
-    height: 80
+    height: 80,
+    backgroundColor: 'transparent',
+    color: "#eee"
   },
   closebutton: {
     width: 50,
