@@ -10,6 +10,7 @@ var Explore = require('./Explore');
 var MyAppsContainer = require('./MyAppsContainer');
 var Settings = require('./Settings');
 var About = require('./About');
+var QRCodeReader = require('./QRCodeReader');
 
 var SMXTabBarIOS = require('SMXTabBarIOS');
 var SMXTabBarItemIOS = SMXTabBarIOS.Item;
@@ -18,6 +19,7 @@ var {
   AppRegistry,
   StyleSheet,
   Text,
+  TouchableOpacity
 } = React;
 
 var Home = React.createClass({
@@ -73,6 +75,16 @@ var Home = React.createClass({
             selected={this.state.selectedTab === 'settings'}
             onPress={() => { this.setState({ selectedTab: 'settings', }); }}>
           <Settings />
+        </SMXTabBarItemIOS>
+        <SMXTabBarItemIOS
+            name="qr_code_reader"
+            iconName={'ion|camera'}
+            title={'QR Code'}
+            iconSize={32}
+            accessibilityLabel="QR Code Reader"
+            selected={this.state.selectedTab === 'qr_code_reader'}
+            onPress={() => { this.setState({ selectedTab: 'qr_code_reader', }); }}>
+          <QRCodeReader />
         </SMXTabBarItemIOS>
       </SMXTabBarIOS>
     )
