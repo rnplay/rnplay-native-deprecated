@@ -37,6 +37,8 @@
 		420C36CC1B2212FF008E8F87 /* RNBlur in Resources */ = {isa = PBXBuildFile; fileRef = 420C36CA1B2212FF008E8F87 /* RNBlur */; };
 		420C36CD1B2212FF008E8F87 /* RNVibrancy in Resources */ = {isa = PBXBuildFile; fileRef = 420C36CB1B2212FF008E8F87 /* RNVibrancy */; };
 		420C36EC1B2218E7008E8F87 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 420C36EB1B2218B9008E8F87 /* libBVLinearGradient.a */; };
+		42D8D30F1B221FA100B7BAEF /* RCTVideo.xcodeproj in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D8D2FA1B221F7A00B7BAEF /* RCTVideo.xcodeproj */; };
+		42D8D3111B221FBB00B7BAEF /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D8D3101B221FBB00B7BAEF /* libRCTVideo.a */; };
 		42F2283C1AF7E25B00A26CF9 /* photo-camera5.png in Resources */ = {isa = PBXBuildFile; fileRef = 42F2283B1AF7E25B00A26CF9 /* photo-camera5.png */; };
 		42F228431AF7E4D000A26CF9 /* libRNOverlay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F228421AF7E4BE00A26CF9 /* libRNOverlay.a */; };
 		55B8F8881B1E4F24002F65B0 /* AppReloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8F8871B1E4F24002F65B0 /* AppReloader.m */; };
@@ -199,6 +201,8 @@
 		420C36CA1B2212FF008E8F87 /* RNBlur */ = {isa = PBXFileReference; lastKnownFileType = folder; name = RNBlur; path = "node_modules/react-native-blur/RNBlur"; sourceTree = "<group>"; };
 		420C36CB1B2212FF008E8F87 /* RNVibrancy */ = {isa = PBXFileReference; lastKnownFileType = folder; name = RNVibrancy; path = "node_modules/react-native-blur/RNVibrancy"; sourceTree = "<group>"; };
 		420C36DC1B221876008E8F87 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
+		42D8D2FA1B221F7A00B7BAEF /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "node_modules/react-native-video/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
+		42D8D3101B221FBB00B7BAEF /* libRCTVideo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRCTVideo.a; path = "node_modules/react-native-video/build/Debug-iphoneos/libRCTVideo.a"; sourceTree = "<group>"; };
 		42F2283B1AF7E25B00A26CF9 /* photo-camera5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-camera5.png"; sourceTree = "<group>"; };
 		42F2283D1AF7E4BE00A26CF9 /* RNOverlay.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNOverlay.xcodeproj; path = "node_modules/react-native-overlay/RNOverlay.xcodeproj"; sourceTree = "<group>"; };
 		55B8F8861B1E4F24002F65B0 /* AppReloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppReloader.h; sourceTree = "<group>"; };
@@ -236,6 +240,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42D8D30F1B221FA100B7BAEF /* RCTVideo.xcodeproj in Frameworks */,
 				55B8F9FA1B20A873002F65B0 /* libsqlite3.dylib in Frameworks */,
 				55B8F9F81B20A869002F65B0 /* libz.dylib in Frameworks */,
 				55B8F9F61B20A861002F65B0 /* SystemConfiguration.framework in Frameworks */,
@@ -256,6 +261,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				420C36EC1B2218E7008E8F87 /* libBVLinearGradient.a in Frameworks */,
 				BB978E0C1B1A7028003774EB /* libRCTCamera.a in Frameworks */,
+				42D8D3111B221FBB00B7BAEF /* libRCTVideo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,6 +395,7 @@
 		1B3EB094E6D4A5101602E36B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				42D8D3101B221FBB00B7BAEF /* libRCTVideo.a */,
 				55B8F9F91B20A873002F65B0 /* libsqlite3.dylib */,
 				55B8F9F71B20A869002F65B0 /* libz.dylib */,
 				55B8F9F51B20A861002F65B0 /* SystemConfiguration.framework */,
@@ -450,6 +457,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				42D8D2FA1B221F7A00B7BAEF /* RCTVideo.xcodeproj */,
 				420C36CA1B2212FF008E8F87 /* RNBlur */,
 				420C36CB1B2212FF008E8F87 /* RNVibrancy */,
 				420C36DC1B221876008E8F87 /* BVLinearGradient.xcodeproj */,
@@ -847,6 +855,7 @@
 					"$(PROJECT_DIR)/GoogleAnalyticsServicesiOS_3.12",
 					"$(PROJECT_DIR)/GoogleAnalytics",
 					"$(PROJECT_DIR)/GoogleAnalytics-3.12",
+					"$(PROJECT_DIR)/node_modules/react-native-video/build/Debug-iphoneos",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Playground;
@@ -873,6 +882,7 @@
 					"$(PROJECT_DIR)/GoogleAnalyticsServicesiOS_3.12",
 					"$(PROJECT_DIR)/GoogleAnalytics",
 					"$(PROJECT_DIR)/GoogleAnalytics-3.12",
+					"$(PROJECT_DIR)/node_modules/react-native-video/build/Debug-iphoneos",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Playground;

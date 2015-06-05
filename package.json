@@ -18,6 +18,7 @@
     "react-native-overlay": "0.2.5",
     "react-native-side-menu": "0.8.0",
     "react-native-blur": "0.5.0",
-    "react-native-linear-gradient": "0.3.0"
+    "react-native-linear-gradient": "0.3.0",
+    "react-native-video": "0.4.2"
   }
 }
