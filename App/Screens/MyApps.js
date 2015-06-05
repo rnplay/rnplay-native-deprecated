@@ -3,15 +3,8 @@
 var React = require('react-native');
 
 var {
-  ActivityIndicatorIOS,
-  AppRegistry,
-  Image,
-  ListView,
-  StyleSheet,
-  Text,
   TouchableOpacity,
   View,
-  Navigator,
   StatusBarIOS,
 } = React;
 
