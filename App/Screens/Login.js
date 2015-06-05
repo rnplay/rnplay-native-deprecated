@@ -54,6 +54,7 @@ var Login = React.createClass({
       user: {
         email: this.state.email,
         password: this.state.password,
+        remember_me: true,
       }
     };
 
