@@ -55,6 +55,11 @@
 		BB978E0C1B1A7028003774EB /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB978E0B1B1A7022003774EB /* libRCTCamera.a */; };
 		BBA8F2681B0D2593009C7EB9 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA8F2671B0D258B009C7EB9 /* libRCTWebSocket.a */; };
 		BBA8F26A1B0D267C009C7EB9 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = BBA8F2691B0D267C009C7EB9 /* main.jsbundle */; };
+		BBB0D2011B2231820043BDB0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBB0D2001B2231820043BDB0 /* Foundation.framework */; };
+		BBB0D2071B22321D0043BDB0 /* RCTPOPAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB0D2061B22321D0043BDB0 /* RCTPOPAnimationManager.m */; };
+		BBE1642E1B2233FB001FC1AC /* pop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBAFA2F71B222CB5006EE174 /* pop.framework */; };
+		BBE1642F1B2233FB001FC1AC /* pop.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BBAFA2F71B222CB5006EE174 /* pop.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BBE164331B223408001FC1AC /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BBB0D2021B2231CA0043BDB0 /* libc++.dylib */; };
 		EE49F76F1AFA1F8D002F30A8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE49F76E1AFA1F8D002F30A8 /* ViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -157,6 +162,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RCTSettings;
 		};
+		BB6FD5401B2227F60098F937 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 42D8D2FA1B221F7A00B7BAEF /* RCTVideo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTVideo;
+		};
 		BB978E0A1B1A7022003774EB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BB978E061B1A7021003774EB /* RCTCamera.xcodeproj */;
@@ -171,7 +183,63 @@
 			remoteGlobalIDString = 3C86DF461ADF2C930047B81A;
 			remoteInfo = RCTWebSocket;
 		};
+		BBAFA2F21B222CB5006EE174 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BBAFA2EA1B222CB5006EE174 /* pop.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EC191218162FB53A00E0CC76;
+			remoteInfo = pop;
+		};
+		BBAFA2F41B222CB5006EE174 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BBAFA2EA1B222CB5006EE174 /* pop.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EC68857F18C7B60000C6194C;
+			remoteInfo = "pop-osx";
+		};
+		BBAFA2F61B222CB5006EE174 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BBAFA2EA1B222CB5006EE174 /* pop.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0B6BE74819FFD3B900762101;
+			remoteInfo = "pop-embedded";
+		};
+		BBAFA2F81B222CB5006EE174 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BBAFA2EA1B222CB5006EE174 /* pop.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ECF01ED318C92B7F009E0AD1;
+			remoteInfo = "pop-tests";
+		};
+		BBAFA2FA1B222CB5006EE174 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BBAFA2EA1B222CB5006EE174 /* pop.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EC7E319918C93D6500B38170;
+			remoteInfo = "pop-tests-osx";
+		};
+		BBE164301B2233FB001FC1AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BBAFA2EA1B222CB5006EE174 /* pop.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0B6BE74719FFD3B900762101;
+			remoteInfo = "pop-embedded";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BBE164321B2233FB001FC1AC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BBE1642F1B2233FB001FC1AC /* pop.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
@@ -238,6 +306,11 @@
 		BB978E061B1A7021003774EB /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "node_modules/react-native-camera/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
 		BBA8F2621B0D258B009C7EB9 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		BBA8F2691B0D267C009C7EB9 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = iOS/main.jsbundle; sourceTree = "<group>"; };
+		BBAFA2EA1B222CB5006EE174 /* pop.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = pop.xcodeproj; path = pop/pop.xcodeproj; sourceTree = "<group>"; };
+		BBB0D2001B2231820043BDB0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BBB0D2021B2231CA0043BDB0 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		BBB0D2051B22321D0043BDB0 /* RCTPOPAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTPOPAnimationManager.h; sourceTree = "<group>"; };
+		BBB0D2061B22321D0043BDB0 /* RCTPOPAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTPOPAnimationManager.m; sourceTree = "<group>"; };
 		EE49F76D1AFA1F8D002F30A8 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = iOS/ViewController.h; sourceTree = "<group>"; };
 		EE49F76E1AFA1F8D002F30A8 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = iOS/ViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -247,6 +320,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBE164331B223408001FC1AC /* libc++.dylib in Frameworks */,
+				BBB0D2011B2231820043BDB0 /* Foundation.framework in Frameworks */,
 				42D8D30F1B221FA100B7BAEF /* RCTVideo.xcodeproj in Frameworks */,
 				55B8F9FA1B20A873002F65B0 /* libsqlite3.dylib in Frameworks */,
 				55B8F9F81B20A869002F65B0 /* libz.dylib in Frameworks */,
@@ -262,6 +337,7 @@
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				42F228431AF7E4D000A26CF9 /* libRNOverlay.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
+				BBE1642E1B2233FB001FC1AC /* pop.framework in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
@@ -402,6 +478,8 @@
 		1B3EB094E6D4A5101602E36B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BBB0D2021B2231CA0043BDB0 /* libc++.dylib */,
+				BBB0D2001B2231820043BDB0 /* Foundation.framework */,
 				42D8D3101B221FBB00B7BAEF /* libRCTVideo.a */,
 				55B8F9F91B20A873002F65B0 /* libsqlite3.dylib */,
 				55B8F9F71B20A869002F65B0 /* libz.dylib */,
@@ -472,6 +550,8 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				BBB0D2041B22321D0043BDB0 /* RCTPOPAnimation */,
+				BBAFA2EA1B222CB5006EE174 /* pop.xcodeproj */,
 				42D8D2FA1B221F7A00B7BAEF /* RCTVideo.xcodeproj */,
 				420C36CA1B2212FF008E8F87 /* RNBlur */,
 				420C36CB1B2212FF008E8F87 /* RNVibrancy */,
@@ -541,6 +621,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		BB6FD5321B2227F60098F937 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BB6FD5411B2227F60098F937 /* libRCTVideo.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		BB978E071B1A7021003774EB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -557,6 +645,27 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		BBAFA2EB1B222CB5006EE174 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BBAFA2F31B222CB5006EE174 /* libpop.a */,
+				BBAFA2F51B222CB5006EE174 /* pop.framework */,
+				BBAFA2F71B222CB5006EE174 /* pop.framework */,
+				BBAFA2F91B222CB5006EE174 /* pop-tests.xctest */,
+				BBAFA2FB1B222CB5006EE174 /* pop-tests-osx.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BBB0D2041B22321D0043BDB0 /* RCTPOPAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				BBB0D2051B22321D0043BDB0 /* RCTPOPAnimationManager.h */,
+				BBB0D2061B22321D0043BDB0 /* RCTPOPAnimationManager.m */,
+			);
+			path = RCTPOPAnimation;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -568,10 +677,12 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				42F8A6DB1AF0E5D700ED7DBD /* ShellScript */,
+				BBE164321B2233FB001FC1AC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				BBE164311B2233FB001FC1AC /* PBXTargetDependency */,
 			);
 			name = RNPlayNative;
 			productName = "Hello World";
@@ -606,6 +717,10 @@
 				{
 					ProductGroup = 420C36E71B2218B9008E8F87 /* Products */;
 					ProjectRef = 420C36DC1B221876008E8F87 /* BVLinearGradient.xcodeproj */;
+				},
+				{
+					ProductGroup = BBAFA2EB1B222CB5006EE174 /* Products */;
+					ProjectRef = BBAFA2EA1B222CB5006EE174 /* pop.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
@@ -644,7 +759,7 @@
 					ProjectRef = 00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */;
 				},
 				{
-					ProductGroup = 42D8D3121B22250800B7BAEF /* Products */;
+					ProductGroup = BB6FD5321B2227F60098F937 /* Products */;
 					ProjectRef = 42D8D2FA1B221F7A00B7BAEF /* RCTVideo.xcodeproj */;
 				},
 				{
@@ -770,6 +885,13 @@
 			remoteRef = BB0C0AFD1B02FFB100BDEA30 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		BB6FD5411B2227F60098F937 /* libRCTVideo.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTVideo.a;
+			remoteRef = BB6FD5401B2227F60098F937 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		BB978E0B1B1A7022003774EB /* libRCTCamera.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -782,6 +904,41 @@
 			fileType = archive.ar;
 			path = libRCTWebSocket.a;
 			remoteRef = BBA8F2661B0D258B009C7EB9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BBAFA2F31B222CB5006EE174 /* libpop.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libpop.a;
+			remoteRef = BBAFA2F21B222CB5006EE174 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BBAFA2F51B222CB5006EE174 /* pop.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = pop.framework;
+			remoteRef = BBAFA2F41B222CB5006EE174 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BBAFA2F71B222CB5006EE174 /* pop.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = pop.framework;
+			remoteRef = BBAFA2F61B222CB5006EE174 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BBAFA2F91B222CB5006EE174 /* pop-tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "pop-tests.xctest";
+			remoteRef = BBAFA2F81B222CB5006EE174 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BBAFA2FB1B222CB5006EE174 /* pop-tests-osx.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "pop-tests-osx.xctest";
+			remoteRef = BBAFA2FA1B222CB5006EE174 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -840,6 +997,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBB0D2071B22321D0043BDB0 /* RCTPOPAnimationManager.m in Sources */,
 				EE49F76F1AFA1F8D002F30A8 /* ViewController.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
@@ -848,6 +1006,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BBE164311B2233FB001FC1AC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "pop-embedded";
+			targetProxy = BBE164301B2233FB001FC1AC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		55B8FA351B20BA27002F65B0 /* LaunchScreen.xib */ = {
@@ -864,6 +1030,7 @@
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				HEADER_SEARCH_PATHS = (
@@ -891,6 +1058,7 @@
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				HEADER_SEARCH_PATHS = (
