@@ -33,28 +33,28 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
 
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
   NSUInteger orientations;
-  
+
   orientations = UIInterfaceOrientationMaskPortrait;
-  
+
   if (appViewController && shouldRotate == YES) {
-    
+
     orientations = UIInterfaceOrientationMaskAllButUpsideDown;
   }
-  
+
   return orientations;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  
+
   [self initializeGoogleAnalytics];
-  
+
   NSURL *initialJSBundleURL;
   NSString *initialModuleName;
 
 //   Example:
 //   NSString *suppliedAppId = @"qAFzcA";
 //   NSString *suppliedModuleName = @"ParallaxExample";
-  
+
   NSString *suppliedAppId = [[NSUserDefaults standardUserDefaults] stringForKey:@"appId"];
   NSString *suppliedModuleName = [[NSUserDefaults standardUserDefaults] stringForKey:@"moduleName"];
   NSString *suppliedAppUrl = [[NSUserDefaults standardUserDefaults] stringForKey:@"bundleUrl"];
@@ -74,11 +74,11 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
     initialJSBundleURL = [NSURL URLWithString:JSURL];
     initialModuleName = @"RNPlayNative";
   }
-  
+
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:initialJSBundleURL
                                                       moduleName:initialModuleName
                                                    launchOptions:launchOptions];
-  
+
   rootView.loadingView = [self spinner];
   rootView.loadingViewFadeDelay = 0.0;
   rootView.loadingViewFadeDuration = 0.15;
@@ -90,7 +90,7 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
   self.window.rootViewController = mainViewController;
   self.window.backgroundColor = [UIColor blackColor];
   [self.window makeKeyAndVisible];
-  
+
   [self trackMainScreeView];
 
   UILongPressGestureRecognizer *exitGesture = [[UILongPressGestureRecognizer alloc]
@@ -107,7 +107,7 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
 }
 
 - (void)goToHomeScreen:(UISwipeGestureRecognizer*)swipeGesture {
-  
+
   if (self.appViewController) {
     self.appViewController = nil;
     shouldRotate = NO;
