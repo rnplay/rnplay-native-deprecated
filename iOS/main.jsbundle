@@ -1073,7 +1073,7 @@ throw new TypeError(
 
 var index=findIndex.call(this, predicate, context);
 return index === -1?undefined:this[index];}});}})();
-__d('RNPlayNative/index.ios',["react-native/Libraries/react-native/react-native","qs/index","LinkingIOS","NativeModules","RNPlayNative/App/Screens/Login","RNPlayNative/App/Screens/Signup","RNPlayNative/App/Screens/Home","RNPlayNative/App/Screens/Guest","RNPlayNative/App/Stores/ProfileStore","RNPlayNative/App/Stores/LocalStorage","lodash/index"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+__d('RNPlayNative/index.ios',["react-native/Libraries/react-native/react-native","qs/index","LinkingIOS","NativeModules","RNPlayNative/App/Screens/Login","RNPlayNative/App/Screens/Signup","RNPlayNative/App/Screens/Home","RNPlayNative/App/Screens/Guest","RNPlayNative/App/Stores/ProfileStore","RNPlayNative/App/Stores/LocalStorage","lodash/index","RNPlayNative/package.json"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 
 
@@ -1100,6 +1100,16 @@ AppRegistry=
 
 
 React.AppRegistry;var Navigator=React.Navigator;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;var StatusBarIOS=React.StatusBarIOS;
+
+
+var RN_VERSION=require('RNPlayNative/package.json').dependencies['react-native'];
+var githubPrefix='rnplay/react-native#';
+if(RN_VERSION.indexOf(githubPrefix) === 0){
+RN_VERSION = RN_VERSION.replace(githubPrefix, '');}else 
+{
+RN_VERSION = RN_VERSION.replace(/\./g, '').replace(/-/g, '');}
+
+global.RN_VERSION = RN_VERSION;
 
 var RNPlayNative=React.createClass({displayName:'RNPlayNative', 
 
@@ -19041,7 +19051,7 @@ stringifySafe(transformation));}}
 
 
 module.exports = precomputeStyle;});
-__d('MatrixMath',["invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';function _slicedToArray(arr, i){if(Array.isArray(arr)){return arr;}else if(Symbol.iterator in Object(arr)){var _arr=[];var _n=true;var _d=false;var _e=undefined;try{for(var _i=arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if(i && _arr.length === i)break;}}catch(err) {_d = true;_e = err;}finally {try{if(!_n && _i['return'])_i['return']();}finally {if(_d)throw _e;}}return _arr;}else {throw new TypeError('Invalid attempt to destructure non-iterable instance');}}
+__d('MatrixMath',["invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 
 
@@ -19179,13 +19189,13 @@ out[14] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
 out[15] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;}, 
 
 
-determinant:function(matrix){var _matrix=_slicedToArray(
+determinant:function(matrix){var 
+
+m00=
 
 
 
-
-
-matrix, 16);var m00=_matrix[0];var m01=_matrix[1];var m02=_matrix[2];var m03=_matrix[3];var m10=_matrix[4];var m11=_matrix[5];var m12=_matrix[6];var m13=_matrix[7];var m20=_matrix[8];var m21=_matrix[9];var m22=_matrix[10];var m23=_matrix[11];var m30=_matrix[12];var m31=_matrix[13];var m32=_matrix[14];var m33=_matrix[15];
+matrix[0];var m01=matrix[1];var m02=matrix[2];var m03=matrix[3];var m10=matrix[4];var m11=matrix[5];var m12=matrix[6];var m13=matrix[7];var m20=matrix[8];var m21=matrix[9];var m22=matrix[10];var m23=matrix[11];var m30=matrix[12];var m31=matrix[13];var m32=matrix[14];var m33=matrix[15];
 return (
 m03 * m12 * m21 * m30 - m02 * m13 * m21 * m30 - 
 m03 * m11 * m22 * m30 + m01 * m13 * m22 * m30 + 
@@ -19212,14 +19222,14 @@ m01 * m10 * m22 * m33 + m00 * m11 * m22 * m33);},
 inverse:function(matrix){
 var det=MatrixMath.determinant(matrix);
 if(!det){
-return matrix;}var _matrix2=_slicedToArray(
+return matrix;}var 
+
+
+m00=
 
 
 
-
-
-
-matrix, 16);var m00=_matrix2[0];var m01=_matrix2[1];var m02=_matrix2[2];var m03=_matrix2[3];var m10=_matrix2[4];var m11=_matrix2[5];var m12=_matrix2[6];var m13=_matrix2[7];var m20=_matrix2[8];var m21=_matrix2[9];var m22=_matrix2[10];var m23=_matrix2[11];var m30=_matrix2[12];var m31=_matrix2[13];var m32=_matrix2[14];var m33=_matrix2[15];
+matrix[0];var m01=matrix[1];var m02=matrix[2];var m03=matrix[3];var m10=matrix[4];var m11=matrix[5];var m12=matrix[6];var m13=matrix[7];var m20=matrix[8];var m21=matrix[9];var m22=matrix[10];var m23=matrix[11];var m30=matrix[12];var m31=matrix[13];var m32=matrix[14];var m33=matrix[15];
 return [
 (m12 * m23 * m31 - m13 * m22 * m31 + m13 * m21 * m32 - m11 * m23 * m32 - m12 * m21 * m33 + m11 * m22 * m33) / det, 
 (m03 * m22 * m31 - m02 * m23 * m31 - m03 * m21 * m32 + m01 * m23 * m32 + m02 * m21 * m33 - m01 * m22 * m33) / det, 
@@ -19258,8 +19268,8 @@ m[3], m[7], m[11], m[15]];},
 multiplyVectorByMatrix:function(
 v, 
 m)
-{var _v=_slicedToArray(
-v, 4);var vx=_v[0];var vy=_v[1];var vz=_v[2];var vw=_v[3];
+{var 
+vx=v[0];var vy=v[1];var vz=v[2];var vw=v[3];
 return [
 vx * m[0] + vy * m[4] + vz * m[8] + vw * m[12], 
 vx * m[1] + vy * m[5] + vz * m[9] + vw * m[13], 
@@ -19345,8 +19355,8 @@ a[0] * b[1] - a[1] * b[0]];},
 
 
 
-quaternionToDegreesXYZ:function(q, matrix, row){var _q=_slicedToArray(
-q, 4);var qx=_q[0];var qy=_q[1];var qz=_q[2];var qw=_q[3];
+quaternionToDegreesXYZ:function(q, matrix, row){var 
+qx=q[0];var qy=q[1];var qz=q[2];var qw=q[3];
 var qw2=qw * qw;
 var qx2=qx * qx;
 var qy2=qy * qy;
@@ -35465,7 +35475,7 @@ if(!RCTPOPAnimationManager){
 
 
 
-module.exports = (null);}else 
+module.exports = null;}else 
 {
 
 var ReactPropTypes=require('ReactPropTypes');
@@ -41976,8 +41986,7 @@ ActivityIndicatorIOS=
 
 
 
-
-React.ActivityIndicatorIOS;var AlertIOS=React.AlertIOS;var AsyncStorage=React.AsyncStorage;var ScrollView=React.ScrollView;var StyleSheet=React.StyleSheet;var TextInput=React.TextInput;var Text=React.Text;var TouchableHighlight=React.TouchableHighlight;var View=React.View;var StatusBarIOS=React.StatusBarIOS;
+React.ActivityIndicatorIOS;var AlertIOS=React.AlertIOS;var ScrollView=React.ScrollView;var StyleSheet=React.StyleSheet;var TextInput=React.TextInput;var Text=React.Text;var TouchableHighlight=React.TouchableHighlight;var View=React.View;var StatusBarIOS=React.StatusBarIOS;
 
 var Login=React.createClass({displayName:'Login', 
 
@@ -42015,7 +42024,8 @@ this.setState({isLoading:true});
 var params={
 user:{
 email:this.state.email, 
-password:this.state.password}};
+password:this.state.password, 
+remember_me:true}};
 
 
 
@@ -42227,9 +42237,7 @@ fontWeight:'400'}});
 
 
 module.exports = NavigationBar;});
-__d('RNPlayNative/App/Api/Core',[],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
-
-BASE_URL='https://rnplay.org';
+__d('RNPlayNative/App/Api/Core',[],function(global, require, requireDynamic, requireLazy, module, exports) {  var BASE_URL='https://rnplay.org';
 
 var Api={
 
@@ -44569,6 +44577,16 @@ onPress:function(){_this.setState({selectedTab:'my-apps'});}},
 React.createElement(MyAppsContainer, null)), 
 
 React.createElement(SMXTabBarItemIOS, {
+name:'qr_code_reader', 
+iconName:'ion|camera', 
+title:'Scan Code', 
+iconSize:32, 
+accessibilityLabel:'QR Code Reader', 
+selected:this.state.selectedTab === 'qr_code_reader', 
+onPress:function(){_this.setState({selectedTab:'qr_code_reader'});}}, 
+React.createElement(QRCodeReader, null)), 
+
+React.createElement(SMXTabBarItemIOS, {
 name:'about', 
 iconName:'ion|ios-help-outline', 
 title:'About', 
@@ -44586,17 +44604,7 @@ iconSize:32,
 accessibilityLabel:'Settings Tab', 
 selected:this.state.selectedTab === 'settings', 
 onPress:function(){_this.setState({selectedTab:'settings'});}}, 
-React.createElement(Settings, null)), 
-
-React.createElement(SMXTabBarItemIOS, {
-name:'qr_code_reader', 
-iconName:'ion|camera', 
-title:'QR Code', 
-iconSize:32, 
-accessibilityLabel:'QR Code Reader', 
-selected:this.state.selectedTab === 'qr_code_reader', 
-onPress:function(){_this.setState({selectedTab:'qr_code_reader'});}}, 
-React.createElement(QRCodeReader, null))));}});
+React.createElement(Settings, null))));}});
 
 
 
@@ -44733,7 +44741,7 @@ transform:[{scaleX:1.1}, {scaleY:1.1}]}});
 
 
 module.exports = Explore;});
-__d('RNPlayNative/App/Components/AppList',["react-native/Libraries/react-native/react-native","NativeModules","RNPlayNative/App/Api/Core","RNPlayNative/App/Components/NoResults","RNPlayNative/App/Utilities/generateAppURL","Dimensions"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+__d('RNPlayNative/App/Components/AppList',["react-native/Libraries/react-native/react-native","ActionSheetIOS","NativeModules","RNPlayNative/App/Api/Core","RNPlayNative/App/Components/NoResults","RNPlayNative/App/Utilities/generateAppURL","image!network_error","Dimensions"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native');var 
 
@@ -44748,7 +44756,10 @@ ActivityIndicatorIOS=
 
 
 
-React.ActivityIndicatorIOS;var AppRegistry=React.AppRegistry;var Image=React.Image;var ListView=React.ListView;var StyleSheet=React.StyleSheet;var Text=React.Text;var TouchableHighlight=React.TouchableHighlight;var View=React.View;var Navigator=React.Navigator;var PixelRatio=React.PixelRatio;
+
+React.ActivityIndicatorIOS;var AppRegistry=React.AppRegistry;var AlertIOS=React.AlertIOS;var Image=React.Image;var ListView=React.ListView;var StyleSheet=React.StyleSheet;var Text=React.Text;var TouchableHighlight=React.TouchableHighlight;var View=React.View;var Navigator=React.Navigator;var PixelRatio=React.PixelRatio;
+
+var ActionSheetIOS=require('ActionSheetIOS');
 
 var AppReloader=require('NativeModules').AppReloader;
 var Api=require('RNPlayNative/App/Api/Core');
@@ -44779,6 +44790,10 @@ this.fetchApps();}},
 
 fetchApps:function(){var _this=this;
 if(!this.requestInFlight){
+this.setState({
+hasError:false});
+
+
 this.requestInFlight = true;
 var separator=this.props.url.indexOf('?') !== -1?
 '&':
@@ -44805,8 +44820,14 @@ _this.setState({
 data:newData, 
 page:page, 
 dataSource:_this.state.dataSource.cloneWithRows(newData), 
-loaded:true});
+loaded:true, 
+hasError:false});}).
 
+
+catch(function(e){
+_this.setState({hasError:true});}).
+
+finally(function(){
 _this.requestInFlight = false;}).
 
 done();}}, 
@@ -44820,6 +44841,9 @@ React.createElement(View, {style:styles.container},
 React.createElement(ListView, {
 dataSource:this.state.dataSource, 
 renderRow:this.renderApp, 
+initialPageSize:10, 
+pageSize:5, 
+onEndReachedThreshold:1200, 
 onEndReached:this.fetchApps, 
 style:styles.listView})));}, 
 
@@ -44839,10 +44863,22 @@ React.createElement(Text, {style:styles.username, numberOfLines:1}, app.creator.
 
 
 
+shareApp:function(app){
+var url='https://rnplay.org/plays/' + app.url_token;
+var message='"' + (app.name || app.module_name) + '" on rnplay.org';
+
+ActionSheetIOS.showShareActionSheetWithOptions(
+{url:url, message:message}, 
+function(error){return console.log(error);}, 
+function(success){return console.log(success);});}, 
+
+
+
 renderApp:function(app){var _this2=this;
 return (
 React.createElement(View, {style:{marginBottom:15}}, 
-React.createElement(TouchableHighlight, {underlayColor:'#F5F5F5', onPress:function(){return _this2.selectApp(app);}}, 
+React.createElement(TouchableHighlight, {underlayColor:'#F5F5F5', onLongPress:function(){return _this2.shareApp(app);}, 
+onPress:function(){return _this2.selectApp(app);}}, 
 React.createElement(View, {style:styles.appContainer}, 
 React.createElement(View, {style:styles.appTextDescription}, 
 React.createElement(Text, {style:styles.appTitle, numberOfLines:1}, app.name || app.module_name), 
@@ -44880,9 +44916,26 @@ React.createElement(NoResults, null));},
 
 
 
+renderRetry:function(){var _this3=this;
+return (
+React.createElement(View, {style:styles.retryButtonWrapper}, 
+React.createElement(Image, {source:require('image!network_error'), style:{opacity:0.9, marginBottom:30}}), 
+React.createElement(TouchableHighlight, {
+style:styles.retryButtonHighlight, 
+onPress:function(){return _this3.fetchApps();}}, 
+React.createElement(View, {style:styles.retryButtonView}, 
+React.createElement(Text, {style:styles.retryButtonText}, 'Connection failed. Retry?')))));}, 
+
+
+
+
+
+
 render:function(){
-if(!this.state.loaded){
+if(!this.state.loaded && !this.state.hasError){
 return this.renderLoading();}else 
+if(this.state.hasError && !this.state.data.length){
+return this.renderRetry();}else 
 {
 if(this.state.dataSource.getRowCount() > 0){
 return this.renderAppList();}else 
@@ -44897,19 +44950,49 @@ return this.renderNoResults();}}}});
 var deviceWidth=require('Dimensions').get('window').width;
 
 var styles=StyleSheet.create({
+retryButtonWrapper:{
+flex:1, 
+alignItems:'center', 
+justifyContent:'center', 
+paddingBottom:80}, 
+
+
+retryButtonHighlight:{
+borderRadius:7, 
+overflow:'hidden'}, 
+
+
+retryButtonView:{
+height:40, 
+backgroundColor:'#712FA9'}, 
+
+
+retryButtonText:{
+padding:10, 
+paddingLeft:20, 
+paddingRight:20, 
+color:'#fff', 
+textAlign:'center', 
+fontWeight:'700'}, 
+
+
 listView:{
 marginTop:-9, 
 paddingTop:0}, 
+
 
 container:{
 flex:1, 
 backgroundColor:'transparent'}, 
 
+
 loadingContainer:{
 flex:1, 
 paddingBottom:80}, 
 
+
 appContainer:{
+overflow:'hidden', 
 marginTop:-18, 
 flexDirection:'row', 
 flex:1, 
@@ -44918,24 +45001,30 @@ paddingTop:15,
 borderBottomWidth:3 / PixelRatio.get(), 
 borderBottomColor:'#eee'}, 
 
+
 appTextDescription:{
 flexDirection:'column', 
 marginLeft:10}, 
+
 
 targetBuild:{
 opacity:0.4, 
 paddingBottom:2}, 
 
+
 viewCount:{
 opacity:0.4}, 
+
 
 targetBuildText:{
 fontSize:12, 
 fontFamily:'Avenir Next'}, 
 
+
 viewCountText:{
 fontSize:12, 
 fontFamily:'Avenir Next'}, 
+
 
 creator:{
 position:'absolute', 
@@ -44945,11 +45034,13 @@ flexDirection:'column',
 justifyContent:'center', 
 alignItems:'center'}, 
 
+
 username:{
 fontSize:11, 
 opacity:0.4, 
 width:50, 
 textAlign:'center'}, 
+
 
 avatar:{
 width:30, 
@@ -44958,11 +45049,13 @@ marginBottom:5,
 borderRadius:15, 
 backgroundColor:'#000'}, 
 
+
 cancelButton:{
 color:'#fff', 
 flex:1, 
 fontSize:25, 
 marginLeft:20}, 
+
 
 appTitle:{
 fontSize:18, 
@@ -44971,12 +45064,73 @@ color:'#712FA9',
 width:deviceWidth - 70, 
 flex:1}, 
 
+
 spinner:{
 flex:1}});
 
 
 
 module.exports = AppList;});
+__d('ActionSheetIOS',["NativeModules","invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+
+
+
+
+
+
+
+
+
+
+
+var RCTActionSheetManager=require('NativeModules').ActionSheetManager;
+
+var invariant=require('invariant');
+
+var ActionSheetIOS={
+showActionSheetWithOptions:function(options, callback){
+invariant(
+typeof options === 'object' && options !== null, 
+'Options must a valid object');
+
+invariant(
+typeof callback === 'function', 
+'Must provide a valid callback');
+
+RCTActionSheetManager.showActionSheetWithOptions(
+options, 
+function(){}, 
+callback);}, 
+
+
+
+showShareActionSheetWithOptions:function(
+options, 
+failureCallback, 
+successCallback)
+{
+invariant(
+typeof options === 'object' && options !== null, 
+'Options must a valid object');
+
+invariant(
+typeof failureCallback === 'function', 
+'Must provide a valid failureCallback');
+
+invariant(
+typeof successCallback === 'function', 
+'Must provide a valid successCallback');
+
+RCTActionSheetManager.showShareActionSheetWithOptions(
+options, 
+failureCallback, 
+successCallback);}};
+
+
+
+
+module.exports = ActionSheetIOS;});
 __d('RNPlayNative/App/Components/NoResults',["react-native/Libraries/react-native/react-native"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native');var 
@@ -45012,38 +45166,9 @@ fontFamily:'Avenir Next'}});
 
 
 module.exports = NoResults;});
-__d('RNPlayNative/App/Utilities/generateAppURL',["RNPlayNative/package.json"],function(global, require, requireDynamic, requireLazy, module, exports) {  var RN_VERSION=require('RNPlayNative/package.json').dependencies['react-native'];
-var githubPrefix='facebook/react-native#';
-if(RN_VERSION.indexOf(githubPrefix) === 0){
-RN_VERSION = RN_VERSION.replace(githubPrefix, '').substring(0, 6);}else 
-{
-RN_VERSION = RN_VERSION.replace(/\./g, '').replace(/-/g, '');}
-
-
-console.log(RN_VERSION);
-module.exports = function(app){
-return 'http://packager' + RN_VERSION + '.rnplay.org/' + app.url_token + '.bundle';};});
-__d('RNPlayNative/package.json',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {
-  "name": "RNPlayNative",
-  "version": "0.1.1",
-  "private": true,
-  "scripts": {
-    "start": "node_modules/react-native/packager/packager.sh"
-  },
-  "dependencies": {
-    "art": "^0.10.0",
-    "flux-util": "^0.1.1",
-    "lodash": "^3.9.3",
-    "qs": "^3.1.0",
-    "react-native": "facebook/react-native#8b93b99",
-    "react-native-accordion": "0.1.1",
-    "react-native-camera": "rnplay/react-native-camera",
-    "react-native-icons": "0.0.8",
-    "react-native-modal": "^0.3.6",
-    "react-native-overlay": "^0.2.5"
-  }
-}
-;});
+__d('RNPlayNative/App/Utilities/generateAppURL',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = function(app){
+return "http://packager" + global.RN_VERSION + ".rnplay.org/" + app.url_token + ".bundle";};});
+__d('image!network_error',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/joshua/projects/rnplay-ios/iOS/Images.xcassets/network_error.imageset/network_error@3x.png","uri":"network_error","width":300,"height":267,"deprecated":true};});
 __d('RNPlayNative/App/Screens/Search',["react-native/Libraries/react-native/react-native","RNPlayNative/App/Components/AppList","RNPlayNative/App/Components/NoResults"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native');
@@ -45610,17 +45735,10 @@ __d('RNPlayNative/App/Screens/MyApps',["react-native/Libraries/react-native/reac
 var React=require('react-native/Libraries/react-native/react-native');var 
 
 
-ActivityIndicatorIOS=
+TouchableOpacity=
 
 
-
-
-
-
-
-
-
-React.ActivityIndicatorIOS;var AppRegistry=React.AppRegistry;var Image=React.Image;var ListView=React.ListView;var StyleSheet=React.StyleSheet;var Text=React.Text;var TouchableOpacity=React.TouchableOpacity;var View=React.View;var Navigator=React.Navigator;var StatusBarIOS=React.StatusBarIOS;
+React.TouchableOpacity;var View=React.View;var StatusBarIOS=React.StatusBarIOS;
 
 var AppList=require('RNPlayNative/App/Components/AppList');
 var NavigationBar=require('RNPlayNative/App/Components/NavigationBar');
@@ -45745,11 +45863,11 @@ marginTop:-2},
 
 aboutTitle:{
 fontSize:18, 
-marginBottom:10, 
+marginBottom:4, 
 lineHeight:20, 
 fontFamily:'Avenir Next', 
 paddingLeft:15, 
-paddingRight:15}, 
+paddingRight:20}, 
 
 aboutText:{
 paddingRight:15, 
@@ -45782,7 +45900,7 @@ paddingBottom:23}});
 
 
 module.exports = Help;});
-__d('RNPlayNative/App/Screens/QRCodeReader',["react-native/Libraries/react-native/react-native","react-native-camera/Camera.ios","RNPlayNative/App/Utilities/generateAppURL","NativeModules","FAKIconImage"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+__d('RNPlayNative/App/Screens/QRCodeReader',["react-native/Libraries/react-native/react-native","react-native-camera/Camera.ios","RNPlayNative/App/Utilities/generateAppURL","NativeModules","FAKIconImage","react-timer-mixin/TimerMixin"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native');
 var Camera=require('react-native-camera/Camera.ios');
@@ -45798,8 +45916,11 @@ React.StyleSheet;var Text=React.Text;var View=React.View;var StatusBarIOS=React.
 
 var AppReloader=require('NativeModules').AppReloader;
 var Icon=require('FAKIconImage');
+var TimerMixin=require('react-timer-mixin/TimerMixin');
+
 
 var QRCodeReader=React.createClass({displayName:'QRCodeReader', 
+mixins:[TimerMixin], 
 
 getInitialState:function(){
 return {
@@ -45807,12 +45928,18 @@ cameraOpen:false};},
 
 
 
-onBarCodeRead:function(e){
+onBarCodeRead:function(e){var _this=this;
 var app=JSON.parse(e.data);
+this.setTimeout(
+function(){
+_this.setState({cameraOpen:false});});
+
+
+
 AppReloader.reloadAppWithURLString(generateAppURL(app), app.module_name);}, 
 
 
-render:function(){var _this=this;
+render:function(){var _this2=this;
 StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
 return (
 this.state.cameraOpen?
@@ -45820,21 +45947,23 @@ React.createElement(Camera, {
 ref:'cam', 
 style:styles.camera, 
 onBarCodeRead:this.onBarCodeRead}, 
+React.createElement(TouchableOpacity, {onPress:function(){return _this2.setState({cameraOpen:false});}}, 
 React.createElement(Icon, {name:'ion|close', 
-size:50, 
+size:30, 
 style:styles.cameraButton, 
-color:'#000'})):
+color:'#eee'}))):
+
 
 React.createElement(View, {style:styles.container}, 
 React.createElement(Text, {style:styles.text}, 'For apps on rnplay.org, click on \'Run on device\', then open the camera and point it at the QR code.'), 
 
 
-React.createElement(TouchableOpacity, {onPress:function(){return _this.setState({cameraOpen:true});}}, 
+React.createElement(TouchableOpacity, {onPress:function(){return _this2.setState({cameraOpen:true});}}, 
 React.createElement(Icon, {
 name:'ion|camera', 
 size:80, 
 style:styles.cameraButton, 
-color:'#000'}))));}});
+color:'#777'}))));}});
 
 
 
@@ -45858,7 +45987,8 @@ marginBottom:20},
 
 cameraButton:{
 width:80, 
-height:80}, 
+height:80, 
+backgroundColor:'transparent'}, 
 
 closebutton:{
 width:50, 
@@ -58543,5 +58673,30 @@ freeExports._ = _;}}else
 root._ = _;}}).
 
 call(this);});
+__d('RNPlayNative/package.json',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {
+  "name": "RNPlayNative",
+  "version": "0.1.1",
+  "private": true,
+  "scripts": {
+    "start": "node_modules/react-native/packager/packager.sh"
+  },
+  "dependencies": {
+    "art": "0.10.0",
+    "flux-util": "0.1.1",
+    "lodash": "3.9.3",
+    "qs": "3.1.0",
+    "react-native": "rnplay/react-native#0c4842",
+    "react-native-accordion": "0.1.1",
+    "react-native-camera": "rnplay/react-native-camera#1102a5",
+    "react-native-icons": "0.0.8",
+    "react-native-modal": "0.3.6",
+    "react-native-overlay": "0.2.5",
+    "react-native-side-menu": "0.8.0",
+    "react-native-blur": "0.5.0",
+    "react-native-linear-gradient": "0.3.0",
+    "react-native-video": "0.4.2"
+  }
+}
+;});
 ;require("RNPlayNative/index.ios");
 //@ sourceMappingURL=/index.ios.map
