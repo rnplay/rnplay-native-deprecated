@@ -42,6 +42,11 @@
 		551EAC161B1B4DE6009233AF /* BlurViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 551EAC141B1B4DE6009233AF /* BlurViewManager.m */; };
 		55B8F8881B1E4F24002F65B0 /* AppReloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8F8871B1E4F24002F65B0 /* AppReloader.m */; };
 		55B8FA371B20BA27002F65B0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55B8FA351B20BA27002F65B0 /* LaunchScreen.xib */; };
+		55B8F9F41B20A858002F65B0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8F9F31B20A858002F65B0 /* CoreData.framework */; };
+		55B8F9F61B20A861002F65B0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8F9F51B20A861002F65B0 /* SystemConfiguration.framework */; };
+		55B8F9F81B20A869002F65B0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8F9F71B20A869002F65B0 /* libz.dylib */; };
+		55B8F9FA1B20A873002F65B0 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8F9F91B20A873002F65B0 /* libsqlite3.dylib */; };
+		55B8FA161B20A928002F65B0 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8FA0A1B20A928002F65B0 /* libGoogleAnalyticsServices.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		BB0C0AEC1B02ACF800BDEA30 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB0C0ADF1B02ACE900BDEA30 /* libART.a */; };
 		BB0C0AF81B02FF7F00BDEA30 /* uiexplorer.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = BB0C0AF71B02FF7F00BDEA30 /* uiexplorer.jsbundle */; };
@@ -210,6 +215,21 @@
 		55B8F8861B1E4F24002F65B0 /* AppReloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppReloader.h; sourceTree = "<group>"; };
 		55B8F8871B1E4F24002F65B0 /* AppReloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppReloader.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55B8FA361B20BA27002F65B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iOS/Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		55B8F9F31B20A858002F65B0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		55B8F9F51B20A861002F65B0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		55B8F9F71B20A869002F65B0 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		55B8F9F91B20A873002F65B0 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		55B8FA0A1B20A928002F65B0 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
+		55B8FA0C1B20A928002F65B0 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
+		55B8FA0D1B20A928002F65B0 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
+		55B8FA0E1B20A928002F65B0 /* GAIEcommerceFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceFields.h; sourceTree = "<group>"; };
+		55B8FA0F1B20A928002F65B0 /* GAIEcommerceProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceProduct.h; sourceTree = "<group>"; };
+		55B8FA101B20A928002F65B0 /* GAIEcommerceProductAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceProductAction.h; sourceTree = "<group>"; };
+		55B8FA111B20A928002F65B0 /* GAIEcommercePromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommercePromotion.h; sourceTree = "<group>"; };
+		55B8FA121B20A928002F65B0 /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIFields.h; sourceTree = "<group>"; };
+		55B8FA131B20A928002F65B0 /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAILogger.h; sourceTree = "<group>"; };
+		55B8FA141B20A928002F65B0 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
+		55B8FA151B20A928002F65B0 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		BB0C0ADA1B02ACE900BDEA30 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
@@ -234,6 +254,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55B8F9FA1B20A873002F65B0 /* libsqlite3.dylib in Frameworks */,
+				55B8F9F81B20A869002F65B0 /* libz.dylib in Frameworks */,
+				55B8F9F61B20A861002F65B0 /* SystemConfiguration.framework in Frameworks */,
+				55B8FA161B20A928002F65B0 /* libGoogleAnalyticsServices.a in Frameworks */,
+				55B8F9F41B20A858002F65B0 /* CoreData.framework in Frameworks */,
 				1111D10C1B18CA68007370BA /* libReactNativeIcons.a in Frameworks */,
 				BBA8F2681B0D2593009C7EB9 /* libRCTWebSocket.a in Frameworks */,
 				BB0C0AFF1B02FFB800BDEA30 /* libRCTSettings.a in Frameworks */,
@@ -390,6 +415,10 @@
 		1B3EB094E6D4A5101602E36B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55B8F9F91B20A873002F65B0 /* libsqlite3.dylib */,
+				55B8F9F71B20A869002F65B0 /* libz.dylib */,
+				55B8F9F51B20A861002F65B0 /* SystemConfiguration.framework */,
+				55B8F9F31B20A858002F65B0 /* CoreData.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -414,6 +443,32 @@
 			path = "node_modules/react-native-modal/node_modules/react-native-blur/RNBlur";
 			sourceTree = "<group>";
 		};
+		55B8FA091B20A928002F65B0 /* GoogleAnalytics-3.12 */ = {
+			isa = PBXGroup;
+			children = (
+				55B8FA0B1B20A928002F65B0 /* Library */,
+				55B8FA0A1B20A928002F65B0 /* libGoogleAnalyticsServices.a */,
+			);
+			path = "GoogleAnalytics-3.12";
+			sourceTree = "<group>";
+		};
+		55B8FA0B1B20A928002F65B0 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				55B8FA0C1B20A928002F65B0 /* GAI.h */,
+				55B8FA0D1B20A928002F65B0 /* GAIDictionaryBuilder.h */,
+				55B8FA0E1B20A928002F65B0 /* GAIEcommerceFields.h */,
+				55B8FA0F1B20A928002F65B0 /* GAIEcommerceProduct.h */,
+				55B8FA101B20A928002F65B0 /* GAIEcommerceProductAction.h */,
+				55B8FA111B20A928002F65B0 /* GAIEcommercePromotion.h */,
+				55B8FA121B20A928002F65B0 /* GAIFields.h */,
+				55B8FA131B20A928002F65B0 /* GAILogger.h */,
+				55B8FA141B20A928002F65B0 /* GAITrackedViewController.h */,
+				55B8FA151B20A928002F65B0 /* GAITracker.h */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -425,6 +480,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				55B8FA091B20A928002F65B0 /* GoogleAnalytics-3.12 */,
 				551EAC101B1B4DE6009233AF /* RNBlur */,
 				BB978E061B1A7021003774EB /* RCTCamera.xcodeproj */,
 				1111D1061B18CA4E007370BA /* ReactNativeIcons.xcodeproj */,
@@ -901,6 +957,12 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/GoogleAnalyticsServicesiOS_3.12",
+					"$(PROJECT_DIR)/GoogleAnalytics",
+					"$(PROJECT_DIR)/GoogleAnalytics-3.12",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RNPlayNative;
 			};
@@ -921,6 +983,12 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/GoogleAnalyticsServicesiOS_3.12",
+					"$(PROJECT_DIR)/GoogleAnalytics",
+					"$(PROJECT_DIR)/GoogleAnalytics-3.12",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RNPlayNative;
 			};
