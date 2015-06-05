@@ -14,8 +14,11 @@ var {
 
 var AppReloader = require('NativeModules').AppReloader;
 var Icon = require('FAKIconImage');
+var TimerMixin = require('react-timer-mixin');
+
 
 var QRCodeReader = React.createClass({
+  mixins: [TimerMixin],
 
   getInitialState() {
     return {
@@ -25,6 +28,12 @@ var QRCodeReader = React.createClass({
 
   onBarCodeRead(e) {
     var app = JSON.parse(e.data);
+    this.setTimeout(
+      () => {
+        this.setState({cameraOpen: false});
+      }
+    )
+
     AppReloader.reloadAppWithURLString(generateAppURL(app), app.module_name);
   },
 
@@ -36,7 +45,7 @@ var QRCodeReader = React.createClass({
         ref="cam"
         style={styles.camera}
         onBarCodeRead={this.onBarCodeRead}>
-        <TouchableOpacity onPress={() => this.setState({cameraOpen: false})} >
+        <TouchableOpacity onPress={() => this.setState({cameraOpen: false}) } >
           <Icon name='ion|close'
             size={30}
             style={styles.cameraButton}
@@ -77,8 +86,7 @@ var styles = StyleSheet.create({
   cameraButton: {
     width: 80,
     height: 80,
-    backgroundColor: 'transparent',
-    color: "#eee"
+    backgroundColor: 'transparent'
   },
   closebutton: {
     width: 50,
