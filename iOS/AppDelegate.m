@@ -29,11 +29,7 @@ int const kFlipTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
 
 static NSString *const kGANPropertyId = @"UA-63760955-1";
 static NSTimeInterval const kGANDispatchInterval = 120.0;
-#if DEBUG
-static GAILogLevel const kGANLogLevel = kGAILogLevelVerbose;
-#else
 static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
-#endif
 
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
   NSUInteger orientations;
@@ -139,6 +135,10 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
   [GAI sharedInstance].dispatchInterval = kGANDispatchInterval;
   [GAI sharedInstance].logger.logLevel = kGANLogLevel;
   [[GAI sharedInstance] trackerWithTrackingId:kGANPropertyId];
+#if DEBUG
+  [[GAI sharedInstance] setDryRun:YES];
+  [GAI sharedInstance].logger.logLevel = kGAILogLevelInfo;
+#endif
 }
 
 - (void)trackMainScreeView {
