@@ -34,6 +34,8 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		420C36CC1B2212FF008E8F87 /* RNBlur in Resources */ = {isa = PBXBuildFile; fileRef = 420C36CA1B2212FF008E8F87 /* RNBlur */; };
+		420C36CD1B2212FF008E8F87 /* RNVibrancy in Resources */ = {isa = PBXBuildFile; fileRef = 420C36CB1B2212FF008E8F87 /* RNVibrancy */; };
 		42F2283C1AF7E25B00A26CF9 /* photo-camera5.png in Resources */ = {isa = PBXBuildFile; fileRef = 42F2283B1AF7E25B00A26CF9 /* photo-camera5.png */; };
 		42F228431AF7E4D000A26CF9 /* libRNOverlay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F228421AF7E4BE00A26CF9 /* libRNOverlay.a */; };
 		551EAC151B1B4DE6009233AF /* BlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 551EAC121B1B4DE6009233AF /* BlurView.m */; };
@@ -188,6 +190,8 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = iOS/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = iOS/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		420C36CA1B2212FF008E8F87 /* RNBlur */ = {isa = PBXFileReference; lastKnownFileType = folder; name = RNBlur; path = "node_modules/react-native-blur/RNBlur"; sourceTree = "<group>"; };
+		420C36CB1B2212FF008E8F87 /* RNVibrancy */ = {isa = PBXFileReference; lastKnownFileType = folder; name = RNVibrancy; path = "node_modules/react-native-blur/RNVibrancy"; sourceTree = "<group>"; };
 		42F2283B1AF7E25B00A26CF9 /* photo-camera5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-camera5.png"; sourceTree = "<group>"; };
 		42F2283D1AF7E4BE00A26CF9 /* RNOverlay.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNOverlay.xcodeproj; path = "node_modules/react-native-overlay/RNOverlay.xcodeproj"; sourceTree = "<group>"; };
 		551EAC111B1B4DE6009233AF /* BlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlurView.h; sourceTree = "<group>"; };
@@ -477,6 +481,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				420C36CA1B2212FF008E8F87 /* RNBlur */,
+				420C36CB1B2212FF008E8F87 /* RNVibrancy */,
 				1111D15A1B18CB88007370BA /* Resources */,
 				13B07FAE1A68108700A75B9A /* RNPlayNative */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -749,8 +755,10 @@
 				1111D1611B18CC4B007370BA /* FAKIcon.m in Resources */,
 				1111D1621B18CC4B007370BA /* FAKIonIcons.h in Resources */,
 				1111D1631B18CC4B007370BA /* FAKIonIcons.m in Resources */,
+				420C36CD1B2212FF008E8F87 /* RNVibrancy in Resources */,
 				1111D1641B18CC4B007370BA /* FAKZocial.h in Resources */,
 				55B8FA371B20BA27002F65B0 /* LaunchScreen.xib in Resources */,
+				420C36CC1B2212FF008E8F87 /* RNBlur in Resources */,
 				1111D1651B18CC4B007370BA /* FAKZocial.m in Resources */,
 				1111D1661B18CC4B007370BA /* FontAwesome.otf in Resources */,
 				1111D1671B18CC4B007370BA /* FontAwesomeKit.h in Resources */,
