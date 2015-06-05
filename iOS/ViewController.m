@@ -8,6 +8,9 @@
 
 #import "ViewController.h"
 #import "RCTRootView.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @implementation ViewController
 
@@ -22,6 +25,8 @@
   rootView.frame = self.view.bounds;
   
   [self setView:rootView];
+  
+  [self trackScreeView];
 }
 
 - (UIActivityIndicatorView *)spinner {
@@ -30,6 +35,12 @@
   [spinner setColor:[UIColor colorWithRed:113.0f/255.0f green:47.0f/255.0f blue:169.0f/255.0f alpha:1.0f]];
   [spinner startAnimating];
   return spinner;
+}
+
+- (void)trackScreeView {
+  id tracker = [[GAI sharedInstance] defaultTracker];
+  [tracker set:kGAIScreenName value:@"App"];
+  [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 @end
