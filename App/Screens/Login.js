@@ -8,7 +8,6 @@ var AppActions = require('../Actions/AppActions');
 var {
   ActivityIndicatorIOS,
   AlertIOS,
-  AsyncStorage,
   ScrollView,
   StyleSheet,
   TextInput,
