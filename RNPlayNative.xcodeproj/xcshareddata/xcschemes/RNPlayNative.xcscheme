@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "RNPlayNative.app"
+               BuildableName = "Playground.app"
                BlueprintName = "RNPlayNative"
                ReferencedContainer = "container:RNPlayNative.xcodeproj">
             </BuildableReference>
@@ -57,7 +57,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "RNPlayNative.app"
+            BuildableName = "Playground.app"
             BlueprintName = "RNPlayNative"
             ReferencedContainer = "container:RNPlayNative.xcodeproj">
          </BuildableReference>
@@ -77,7 +77,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "RNPlayNative.app"
+            BuildableName = "Playground.app"
             BlueprintName = "RNPlayNative"
             ReferencedContainer = "container:RNPlayNative.xcodeproj">
          </BuildableReference>
@@ -96,7 +96,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "RNPlayNative.app"
+            BuildableName = "Playground.app"
             BlueprintName = "RNPlayNative"
             ReferencedContainer = "container:RNPlayNative.xcodeproj">
          </BuildableReference>
