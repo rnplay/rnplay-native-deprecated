@@ -34,10 +34,11 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		420C36CC1B2212FF008E8F87 /* RNBlur in Resources */ = {isa = PBXBuildFile; fileRef = 420C36CA1B2212FF008E8F87 /* RNBlur */; };
+		420C36CD1B2212FF008E8F87 /* RNVibrancy in Resources */ = {isa = PBXBuildFile; fileRef = 420C36CB1B2212FF008E8F87 /* RNVibrancy */; };
+		420C36EC1B2218E7008E8F87 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 420C36EB1B2218B9008E8F87 /* libBVLinearGradient.a */; };
 		42F2283C1AF7E25B00A26CF9 /* photo-camera5.png in Resources */ = {isa = PBXBuildFile; fileRef = 42F2283B1AF7E25B00A26CF9 /* photo-camera5.png */; };
 		42F228431AF7E4D000A26CF9 /* libRNOverlay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F228421AF7E4BE00A26CF9 /* libRNOverlay.a */; };
-		551EAC151B1B4DE6009233AF /* BlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 551EAC121B1B4DE6009233AF /* BlurView.m */; };
-		551EAC161B1B4DE6009233AF /* BlurViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 551EAC141B1B4DE6009233AF /* BlurViewManager.m */; };
 		55B8F8881B1E4F24002F65B0 /* AppReloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8F8871B1E4F24002F65B0 /* AppReloader.m */; };
 		55B8F9F41B20A858002F65B0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8F9F31B20A858002F65B0 /* CoreData.framework */; };
 		55B8F9F61B20A861002F65B0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8F9F51B20A861002F65B0 /* SystemConfiguration.framework */; };
@@ -104,6 +105,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
 			remoteInfo = React;
+		};
+		420C36EA1B2218B9008E8F87 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 420C36DC1B221876008E8F87 /* BVLinearGradient.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = BVLinearGradient;
 		};
 		42F228411AF7E4BE00A26CF9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -188,12 +196,11 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = iOS/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = iOS/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		420C36CA1B2212FF008E8F87 /* RNBlur */ = {isa = PBXFileReference; lastKnownFileType = folder; name = RNBlur; path = "node_modules/react-native-blur/RNBlur"; sourceTree = "<group>"; };
+		420C36CB1B2212FF008E8F87 /* RNVibrancy */ = {isa = PBXFileReference; lastKnownFileType = folder; name = RNVibrancy; path = "node_modules/react-native-blur/RNVibrancy"; sourceTree = "<group>"; };
+		420C36DC1B221876008E8F87 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		42F2283B1AF7E25B00A26CF9 /* photo-camera5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-camera5.png"; sourceTree = "<group>"; };
 		42F2283D1AF7E4BE00A26CF9 /* RNOverlay.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNOverlay.xcodeproj; path = "node_modules/react-native-overlay/RNOverlay.xcodeproj"; sourceTree = "<group>"; };
-		551EAC111B1B4DE6009233AF /* BlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlurView.h; sourceTree = "<group>"; };
-		551EAC121B1B4DE6009233AF /* BlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlurView.m; sourceTree = "<group>"; };
-		551EAC131B1B4DE6009233AF /* BlurViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlurViewManager.h; sourceTree = "<group>"; };
-		551EAC141B1B4DE6009233AF /* BlurViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlurViewManager.m; sourceTree = "<group>"; };
 		55B8F8861B1E4F24002F65B0 /* AppReloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppReloader.h; sourceTree = "<group>"; };
 		55B8F8871B1E4F24002F65B0 /* AppReloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppReloader.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55B8F9F31B20A858002F65B0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -247,6 +254,7 @@
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
+				420C36EC1B2218E7008E8F87 /* libBVLinearGradient.a in Frameworks */,
 				BB978E0C1B1A7028003774EB /* libRCTCamera.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -389,24 +397,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		420C36E71B2218B9008E8F87 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				420C36EB1B2218B9008E8F87 /* libBVLinearGradient.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		42F2283E1AF7E4BE00A26CF9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				42F228421AF7E4BE00A26CF9 /* libRNOverlay.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		551EAC101B1B4DE6009233AF /* RNBlur */ = {
-			isa = PBXGroup;
-			children = (
-				551EAC111B1B4DE6009233AF /* BlurView.h */,
-				551EAC121B1B4DE6009233AF /* BlurView.m */,
-				551EAC131B1B4DE6009233AF /* BlurViewManager.h */,
-				551EAC141B1B4DE6009233AF /* BlurViewManager.m */,
-			);
-			name = RNBlur;
-			path = "node_modules/react-native-modal/node_modules/react-native-blur/RNBlur";
 			sourceTree = "<group>";
 		};
 		55B8FA091B20A928002F65B0 /* GoogleAnalytics-3.12 */ = {
@@ -446,8 +450,10 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				420C36CA1B2212FF008E8F87 /* RNBlur */,
+				420C36CB1B2212FF008E8F87 /* RNVibrancy */,
+				420C36DC1B221876008E8F87 /* BVLinearGradient.xcodeproj */,
 				55B8FA091B20A928002F65B0 /* GoogleAnalytics-3.12 */,
-				551EAC101B1B4DE6009233AF /* RNBlur */,
 				BB978E061B1A7021003774EB /* RCTCamera.xcodeproj */,
 				1111D1061B18CA4E007370BA /* ReactNativeIcons.xcodeproj */,
 				BBA8F2621B0D258B009C7EB9 /* RCTWebSocket.xcodeproj */,
@@ -575,6 +581,10 @@
 					ProjectRef = BB0C0ADA1B02ACE900BDEA30 /* ART.xcodeproj */;
 				},
 				{
+					ProductGroup = 420C36E71B2218B9008E8F87 /* Products */;
+					ProjectRef = 420C36DC1B221876008E8F87 /* BVLinearGradient.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
 				},
@@ -684,6 +694,13 @@
 			remoteRef = 146834031AC3E56700842450 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		420C36EB1B2218B9008E8F87 /* libBVLinearGradient.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBVLinearGradient.a;
+			remoteRef = 420C36EA1B2218B9008E8F87 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		42F228421AF7E4BE00A26CF9 /* libRNOverlay.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -749,8 +766,10 @@
 				1111D1611B18CC4B007370BA /* FAKIcon.m in Resources */,
 				1111D1621B18CC4B007370BA /* FAKIonIcons.h in Resources */,
 				1111D1631B18CC4B007370BA /* FAKIonIcons.m in Resources */,
+				420C36CD1B2212FF008E8F87 /* RNVibrancy in Resources */,
 				1111D1641B18CC4B007370BA /* FAKZocial.h in Resources */,
 				55B8FA371B20BA27002F65B0 /* LaunchScreen.xib in Resources */,
+				420C36CC1B2212FF008E8F87 /* RNBlur in Resources */,
 				1111D1651B18CC4B007370BA /* FAKZocial.m in Resources */,
 				1111D1661B18CC4B007370BA /* FontAwesome.otf in Resources */,
 				1111D1671B18CC4B007370BA /* FontAwesomeKit.h in Resources */,
@@ -788,10 +807,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE49F76F1AFA1F8D002F30A8 /* ViewController.m in Sources */,
-				551EAC151B1B4DE6009233AF /* BlurView.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				551EAC161B1B4DE6009233AF /* BlurViewManager.m in Sources */,
 				55B8F8881B1E4F24002F65B0 /* AppReloader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
