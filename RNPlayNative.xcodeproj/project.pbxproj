@@ -120,13 +120,6 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = BVLinearGradient;
 		};
-		42D8D3151B22250800B7BAEF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 42D8D2FA1B221F7A00B7BAEF /* RCTVideo.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RCTVideo;
-		};
 		42F228411AF7E4BE00A26CF9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 42F2283D1AF7E4BE00A26CF9 /* RNOverlay.xcodeproj */;
@@ -497,14 +490,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		42D8D3121B22250800B7BAEF /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				42D8D3161B22250800B7BAEF /* libRCTVideo.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		42F2283E1AF7E4BE00A26CF9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -843,13 +828,6 @@
 			remoteRef = 420C36EA1B2218B9008E8F87 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		42D8D3161B22250800B7BAEF /* libRCTVideo.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTVideo.a;
-			remoteRef = 42D8D3151B22250800B7BAEF /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		42F228421AF7E4BE00A26CF9 /* libRNOverlay.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1045,10 +1023,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/GoogleAnalyticsServicesiOS_3.12",
-					"$(PROJECT_DIR)/GoogleAnalytics",
-					"$(PROJECT_DIR)/GoogleAnalytics-3.12",
-					"$(PROJECT_DIR)/node_modules/react-native-video/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/GoogleAnalytics-3.12/**",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Playground;
@@ -1073,10 +1048,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/GoogleAnalyticsServicesiOS_3.12",
-					"$(PROJECT_DIR)/GoogleAnalytics",
-					"$(PROJECT_DIR)/GoogleAnalytics-3.12",
-					"$(PROJECT_DIR)/node_modules/react-native-video/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/GoogleAnalytics-3.12/**",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Playground;
