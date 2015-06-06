@@ -36,6 +36,7 @@ var Home = React.createClass({
         tintColor={'#712FA9'}
         style={styles.tabBar}
         barTintColor={'white'}>
+
         <SMXTabBarItemIOS
           name="explore"
           iconName={'ion|ios-search-strong'}
@@ -46,6 +47,7 @@ var Home = React.createClass({
           onPress={() => { this.setState({ selectedTab: 'explore', }); }}>
           <Explore />
         </SMXTabBarItemIOS>
+
         <SMXTabBarItemIOS
             name="my-apps"
             iconName={'ion|ios-briefcase-outline'}
@@ -56,6 +58,7 @@ var Home = React.createClass({
             onPress={() => { this.setState({selectedTab: 'my-apps',}); }}>
           <MyAppsContainer />
         </SMXTabBarItemIOS>
+
         <SMXTabBarItemIOS
             name="qr_code_reader"
             iconName={'ion|camera'}
@@ -66,6 +69,7 @@ var Home = React.createClass({
             onPress={() => { this.setState({ selectedTab: 'qr_code_reader', }); }}>
           <QRCodeReader />
         </SMXTabBarItemIOS>
+
         <SMXTabBarItemIOS
           name="about"
           iconName={'ion|ios-help-outline'}
@@ -76,6 +80,7 @@ var Home = React.createClass({
           onPress={() => { this.setState({ selectedTab: 'about', }); }}>
           <About />
         </SMXTabBarItemIOS>
+
         <SMXTabBarItemIOS
             name="settings"
             iconName={'ion|gear-a'}
