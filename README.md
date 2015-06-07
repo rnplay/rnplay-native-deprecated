@@ -4,6 +4,8 @@ iOS app for running React Native apps from the [React Native
 Playground](http://rnplay.org). This is also the app that powers the
 in-browser simulators on the site.
 
+![](https://raw.githubusercontent.com/rnplay/rnplay-ios/master/screenshot.png)
+
 ### Try it out live
 
 Here are some direct links to apps that are hosted on the web and run
