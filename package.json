@@ -10,15 +10,15 @@
     "flux-util": "0.1.1",
     "lodash": "3.9.3",
     "qs": "3.1.0",
-    "react-native": "rnplay/react-native#0c4842",
-    "react-native-accordion": "0.1.1",
-    "react-native-camera": "rnplay/react-native-camera#1102a5",
-    "react-native-icons": "0.0.8",
-    "react-native-modal": "0.3.6",
-    "react-native-overlay": "0.2.5",
+    "react-native": "rnplay/react-native#0.5-backports",
+    "react-native-accordion": "rnplay/react-native-accordion",
+    "react-native-camera": "rnplay/react-native-camera",
+    "react-native-icons": "rnplay/react-native-icons",
+    "react-native-modal": "rnplay/react-native-modal",
+    "react-native-overlay": "rnplay/react-native-overlay",
+    "react-native-linear-gradient": "rnplay/react-native-linear-gradient",
+    "react-native-video": "rnplay/react-native-video",
     "react-native-side-menu": "0.8.0",
-    "react-native-blur": "0.5.0",
-    "react-native-linear-gradient": "0.3.0",
-    "react-native-video": "0.4.2"
+    "react-native-blur": "0.5.0"
   }
 }
