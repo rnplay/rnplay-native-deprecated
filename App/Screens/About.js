@@ -29,11 +29,12 @@ var Help = React.createClass({
         <NavigationBar title={'About'} />
         <ScrollView style={styles.contentContainer}>
             <Text style={styles.firstText}>Run React Native apps from <TouchableOpacity onPress={() => this._loadWebsite('https://rnplay.org')}><Text style={styles.link}>rnplay.org</Text></TouchableOpacity> directly on your device.</Text>
+            <Text style={styles.aboutText}>Get started by trying apps on the <Text style={styles.emphasis}>Explore</Text> tab, or login to your rnplay.org account in <Text style={styles.emphasis}>My Apps</Text>.</Text>
             <View style={styles.separator} />
             <Text style={styles.aboutTitle}>How do I exit a loaded app?</Text>
             <Text style={styles.aboutText}>Tap and hold the screen with two fingers simultaneously for 1.5 seconds.</Text>
             <View style={styles.separator} />
-            <Text style={styles.aboutTitle}>What does <Text style={{fontStyle: "italic"}}>target</Text> mean?</Text>
+            <Text style={styles.aboutTitle}>What does <Text style={styles.emphasis}>target</Text> mean?</Text>
             <Text style={styles.aboutText}>The target React Native version for an app. An app might not behave if the target is different than the our bundled React Native version.</Text>
             <View style={styles.separator} />
             <Text style={styles.aboutTitle} numberOfLines={2}>
@@ -75,10 +76,14 @@ var styles = StyleSheet.create({
     color: "#712FA9"
   },
 
+  emphasis: {
+    fontStyle: "italic"
+  },
+
   firstText: {
     paddingRight: 15,
     paddingLeft: 15,
-    marginBottom: 30,
+    marginBottom: 20,
     fontSize: 19,
     textAlign: 'left',
   },
@@ -97,7 +102,7 @@ var styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'left',
     color: '#3a3638',
-    opacity: 0.5,
+    opacity: 0.8,
   },
   separator: {
     flex: 1,
