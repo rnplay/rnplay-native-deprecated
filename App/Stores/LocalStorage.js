@@ -36,6 +36,11 @@ var store = createStore({
           store.emitChange(action);
         });
       break;
+      case AppConstants.DELETE_PROFILE:
+        AsyncStorage.removeItem(PROFILE_KEY)
+          .catch((error) => AlertIOS.alert('Error', error.message,[{text: 'OK'}]))
+          .done();
+      break;
     }
 
     return true;
