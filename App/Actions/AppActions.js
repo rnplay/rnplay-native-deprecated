@@ -9,4 +9,9 @@ module.exports = {
       data: profile
     });
   },
+  deleteProfile() {
+    dispatcher.handleViewAction({
+      actionType: AppConstants.DELETE_PROFILE    
+    });
+  },
 }
