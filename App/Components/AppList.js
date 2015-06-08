@@ -156,6 +156,7 @@ var AppList = React.createClass({
   },
 
   selectApp(app) {
+    Api.post("/apps/"+app.url_token+"/view.json");
     AppReloader.reloadAppWithURLString(generateAppURL(app), app.module_name);
   },
 
