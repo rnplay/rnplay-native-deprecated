@@ -91,7 +91,8 @@ var styles = StyleSheet.create({
   text: {
     fontSize:18,
     padding: 20,
-    fontFamily: "Avenir Next"
+    fontFamily: "Avenir Next",
+    textAlign: 'center',
   },
   runOnDevice: {
     fontStyle: 'italic'
