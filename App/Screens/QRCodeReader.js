@@ -54,8 +54,15 @@ var QRCodeReader = React.createClass({
       </Camera>  :
        <View style={styles.container}>
          <Text style={styles.text}>
-           For apps on rnplay.org, click on 'Run on device', then open the camera and point it at the QR code.
+           On rnplay.org, find an app.
          </Text>
+         <Text style={styles.text}>
+          Click <Text style={styles.runOnDevice}>Run on device</Text>.
+        </Text>
+         <Text style={styles.text}>
+           Tap below and point the camera at the displayed code.
+         </Text>
+
          <TouchableOpacity onPress={() => this.setState({cameraOpen: true})} >
            <Icon
              name='ion|camera'
@@ -79,9 +86,12 @@ var styles = StyleSheet.create({
     flex: 1
   },
   text: {
-    fontSize:20,
-    padding: 10,
-    marginBottom: 20
+    fontSize:18,
+    padding: 20,
+    fontFamily: "Avenir Next"
+  },
+  runOnDevice: {
+    fontStyle: 'italic'
   },
   cameraButton: {
     width: 80,
