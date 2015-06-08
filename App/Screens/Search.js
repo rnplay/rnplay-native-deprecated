@@ -74,6 +74,7 @@ var styles = StyleSheet.create({
   searchRow: {
     backgroundColor: '#f3f3f3',
     padding: 10,
+    marginBottom: 9,
   },
   input: {
     height: 40,
