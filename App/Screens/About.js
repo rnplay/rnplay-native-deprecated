@@ -33,15 +33,15 @@ var Help = React.createClass({
             <Text style={styles.aboutTitle}>How do I exit a loaded app?</Text>
             <Text style={styles.aboutText}>Tap and hold the screen with two fingers simultaneously for 1.5 seconds.</Text>
             <View style={styles.separator} />
-            <Text style={styles.aboutTitle}>What does target mean?</Text>
-            <Text style={styles.aboutText}>Target refers to the React Native build version that a given play is intended for.</Text>
+            <Text style={styles.aboutTitle}>What does <Text style={{fontStyle: "italic"}}>target</Text> mean?</Text>
+            <Text style={styles.aboutText}>The target React Native version for an app. An app might not behave if the target is different than the our bundled React Native version.</Text>
             <View style={styles.separator} />
             <Text style={styles.aboutTitle} numberOfLines={2}>
               What React Native version is this app built with?
             </Text>
-            <Text style={styles.aboutText} numberOfLines={2}>
-              This app is currently built against React Native
-              <Text style={styles.buildVersionText}> 0.5.0</Text>, released Friday, June 5th, 2015.
+            <Text style={styles.aboutText}>
+              This app's React Native version is
+              <Text style={styles.buildVersionText}> 0.5.0</Text>, released Friday, June 5th, 2015. We will regularly update this app, tracking React Native.
             </Text>
             <View style={styles.separator} />
             <View style={styles.otherQuestions}>
@@ -79,7 +79,7 @@ var styles = StyleSheet.create({
     paddingRight: 15,
     paddingLeft: 15,
     marginBottom: 30,
-    fontSize: 16,
+    fontSize: 19,
     textAlign: 'left',
   },
   aboutTitle: {
@@ -94,7 +94,7 @@ var styles = StyleSheet.create({
     paddingRight: 15,
     paddingLeft: 15,
     marginBottom: 12,
-    fontSize: 13,
+    fontSize: 15,
     textAlign: 'left',
     color: '#3a3638',
     opacity: 0.5,
