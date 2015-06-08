@@ -23,6 +23,10 @@ var store = createStore({
         _profile = action.data;
         store.emitChange(action);
         break;
+      case AppConstants.DELETE_PROFILE:
+        _profile = {};
+        store.emitChange(action);
+        break;
     }
 
     return true;
