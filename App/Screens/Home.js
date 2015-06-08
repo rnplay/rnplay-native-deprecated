@@ -76,16 +76,6 @@ var Home = React.createClass({
           onPress={() => { this.setState({ selectedTab: 'about', }); }}>
           <About />
         </SMXTabBarItemIOS>
-        <SMXTabBarItemIOS
-            name="settings"
-            iconName={'ion|gear-a'}
-            title={'Settings'}
-            iconSize={32}
-            accessibilityLabel="Settings Tab"
-            selected={this.state.selectedTab === 'settings'}
-            onPress={() => { this.setState({ selectedTab: 'settings', }); }}>
-          <Settings />
-        </SMXTabBarItemIOS>
       </SMXTabBarIOS>
     )
   }
