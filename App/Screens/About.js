@@ -33,7 +33,7 @@ var Help = React.createClass({
           <View style={styles.logoContainer}>
             <Image style={styles.logo} source={require('image!rnplay_logo_light_w_sand')} />
           </View>
-          <Text style={styles.firstText}>Run React Native apps from <TouchableOpacity onPress={() => this._loadWebsite('https://rnplay.org')}><Text style={styles.link}>rnplay.org</Text></TouchableOpacity> directly on your device.</Text>
+          <Text style={styles.firstText}>Run React Native apps from <TouchableOpacity onPress={() => this._loadURL('https://rnplay.org')}><Text style={styles.link}>rnplay.org</Text></TouchableOpacity> directly on your device.</Text>
           <Text style={styles.aboutText}>Get started by trying apps on the <Text style={styles.emphasis}>Explore</Text> tab, or login to your rnplay.org account in <Text style={styles.emphasis}>My Apps</Text>.</Text>
           <View style={styles.separator} />
           <Text style={styles.aboutTitle}>How do I exit a loaded app?</Text>
