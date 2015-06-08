@@ -40,6 +40,7 @@ var QRCodeReader = React.createClass({
   render(){
     StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
     return (
+      this.state.cameraOpen ?
       <Camera
         ref="cam"
         style={styles.camera}
@@ -50,7 +51,20 @@ var QRCodeReader = React.createClass({
             style={styles.cameraButton}
             color='#eee' />
         </TouchableOpacity>
-      </Camera>
+      </Camera>  :
+       <View style={styles.container}>
+         <Text style={styles.text}>
+           For apps on rnplay.org, click on 'Run on device', then open the camera and point it at the QR code.
+         </Text>
+         <TouchableOpacity onPress={() => this.setState({cameraOpen: true})} >
+           <Icon
+             name='ion|camera'
+             size={80}
+             style={styles.cameraButton}
+             color='#777'
+           />
+         </TouchableOpacity>
+       </View>
     )
   }
 });
