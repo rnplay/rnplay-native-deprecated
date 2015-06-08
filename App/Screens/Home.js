@@ -25,7 +25,7 @@ var {
 var Home = React.createClass({
   getInitialState() {
     return {
-      selectedTab: 'explore',
+      selectedTab: 'about',
     };
   },
 
