@@ -48,8 +48,8 @@ var QRCodeReader = React.createClass({
         <TouchableOpacity onPress={() => this.setState({cameraOpen: false}) } >
           <Icon name='ion|close'
             size={30}
-            style={styles.cameraButton}
-            color='#eee' />
+            style={styles.closeButton}
+            color='#fff' />
         </TouchableOpacity>
       </Camera>  :
        <View style={styles.container}>
@@ -98,10 +98,13 @@ var styles = StyleSheet.create({
     height: 80,
     backgroundColor: 'transparent'
   },
-  closebutton: {
-    width: 50,
-    height: 50,
-    backgroundColor: '#aaa'
+  closeButton: {
+    width: 30,
+    height: 30,
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    top: 30,
+    right: 20
   }
 
 });
