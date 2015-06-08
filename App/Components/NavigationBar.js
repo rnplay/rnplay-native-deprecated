@@ -88,11 +88,13 @@ var styles = StyleSheet.create({
     paddingTop: 15,
   },
   navButton: {
-    flex: 0.1,
+    flex: 0.2,
     fontSize: 15,
+    paddingHorizontal: 7,
+    color: 'white'
   },
   navTitle: {
-    flex: 0.8,
+    flex: 0.6,
     textAlign: 'center',
     color: 'white',
     fontFamily: 'Avenir Next',
