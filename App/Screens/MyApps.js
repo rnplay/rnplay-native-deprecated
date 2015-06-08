@@ -26,8 +26,8 @@ var MyApps = React.createClass({
 
     return (
       <View style={{flex: 1}}>
-        <NavigationBar 
-          title={'My Apps'} 
+        <NavigationBar
+          title={'My Apps'}
           nextTitle={'Sign Out'}
           onNext={this._signOut}/>
         <AppList url="/apps.json" hideCreator={true} />
