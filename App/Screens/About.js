@@ -18,14 +18,17 @@ var Help = React.createClass({
     LinkingIOS.openURL('mailto:info@rnplay.org');
   },
 
+  _loadURL(url) {
+    LinkingIOS.openURL(url);
+  },
+
   render() {
     StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
     return (
       <View style={{flex: 1}}>
         <NavigationBar title={'About'} />
         <ScrollView style={styles.contentContainer}>
-            <Text style={styles.aboutTitle}>What is this app for?</Text>
-            <Text style={styles.aboutText}>Running React Native apps from rnplay.org directly on your device.</Text>
+            <Text style={styles.firstText}>Run React Native apps from <TouchableOpacity onPress={() => this._loadWebsite('https://rnplay.org')}><Text style={styles.link}>rnplay.org</Text></TouchableOpacity> directly on your device.</Text>
             <View style={styles.separator} />
             <Text style={styles.aboutTitle}>How do I exit a loaded app?</Text>
             <Text style={styles.aboutText}>Tap and hold the screen with two fingers simultaneously for 1.5 seconds.</Text>
@@ -43,13 +46,13 @@ var Help = React.createClass({
             <View style={styles.separator} />
             <View style={styles.otherQuestions}>
               <Text style={styles.otherQuestionsText}>
-                More questions? Pleaes get in touch with us by email.
-              </Text>
-              <View style={{paddingTop: 5}}>
-                <TouchableOpacity onPress={this._sendEmail}>
+                More questions? Pleaes get in touch with us by email. <TouchableOpacity onPress={this._sendEmail}>
                   <Text style={styles.sendEmailText}>info@rnplay.org</Text>
                 </TouchableOpacity>
-              </View>
+
+              </Text>
+              <View style={{paddingTop: 5}}>
+                            </View>
             </View>
         </ScrollView>
       </View>
@@ -67,6 +70,17 @@ var styles = StyleSheet.create({
     color: '#712FA9',
     fontSize: 13,
     marginTop: -2,
+  },
+  link: {
+    color: "#712FA9"
+  },
+
+  firstText: {
+    paddingRight: 15,
+    paddingLeft: 15,
+    marginBottom: 30,
+    fontSize: 16,
+    textAlign: 'left',
   },
   aboutTitle: {
     fontSize: 18,
@@ -95,7 +109,7 @@ var styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   otherQuestionsText: {
-    opacity: 0.4,
+    opacity: 1,
     fontSize: 13,
   },
   otherQuestions: {
