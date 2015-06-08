@@ -3,6 +3,7 @@
 var React = require('react-native');
 var Camera = require('react-native-camera');
 var generateAppURL = require('../Utilities/generateAppURL');
+var Overlay = require('react-native-overlay');
 
 var {
   StyleSheet,
@@ -41,37 +42,39 @@ var QRCodeReader = React.createClass({
     StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
     return (
       this.state.cameraOpen ?
-      <Camera
-        ref="cam"
-        style={styles.camera}
-        onBarCodeRead={this.onBarCodeRead}>
-        <TouchableOpacity onPress={() => this.setState({cameraOpen: false}) } >
-          <Icon name='ion|close'
-            size={30}
-            style={styles.closeButton}
-            color='#fff' />
-        </TouchableOpacity>
-      </Camera>  :
-       <View style={styles.container}>
-         <Text style={styles.text}>
-           On rnplay.org, find an app.
-         </Text>
-         <Text style={styles.text}>
-          Click <Text style={styles.runOnDevice}>Run on device</Text>.
-        </Text>
-         <Text style={styles.text}>
-           Tap below and point the camera at the displayed code.
-         </Text>
+        <Overlay isVisible={true}>
+          <Camera
+            ref="cam"
+            style={styles.camera}
+            onBarCodeRead={this.onBarCodeRead}>
+            <TouchableOpacity onPress={() => this.setState({cameraOpen: false}) } >
+              <Icon name='ion|close'
+                size={30}
+                style={styles.closeButton}
+                color='#fff' />
+            </TouchableOpacity>
+          </Camera>
+        </Overlay> :
+          <View style={styles.container}>
+            <Text style={styles.text}>
+              On rnplay.org, find an app.
+            </Text>
+            <Text style={styles.text}>
+              Click <Text style={styles.runOnDevice}>Run on device</Text>.
+            </Text>
+            <Text style={styles.text}>
+              Tap below and point the camera at the displayed code.
+            </Text>
 
-         <TouchableOpacity onPress={() => this.setState({cameraOpen: true})} >
-           <Icon
-             name='ion|camera'
-             size={80}
-             style={styles.cameraButton}
-             color='#777'
-           />
-         </TouchableOpacity>
-       </View>
+            <TouchableOpacity onPress={() => this.setState({cameraOpen: true})} >
+              <Icon
+                name='ion|camera'
+                size={80}
+                style={styles.cameraButton}
+                color='#777'
+              />
+            </TouchableOpacity>
+          </View>
     )
   }
 });
