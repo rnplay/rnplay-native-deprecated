@@ -29,11 +29,8 @@ var {
 // globals are bad, we make an exception here for now
 var RN_VERSION = require('./package.json').dependencies['react-native'];
 var githubPrefix = 'rnplay/react-native#';
-if (RN_VERSION.indexOf(githubPrefix) === 0) {
-  RN_VERSION = RN_VERSION.replace(githubPrefix, '');
-} else {
-  RN_VERSION = RN_VERSION.replace(/\./g,'').replace(/-/g, '')
-}
+RN_VERSION = RN_VERSION.replace(githubPrefix, '').replace(/\./g,'').replace(/-/g, '')
+
 global.RN_VERSION = RN_VERSION;
 
 var RNPlayNative = React.createClass({
