@@ -42,7 +42,7 @@ var RNPlayNative = React.createClass({
   },
 
   componentDidMount() {
-    StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
+    StatusBarIOS.setStyle('light-content');
     LocalStorage.bootstrap(() => this.setState({bootstrapped: true}));
     LinkingIOS.addEventListener('url', this._processURL);
 
