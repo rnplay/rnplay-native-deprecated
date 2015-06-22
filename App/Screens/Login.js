@@ -76,7 +76,7 @@ var Login = React.createClass({
   },
 
   render(){
-    StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
+    StatusBarIOS.setStyle(StatusBarIOS.setStyle('light-content'));
 
     return (
       <View style={styles.mainContainer}>

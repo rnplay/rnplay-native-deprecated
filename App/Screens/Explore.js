@@ -58,7 +58,7 @@ var Explore = React.createClass({
 
 
   render() {
-    StatusBarIOS.setStyle(StatusBarIOS.Style.darkContent);
+    StatusBarIOS.setStyle(StatusBarIOS.setStyle("default"));
 
     return (
       <View style={styles.mainContainer}>
