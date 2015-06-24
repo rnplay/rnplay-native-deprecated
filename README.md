@@ -8,6 +8,8 @@ in-browser simulators on the site.
 
 ### Try it out live
 
+[Download the latest release](https://itunes.apple.com/us/app/react-native-playground/id1002032944) from the iTunes Store.
+
 Here are some direct links to apps that are hosted on the web and run
 through [Appetize.io](http://www.appetize.io) in the browser via RNPlay.
 
