@@ -39,7 +39,7 @@ var QRCodeReader = React.createClass({
   },
 
   render(){
-    StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
+    StatusBarIOS.setStyle('light-content');
     return (
       this.state.cameraOpen ?
         <Overlay isVisible={true}>
