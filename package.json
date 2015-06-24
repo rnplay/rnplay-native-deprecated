@@ -6,20 +6,21 @@
     "start": "node_modules/react-native/packager/packager.sh"
   },
   "dependencies": {
+    "react-native": "facebook/react-native#4510b3f01f1f8faed5f030fb493bfae6fc24f318",
+    "react-native-linear-gradient": "rnplay/react-native-linear-gradient",
+    "react-native-overlay": "rnplay/react-native-overlay",
     "art": "0.10.0",
     "flux-util": "0.1.1",
     "lodash": "3.9.3",
     "qs": "3.1.0",
-    "react-native": "facebook/react-native",
-    "react-native-accordion": "rnplay/react-native-accordion",
+    "react-native-accordion": "0.2.0",
     "react-native-blur": "0.5.2",
-    "react-native-camera": "rnplay/react-native-camera",
-    "react-native-icons": "rnplay/react-native-icons",
-    "react-native-linear-gradient": "rnplay/react-native-linear-gradient",
-    "react-native-modal": "^0.3.8",
-    "react-native-overlay": "rnplay/react-native-overlay",
-    "react-native-side-menu": "^0.9.2",
-    "react-native-video": "rnplay/react-native-video",
-    "superagent": "^1.2.0"
+    "react-native-camera": "0.2.11",
+    "react-native-icons": "0.1.0",
+    "react-native-modal": "0.3.8",
+    "react-native-side-menu": "0.9.2",
+    "react-native-userdefaults-ios": "rnplay/react-native-userdefaults-ios",
+    "react-native-video": "0.4.5",
+    "superagent": "1.2.0"
   }
 }
