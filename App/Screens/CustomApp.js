@@ -37,6 +37,7 @@ var CustomApp = React.createClass({
 
     this.setState({ isLoading: true });
     AppReloader.reloadAppWithURLString(this.state.url, this.state.appName);
+    this.setState({ isLoading: false });
   },
 
   render() {
@@ -44,10 +45,10 @@ var CustomApp = React.createClass({
 
     return (
       <View style={styles.mainContainer}>
-        <NavigationBar title="Load Custom Apps" />
+        <NavigationBar title="Direct URL" />
         <ScrollView>
           <Text style={styles.text}>
-            Load your React Native app from your local node server or any given url.
+            Load your React Native app from any URL, such as your local packager or a javascript bundle.
           </Text>
 
           <View style={styles.inputContainer}>
@@ -66,7 +67,7 @@ var CustomApp = React.createClass({
           <View style={styles.inputContainer}>
             <TextInput
               ref="appName"
-              placeholder="APP NAME"
+              placeholder="APP MODULE NAME"
               returnKeyType="done"
               onSubmitEditing={this.handleSubmit}
               style={styles.input}
@@ -77,6 +78,10 @@ var CustomApp = React.createClass({
           <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
             <Text style={styles.buttonText}>LOAD & RUN</Text>
           </TouchableHighlight>
+
+          <Text style={styles.helpText}>The module name should match the registered top level component name.</Text>
+
+          <Text style={styles.helpText}>Your app should React Native <Text style={{fontWeight: 700}}>{global.RN_VERSION_DISPLAY}</Text></Text>
 
           <ActivityIndicatorIOS
             animating={this.state.isLoading}
@@ -97,11 +102,15 @@ var styles = StyleSheet.create({
   },
   text: {
     fontFamily: 'Avenir Next',
-    paddingRight: 15,
-    paddingLeft: 15,
+    paddingHorizontal: 15,
     marginBottom: 20,
-    fontSize: 20,
+    fontSize: 17,
     textAlign: 'center',
+  },
+  helpText: {
+    marginTop: 10,
+    paddingHorizontal: 10,
+    color: "#888"
   },
   inputContainer: {
     borderBottomWidth: 1,
@@ -119,7 +128,7 @@ var styles = StyleSheet.create({
     margin: 10
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: 16,
     textAlign: 'center',
     color: 'white',
     padding: 10,
