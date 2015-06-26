@@ -60,7 +60,7 @@ var Home = React.createClass({
         <SMXTabBarItemIOS
             name="custom-app"
             iconName={'ion|code'}
-            title={'Custom App'}
+            title={'Direct URL'}
             iconSize={32}
             accessibilityLabel="Load your custom app"
             selected={this.state.selectedTab === 'custom-app'}
