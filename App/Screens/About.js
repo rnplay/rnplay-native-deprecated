@@ -24,7 +24,7 @@ var Help = React.createClass({
   },
 
   render() {
-    StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
+    StatusBarIOS.setStyle('light-content');
     return (
       <View style={{flex: 1}}>
         <NavigationBar title={'About'} />
@@ -47,9 +47,14 @@ var Help = React.createClass({
           </Text>
           <Text style={styles.aboutText} numberOfLines={2}>
             This app is currently built against React Native
-            <Text style={styles.buildVersionText}> 0.5.0</Text>, released Friday, June 5th, 2015.
+            <Text style={styles.buildVersionText}> {global.RN_VERSION_DISPLAY}</Text>, released Thursday, June 25th, 2015.
           </Text>
           <View style={styles.separator} />
+
+          <Text style={styles.aboutTitle}>Which native modules can I use?</Text>
+          <Text style={styles.aboutText}>Check the <TouchableOpacity onPress={() => LinkingIOS.openURL("https://github.com/rnplay/rnplay-ios/blob/master/package.json")}><Text style={{color: 'blue'}}>package.json for this release</Text></TouchableOpacity> for reference.</Text>
+          <View style={styles.separator} />
+
           <View style={styles.otherQuestions}>
             <Text style={styles.otherQuestionsText}>
               More questions? Pleaes get in touch with us by email. <TouchableOpacity onPress={this._sendEmail}>

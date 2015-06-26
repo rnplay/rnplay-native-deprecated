@@ -13,7 +13,7 @@ var {
 var Settings = React.createClass({
 
   render(){
-    StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
+    StatusBarIOS.setStyle('light-content');
     return (
       <View style={styles.mainContainer}>
         <NavigationBar title={'Settings'} />
