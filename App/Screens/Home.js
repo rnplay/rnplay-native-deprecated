@@ -8,6 +8,7 @@
 var React = require('react-native');
 var Explore = require('./Explore');
 var MyAppsContainer = require('./MyAppsContainer');
+var CustomApp = require('./CustomApp');
 var Settings = require('./Settings');
 var About = require('./About');
 var QRCodeReader = require('./QRCodeReader');
@@ -55,6 +56,16 @@ var Home = React.createClass({
             selected={this.state.selectedTab === 'my-apps'}
             onPress={() => { this.setState({selectedTab: 'my-apps',}); }}>
           <MyAppsContainer />
+        </SMXTabBarItemIOS>
+        <SMXTabBarItemIOS
+            name="custom-app"
+            iconName={'ion|code'}
+            title={'Custom App'}
+            iconSize={32}
+            accessibilityLabel="Load your custom app"
+            selected={this.state.selectedTab === 'custom-app'}
+            onPress={() => { this.setState({selectedTab: 'custom-app',}); }}>
+          <CustomApp />
         </SMXTabBarItemIOS>
         <SMXTabBarItemIOS
             name="qr_code_reader"
