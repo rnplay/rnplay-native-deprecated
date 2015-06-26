@@ -8,13 +8,14 @@
 var React = require('react-native');
 var qs = require('qs');
 var LinkingIOS = require('LinkingIOS');
-var AppReloader = require('NativeModules').AppReloader;
+var reloadApp = require('./App/Utilities/reloadApp');
 var Login = require('./App/Screens/Login');
 var Signup = require('./App/Screens/Signup');
 var Home = require('./App/Screens/Home');
 var Guest = require('./App/Screens/Guest');
 var ProfileStore = require('./App/Stores/ProfileStore');
 var LocalStorage = require('./App/Stores/LocalStorage');
+
 var _ = require('lodash');
 
 var {
@@ -28,6 +29,7 @@ var {
 
 // globals are bad, we make an exception here for now
 var RN_VERSION = require('./package.json').dependencies['react-native'];
+global.RN_VERSION_DISPLAY = RN_VERSION;
 var githubPrefix = 'rnplay/react-native#';
 RN_VERSION = RN_VERSION.replace(githubPrefix, '').replace(/\./g,'').replace(/-/g, '')
 
@@ -42,7 +44,7 @@ var RNPlayNative = React.createClass({
   },
 
   componentDidMount() {
-    StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent);
+    StatusBarIOS.setStyle('light-content');
     LocalStorage.bootstrap(() => this.setState({bootstrapped: true}));
     LinkingIOS.addEventListener('url', this._processURL);
 
@@ -58,10 +60,14 @@ var RNPlayNative = React.createClass({
 
   _processURL(e) {
     var url = e.url.replace('rnplay://', '');
-    var {bundle_url, module_name} = qs.parse(url);
+    var [path, querystring] = url.split("?");
 
-    if (bundle_url && module_name) {
-      AppReloader.reloadAppWithURLString(bundle_url, module_name);
+    if (querystring) {
+      var {bundle_url, module_name, params_json} = qs.parse(querystring);
+      if (bundle_url && module_name) {
+        reloadApp(bundle_url, module_name, params_json);
+      }
+
     }
   },
 
