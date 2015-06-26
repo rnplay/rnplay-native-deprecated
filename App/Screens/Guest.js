@@ -18,7 +18,7 @@ var {
   View
 } = React;
 
-var AppReloader = require('NativeModules').AppReloader;
+var reloadApp = require('../Utilities/reloadApp');
 var Camera = require('react-native-camera');
 var Overlay = require('react-native-overlay');
 
@@ -103,7 +103,7 @@ var Guest = React.createClass({
   },
 
   selectApp(app) {
-    AppReloader.reloadAppWithURLString(app.bundle_url, app.module_name);
+    reloadApp(app.bundle_url, app.module_name);
   },
 
   renderLoading() {
@@ -118,7 +118,7 @@ var Guest = React.createClass({
     if (!this.barCodeRead) {
       this.barCodeRead = true
       var appdata = JSON.parse(data.data)
-      AppReloader.reloadAppWithURLString(appdata.url, appdata.module_name);
+      reloadApp(appdata.url, appdata.module_name);
     }
   },
 

@@ -4,7 +4,7 @@ var React = require('react-native');
 var NavigationBar = require('../Components/NavigationBar');
 var Api = require('../Api/Core');
 var AppActions = require('../Actions/AppActions');
-var AppReloader = require('NativeModules').AppReloader;
+var reloadApp = require('../Utilities/reloadApp');
 
 var {
   ActivityIndicatorIOS,
@@ -36,7 +36,7 @@ var CustomApp = React.createClass({
     }
 
     this.setState({ isLoading: true });
-    AppReloader.reloadAppWithURLString(this.state.url, this.state.appName);
+    reloadApp(this.state.url, this.state.appName);
     this.setState({ isLoading: false });
   },
 
@@ -81,7 +81,7 @@ var CustomApp = React.createClass({
 
           <Text style={styles.helpText}>The module name should match the registered top level component name.</Text>
 
-          <Text style={styles.helpText}>Your app should React Native <Text style={{fontWeight: 700}}>{global.RN_VERSION_DISPLAY}</Text></Text>
+          <Text style={styles.helpText}>Your app should React Native <Text style={{fontWeight: "700"}}>{global.RN_VERSION_DISPLAY}</Text></Text>
 
           <ActivityIndicatorIOS
             animating={this.state.isLoading}

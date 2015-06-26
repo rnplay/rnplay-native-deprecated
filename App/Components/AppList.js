@@ -18,7 +18,7 @@ var {
 
 var ActionSheetIOS = require('ActionSheetIOS');
 
-var AppReloader = require('NativeModules').AppReloader;
+var reloadApp = require('../Utilities/reloadApp');
 var Api = require("../Api/Core");
 var NoResults = require('../Components/NoResults');
 var generateAppURL = require('../Utilities/generateAppURL');
@@ -157,7 +157,7 @@ var AppList = React.createClass({
 
   selectApp(app) {
     Api.post("/apps/"+app.url_token+"/view.json");
-    AppReloader.reloadAppWithURLString(generateAppURL(app), app.module_name);
+    reloadApp(generateAppURL(app), app.module_name);
   },
 
   renderLoading() {
