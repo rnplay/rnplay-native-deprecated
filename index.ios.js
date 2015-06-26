@@ -8,14 +8,13 @@
 var React = require('react-native');
 var qs = require('qs');
 var LinkingIOS = require('LinkingIOS');
-var AppReloader = require('NativeModules').AppReloader;
+var reloadApp = require('./App/Utilities/reloadApp');
 var Login = require('./App/Screens/Login');
 var Signup = require('./App/Screens/Signup');
 var Home = require('./App/Screens/Home');
 var Guest = require('./App/Screens/Guest');
 var ProfileStore = require('./App/Stores/ProfileStore');
 var LocalStorage = require('./App/Stores/LocalStorage');
-var UserDefaults = require('react-native-userdefaults-ios');
 
 var _ = require('lodash');
 
@@ -65,17 +64,8 @@ var RNPlayNative = React.createClass({
 
     if (querystring) {
       var {bundle_url, module_name, params_json} = qs.parse(querystring);
-
-      if (params_json) {
-        var params = JSON.parse(params_json);
-        UserDefaults.setObjectForKey(params, 'rnplayParams')
-          .then(result => {
-            console.log(result);
-          });
-      }
-
       if (bundle_url && module_name) {
-        AppReloader.reloadAppWithURLString(bundle_url, module_name);
+        reloadApp(bundle_url, module_name, params_json);
       }
 
     }

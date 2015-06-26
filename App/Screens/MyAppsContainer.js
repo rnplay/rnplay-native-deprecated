@@ -6,7 +6,6 @@
 'use strict';
 
 var React = require('react-native');
-var AppReloader = require('NativeModules').AppReloader;
 var Camera = require('react-native-camera');
 var Overlay = require('react-native-overlay');
 var Api = require("../Api/Core");

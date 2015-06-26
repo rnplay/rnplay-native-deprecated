@@ -4,7 +4,7 @@ var React = require('react-native');
 var NavigationBar = require('../Components/NavigationBar');
 var Api = require('../Api/Core');
 var AppActions = require('../Actions/AppActions');
-var AppReloader = require('NativeModules').AppReloader;
+var reloadApp = require('../Utilities/reloadApp');
 
 var {
   ActivityIndicatorIOS,
@@ -36,7 +36,7 @@ var CustomApp = React.createClass({
     }
 
     this.setState({ isLoading: true });
-    AppReloader.reloadAppWithURLString(this.state.url, this.state.appName);
+    reloadApp(this.state.url, this.state.appName);
     this.setState({ isLoading: false });
   },
 
