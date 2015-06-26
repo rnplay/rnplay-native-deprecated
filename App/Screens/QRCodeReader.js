@@ -13,7 +13,7 @@ var {
   TouchableOpacity
 } = React;
 
-var AppReloader = require('NativeModules').AppReloader;
+var reloadApp = require('../Utilities/reloadApp');
 var Icon = require('FAKIconImage');
 var TimerMixin = require('react-timer-mixin');
 
@@ -35,7 +35,7 @@ var QRCodeReader = React.createClass({
       }
     )
 
-    AppReloader.reloadAppWithURLString(generateAppURL(app), app.module_name);
+    reloadApp(generateAppURL(app), app.module_name);
   },
 
   render(){
