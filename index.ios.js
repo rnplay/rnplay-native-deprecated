@@ -15,6 +15,8 @@ var Home = require('./App/Screens/Home');
 var Guest = require('./App/Screens/Guest');
 var ProfileStore = require('./App/Stores/ProfileStore');
 var LocalStorage = require('./App/Stores/LocalStorage');
+var UserDefaults = require('react-native-userdefaults-ios');
+
 var _ = require('lodash');
 
 var {
@@ -28,6 +30,7 @@ var {
 
 // globals are bad, we make an exception here for now
 var RN_VERSION = require('./package.json').dependencies['react-native'];
+global.RN_VERSION_DISPLAY = RN_VERSION;
 var githubPrefix = 'rnplay/react-native#';
 RN_VERSION = RN_VERSION.replace(githubPrefix, '').replace(/\./g,'').replace(/-/g, '')
 
@@ -58,10 +61,23 @@ var RNPlayNative = React.createClass({
 
   _processURL(e) {
     var url = e.url.replace('rnplay://', '');
-    var {bundle_url, module_name} = qs.parse(url);
+    var [path, querystring] = url.split("?");
 
-    if (bundle_url && module_name) {
-      AppReloader.reloadAppWithURLString(bundle_url, module_name);
+    if (querystring) {
+      var {bundle_url, module_name, params_json} = qs.parse(querystring);
+
+      if (params_json) {
+        var params = JSON.parse(params_json);
+        UserDefaults.setObjectForKey(params, 'rnplayParams')
+          .then(result => {
+            console.log(result);
+          });
+      }
+
+      if (bundle_url && module_name) {
+        AppReloader.reloadAppWithURLString(bundle_url, module_name);
+      }
+
     }
   },
 
