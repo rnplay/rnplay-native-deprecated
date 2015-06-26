@@ -4,6 +4,7 @@ var React = require('react-native');
 var NavigationBar = require('../Components/NavigationBar');
 var Api = require('../Api/Core');
 var AppActions = require('../Actions/AppActions');
+var AppReloader = require('NativeModules').AppReloader;
 
 var {
   ActivityIndicatorIOS,
@@ -17,62 +18,25 @@ var {
   StatusBarIOS,
 } = React;
 
-var Login = React.createClass({
+var CustomApp = React.createClass({
 
   getInitialState() {
     return {
       isLoading: false,
-      error: false,
       email: '',
       password: '',
 
     }
   },
 
-  renderError() {
-    // return (
-    //   <View style={styles.errorContainer}>
-    //     <Text style={styles.errorText}>{this.props.error}</Text>
-    //   </View>
-    // )
-  },
-
   handleSubmit() {
-    if(!this.state.email || !this.state.password) {
+    if(!this.state.url || !this.state.appName) {
       AlertIOS.alert('Error', 'Please fill in all fields',[{text: 'OK'}])
       return;
     }
 
-    if(this.state.password.length < 5) {
-      AlertIOS.alert('Error', 'Please enter a valid password',[{text: 'OK'}])
-      return;
-    }
-
     this.setState({ isLoading: true });
-
-    var params = {
-      user: {
-        email: this.state.email,
-        password: this.state.password,
-        remember_me: true,
-      }
-    };
-
-    Api.post('/users/sign_in', params)
-      .then((res) => {
-        if(res.error) {
-          this.setState({
-            isLoading: false,
-            email: this.state.email,
-            password: this.state.password
-          });
-          AlertIOS.alert('Sign In Failed', this.state.error,[{text: 'OK'}]);
-        } else {
-          AppActions.updateProfile(res);
-          this.setState({ isLoading: false, error: false });
-          this.props.navigator.replace({ id: 'my_apps' });
-        }
-    });
+    AppReloader.reloadAppWithURLString(this.state.url, this.state.appName);
   },
 
   render() {
@@ -80,38 +44,39 @@ var Login = React.createClass({
 
     return (
       <View style={styles.mainContainer}>
-        <NavigationBar title={'Account Required'} />
+        <NavigationBar title="Load Custom Apps" />
         <ScrollView>
+          <Text style={styles.text}>
+            Load your React Native app from your local node server or any given url.
+          </Text>
+
           <View style={styles.inputContainer}>
             <TextInput
-              placeholder={"EMAIL"}
-              keyboardType={'email-address'}
-              autoCapitalize={"none"}
+              placeholder="URL"
+              keyboardType="url"
+              autoCapitalize="none"
               autoCorrect={false}
-              returnKeyType={'next'}
-              onSubmitEditing={() => this.refs.pwField.focus()}
+              returnKeyType="next"
+              onSubmitEditing={() => this.refs.appName.focus()}
               style={styles.input}
-              onChangeText={(text) => this.setState({email: text})}
+              onChangeText={(url) => this.setState({url: url})}
             />
           </View>
 
           <View style={styles.inputContainer}>
             <TextInput
-              ref="pwField"
-              placeholder={"PASSWORD"}
-              password={true}
-              returnKeyType={'done'}
+              ref="appName"
+              placeholder="APP NAME"
+              returnKeyType="done"
               onSubmitEditing={this.handleSubmit}
               style={styles.input}
-              onChangeText={(text) => this.setState({password: text})}
+              onChangeText={(text) => this.setState({appName: text})}
             />
           </View>
 
           <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
-            <Text style={styles.buttonText}>SIGN IN</Text>
+            <Text style={styles.buttonText}>LOAD & RUN</Text>
           </TouchableHighlight>
-
-          {this.props.error && this.renderError()}
 
           <ActivityIndicatorIOS
             animating={this.state.isLoading}
@@ -129,6 +94,14 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: 'white'
+  },
+  text: {
+    fontFamily: 'Avenir Next',
+    paddingRight: 15,
+    paddingLeft: 15,
+    marginBottom: 20,
+    fontSize: 20,
+    textAlign: 'center',
   },
   inputContainer: {
     borderBottomWidth: 1,
@@ -152,13 +125,6 @@ var styles = StyleSheet.create({
     padding: 10,
     fontFamily: 'Avenir Next',
   },
-  errorContainer: {
-    justifyContent: 'center',
-    alignSelf: 'center',
-  },
-  errorText: {
-    opacity: 0.6,
-  },
 });
 
-module.exports = Login;
+module.exports = CustomApp;
