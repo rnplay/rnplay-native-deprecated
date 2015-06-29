@@ -1164,7 +1164,7 @@ var RNPlayNative = React.createClass({displayName: "RNPlayNative",
 
 AppRegistry.registerComponent('RNPlayNative', function()  {return RNPlayNative;});
 });
-__d('react-native/Libraries/react-native/react-native',["React","ActivityIndicatorIOS","DatePickerIOS","Image","ListView","MapView","NavigatorIOS","PickerIOS","Navigator","SegmentedControlIOS","ScrollView","SliderIOS","SwitchIOS","TabBarIOS","Text","TextInput","TouchableHighlight","TouchableOpacity","TouchableWithoutFeedback","View","WebView","AlertIOS","AppRegistry","AppStateIOS","AsyncStorage","CameraRoll","InteractionManager","LinkingIOS","LayoutAnimation","NetInfo","PixelRatio","PushNotificationIOS","PanResponder","StatusBarIOS","StyleSheet","VibrationIOS","RCTDeviceEventEmitter","NativeModules","requireNativeComponent","LinkedStateMixin","ReactComponentWithPureRenderMixin","NativeModules","ReactUpdates","cloneWithProps","ReactFragment","update","ReactDefaultPerf","ReactTestUtils"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('react-native/Libraries/react-native/react-native',["React","ActivityIndicatorIOS","DatePickerIOS","Image","ListView","MapView","NavigatorIOS","PickerIOS","Navigator","SegmentedControlIOS","ScrollView","SliderIOS","SwitchIOS","TabBarIOS","Text","TextInput","TouchableHighlight","TouchableOpacity","TouchableWithoutFeedback","View","WebView","AlertIOS","AppRegistry","AppStateIOS","AsyncStorage","CameraRoll","InteractionManager","LinkingIOS","LayoutAnimation","NetInfo","PixelRatio","PushNotificationIOS","PanResponder","StatusBarIOS","StyleSheet","VibrationIOS","RCTDeviceEventEmitter","RCTNativeAppEventEmitter","NativeModules","requireNativeComponent","LinkedStateMixin","ReactComponentWithPureRenderMixin","NativeModules","ReactUpdates","cloneWithProps","ReactFragment","update","ReactDefaultPerf","ReactTestUtils"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -1225,6 +1225,7 @@ var ReactNative = Object.assign(Object.create(require('React')), {
 
   // Plugins
   DeviceEventEmitter: require('RCTDeviceEventEmitter'),
+  NativeAppEventEmitter: require('RCTNativeAppEventEmitter'),
   NativeModules: require('NativeModules'),
   requireNativeComponent: require('requireNativeComponent'),
 
@@ -1259,8 +1260,7 @@ __d('React',["ReactNative"],function(global, require, requireDynamic, requireLaz
  * @providesModule React
  * @flow
  */
-
-"use strict";
+'use strict';
 
 module.exports = require('ReactNative');
 });
@@ -1275,7 +1275,7 @@ __d('ReactNative',["ReactChildren","ReactClass","ReactComponent","ReactContext",
  * @providesModule ReactNative
  * @flow
  */
-"use strict";
+'use strict';
 
 var ReactChildren = require('ReactChildren');
 var ReactClass = require('ReactClass');
@@ -6349,7 +6349,7 @@ var keyOf = function(oneKeyObj) {
 
 module.exports = keyOf;
 });
-__d('ReactNativeDefaultInjection',["InitializeJavaScriptAppEngine","EventPluginHub","EventPluginUtils","IOSDefaultEventPluginOrder","IOSNativeBridgeEventPlugin","NodeHandle","ReactClass","ReactComponentEnvironment","ReactDefaultBatchingStrategy","ReactEmptyComponent","ReactInstanceHandles","ReactNativeComponentEnvironment","ReactNativeGlobalInteractionHandler","ReactNativeGlobalResponderHandler","ReactNativeMount","ReactNativeTextComponent","ReactNativeComponent","ReactUpdates","ResponderEventPlugin","UniversalWorkerNodeHandle","createReactNativeComponentClass","invariant","RCTEventEmitter","RCTLog","RCTJSTimers"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ReactNativeDefaultInjection',["InitializeJavaScriptAppEngine","EventPluginHub","EventPluginUtils","IOSDefaultEventPluginOrder","IOSNativeBridgeEventPlugin","NodeHandle","ReactComponentEnvironment","ReactDefaultBatchingStrategy","ReactEmptyComponent","ReactInstanceHandles","ReactNativeComponentEnvironment","ReactNativeGlobalInteractionHandler","ReactNativeGlobalResponderHandler","ReactNativeMount","ReactNativeTextComponent","ReactNativeComponent","ReactUpdates","ResponderEventPlugin","UniversalWorkerNodeHandle","createReactNativeComponentClass","invariant","RCTEventEmitter","RCTLog","RCTJSTimers"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -6360,8 +6360,7 @@ __d('ReactNativeDefaultInjection',["InitializeJavaScriptAppEngine","EventPluginH
  * @providesModule ReactNativeDefaultInjection
  * @flow
  */
-
-"use strict";
+'use strict';
 
 /**
  * Make sure `setTimeout`/`setInterval` are patched correctly.
@@ -6372,7 +6371,6 @@ var EventPluginUtils = require('EventPluginUtils');
 var IOSDefaultEventPluginOrder = require('IOSDefaultEventPluginOrder');
 var IOSNativeBridgeEventPlugin = require('IOSNativeBridgeEventPlugin');
 var NodeHandle = require('NodeHandle');
-var ReactClass = require('ReactClass');
 var ReactComponentEnvironment = require('ReactComponentEnvironment');
 var ReactDefaultBatchingStrategy = require('ReactDefaultBatchingStrategy');
 var ReactEmptyComponent = require('ReactEmptyComponent');
@@ -6893,6 +6891,7 @@ __d('ErrorUtils',[],function(global, require, requireDynamic, requireLazy, modul
  *
  * @providesModule ErrorUtils
  */
+/* eslint-disable consistent-this, global-strict */
 
 var GLOBAL = this;
 
@@ -8141,7 +8140,6 @@ var JSTimers = {
     var newID = JSTimersExecution.GUID++;
     var freeIndex = JSTimers._getFreeIndex();
     JSTimersExecution.timerIDs[freeIndex] = newID;
-    JSTimersExecution.callbacks[freeIndex] = func;
     JSTimersExecution.callbacks[freeIndex] = function() {
       return func.apply(undefined, args);
     };
@@ -8158,12 +8156,15 @@ var JSTimers = {
     var newID = JSTimersExecution.GUID++;
     var freeIndex = JSTimers._getFreeIndex();
     JSTimersExecution.timerIDs[freeIndex] = newID;
-    JSTimersExecution.callbacks[freeIndex] = func;
     JSTimersExecution.callbacks[freeIndex] = function() {
-      return func.apply(undefined, args);
+      var startTime = Date.now();
+      var ret = func.apply(undefined, args);
+      var endTime = Date.now();
+      RCTTiming.createTimer(newID, Math.max(0, duration - (endTime - startTime)), endTime, false);
+      return ret;
     };
     JSTimersExecution.types[freeIndex] = JSTimersExecution.Type.setInterval;
-    RCTTiming.createTimer(newID, duration, Date.now(), /** recurring */ true);
+    RCTTiming.createTimer(newID, duration, Date.now(), /** recurring */ false);
     return newID;
   },
 
@@ -8175,7 +8176,6 @@ var JSTimers = {
     var newID = JSTimersExecution.GUID++;
     var freeIndex = JSTimers._getFreeIndex();
     JSTimersExecution.timerIDs[freeIndex] = newID;
-    JSTimersExecution.callbacks[freeIndex] = func;
     JSTimersExecution.callbacks[freeIndex] = function() {
       return func.apply(undefined, args);
     };
@@ -8616,9 +8616,9 @@ var ZERO = valuePromise(0);
 var EMPTYSTRING = valuePromise('');
 
 function valuePromise(value) {
-  var p = new Promise(Promise._83);
-  p._32 = 1;
-  p._8 = value;
+  var p = new Promise(Promise._1);
+  p._41 = 1;
+  p._86 = value;
   return p;
 }
 Promise.resolve = function (value) {
@@ -8655,11 +8655,11 @@ Promise.all = function (arr) {
     function res(i, val) {
       if (val && (typeof val === 'object' || typeof val === 'function')) {
         if (val instanceof Promise && val.then === Promise.prototype.then) {
-          while (val._32 === 3) {
-            val = val._8;
+          while (val._41 === 3) {
+            val = val._86;
           }
-          if (val._32 === 1) return res(i, val._8);
-          if (val._32 === 2) reject(val._8);
+          if (val._41 === 1) return res(i, val._86);
+          if (val._41 === 2) reject(val._86);
           val.then(function (val) {
             res(i, val);
           }, reject);
@@ -8766,13 +8766,13 @@ function Promise(fn) {
   if (typeof fn !== 'function') {
     throw new TypeError('not a function');
   }
-  this._32 = 0;
-  this._8 = null;
-  this._89 = [];
+  this._41 = 0;
+  this._86 = null;
+  this._17 = [];
   if (fn === noop) return;
   doResolve(fn, this);
 }
-Promise._83 = noop;
+Promise._1 = noop;
 
 Promise.prototype.then = function(onFulfilled, onRejected) {
   if (this.constructor !== Promise) {
@@ -8791,24 +8791,24 @@ function safeThen(self, onFulfilled, onRejected) {
   });
 };
 function handle(self, deferred) {
-  while (self._32 === 3) {
-    self = self._8;
+  while (self._41 === 3) {
+    self = self._86;
   }
-  if (self._32 === 0) {
-    self._89.push(deferred);
+  if (self._41 === 0) {
+    self._17.push(deferred);
     return;
   }
   setImmediate(function() {
-    var cb = self._32 === 1 ? deferred.onFulfilled : deferred.onRejected;
+    var cb = self._41 === 1 ? deferred.onFulfilled : deferred.onRejected;
     if (cb === null) {
-      if (self._32 === 1) {
-        resolve(deferred.promise, self._8);
+      if (self._41 === 1) {
+        resolve(deferred.promise, self._86);
       } else {
-        reject(deferred.promise, self._8);
+        reject(deferred.promise, self._86);
       }
       return;
     }
-    var ret = tryCallOne(cb, self._8);
+    var ret = tryCallOne(cb, self._86);
     if (ret === IS_ERROR) {
       reject(deferred.promise, LAST_ERROR);
     } else {
@@ -8836,8 +8836,8 @@ function resolve(self, newValue) {
       then === self.then &&
       newValue instanceof Promise
     ) {
-      self._32 = 3;
-      self._8 = newValue;
+      self._41 = 3;
+      self._86 = newValue;
       finale(self);
       return;
     } else if (typeof then === 'function') {
@@ -8845,21 +8845,21 @@ function resolve(self, newValue) {
       return;
     }
   }
-  self._32 = 1;
-  self._8 = newValue;
+  self._41 = 1;
+  self._86 = newValue;
   finale(self);
 }
 
 function reject(self, newValue) {
-  self._32 = 2;
-  self._8 = newValue;
+  self._41 = 2;
+  self._86 = newValue;
   finale(self);
 }
 function finale(self) {
-  for (var i = 0; i < self._89.length; i++) {
-    handle(self, self._89[i]);
+  for (var i = 0; i < self._17.length; i++) {
+    handle(self, self._17[i]);
   }
-  self._89 = null;
+  self._17 = null;
 }
 
 function Handler(onFulfilled, onRejected, promise){
@@ -8925,6 +8925,7 @@ __d('SourceMap',[],function(global, require, requireDynamic, requireLazy, module
  * and wrapping resulting file into `wrapper` function.
  *
  */
+/*eslint-disable */
 
 var scope = {};
 wrapper.call(scope);
@@ -10882,6 +10883,7 @@ __d('react-native/Libraries/JavaScriptAppEngine/Initialization/source-map-url',[
  *
  * @nolint
  */
+/* eslint-disable */
 
 (function() {
   var define = null; // Hack to make it work with our packager
@@ -11429,6 +11431,7 @@ __d('fetch',[],function(global, require, requireDynamic, requireLazy, module, ex
  * @providesModule fetch
  * @nolint
  */
+/* eslint-disable */
 'use strict';
 
 var self = {};
@@ -11918,7 +11921,7 @@ var Geolocation = {
       subscriptions = [];
     }
   }
-}
+};
 
 module.exports = Geolocation;
 });
@@ -13115,8 +13118,7 @@ __d('IOSNativeBridgeEventPlugin',["EventPropagators","NativeModules","SyntheticE
  * @providesModule IOSNativeBridgeEventPlugin
  * @flow
  */
-
-"use strict";
+'use strict';
 
 var EventPropagators = require('EventPropagators');
 var NativeModules = require('NativeModules');
@@ -13139,7 +13141,7 @@ for (var bubblingTypeName in customBubblingEventTypes) {
 for (var directTypeName in customDirectEventTypes) {
   warning(
     !customBubblingEventTypes[directTypeName],
-    "Event cannot be both direct and bubbling: %s",
+    'Event cannot be both direct and bubbling: %s',
     directTypeName
   );
   allTypesByEventName[directTypeName] = customDirectEventTypes[directTypeName];
@@ -13182,7 +13184,6 @@ var IOSNativeBridgeEventPlugin = {
 };
 
 module.exports = IOSNativeBridgeEventPlugin;
-
 });
 __d('EventPropagators',["EventConstants","EventPluginHub","accumulateInto","forEachAccumulated"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright 2013-2014 Facebook, Inc.
@@ -14175,8 +14176,7 @@ __d('ReactNativeDOMIDOperations',["ReactNativeTagHandles","ReactMultiChildUpdate
  * @providesModule ReactNativeDOMIDOperations
  * @flow
  */
-
-"use strict";
+'use strict';
 
 var ReactNativeTagHandles = require('ReactNativeTagHandles');
 var ReactMultiChildUpdateTypes = require('ReactMultiChildUpdateTypes');
@@ -14413,8 +14413,7 @@ __d('ReactNativeReconcileTransaction',["CallbackQueue","PooledClass","Transactio
  * @providesModule ReactNativeReconcileTransaction
  * @flow
  */
-
-"use strict";
+'use strict';
 
 var CallbackQueue = require('CallbackQueue');
 var PooledClass = require('PooledClass');
@@ -14562,6 +14561,13 @@ var invariant = require('invariant');
 var keyMirror = require('keyMirror');
 var setImmediate = require('setImmediate');
 
+                     
+
+/**
+ * Maximum time a handle can be open before warning in DEV.
+ */
+var DEV_TIMEOUT = 2000;
+
 var _emitter = new EventEmitter();
 var _interactionSet = new Set();
 var _addInteractionSet = new Set();
@@ -14630,6 +14636,14 @@ var InteractionManager = {
     scheduleUpdate();
     var handle = ++_inc;
     _addInteractionSet.add(handle);
+    if (__DEV__) {
+      // Capture the stack trace of what created the handle.
+      var error = new Error(
+        'InteractionManager: interaction handle not cleared within ' +
+        DEV_TIMEOUT + ' ms.'
+      );
+      setDevTimeoutHandle(handle, error, DEV_TIMEOUT);
+    }
     return handle;
   },
 
@@ -14692,6 +14706,21 @@ function processUpdate() {
 
   _addInteractionSet.clear();
   _deleteInteractionSet.clear();
+}
+
+/**
+ * Wait until `timeout` has passed and warn if the handle has not been cleared.
+ */
+function setDevTimeoutHandle(
+  handle        ,
+  error       ,
+  timeout        
+)       {
+  setTimeout(function()  {
+    if (_interactionSet.has(handle)) {
+      console.warn(error.message + '\n' + error.stack);
+    }
+  }, timeout);
 }
 
 module.exports = InteractionManager;
@@ -15874,7 +15903,7 @@ var ReactNativeGlobalResponderHandler = {
 
 module.exports = ReactNativeGlobalResponderHandler;
 });
-__d('ReactNativeMount',["NativeModules","ReactNativeTagHandles","ReactPerf","ReactReconciler","ReactUpdateQueue","ReactUpdates","emptyObject","instantiateReactComponent","invariant","shouldUpdateReactComponent"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ReactNativeMount',["NativeModules","ReactNativeTagHandles","ReactPerf","ReactReconciler","ReactUpdateQueue","ReactUpdates","emptyObject","instantiateReactComponent","shouldUpdateReactComponent"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -15897,7 +15926,6 @@ var ReactUpdates = require('ReactUpdates');
 
 var emptyObject = require('emptyObject');
 var instantiateReactComponent = require('instantiateReactComponent');
-var invariant = require('invariant');
 var shouldUpdateReactComponent = require('shouldUpdateReactComponent');
 
 function instanceNumberToChildRootID(rootNodeID, instanceNumber) {
@@ -18208,7 +18236,7 @@ var UniversalWorkerNodeHandle = {
 
 module.exports = UniversalWorkerNodeHandle;
 });
-__d('createReactNativeComponentClass',["ReactElement","ReactNativeBaseComponent"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('createReactNativeComponentClass',["ReactNativeBaseComponent"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -18220,9 +18248,8 @@ __d('createReactNativeComponentClass',["ReactElement","ReactNativeBaseComponent"
  * @flow
  */
 
-"use strict";
+'use strict';
 
-var ReactElement = require('ReactElement');
 var ReactNativeBaseComponent = require('ReactNativeBaseComponent');
 
 // See also ReactNativeBaseComponent
@@ -18318,7 +18345,8 @@ var cachedIndexArray = function(size) {
     for (var i = 0; i < size; i++) {
       arr[i] = i;
     }
-    return cachedIndexArray._cache[size] = arr;
+    cachedIndexArray._cache[size] = arr;
+    return arr;
   } else {
     return cachedResult;
   }
@@ -18483,7 +18511,7 @@ ReactNativeBaseComponent.Mixin = {
    */
   _reconcileListenersUponUpdate: function(prevProps, nextProps) {
     for (var key in nextProps) {
-      if (registrationNames[key] && (nextProps[key] != prevProps[key])) {
+      if (registrationNames[key] && (nextProps[key] !== prevProps[key])) {
         putListener(this._rootNodeID, key, nextProps[key]);
       }
     }
@@ -19233,6 +19261,7 @@ __d('MatrixMath',["invariant"],function(global, require, requireDynamic, require
  *
  * @providesModule MatrixMath
  */
+/* eslint-disable space-infix-ops */
 'use strict';
 
 var invariant = require('invariant');
@@ -19837,8 +19866,7 @@ __d('ReactNativeEventEmitter',["EventPluginHub","ReactEventEmitterMixin","ReactN
  * @providesModule ReactNativeEventEmitter
  * @flow
  */
-
-"use strict";
+'use strict';
 
 var EventPluginHub = require('EventPluginHub');
 var ReactEventEmitterMixin = require('ReactEventEmitterMixin');
@@ -21736,7 +21764,6 @@ __d('RCTLog',["invariant"],function(global, require, requireDynamic, requireLazy
  * @providesModule RCTLog
  * @flow
  */
- /* globals nativeLoggingHook */
 'use strict';
 
 var invariant = require('invariant');
@@ -21879,7 +21906,7 @@ function onlyChild(children) {
 
 module.exports = onlyChild;
 });
-__d('ActivityIndicatorIOS',["NativeMethodsMixin","NativeModules","ReactPropTypes","React","StyleSheet","View","requireNativeComponent","verifyPropTypes"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('ActivityIndicatorIOS',["NativeMethodsMixin","ReactPropTypes","React","StyleSheet","View","requireNativeComponent","verifyPropTypes"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -21893,7 +21920,6 @@ __d('ActivityIndicatorIOS',["NativeMethodsMixin","NativeModules","ReactPropTypes
 'use strict';
 
 var NativeMethodsMixin = require('NativeMethodsMixin');
-var NativeModules = require('NativeModules');
 var PropTypes = require('ReactPropTypes');
 var React = require('React');
 var StyleSheet = require('StyleSheet');
@@ -21934,6 +21960,12 @@ var ActivityIndicatorIOS = React.createClass({displayName: "ActivityIndicatorIOS
       'small',
       'large',
     ]),
+    /**
+     * Invoked on mount and layout changes with
+     *
+     *   {nativeEvent: { layout: {x, y, width, height}}}.
+     */
+    onLayout: PropTypes.func,
   },
 
   getDefaultProps: function()               {
@@ -21946,10 +21978,12 @@ var ActivityIndicatorIOS = React.createClass({displayName: "ActivityIndicatorIOS
   },
 
   render: function() {
-    var $__0=   this.props,style=$__0.style,props=(function(source, exclusion) {var rest = {};var hasOwn = Object.prototype.hasOwnProperty;if (source == null) {throw new TypeError();}for (var key in source) {if (hasOwn.call(source, key) && !hasOwn.call(exclusion, key)) {rest[key] = source[key];}}return rest;})($__0,{style:1});
+    var $__0=    this.props,onLayout=$__0.onLayout,style=$__0.style,props=(function(source, exclusion) {var rest = {};var hasOwn = Object.prototype.hasOwnProperty;if (source == null) {throw new TypeError();}for (var key in source) {if (hasOwn.call(source, key) && !hasOwn.call(exclusion, key)) {rest[key] = source[key];}}return rest;})($__0,{onLayout:1,style:1});
     var sizeStyle = (this.props.size === 'large') ? styles.sizeLarge : styles.sizeSmall;
     return (
-      React.createElement(View, {style: [styles.container, sizeStyle, style]}, 
+      React.createElement(View, {
+        onLayout: onLayout, 
+        style: [styles.container, sizeStyle, style]}, 
         React.createElement(RCTActivityIndicatorView, React.__spread({},  props))
       )
     );
@@ -22162,6 +22196,26 @@ var createReactNativeComponentClass = require('createReactNativeComponentClass')
 
 var stylePropType = StyleSheetPropType(ViewStylePropTypes);
 
+var AccessibilityTraits = [
+  'none',
+  'button',
+  'link',
+  'header',
+  'search',
+  'image',
+  'selected',
+  'plays',
+  'key',
+  'text',
+  'summary',
+  'disabled',
+  'frequentUpdates',
+  'startsMedia',
+  'adjustable',
+  'allowsDirectInteraction',
+  'pageTurn',
+];
+
 /**
  * The most fundamental component for building UI, `View` is a
  * container that supports layout with flexbox, style, some touch handling, and
@@ -22209,6 +22263,27 @@ var View = React.createClass({displayName: "View",
     accessibilityLabel: PropTypes.string,
 
     /**
+     * Provides additional traits to screen reader. By default no traits are
+     * provided unless specified otherwise in element
+     */
+    accessibilityTraits: PropTypes.oneOfType([
+      PropTypes.oneOf(AccessibilityTraits),
+      PropTypes.arrayOf(PropTypes.oneOf(AccessibilityTraits)),
+    ]),
+
+    /**
+     * When `accessible` is true, the system will try to invoke this function
+     * when the user performs accessibility tap gesture.
+     */
+    onAcccessibilityTap: PropTypes.func,
+
+    /**
+     * When `accessible` is true, the system will invoke this function when the
+     * user performs the magic tap gesture.
+     */
+    onMagicTap: PropTypes.func,
+
+    /**
      * Used to locate this view in end-to-end tests.
      */
     testID: PropTypes.string,
@@ -22229,7 +22304,9 @@ var View = React.createClass({displayName: "View",
     onStartShouldSetResponderCapture: PropTypes.func,
 
     /**
-     * Invoked on mount and layout changes with {x, y, width, height}.
+     * Invoked on mount and layout changes with
+     *
+     *   {nativeEvent: { layout: {x, y, width, height}}}.
      */
     onLayout: PropTypes.func,
 
@@ -22346,8 +22423,11 @@ ReactNativeViewAttributes.UIView = {
   pointerEvents: true,
   accessible: true,
   accessibilityLabel: true,
+  accessibilityTraits: true,
   testID: true,
   onLayout: true,
+  onAccessibilityTap: true,
+  onMagicTap: true,
 };
 
 ReactNativeViewAttributes.RCTView = merge(
@@ -22688,6 +22768,13 @@ function verifyPropTypes(
   if (!viewConfig) {
     return; // This happens for UnimplementedView.
   }
+  var componentName = component.name || component.displayName;
+  if (!component.propTypes) {
+    throw new Error(
+      '`' + componentName + '` has no propTypes defined`'
+    );
+  }
+
   var nativeProps = viewConfig.nativeProps;
   for (var prop in nativeProps) {
     if (!component.propTypes[prop] &&
@@ -22695,9 +22782,9 @@ function verifyPropTypes(
         !ReactNativeStyleAttributes[prop] &&
         (!nativePropsToIgnore || !nativePropsToIgnore[prop])) {
       throw new Error(
-        '`' + component.displayName + '` has no propType for native prop `' +
+        '`' + componentName + '` has no propType for native prop `' +
         viewConfig.uiViewClassName + '.' + prop + '` of native type `' +
-        nativeProps[prop].type + '`'
+        nativeProps[prop] + '`'
       );
     }
   }
@@ -22918,7 +23005,7 @@ var Image = React.createClass({displayName: "Image",
     /**
      * `uri` is a string representing the resource identifier for the image, which
      * could be an http address, a local file path, or the name of a static image
-     * resource (which should be wrapped in the `required('image!name')` function).
+     * resource (which should be wrapped in the `require('image!name')` function).
      */
     source: PropTypes.shape({
       uri: PropTypes.string,
@@ -22957,6 +23044,12 @@ var Image = React.createClass({displayName: "Image",
      * testing scripts.
      */
     testID: PropTypes.string,
+    /**
+     * Invoked on mount and layout changes with
+     *
+     *   {nativeEvent: { layout: {x, y, width, height}}}.
+     */
+     onLayout: PropTypes.func,
   },
 
   statics: {
@@ -23048,7 +23141,7 @@ if (__DEV__) {
 
 module.exports = Image;
 });
-__d('EdgeInsetsPropType',["ReactPropTypes","createStrictShapeTypeChecker","insetsDiffer"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('EdgeInsetsPropType',["ReactPropTypes","createStrictShapeTypeChecker"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -23059,12 +23152,11 @@ __d('EdgeInsetsPropType',["ReactPropTypes","createStrictShapeTypeChecker","inset
  * @providesModule EdgeInsetsPropType
  * @flow
  */
-'use strict'
+'use strict';
 
 var PropTypes = require('ReactPropTypes');
 
 var createStrictShapeTypeChecker = require('createStrictShapeTypeChecker');
-var insetsDiffer = require('insetsDiffer');
 
 var EdgeInsetsPropType = createStrictShapeTypeChecker({
   top: PropTypes.number,
@@ -24706,7 +24798,7 @@ if (Platform.OS === 'android') {
 
 module.exports = ScrollView;
 });
-__d('PointPropType',["ReactPropTypes","createStrictShapeTypeChecker","pointsDiffer"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('PointPropType',["ReactPropTypes","createStrictShapeTypeChecker"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -24717,12 +24809,11 @@ __d('PointPropType',["ReactPropTypes","createStrictShapeTypeChecker","pointsDiff
  * @providesModule PointPropType
  * @flow
  */
-'use strict'
+'use strict';
 
 var PropTypes = require('ReactPropTypes');
 
 var createStrictShapeTypeChecker = require('createStrictShapeTypeChecker');
-var pointsDiffer = require('pointsDiffer');
 
 var PointPropType = createStrictShapeTypeChecker({
   x: PropTypes.number,
@@ -24916,7 +25007,7 @@ var ScrollResponderMixin = {
     var currentlyFocusedTextInput = TextInputState.currentlyFocusedField();
     if (!this.props.keyboardShouldPersistTaps &&
       currentlyFocusedTextInput != null &&
-      e.target != currentlyFocusedTextInput) {
+      e.target !== currentlyFocusedTextInput) {
       return true;
     }
     return this.scrollResponderIsAnimating();
@@ -24977,7 +25068,7 @@ var ScrollResponderMixin = {
     var currentlyFocusedTextInput = TextInputState.currentlyFocusedField();
     if (!this.props.keyboardShouldPersistTaps &&
       currentlyFocusedTextInput != null &&
-      e.target != currentlyFocusedTextInput  &&
+      e.target !== currentlyFocusedTextInput  &&
       !this.state.observedScrollSinceBecomingResponder &&
       !this.state.becameResponderWhileAnimating) {
       this.props.onScrollResponderKeyboardDismissed &&
@@ -25233,7 +25324,7 @@ __d('Subscribable',["EventEmitter"],function(global, require, requireDynamic, re
  */
 'use strict';
 
-var EventEmitter = require('EventEmitter');
+                                             
 
 /**
  * Subscribable provides a mixin for safely subscribing a component to an
@@ -26434,7 +26525,7 @@ var RCTPickerIOS = createReactNativeComponentClass({
 
 module.exports = PickerIOS;
 });
-__d('Navigator',["NativeModules","BackAndroid","Dimensions","InteractionMixin","NavigatorBreadcrumbNavigationBar","NavigatorInterceptor","NavigatorNavigationBar","NavigatorSceneConfigs","NavigatorStaticContextContainer","PanResponder","Platform","React","StaticContainer.react","StyleSheet","Subscribable","react-timer-mixin/TimerMixin","View","clamp","flattenStyle","getNavigatorContext","invariant","keyMirror","merge","rebound/rebound"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('Navigator',["NativeModules","BackAndroid","Dimensions","InteractionMixin","NavigatorBreadcrumbNavigationBar","NavigatorInterceptor","NavigatorNavigationBar","NavigatorSceneConfigs","NavigatorStaticContextContainer","PanResponder","Platform","React","StaticContainer.react","StyleSheet","Subscribable","react-timer-mixin/TimerMixin","View","clamp","flattenStyle","getNavigatorContext","invariant","rebound/rebound"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015, Facebook, Inc.  All rights reserved.
  *
  * Facebook, Inc. (“Facebook”) owns all right, title and interest, including
@@ -26460,6 +26551,7 @@ __d('Navigator',["NativeModules","BackAndroid","Dimensions","InteractionMixin","
  *
  * @providesModule Navigator
  */
+ /* eslint-disable no-extra-boolean-cast*/
 'use strict';
 
 var AnimationsDebugModule = require('NativeModules').AnimationsDebugModule;
@@ -26484,8 +26576,6 @@ var clamp = require('clamp');
 var flattenStyle = require('flattenStyle');
 var getNavigatorContext = require('getNavigatorContext');
 var invariant = require('invariant');
-var keyMirror = require('keyMirror');
-var merge = require('merge');
 var rebound = require('rebound/rebound');
 
 var PropTypes = React.PropTypes;
@@ -27125,7 +27215,7 @@ var Navigator = React.createClass({displayName: "Navigator",
    */
   _enableScene: function(sceneIndex) {
     // First, determine what the defined styles are for scenes in this navigator
-    var sceneStyle = flattenStyle(this.props.sceneStyle);
+    var sceneStyle = flattenStyle([styles.baseScene, this.props.sceneStyle]);
     // Then restore the left value for this scene
     var enabledSceneNativeProps = {
       left: sceneStyle.left,
@@ -27181,7 +27271,6 @@ var Navigator = React.createClass({displayName: "Navigator",
   },
 
   _handleMoveShouldSetPanResponder: function(e, gestureState) {
-    var currentRoute = this.state.routeStack[this.state.presentedIndex];
     var sceneConfig = this.state.sceneConfigStack[this.state.presentedIndex];
     this._expectingGestureGrant = this._matchGestureAction(this._eligibleGestures, sceneConfig.gestures, gestureState);
     return !! this._expectingGestureGrant;
@@ -27265,7 +27354,16 @@ var Navigator = React.createClass({displayName: "Navigator",
       }
     } else {
       // The gesture has enough velocity to complete, so we transition to the gesture's destination
-      this._transitionTo(destIndex, transitionVelocity);
+      this._transitionTo(
+        destIndex,
+        transitionVelocity,
+        null,
+        function()  {
+          if (releaseGestureAction === 'pop') {
+            this._cleanScenesPastIndex(destIndex);
+          }
+        }.bind(this)
+      );
     }
     this._detachGesture();
   },
@@ -27727,6 +27825,14 @@ var Navigator = React.createClass({displayName: "Navigator",
     if (i !== this.state.presentedIndex) {
       disabledSceneStyle = styles.disabledScene;
     }
+    var originalRef = child.ref;
+    if (originalRef != null && typeof originalRef !== 'function') {
+      console.warn(
+        'String refs are not supported for navigator scenes. Use a callback ' +
+        'ref instead. Ignoring ref: ' + originalRef
+      );
+      originalRef = null;
+    }
     return (
       React.createElement(View, {
         key: this.state.idStack[i], 
@@ -27736,7 +27842,12 @@ var Navigator = React.createClass({displayName: "Navigator",
         }.bind(this), 
         style: [styles.baseScene, this.props.sceneStyle, disabledSceneStyle]}, 
         React.cloneElement(child, {
-          ref: this._handleItemRef.bind(null, this.state.idStack[i], route),
+          ref: function(component)  {
+            this._handleItemRef(this.state.idStack[i], route, component);
+            if (originalRef) {
+              originalRef(component);
+            }
+          }.bind(this)
         })
       )
     );
@@ -28555,6 +28666,7 @@ __d('buildStyleInterpolator',["keyOf"],function(global, require, requireDynamic,
 /**
  * Cannot "use strict" because we must use eval in this file.
  */
+/* eslint-disable global-strict */
 
 var keyOf = require('keyOf');
 
@@ -28920,7 +29032,7 @@ var MatrixOpsInitial = {
 var setNextValAndDetectChange = function(name, tmpVarName) {
   return (
     '  if (!didChange) {\n' +
-    '    var prevVal = result.' + name +';\n' +
+    '    var prevVal = result.' + name + ';\n' +
     '    result.' + name + ' = ' + tmpVarName + ';\n' +
     '    didChange = didChange  || (' + tmpVarName + ' !== prevVal);\n' +
     '  } else {\n' +
@@ -29658,7 +29770,7 @@ var FromTheLeft = Object.assign({},
   translateX: {
     from: -SCREEN_WIDTH,
     to: 0,
-    min: 0, 
+    min: 0,
     max: 1,
     type: 'linear',
     extrapolate: true,
@@ -32268,6 +32380,12 @@ var Text = React.createClass({displayName: "Text",
      * Used to locate this view in end-to-end tests.
      */
     testID: React.PropTypes.string,
+    /**
+     * Invoked on mount and layout changes with
+     *
+     *   {nativeEvent: { layout: {x, y, width, height}}}.
+     */
+     onLayout: React.PropTypes.func,
   },
 
   viewConfig: viewConfig,
@@ -33207,7 +33325,6 @@ var queryLayoutByID = function(
 };
 
 module.exports = queryLayoutByID;
-
 });
 __d('TextInput',["DocumentSelectionState","EventEmitter","NativeMethodsMixin","NativeModules","Platform","ReactPropTypes","React","ReactChildren","ReactNativeViewAttributes","StyleSheet","Text","TextInputState","react-timer-mixin/TimerMixin","TouchableWithoutFeedback","createReactNativeComponentClass","emptyFunction","invariant","merge"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
@@ -33390,12 +33507,12 @@ var TextInput = React.createClass({displayName: "TextInput",
       'number-pad',
       'phone-pad',
       'name-phone-pad',
-      'email-address',
       'decimal-pad',
       'twitter',
       'web-search',
       // Cross-platform
       'numeric',
+      'email-address',
     ]),
     /**
      * Determines how the return key should look.
@@ -35787,7 +35904,7 @@ function getObjectValues(obj) {
 
 module.exports = getObjectValues;
 });
-__d('WebView',["ActivityIndicatorIOS","EdgeInsetsPropType","React","ReactNativeViewAttributes","StyleSheet","Text","View","invariant","keyMirror","requireNativeComponent","NativeModules"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('WebView',["ActivityIndicatorIOS","EdgeInsetsPropType","React","StyleSheet","Text","View","invariant","keyMirror","requireNativeComponent","NativeModules"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -35803,7 +35920,6 @@ __d('WebView',["ActivityIndicatorIOS","EdgeInsetsPropType","React","ReactNativeV
 var ActivityIndicatorIOS = require('ActivityIndicatorIOS');
 var EdgeInsetsPropType = require('EdgeInsetsPropType');
 var React = require('React');
-var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
 var StyleSheet = require('StyleSheet');
 var Text = require('Text');
 var View = require('View');
@@ -35987,7 +36103,7 @@ var WebView = React.createClass({displayName: "WebView",
 
   onLoadingError: function(event       ) {
     event.persist(); // persist this event because we need to store it
-    console.error("encountered an error loading page", event.nativeEvent);
+    console.error('Encountered an error loading page', event.nativeEvent);
 
     this.setState({
       lastErrorEvent: event.nativeEvent,
@@ -36965,7 +37081,7 @@ function convertError(error) {
 
 module.exports = AsyncStorage;
 });
-__d('RCTRenderingPerf',["ReactDefaultPerf","ReactPerf","invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('RCTRenderingPerf',["ReactDefaultPerf","invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -36979,7 +37095,6 @@ __d('RCTRenderingPerf',["ReactDefaultPerf","ReactPerf","invariant"],function(glo
 'use strict';
 
 var ReactDefaultPerf = require('ReactDefaultPerf');
-var ReactPerf = require('ReactPerf');
 
 var invariant = require('invariant');
 
@@ -40137,7 +40252,7 @@ if (RCTReachability) {
 
 module.exports = NetInfo;
 });
-__d('PushNotificationIOS',["NativeModules","RCTDeviceEventEmitter","NativeModules","invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+__d('PushNotificationIOS',["RCTDeviceEventEmitter","NativeModules","invariant"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -40150,7 +40265,6 @@ __d('PushNotificationIOS',["NativeModules","RCTDeviceEventEmitter","NativeModule
  */
 'use strict';
 
-var NativeModules = require('NativeModules');
 var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
 var RCTPushNotificationManager = require('NativeModules').PushNotificationManager;
 var invariant = require('invariant');
@@ -40405,6 +40519,25 @@ var VibrationIOS = {
 };
 
 module.exports = VibrationIOS;
+});
+__d('RCTNativeAppEventEmitter',["EventEmitter"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule RCTNativeAppEventEmitter
+ * @flow
+ */
+'use strict';
+
+var EventEmitter = require('EventEmitter');
+
+var RCTNativeAppEventEmitter = new EventEmitter();
+
+module.exports = RCTNativeAppEventEmitter;
 });
 __d('LinkedStateMixin',["ReactLink","ReactStateSetters"],function(global, require, requireDynamic, requireLazy, module, exports) {  /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -58609,26 +58742,29 @@ __d('lodash/index',[],function(global, require, requireDynamic, requireLazy, mod
 });
 __d('RNPlayNative/package.json',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {
   "name": "RNPlayNative",
-  "version": "0.1.1",
+  "version": "0.6.0",
   "private": true,
   "scripts": {
     "start": "node_modules/react-native/packager/packager.sh"
   },
   "dependencies": {
+    "react-native": "rnplay/react-native#0.5-backports",
+    "react-native-linear-gradient": "0.3.1",
+    "react-native-overlay": "0.2.6",
+    "react-native-userdefaults-ios": "0.1.2",
     "art": "0.10.0",
     "flux-util": "0.1.1",
     "lodash": "3.9.3",
     "qs": "3.1.0",
-    "react-native": "rnplay/react-native#0.5-backports",
-    "react-native-accordion": "rnplay/react-native-accordion",
-    "react-native-camera": "rnplay/react-native-camera",
-    "react-native-icons": "rnplay/react-native-icons",
-    "react-native-modal": "rnplay/react-native-modal",
-    "react-native-overlay": "rnplay/react-native-overlay",
-    "react-native-linear-gradient": "rnplay/react-native-linear-gradient",
-    "react-native-video": "rnplay/react-native-video",
-    "react-native-side-menu": "0.8.0",
-    "react-native-blur": "0.5.0"
+    "react-native-accordion": "0.2.0",
+    "react-native-blur": "0.5.2",
+    "react-native-camera": "0.2.11",
+    "react-native-icons": "0.1.0",
+    "react-native-modal": "0.3.8",
+    "react-native-side-menu": "0.9.2",
+    "react-native-video": "0.4.5",
+    "react-native-activity-view": "0.2.1",
+    "superagent": "1.2.0"
   }
 }
 ;});
