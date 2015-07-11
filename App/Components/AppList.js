@@ -121,7 +121,7 @@ var AppList = React.createClass({
   },
 
   shareApp(app) {
-    var url = 'https://rnplay.org/plays/' + app.url_token;
+    var url = 'https://rnplay.org/apps/' + app.url_token;
     var message = '"' + (app.name || app.module_name) + '" on rnplay.org';
 
     ActionSheetIOS.showShareActionSheetWithOptions(
@@ -247,6 +247,7 @@ var styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
     paddingBottom: 80,
+    alignItems: 'center'
   },
 
   appContainer: {
