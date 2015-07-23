@@ -26,6 +26,7 @@
     "react-native-side-menu": "0.9.5",
     "react-native-video": "0.4.12",
     "react-native-activity-view": "0.2.4",
+    "react-native-keychain": "0.2.3",
     "superagent": "1.2.0",
     "react-timer-mixin": "0.13.2"
   }
