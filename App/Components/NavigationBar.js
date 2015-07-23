@@ -93,9 +93,7 @@ var styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'right',
     paddingHorizontal: 10,
-    marginTop: 20,
-    color: 'white',
-    backgroundColor: "transparent"
+    color: 'white'
   },
   navTitle: {
     flex: 0.7,
