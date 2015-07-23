@@ -47,7 +47,7 @@ var Help = React.createClass({
           </Text>
           <Text style={styles.aboutText} numberOfLines={2}>
             This app is currently built against React Native
-            <Text style={styles.buildVersionText}> {global.RN_VERSION_DISPLAY}</Text>, released Thursday, June 25th, 2015.
+            <Text style={styles.buildVersionText}> {global.RN_VERSION_DISPLAY}</Text>, released July 17th, 2015.
           </Text>
           <View style={styles.separator} />
 
