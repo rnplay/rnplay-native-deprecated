@@ -1,0 +1,14 @@
+This app was built against React Native 0.8.0.
+
+Development mode is properly enabled. You can access the development menu by roughly shaking your device.
+
+We added the following native module support:
+
+* react-native-mapbox-gl
+* react-native-keychain
+* react-native-keyboardevents
+* react-native-addressbook
+* react-native-vector-icons
+* react-native-search-bar
+
+Find more information here: https://rnplay.org/about

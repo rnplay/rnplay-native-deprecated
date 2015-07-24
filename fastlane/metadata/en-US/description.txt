@@ -1,0 +1,9 @@
+Run, test and share React Native applications directly on an iOS device.
+
+Build an app in the browser on http://rnplay.org and share it with anyone!
+
+Explore the site via popular apps, staff packs or search.
+
+Sign in to test your own apps.
+
+Load any React Native app via a direct URL.

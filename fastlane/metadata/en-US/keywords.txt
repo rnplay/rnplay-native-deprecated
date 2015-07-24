@@ -1,0 +1,5 @@
+react native
+react
+development
+ios
+javascript
