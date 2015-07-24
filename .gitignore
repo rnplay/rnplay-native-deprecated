@@ -33,3 +33,5 @@ Pods/
 
 iOS/JSUrl.h
 fastlane/screenshots
+*.zip
+*.mobileprovision
