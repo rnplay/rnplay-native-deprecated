@@ -113,11 +113,13 @@ var Login = React.createClass({
 
           {this.props.error && this.renderError()}
 
-          <ActivityIndicatorIOS
-            animating={this.state.isLoading}
-            color="#111"
-            size="large">
-          </ActivityIndicatorIOS>
+          <View style={{alignItems: 'center'}}>
+            <ActivityIndicatorIOS
+              animating={this.state.isLoading}
+              color="#712FA9"
+              size="large">
+            </ActivityIndicatorIOS>
+          </View>
         </ScrollView>
       </View>
     )
