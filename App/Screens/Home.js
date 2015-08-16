@@ -13,13 +13,12 @@ var Settings = require('./Settings');
 var About = require('./About');
 var QRCodeReader = require('./QRCodeReader');
 
-var SMXTabBarIOS = require('SMXTabBarIOS');
-var SMXTabBarItemIOS = SMXTabBarIOS.Item;
+var {TabBarIOS} = require('react-native-icons');
+var TabBarItemIOS = TabBarIOS.Item;
 
 var {
   AppRegistry,
   StyleSheet,
-  Text,
   TouchableOpacity
 } = React;
 
@@ -32,12 +31,12 @@ var Home = React.createClass({
 
   render() {
     return (
-      <SMXTabBarIOS
+      <TabBarIOS
         selectedTab={this.state.selectedTab}
         tintColor={'#712FA9'}
         style={styles.tabBar}
         barTintColor={'white'}>
-        <SMXTabBarItemIOS
+        <TabBarItemIOS
           name="explore"
           iconName={'ion|ios-search-strong'}
           title={'Explore'}
@@ -46,8 +45,8 @@ var Home = React.createClass({
           selected={this.state.selectedTab === 'explore'}
           onPress={() => { this.setState({ selectedTab: 'explore', }); }}>
           <Explore />
-        </SMXTabBarItemIOS>
-        <SMXTabBarItemIOS
+        </TabBarItemIOS>
+        <TabBarItemIOS
             name="my-apps"
             iconName={'ion|ios-briefcase-outline'}
             title={'My Apps'}
@@ -56,8 +55,8 @@ var Home = React.createClass({
             selected={this.state.selectedTab === 'my-apps'}
             onPress={() => { this.setState({selectedTab: 'my-apps',}); }}>
           <MyAppsContainer />
-        </SMXTabBarItemIOS>
-        <SMXTabBarItemIOS
+        </TabBarItemIOS>
+        <TabBarItemIOS
             name="custom-app"
             iconName={'ion|code'}
             title={'Direct URL'}
@@ -66,8 +65,8 @@ var Home = React.createClass({
             selected={this.state.selectedTab === 'custom-app'}
             onPress={() => { this.setState({selectedTab: 'custom-app',}); }}>
           <CustomApp />
-        </SMXTabBarItemIOS>
-        <SMXTabBarItemIOS
+        </TabBarItemIOS>
+        <TabBarItemIOS
             name="qr_code_reader"
             iconName={'ion|camera'}
             title={'Scan Code'}
@@ -76,8 +75,8 @@ var Home = React.createClass({
             selected={this.state.selectedTab === 'qr_code_reader'}
             onPress={() => { this.setState({ selectedTab: 'qr_code_reader', }); }}>
           <QRCodeReader />
-        </SMXTabBarItemIOS>
-        <SMXTabBarItemIOS
+        </TabBarItemIOS>
+        <TabBarItemIOS
           name="about"
           iconName={'ion|ios-help-outline'}
           title={'About'}
@@ -86,8 +85,8 @@ var Home = React.createClass({
           selected={this.state.selectedTab === 'about'}
           onPress={() => { this.setState({ selectedTab: 'about', }); }}>
           <About />
-        </SMXTabBarItemIOS>
-      </SMXTabBarIOS>
+        </TabBarItemIOS>
+      </TabBarIOS>
     )
   }
 });

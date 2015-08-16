@@ -8,13 +8,13 @@
 var React = require('react-native');
 var qs = require('qs');
 var LinkingIOS = require('LinkingIOS');
-var reloadApp = require('./App/Utilities/reloadApp');
-var Login = require('./App/Screens/Login');
-var Signup = require('./App/Screens/Signup');
-var Home = require('./App/Screens/Home');
-var Guest = require('./App/Screens/Guest');
-var ProfileStore = require('./App/Stores/ProfileStore');
-var LocalStorage = require('./App/Stores/LocalStorage');
+var reloadApp = require('../Utilities/reloadApp');
+var Login = require('../Screens/Login');
+var Signup = require('../Screens/Signup');
+var Home = require('../Screens/Home');
+var Guest = require('../Screens/Guest');
+var ProfileStore = require('../Stores/ProfileStore');
+var LocalStorage = require('../Stores/LocalStorage');
 
 var _ = require('lodash');
 
@@ -28,7 +28,7 @@ var {
 } = React;
 
 // globals are bad, we make an exception here for now
-var RN_VERSION = require('./package.json').dependencies['react-native'];
+var RN_VERSION = require('json!../../package.json').dependencies['react-native'];
 global.RN_VERSION_DISPLAY = RN_VERSION;
 var githubPrefix = 'rnplay/react-native#';
 RN_VERSION = RN_VERSION.replace(githubPrefix, '').replace(/\./g,'').replace(/-/g, '')
@@ -79,4 +79,4 @@ var RNPlayNative = React.createClass({
   }
 });
 
-AppRegistry.registerComponent('RNPlayNative', () => RNPlayNative);
+module.exports = RNPlayNative;
