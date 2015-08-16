@@ -52,7 +52,11 @@ var Help = React.createClass({
 
           <Text style={styles.title}>Which native modules can I use?</Text>
           <Text style={styles.text}>
-           react-native-linear-gradient, react-native-overlay, react-native-userdefaults-ios, react-native-blur, react-native-camera, react-native-icons, react-native-vector-icons, react-native-addressbook, react-native-keyboardevents, react-native-mapbox-gl, react-native-modal, react-native-side-menu, react-native-video, react-native-activity-view, react-native-keychain
+           react-native-linear-gradient, react-native-overlay, react-native-userdefaults-ios, react-native-blur,
+           react-native-camera, react-native-icons, react-native-vector-icons, react-native-addressbook,
+           react-native-keyboardevents, react-native-mapbox-gl, react-native-modal, react-native-side-menu,
+           react-native-video, react-native-activity-view, react-native-keychain, react-native-webview-bridge,
+           react-native-image-picker
            </Text>
 
           <View style={styles.otherQuestions}>
