@@ -32,7 +32,6 @@
 		4202C67E1B617541007FE903 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4202C67D1B617541007FE903 /* MobileCoreServices.framework */; };
 		4202C6801B617547007FE903 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4202C67F1B617547007FE903 /* QuartzCore.framework */; };
 		4202C6871B61759A007FE903 /* libRNKeyboardEvents.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4202C6861B617592007FE903 /* libRNKeyboardEvents.a */; };
-		4202C68E1B6175CB007FE903 /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4202C68D1B6175C5007FE903 /* libRNSearchBar.a */; };
 		4202C6981B6175E5007FE903 /* libRCTAddressBook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4202C6951B6175DF007FE903 /* libRCTAddressBook.a */; };
 		4202C69F1B6175F9007FE903 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4202C69E1B6175F0007FE903 /* libRNVectorIcons.a */; };
 		4202C6A11B617693007FE903 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 4202C6A01B617693007FE903 /* Fonts */; };
@@ -134,13 +133,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = F12AFB9B1ADAF8F800E0535D;
 			remoteInfo = RNKeyboardEvents;
-		};
-		4202C68C1B6175C5007FE903 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4202C6881B6175C5007FE903 /* RNSearchBar.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RNSearchBar;
 		};
 		4202C6941B6175DF007FE903 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -306,7 +298,6 @@
 		4202C67D1B617541007FE903 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		4202C67F1B617547007FE903 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4202C6811B617592007FE903 /* RNKeyboardEvents.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNKeyboardEvents.xcodeproj; path = "node_modules/react-native-keyboardevents/RNKeyboardEvents.xcodeproj"; sourceTree = "<group>"; };
-		4202C6881B6175C5007FE903 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
 		4202C68F1B6175DF007FE903 /* RCTAddressBook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAddressBook.xcodeproj; path = "node_modules/react-native-addressbook/RCTAddressBook.xcodeproj"; sourceTree = "<group>"; };
 		4202C6991B6175F0007FE903 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		4202C6A01B617693007FE903 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
@@ -375,7 +366,6 @@
 				4202C6721B617483007FE903 /* libRCTMapboxGL.a in Frameworks */,
 				42DF0C6B1B3D679700AA060D /* libActivityView.a in Frameworks */,
 				1111D10C1B18CA68007370BA /* libReactNativeIcons.a in Frameworks */,
-				4202C68E1B6175CB007FE903 /* libRNSearchBar.a in Frameworks */,
 				BBA8F2681B0D2593009C7EB9 /* libRCTWebSocket.a in Frameworks */,
 				4202C6981B6175E5007FE903 /* libRCTAddressBook.a in Frameworks */,
 				BB0C0AFF1B02FFB800BDEA30 /* libRCTSettings.a in Frameworks */,
@@ -549,14 +539,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4202C6891B6175C5007FE903 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4202C68D1B6175C5007FE903 /* libRNSearchBar.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		4202C6901B6175DF007FE903 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -663,7 +645,6 @@
 				4250E8451B61923600D06A0B /* RNKeychain.xcodeproj */,
 				4202C6991B6175F0007FE903 /* RNVectorIcons.xcodeproj */,
 				4202C68F1B6175DF007FE903 /* RCTAddressBook.xcodeproj */,
-				4202C6881B6175C5007FE903 /* RNSearchBar.xcodeproj */,
 				4202C6811B617592007FE903 /* RNKeyboardEvents.xcodeproj */,
 				4202C6551B617477007FE903 /* RCTMapboxGL.xcodeproj */,
 				42DF0C651B3D678800AA060D /* ActivityView.xcodeproj */,
@@ -897,10 +878,6 @@
 					ProjectRef = 42F2283D1AF7E4BE00A26CF9 /* RNOverlay.xcodeproj */;
 				},
 				{
-					ProductGroup = 4202C6891B6175C5007FE903 /* Products */;
-					ProjectRef = 4202C6881B6175C5007FE903 /* RNSearchBar.xcodeproj */;
-				},
-				{
 					ProductGroup = 424BBF781B38C917006C95AA /* Products */;
 					ProjectRef = 424BBF771B38C917006C95AA /* RNUserDefaultsIOS.xcodeproj */;
 				},
@@ -985,13 +962,6 @@
 			fileType = archive.ar;
 			path = libRNKeyboardEvents.a;
 			remoteRef = 4202C6851B617592007FE903 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4202C68D1B6175C5007FE903 /* libRNSearchBar.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNSearchBar.a;
-			remoteRef = 4202C68C1B6175C5007FE903 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		4202C6951B6175DF007FE903 /* libRCTAddressBook.a */ = {
