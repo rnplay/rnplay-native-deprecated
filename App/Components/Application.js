@@ -16,6 +16,7 @@ var Guest = require('../Screens/Guest');
 var ProfileStore = require('../Stores/ProfileStore');
 var LocalStorage = require('../Stores/LocalStorage');
 
+var Art = require('art');
 var _ = require('lodash');
 
 var {
