@@ -14,7 +14,7 @@ var {
 } = React;
 
 var reloadApp = require('../Utilities/reloadApp');
-var {Icon} = require('react-native-icons');
+var Icon = require('react-native-vector-icons/Ionicons');
 var TimerMixin = require('react-timer-mixin');
 
 
@@ -48,7 +48,7 @@ var QRCodeReader = React.createClass({
             style={styles.camera}
             onBarCodeRead={this.onBarCodeRead}>
             <TouchableOpacity onPress={() => this.setState({cameraOpen: false}) } >
-              <Icon name='ion|close'
+              <Icon name='close'
                 size={30}
                 style={styles.closeButton}
                 color='#fff' />
@@ -68,7 +68,7 @@ var QRCodeReader = React.createClass({
 
             <TouchableOpacity onPress={() => this.setState({cameraOpen: true})} >
               <Icon
-                name='ion|camera'
+                name='camera'
                 size={80}
                 style={styles.cameraButton}
                 color='#777'
