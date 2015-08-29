@@ -1,8 +1,4 @@
-if(__DEV__) {
-  var BASE_URL = 'http://localhost:34560';
-} else {
-  var BASE_URL = 'https://rnplay.org';  
-}
+var BASE_URL = 'https://rnplay.org';  
 
 var Api = {
 
