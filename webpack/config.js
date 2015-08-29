@@ -10,7 +10,7 @@ var config = {
   devtool: 'source-map',
 
   entry: {
-    'index.ios': [path.resolve(__dirname, '..', 'App', 'main.js')]
+    'index.ios': [path.resolve(__dirname, '..', 'App', 'entry.js')]
   },
 
   output: {
@@ -24,13 +24,10 @@ var config = {
         test: /\.jsx?$/,
         include: [
           path.resolve(__dirname, '..', 'App'),
-          path.resolve(__dirname, '..', 'node_modules/react-native'),
-          path.resolve(__dirname, '..', 'node_modules/react-native-side-menu'),
-          path.resolve(__dirname, '..', 'node_modules/react-native-icons'),
-          path.resolve(__dirname, '..', 'node_modules/react-native-camera')
+          path.resolve(__dirname, '..', 'node_modules/react-native')
 
         ],
-        loaders: ['babel?stage=0&blacklist=validation.react']
+        loaders: ['babel-loader?stage=0,blacklist=validation.react']
       },
     ],
   },

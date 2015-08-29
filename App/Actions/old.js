@@ -1,7 +1,3 @@
-var dispatcher = require('../Utilities/AppDispatcher');
-var AppConstants = require('../Constants/AppConstants');
-var Api = require('../Api/Core');
-
 module.exports = {
   updateProfile(profile) {
     dispatcher.handleViewAction({
@@ -11,7 +7,7 @@ module.exports = {
   },
   deleteProfile() {
     dispatcher.handleViewAction({
-      actionType: AppConstants.DELETE_PROFILE    
+      actionType: AppConstants.DELETE_PROFILE
     });
   },
 }

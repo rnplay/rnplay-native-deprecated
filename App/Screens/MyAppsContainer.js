@@ -10,8 +10,6 @@ var Camera = require('react-native-camera');
 var Overlay = require('react-native-overlay');
 var Api = require("../Api/Core");
 var NavigationBar = require('../Components/NavigationBar');
-var ProfileStore = require('../Stores/ProfileStore');
-var LocalStorage = require('../Stores/LocalStorage');
 var Login = require('../Screens/Login');
 var Signup = require('../Screens/Signup');
 var MyApps = require('../Screens/MyApps');
@@ -48,7 +46,7 @@ var MyAppsContainer = React.createClass({
   render() {
     StatusBarIOS.setStyle('light-content');
 
-    if(ProfileStore.getState().id){
+    if(this.props.profile && this.props.profile.id){
       DEFAULT_ROUTE.id = 'my_apps';
     } else {
       DEFAULT_ROUTE.id = 'login';
@@ -112,4 +110,14 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = MyAppsContainer;
+var {updateProfile} = require('../Actions');
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux/native'
+
+export default connect(
+  (state) => {
+    return {
+      profile: state.profile
+    }
+  }
+)(MyAppsContainer)

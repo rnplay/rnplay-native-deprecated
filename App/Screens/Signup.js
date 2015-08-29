@@ -3,7 +3,6 @@
 var React = require('react-native');
 var NavigationBar = require('../Components/NavigationBar');
 var Api = require('../Api/Core');
-var AppActions = require('../Actions/AppActions');
 
 var {
   ActivityIndicatorIOS,
@@ -62,7 +61,7 @@ var Signup = React.createClass({
           });
           AlertIOS.alert('Sign Up Failed', this.state.error,[{text: 'OK'}]);
         } else {
-          AppActions.updateProfile(res);
+          this.props.updateProfile(res);
           this.setState({ isLoading: false, error: false });
           this.props.navigator.replace({ id: 'home' });
         }
@@ -160,4 +159,17 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = Signup;
+var {updateProfile} = require('../Actions');
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux/native'
+
+export default connect(
+  (state) => {
+    return {
+      profile: state.profile
+    }
+  },
+  (dispatch) => {
+    return bindActionCreators({updateProfile}, dispatch)
+  }
+)(Signup)

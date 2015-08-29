@@ -13,8 +13,6 @@ var Login = require('../Screens/Login');
 var Signup = require('../Screens/Signup');
 var Home = require('../Screens/Home');
 var Guest = require('../Screens/Guest');
-var ProfileStore = require('../Stores/ProfileStore');
-var LocalStorage = require('../Stores/LocalStorage');
 
 var Art = require('art');
 var _ = require('lodash');
@@ -29,7 +27,7 @@ var {
 } = React;
 
 // globals are bad, we make an exception here for now
-var RN_VERSION = require('../../package.json').dependencies['react-native'];
+var RN_VERSION = require('json!../../package.json').dependencies['react-native'];
 global.RN_VERSION_DISPLAY = RN_VERSION;
 var githubPrefix = 'rnplay/react-native#';
 RN_VERSION = RN_VERSION.replace(githubPrefix, '').replace(/\./g,'').replace(/-/g, '')
@@ -46,7 +44,6 @@ var RNPlayNative = React.createClass({
 
   componentDidMount() {
     StatusBarIOS.setStyle('light-content');
-    LocalStorage.bootstrap(() => this.setState({bootstrapped: true}));
     LinkingIOS.addEventListener('url', this._processURL);
 
     var url = LinkingIOS.popInitialURL();
@@ -73,9 +70,6 @@ var RNPlayNative = React.createClass({
   },
 
   render() {
-    if (this.state.bootstrapped === false) {
-      return <View />;
-    }
     return <Home />;
   }
 });

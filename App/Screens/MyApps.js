@@ -2,7 +2,6 @@
 
 var React = require('react-native');
 var Api = require('../Api/Core');
-var AppActions = require('../Actions/AppActions');
 
 var {
   TouchableOpacity,
@@ -17,7 +16,7 @@ var MyApps = React.createClass({
 
   _signOut() {
     Api.delete('/users/sign_out');
-    AppActions.deleteProfile();
+    this.props.deleteProfile();
     this.props.navigator.replace({ id: 'login'});
   },
 
@@ -36,4 +35,12 @@ var MyApps = React.createClass({
   }
 });
 
-module.exports = MyApps;
+var {deleteProfile} = require('../Actions');
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux/native'
+
+export default connect(null,
+  (dispatch) => {
+    return bindActionCreators({deleteProfile}, dispatch)
+  }
+)(MyApps)

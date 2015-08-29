@@ -3,7 +3,6 @@
 var React = require('react-native');
 var NavigationBar = require('../Components/NavigationBar');
 var Api = require('../Api/Core');
-var AppActions = require('../Actions/AppActions');
 var reloadApp = require('../Utilities/reloadApp');
 
 var {

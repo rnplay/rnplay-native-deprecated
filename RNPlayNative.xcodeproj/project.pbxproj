@@ -36,6 +36,7 @@
 		420C36CC1B2212FF008E8F87 /* RNBlur in Resources */ = {isa = PBXBuildFile; fileRef = 420C36CA1B2212FF008E8F87 /* RNBlur */; };
 		420C36CD1B2212FF008E8F87 /* RNVibrancy in Resources */ = {isa = PBXBuildFile; fileRef = 420C36CB1B2212FF008E8F87 /* RNVibrancy */; };
 		420C36EC1B2218E7008E8F87 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 420C36EB1B2218B9008E8F87 /* libBVLinearGradient.a */; };
+		424043F71B91F02C00AE8C6E /* libRNGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424043EE1B91F01900AE8C6E /* libRNGL.a */; };
 		424BBF901B38C91E006C95AA /* libRNUserDefaultsIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424BBF8D1B38C917006C95AA /* libRNUserDefaultsIOS.a */; };
 		4250E8661B61924800D06A0B /* libRNKeychain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4250E8601B61923700D06A0B /* libRNKeychain.a */; };
 		426E0EA71B83BF2800DCFBBC /* UIImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 426E0EA61B83BF2800DCFBBC /* UIImagePickerManager.m */; };
@@ -141,6 +142,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = BVLinearGradient;
+		};
+		424043ED1B91F01900AE8C6E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 424043D41B91F01900AE8C6E /* RNGL.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 34B330031B821571003856F8;
+			remoteInfo = RNGL;
+		};
+		424043EF1B91F01900AE8C6E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 424043D41B91F01900AE8C6E /* RNGL.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 34B3300E1B821571003856F8;
+			remoteInfo = RNGLTests;
 		};
 		424BBF8C1B38C917006C95AA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -296,6 +311,7 @@
 		420C36CA1B2212FF008E8F87 /* RNBlur */ = {isa = PBXFileReference; lastKnownFileType = folder; name = RNBlur; path = "node_modules/react-native-blur/RNBlur"; sourceTree = "<group>"; };
 		420C36CB1B2212FF008E8F87 /* RNVibrancy */ = {isa = PBXFileReference; lastKnownFileType = folder; name = RNVibrancy; path = "node_modules/react-native-blur/RNVibrancy"; sourceTree = "<group>"; };
 		420C36DC1B221876008E8F87 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
+		424043D41B91F01900AE8C6E /* RNGL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGL.xcodeproj; path = "node_modules/gl-react-native/RNGL.xcodeproj"; sourceTree = "<group>"; };
 		424BBF771B38C917006C95AA /* RNUserDefaultsIOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNUserDefaultsIOS.xcodeproj; path = "node_modules/react-native-userdefaults-ios/RNUserDefaultsIOS.xcodeproj"; sourceTree = "<group>"; };
 		4250E8451B61923600D06A0B /* RNKeychain.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNKeychain.xcodeproj; path = "node_modules/react-native-keychain/RNKeychain.xcodeproj"; sourceTree = "<group>"; };
 		426E0EA51B83BF2800DCFBBC /* UIImagePickerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIImagePickerManager.h; path = "node_modules/react-native-image-picker/UIImagePickerManager/UIImagePickerManager.h"; sourceTree = "<group>"; };
@@ -348,6 +364,7 @@
 				55B8F9F81B20A869002F65B0 /* libz.dylib in Frameworks */,
 				55B8F9FA1B20A873002F65B0 /* libsqlite3.dylib in Frameworks */,
 				BBE164331B223408001FC1AC /* libc++.dylib in Frameworks */,
+				424043F71B91F02C00AE8C6E /* libRNGL.a in Frameworks */,
 				42D5E8731B892BDD00688341 /* libRCTMapboxGL.a in Frameworks */,
 				4250E8661B61924800D06A0B /* libRNKeychain.a in Frameworks */,
 				55B8F9F61B20A861002F65B0 /* SystemConfiguration.framework in Frameworks */,
@@ -542,6 +559,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		424043D51B91F01900AE8C6E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				424043EE1B91F01900AE8C6E /* libRNGL.a */,
+				424043F01B91F01900AE8C6E /* RNGLTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		424BBF781B38C917006C95AA /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -629,6 +655,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				424043D41B91F01900AE8C6E /* RNGL.xcodeproj */,
 				42D5E8521B892BC700688341 /* RCTMapboxGL.xcodeproj */,
 				426E0EA51B83BF2800DCFBBC /* UIImagePickerManager.h */,
 				426E0EA61B83BF2800DCFBBC /* UIImagePickerManager.m */,
@@ -851,6 +878,10 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
+					ProductGroup = 424043D51B91F01900AE8C6E /* Products */;
+					ProjectRef = 424043D41B91F01900AE8C6E /* RNGL.xcodeproj */;
+				},
+				{
 					ProductGroup = 4202C6821B617592007FE903 /* Products */;
 					ProjectRef = 4202C6811B617592007FE903 /* RNKeyboardEvents.xcodeproj */;
 				},
@@ -954,6 +985,20 @@
 			fileType = archive.ar;
 			path = libBVLinearGradient.a;
 			remoteRef = 420C36EA1B2218B9008E8F87 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		424043EE1B91F01900AE8C6E /* libRNGL.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNGL.a;
+			remoteRef = 424043ED1B91F01900AE8C6E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		424043F01B91F01900AE8C6E /* RNGLTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RNGLTests.xctest;
+			remoteRef = 424043EF1B91F01900AE8C6E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		424BBF8D1B38C917006C95AA /* libRNUserDefaultsIOS.a */ = {
