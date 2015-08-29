@@ -1,13 +1,9 @@
 {
   "name": "RNPlayNative",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "private": true,
    "scripts": {
     "start": "node_modules/react-native/packager/packager.sh",
-    "start-webpack": "HOT=1 node ./node_modules/.bin/react-native-webpack-server start --hostname localhost --webpackConfigPath webpack/config.js --hot",
-    "start-release": "./node_modules/.bin/react-native-webpack-server start --hostname localhost --port 10100 --packagerPort 10101 --webpackPort 10102 --webpackConfigPath webpack/config.js",
-    "update-release-bundle": "curl -s 'http://localhost:10100/index.ios.bundle?dev=false&minify=true' -o iOS/main.jsbundle",
-    "release": "npm run update-release-bundle"
     },
   "dependencies": {
     "art": "0.10.0",
@@ -20,18 +16,18 @@
 
     "react-native": "0.10.0-rc",
     "react-native-linear-gradient": "0.3.2",
-    "react-native-overlay": "0.2.9",
+    "react-native-overlay": "0.3.0",
     "react-native-userdefaults-ios": "0.1.3",
     "react-native-blur": "0.6.0",
     "react-native-camera": "0.3.3",
-    "react-native-icons": "0.3.4",
     "react-native-vector-icons": "0.6.9",
+    "react-native-icons": "0.3.6",
     "react-native-addressbook": "1.2.0",
     "react-native-keyboardevents": "0.4.5",
-    "react-native-mapbox-gl": "0.4.0",
+    "react-native-mapbox-gl": "0.4.1",
     "react-native-modal": "0.3.8",
     "react-native-side-menu": "0.10.0",
-    "react-native-video": "0.5.1",
+    "react-native-video": "0.6.0",
     "react-native-activity-view": "0.2.4",
     "react-native-keychain": "0.2.5",
     "react-native-webview-bridge": "0.3.5",
