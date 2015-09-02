@@ -1,5 +1,7 @@
 import api from '../Api/Core'
 
+import {AsyncStorage} from 'react-native';
+
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const DELETE_PROFILE = 'DELETE_PROFILE';
 export const FETCH_PROFILE = 'FETCH_PROFILE';
