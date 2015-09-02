@@ -53,6 +53,8 @@
 		55B8F9FA1B20A873002F65B0 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8F9F91B20A873002F65B0 /* libsqlite3.dylib */; };
 		55B8FA161B20A928002F65B0 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8FA0A1B20A928002F65B0 /* libGoogleAnalyticsServices.a */; };
 		55B8FA371B20BA27002F65B0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55B8FA351B20BA27002F65B0 /* LaunchScreen.xib */; };
+		55FF68641B97284600257CB9 /* AppLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FF68631B97284600257CB9 /* AppLoadingView.m */; };
+		55FF68681B97830200257CB9 /* AppLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FF68671B97830200257CB9 /* AppLoadingView.xib */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		BB0C0AEC1B02ACF800BDEA30 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB0C0ADF1B02ACE900BDEA30 /* libART.a */; };
 		BB0C0AF81B02FF7F00BDEA30 /* uiexplorer.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = BB0C0AF71B02FF7F00BDEA30 /* uiexplorer.jsbundle */; };
@@ -342,6 +344,9 @@
 		55B8FA141B20A928002F65B0 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
 		55B8FA151B20A928002F65B0 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
 		55B8FA361B20BA27002F65B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iOS/Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		55FF68621B97284600257CB9 /* AppLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppLoadingView.h; path = iOS/AppLoadingView.h; sourceTree = "<group>"; };
+		55FF68631B97284600257CB9 /* AppLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppLoadingView.m; path = iOS/AppLoadingView.m; sourceTree = "<group>"; };
+		55FF68671B97830200257CB9 /* AppLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AppLoadingView.xib; path = iOS/AppLoadingView.xib; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		BB0C0ADA1B02ACE900BDEA30 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
@@ -491,6 +496,9 @@
 				55B8F8871B1E4F24002F65B0 /* AppReloader.m */,
 				EE49F76D1AFA1F8D002F30A8 /* ViewController.h */,
 				EE49F76E1AFA1F8D002F30A8 /* ViewController.m */,
+				55FF68621B97284600257CB9 /* AppLoadingView.h */,
+				55FF68631B97284600257CB9 /* AppLoadingView.m */,
+				55FF68671B97830200257CB9 /* AppLoadingView.xib */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				55B8FA351B20BA27002F65B0 /* LaunchScreen.xib */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -1123,6 +1131,7 @@
 				420C36CC1B2212FF008E8F87 /* RNBlur in Resources */,
 				1111D1661B18CC4B007370BA /* FontAwesome.otf in Resources */,
 				1111D1681B18CC4B007370BA /* foundation-icons.ttf in Resources */,
+				55FF68681B97830200257CB9 /* AppLoadingView.xib in Resources */,
 				1111D1691B18CC4B007370BA /* ionicons.ttf in Resources */,
 				1111D16A1B18CC4B007370BA /* zocial-regular-webfont.ttf in Resources */,
 				42F2283C1AF7E25B00A26CF9 /* photo-camera5.png in Resources */,
@@ -1156,6 +1165,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE49F76F1AFA1F8D002F30A8 /* ViewController.m in Sources */,
+				55FF68641B97284600257CB9 /* AppLoadingView.m in Sources */,
 				426E0EA71B83BF2800DCFBBC /* UIImagePickerManager.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,

@@ -10,6 +10,6 @@
 
 @interface ViewController : UIViewController
 
-- (void)reloadWithJSBundleURL:(NSURL *)JSBundleURL moduleNamed:(NSString *)moduleName;
+- (void)reloadWithJSBundleURL:(NSURL *)JSBundleURL moduleNamed:(NSString *)moduleName appName:(NSString *)appName;
 
 @end

@@ -3,12 +3,12 @@
 var AppReloader = require('NativeModules').AppReloader;
 var UserDefaults = require('react-native-userdefaults-ios');
 
-module.exports = (bundleUrl, moduleName, urlParams) => {
+module.exports = (bundleUrl, moduleName, appName, urlParams) => {
   urlParams = urlParams ? urlParams : '{}';
   var params = JSON.parse(urlParams);
 
   UserDefaults.setObjectForKey(params, 'rnplayParams')
   .then(() => {
-    AppReloader.reloadAppWithURLString(bundleUrl, moduleName);
+    AppReloader.reloadAppWithURLString(bundleUrl, moduleName, appName);
   });
 };

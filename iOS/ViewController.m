@@ -11,15 +11,19 @@
 #import "GAI.h"
 #import "GAIFields.h"
 #import "GAIDictionaryBuilder.h"
+#import "AppLoadingView.h"
 
 @implementation ViewController
 
-- (void)reloadWithJSBundleURL:(NSURL *)JSBundleURL moduleNamed:(NSString *)moduleName {
+- (void)reloadWithJSBundleURL:(NSURL *)JSBundleURL moduleNamed:(NSString *)moduleName appName:(NSString *)appName {
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:JSBundleURL
                                                       moduleName:moduleName
                                                    launchOptions:nil];
   
-  rootView.loadingView = [self spinner];
+  NSString *loadingText = [NSString stringWithFormat:@"Loading %@...", appName];
+  AppLoadingView *appLoadingView = [[AppLoadingView alloc] initWithLoadingText:loadingText];
+  
+  rootView.loadingView = appLoadingView;
   rootView.loadingViewFadeDelay = 0.0;
   rootView.loadingViewFadeDuration = 0.15;
   rootView.frame = self.view.bounds;
@@ -27,14 +31,6 @@
   [self setView:rootView];
   
   [self trackScreeView];
-}
-
-- (UIActivityIndicatorView *)spinner {
-  UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] init];
-  [spinner setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
-  [spinner setColor:[UIColor colorWithRed:113.0f/255.0f green:47.0f/255.0f blue:169.0f/255.0f alpha:1.0f]];
-  [spinner startAnimating];
-  return spinner;
 }
 
 - (void)trackScreeView {

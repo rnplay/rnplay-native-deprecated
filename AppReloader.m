@@ -23,14 +23,14 @@ RCT_EXPORT_MODULE()
  *  var AppReloader = require('NativeModules').AppReloader;
  *  AppReloader.reloadAppWithURLString('https://example.com/index.ios.bundle', 'App')
  */
-RCT_EXPORT_METHOD(reloadAppWithURLString:(NSString *)URLString moduleNamed:(NSString *)moduleName)
+RCT_EXPORT_METHOD(reloadAppWithURLString:(NSString *)URLString moduleNamed:(NSString *)moduleName appName:(NSString *)appName)
 {
   AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
   NSURL *JSBundleURL = [NSURL URLWithString:URLString];
   
   @try {
     ViewController *appViewController = [[ViewController alloc] init];
-    [appViewController reloadWithJSBundleURL:JSBundleURL moduleNamed:moduleName];
+    [appViewController reloadWithJSBundleURL:JSBundleURL moduleNamed:moduleName appName:appName];
     
     delegate.appViewController = appViewController;
     delegate.shouldRotate = YES;
@@ -44,6 +44,8 @@ RCT_EXPORT_METHOD(reloadAppWithURLString:(NSString *)URLString moduleNamed:(NSSt
                     completion:NULL];
   }
   @catch (NSException *exception) {
+    
+    NSLog(@"exception: %@", exception);
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error!"
                                                     message:@"Sorry, this app doesn't work! Looks like someone needs to brush up on their JavaScript! :p"

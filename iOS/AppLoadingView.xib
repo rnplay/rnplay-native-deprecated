@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AppLoadingView">
+            <connections>
+                <outlet property="LoadingText" destination="sea-aV-AzF" id="4Wr-iP-OFQ"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oTT-2L-sue" userLabel="container">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wNb-fZ-H1O" userLabel="textContainer">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pXq-HU-ObB" userLabel="insideContainer">
+                                    <rect key="frame" x="100" y="150" width="400" height="150"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading [appName]..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sea-aV-AzF">
+                                            <rect key="frame" x="50" y="25" width="300" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="40" id="WRB-7M-m4p"/>
+                                                <constraint firstAttribute="width" constant="300" id="k0J-bz-iku"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="250" translatesAutoresizingMaskIntoConstraints="NO" id="DAW-oX-rjC">
+                                            <rect key="frame" x="75" y="65" width="250" height="80"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="80" id="Uhc-hi-Bfs"/>
+                                                <constraint firstAttribute="width" constant="250" id="bQg-za-OI4"/>
+                                            </constraints>
+                                            <attributedString key="attributedText">
+                                                <fragment content="To go back, press anywhere with ">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.4431372549" green="0.1843137255" blue="0.66274509800000003" alpha="0.70000000000000007" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <font key="NSFont" size="17" name="HelveticaNeue"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content="2 fingers">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.4431372549" green="0.1843137255" blue="0.66274509800000003" alpha="0.70000000000000007" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <font key="NSFont" size="17" name="HelveticaNeue-Bold"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content=" for ">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.4431372549" green="0.1843137255" blue="0.66274509800000003" alpha="0.70000000000000007" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <font key="NSFont" size="17" name="HelveticaNeue"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content="1.5 seconds">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.4431372549" green="0.1843137255" blue="0.66274509800000003" alpha="0.70000000000000007" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <font key="NSFont" size="17" name="HelveticaNeue-Bold"/>
+                                                        <font key="NSOriginalFont" size="17" name="HelveticaNeue-Bold"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content=".">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.4431372549" green="0.1843137255" blue="0.66274509800000003" alpha="0.70000000000000007" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <font key="NSFont" size="17" name="HelveticaNeue"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="150" id="Kb5-sM-rPk">
+                                            <variation key="heightClass=compact-widthClass=compact" constant="150"/>
+                                        </constraint>
+                                        <constraint firstAttribute="centerX" secondItem="DAW-oX-rjC" secondAttribute="centerX" id="QP5-uS-FqI"/>
+                                        <constraint firstItem="sea-aV-AzF" firstAttribute="bottom" secondItem="DAW-oX-rjC" secondAttribute="top" id="YCc-QP-UGy"/>
+                                        <constraint firstAttribute="centerX" secondItem="sea-aV-AzF" secondAttribute="centerX" id="cYq-bW-aXq"/>
+                                        <constraint firstAttribute="width" constant="400" id="i0a-Jw-e0l"/>
+                                        <constraint firstItem="sea-aV-AzF" firstAttribute="top" secondItem="pXq-HU-ObB" secondAttribute="top" constant="25" id="ucq-gc-IwJ"/>
+                                    </constraints>
+                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                        <rect key="frame" x="0.0" y="200" width="400" height="150"/>
+                                    </variation>
+                                </view>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hrG-fc-rm5">
+                                    <rect key="frame" x="290" y="130" width="20" height="20"/>
+                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                        <rect key="frame" x="190" y="180" width="20" height="20"/>
+                                    </variation>
+                                </activityIndicatorView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="pXq-HU-ObB" secondAttribute="bottom" id="36A-YU-GfM"/>
+                                <constraint firstItem="hrG-fc-rm5" firstAttribute="bottom" secondItem="pXq-HU-ObB" secondAttribute="top" id="Khs-zj-XIK"/>
+                                <constraint firstAttribute="centerX" secondItem="hrG-fc-rm5" secondAttribute="centerX" id="h4W-zp-agn"/>
+                                <constraint firstAttribute="centerX" secondItem="pXq-HU-ObB" secondAttribute="centerX" id="tJ5-3D-9v8"/>
+                            </constraints>
+                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                <rect key="frame" x="0.0" y="0.0" width="400" height="350"/>
+                            </variation>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V2Y-eG-69T" userLabel="imageContainer">
+                            <rect key="frame" x="0.0" y="300" width="600" height="300"/>
+                            <subviews>
+                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="two_finger_hold" translatesAutoresizingMaskIntoConstraints="NO" id="Rdt-mO-wTV">
+                                    <rect key="frame" x="175" y="0.0" width="250" height="250"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="centerX" secondItem="Rdt-mO-wTV" secondAttribute="centerX" id="mEx-yZ-Pwh"/>
+                                <constraint firstItem="Rdt-mO-wTV" firstAttribute="top" secondItem="V2Y-eG-69T" secondAttribute="top" id="yIR-sV-dU0"/>
+                            </constraints>
+                            <variation key="heightClass=compact-widthClass=compact">
+                                <mask key="constraints">
+                                    <include reference="mEx-yZ-Pwh"/>
+                                </mask>
+                            </variation>
+                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                <rect key="frame" x="0.0" y="350" width="400" height="450"/>
+                            </variation>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="V2Y-eG-69T" firstAttribute="leading" secondItem="oTT-2L-sue" secondAttribute="leading" id="Cag-0X-0gv"/>
+                        <constraint firstItem="wNb-fZ-H1O" firstAttribute="top" secondItem="oTT-2L-sue" secondAttribute="top" id="EW7-1p-nQx"/>
+                        <constraint firstAttribute="centerX" secondItem="wNb-fZ-H1O" secondAttribute="centerX" id="EkE-Lw-WZI"/>
+                        <constraint firstItem="V2Y-eG-69T" firstAttribute="height" secondItem="wNb-fZ-H1O" secondAttribute="height" id="GuK-h6-9aH"/>
+                        <constraint firstAttribute="bottom" secondItem="V2Y-eG-69T" secondAttribute="bottom" id="SX1-qv-rFr"/>
+                        <constraint firstItem="V2Y-eG-69T" firstAttribute="top" secondItem="wNb-fZ-H1O" secondAttribute="bottom" id="bNb-C0-3uZ"/>
+                        <constraint firstAttribute="trailing" secondItem="wNb-fZ-H1O" secondAttribute="trailing" id="bm6-Yb-8yb"/>
+                        <constraint firstAttribute="trailing" secondItem="V2Y-eG-69T" secondAttribute="trailing" id="pCa-QA-aNy"/>
+                        <constraint firstItem="wNb-fZ-H1O" firstAttribute="leading" secondItem="oTT-2L-sue" secondAttribute="leading" id="y9R-Dv-YL3"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="oTT-2L-sue" secondAttribute="bottom" id="5sw-cX-zSx"/>
+                <constraint firstAttribute="leading" secondItem="oTT-2L-sue" secondAttribute="leading" id="7Vx-vk-GAZ"/>
+                <constraint firstAttribute="trailing" secondItem="oTT-2L-sue" secondAttribute="trailing" id="BtI-Nf-i0Z"/>
+                <constraint firstAttribute="top" secondItem="oTT-2L-sue" secondAttribute="top" id="GXC-CU-aof"/>
+            </constraints>
+            <point key="canvasLocation" x="-202" y="114"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="two_finger_hold" width="250" height="250"/>
+    </resources>
+</document>
