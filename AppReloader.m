@@ -21,7 +21,7 @@ RCT_EXPORT_MODULE()
 
 /**
  *  var AppReloader = require('NativeModules').AppReloader;
- *  AppReloader.reloadAppWithURLString('https://example.com/index.ios.bundle', 'App')
+ *  AppReloader.reloadAppWithURLString('https://example.com/index.ios.bundle', 'App', 'Sample App')
  */
 RCT_EXPORT_METHOD(reloadAppWithURLString:(NSString *)URLString moduleNamed:(NSString *)moduleName appName:(NSString *)appName)
 {

@@ -20,6 +20,10 @@
                                                       moduleName:moduleName
                                                    launchOptions:nil];
   
+  if (appName == nil) {
+    appName = @"app";
+  }
+  
   NSString *loadingText = [NSString stringWithFormat:@"Loading %@...", appName];
   AppLoadingView *appLoadingView = [[AppLoadingView alloc] initWithLoadingText:loadingText];
   
