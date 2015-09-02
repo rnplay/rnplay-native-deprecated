@@ -3,7 +3,10 @@
   "version": "1.10.1",
   "private": true,
   "scripts": {
-    "start": "HOT=1 node ./node_modules/.bin/react-native-webpack-server start --hostname localhost --webpackConfigPath webpack/config.js --hot"
+    "start": "HOT=1 node ./node_modules/.bin/react-native-webpack-server start --hostname localhost --webpackConfigPath webpack/config.js --hot",
+    "start-release": "./node_modules/.bin/react-native-webpack-server start --hostname localhost --port 10100 --packagerPort 10101 --webpackPort 10102 --webpackConfigPath webpack/config.js",
+    "update-release-bundle": "curl -s 'http://localhost:10100/index.ios.bundle?dev=false&minify=true' -o iOS/main.jsbundle",
+    "release": "npm run update-release-bundle"
   },
   "dependencies": {
     "art": "0.10.0",
