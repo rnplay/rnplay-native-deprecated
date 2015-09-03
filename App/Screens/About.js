@@ -14,6 +14,8 @@ var {
   Image,
 } = React;
 
+var {map} = require('lodash');
+
 var Help = React.createClass({
   _sendEmail() {
     LinkingIOS.openURL('mailto:info@rnplay.org');
@@ -23,6 +25,11 @@ var Help = React.createClass({
     LinkingIOS.openURL(url);
   },
 
+  renderModules() {
+    return map(global.PACKAGE['dependencies'], (version, name) => {
+      return <Text style={styles.moduleText}>{name} {version}</Text>
+    })
+  },
   render() {
     StatusBarIOS.setStyle('light-content');
     return (
@@ -43,22 +50,15 @@ var Help = React.createClass({
           <Text style={styles.text}>The target React Native version for an app. An app might not behave if the target is different than the our bundled React Native version.</Text>
 
           <Text style={styles.title} numberOfLines={2}>
-            What React Native version is this app built with?
+            What's the current React Native version?
           </Text>
           <Text style={styles.text} numberOfLines={2}>
-            This app is currently built against React Native
-            <Text style={styles.buildVersionText}> {global.RN_VERSION_DISPLAY}</Text>, released July 17th, 2015.
+            The app's current React Native version is
+            <Text style={styles.buildVersionText}> {global.RN_VERSION_DISPLAY}</Text>.
           </Text>
 
-          <Text style={styles.title}>Which native modules can I use?</Text>
-          <Text style={styles.text}>
-           react-native-linear-gradient, react-native-overlay, react-native-userdefaults-ios, react-native-blur,
-           react-native-camera, react-native-icons, react-native-vector-icons, react-native-addressbook,
-           react-native-keyboardevents, react-native-mapbox-gl, react-native-modal, react-native-side-menu,
-           react-native-video, react-native-activity-view, react-native-keychain, react-native-webview-bridge,
-           react-native-image-picker
-           </Text>
-
+          <Text style={styles.title}>Which modules are included?</Text>
+          {this.renderModules()}
           <View style={styles.otherQuestions}>
             <Text style={styles.otherQuestionsText}>
               More questions? Please get in touch with us by email: info@rnplay.org
@@ -123,12 +123,19 @@ var styles = StyleSheet.create({
     marginBottom: 20,
     fontSize: 14
   },
+  moduleText: {
+    fontFamily: 'Avenir Next',
+    paddingRight: 15,
+    color: "#222",
+    paddingLeft: 15,
+    fontSize: 14
+  },
   otherQuestionsText: {
     opacity: 1,
     fontSize: 13,
   },
   otherQuestions: {
-    paddingTop: 0,
+    paddingTop: 20,
     paddingLeft: 15,
     paddingRight: 15,
     paddingBottom: 23,

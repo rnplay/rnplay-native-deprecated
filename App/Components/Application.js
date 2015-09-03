@@ -6,6 +6,7 @@
 'use strict';
 
 var React = require('react-native');
+
 var qs = require('qs');
 var LinkingIOS = require('LinkingIOS');
 var reloadApp = require('../Utilities/reloadApp');
@@ -27,7 +28,8 @@ var {
 } = React;
 
 // globals are bad, we make an exception here for now
-var RN_VERSION = require('json!../../package.json').dependencies['react-native'];
+global.PACKAGE = require('json!../../package.json');
+var RN_VERSION = global.PACKAGE.dependencies['react-native'];
 global.RN_VERSION_DISPLAY = RN_VERSION;
 var githubPrefix = 'rnplay/react-native#';
 RN_VERSION = RN_VERSION.replace(githubPrefix, '').replace(/\./g,'').replace(/-/g, '')
