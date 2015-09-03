@@ -2,12 +2,10 @@
 
 import { AppRegistry, Component } from 'react-native'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
-import createLogger from 'redux-logger'
 import thunk from 'redux-thunk'
 import reducer from './Reducers'
-const logger = createLogger();
 
-const store = applyMiddleware(thunk, logger)(createStore)(reducer)
+const store = applyMiddleware(thunk)(createStore)(reducer)
 
 // store bootstrap
 
