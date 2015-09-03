@@ -13,6 +13,8 @@
 @synthesize appViewController;
 @synthesize shouldRotate;
 
+NSString *const ReturnToHomeEvent = @"returnToHome";
+
 float const kFlipTransitionDuration = 0.4f;
 int const kFlipTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
 
@@ -111,7 +113,13 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
                     animations:^{
                       self.window.rootViewController = mainViewController;
                     }
-                    completion:nil];
+                    completion: ^(BOOL finished){
+                      if (finished) {
+                        [mainViewController.view.batchedBridge.eventDispatcher sendAppEventWithName:ReturnToHomeEvent body:@{
+                          @"returnToHome": @"true"
+                        }];
+                      }
+                    }];
   }
 }
 

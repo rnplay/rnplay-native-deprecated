@@ -52,6 +52,14 @@ var RNPlayNative = React.createClass({
     if (url) {
       this._processURL({url});
     }
+
+    this.returnSubscription = NativeAppEventEmitter.addListener('returnToHome',
+      (data) => {
+        console.log(data);
+        if (this.onReturn) {
+          this.onreturn();
+        }
+      });
   },
 
   componentWillUnmount() {
