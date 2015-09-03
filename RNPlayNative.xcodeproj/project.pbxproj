@@ -39,6 +39,7 @@
 		424043F71B91F02C00AE8C6E /* libRNGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424043EE1B91F01900AE8C6E /* libRNGL.a */; };
 		424BBF901B38C91E006C95AA /* libRNUserDefaultsIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424BBF8D1B38C917006C95AA /* libRNUserDefaultsIOS.a */; };
 		4250E8661B61924800D06A0B /* libRNKeychain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4250E8601B61923700D06A0B /* libRNKeychain.a */; };
+		4264D3B41B986D9E00389E41 /* libRCTMaterialKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4264D3A31B986D9500389E41 /* libRCTMaterialKit.a */; };
 		426E0EA71B83BF2800DCFBBC /* UIImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 426E0EA61B83BF2800DCFBBC /* UIImagePickerManager.m */; };
 		42CE1E881B80FE6A00EA8CA4 /* WebViewBridge in Resources */ = {isa = PBXBuildFile; fileRef = 42CE1E871B80FE6A00EA8CA4 /* WebViewBridge */; };
 		42D5E8731B892BDD00688341 /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D5E8621B892BC800688341 /* libRCTMapboxGL.a */; };
@@ -180,6 +181,13 @@
 			remoteGlobalIDString = 5D82366F1B0CE05B005A9EF3;
 			remoteInfo = RNKeychain;
 		};
+		4264D3A21B986D9500389E41 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4264D3921B986D9500389E41 /* RCTMaterialKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8A1B8E771B22E4E300DB45C2;
+			remoteInfo = RCTMaterialKit;
+		};
 		42D5E8611B892BC800688341 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 42D5E8521B892BC700688341 /* RCTMapboxGL.xcodeproj */;
@@ -316,6 +324,7 @@
 		424043D41B91F01900AE8C6E /* RNGL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGL.xcodeproj; path = "node_modules/gl-react-native/RNGL.xcodeproj"; sourceTree = "<group>"; };
 		424BBF771B38C917006C95AA /* RNUserDefaultsIOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNUserDefaultsIOS.xcodeproj; path = "node_modules/react-native-userdefaults-ios/RNUserDefaultsIOS.xcodeproj"; sourceTree = "<group>"; };
 		4250E8451B61923600D06A0B /* RNKeychain.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNKeychain.xcodeproj; path = "node_modules/react-native-keychain/RNKeychain.xcodeproj"; sourceTree = "<group>"; };
+		4264D3921B986D9500389E41 /* RCTMaterialKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTMaterialKit.xcodeproj; path = "node_modules/react-native-material-kit/iOS/RCTMaterialKit.xcodeproj"; sourceTree = "<group>"; };
 		426E0EA51B83BF2800DCFBBC /* UIImagePickerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIImagePickerManager.h; path = "node_modules/react-native-image-picker/UIImagePickerManager/UIImagePickerManager.h"; sourceTree = "<group>"; };
 		426E0EA61B83BF2800DCFBBC /* UIImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIImagePickerManager.m; path = "node_modules/react-native-image-picker/UIImagePickerManager/UIImagePickerManager.m"; sourceTree = "<group>"; };
 		42CE1E871B80FE6A00EA8CA4 /* WebViewBridge */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WebViewBridge; path = "node_modules/react-native-webview-bridge/WebViewBridge"; sourceTree = "<group>"; };
@@ -370,6 +379,7 @@
 				55B8F9FA1B20A873002F65B0 /* libsqlite3.dylib in Frameworks */,
 				BBE164331B223408001FC1AC /* libc++.dylib in Frameworks */,
 				424043F71B91F02C00AE8C6E /* libRNGL.a in Frameworks */,
+				4264D3B41B986D9E00389E41 /* libRCTMaterialKit.a in Frameworks */,
 				42D5E8731B892BDD00688341 /* libRCTMapboxGL.a in Frameworks */,
 				4250E8661B61924800D06A0B /* libRNKeychain.a in Frameworks */,
 				55B8F9F61B20A861002F65B0 /* SystemConfiguration.framework in Frameworks */,
@@ -593,6 +603,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		4264D3931B986D9500389E41 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4264D3A31B986D9500389E41 /* libRCTMaterialKit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		42D5E8531B892BC700688341 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -663,6 +681,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				4264D3921B986D9500389E41 /* RCTMaterialKit.xcodeproj */,
 				424043D41B91F01900AE8C6E /* RNGL.xcodeproj */,
 				42D5E8521B892BC700688341 /* RCTMapboxGL.xcodeproj */,
 				426E0EA51B83BF2800DCFBBC /* UIImagePickerManager.h */,
@@ -854,6 +873,10 @@
 					ProjectRef = 42D5E8521B892BC700688341 /* RCTMapboxGL.xcodeproj */;
 				},
 				{
+					ProductGroup = 4264D3931B986D9500389E41 /* Products */;
+					ProjectRef = 4264D3921B986D9500389E41 /* RCTMaterialKit.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302D41ABCB9D200DB3ED1 /* Products */;
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
 				},
@@ -1028,6 +1051,13 @@
 			fileType = archive.ar;
 			path = libRNKeychain.a;
 			remoteRef = 4250E85F1B61923700D06A0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4264D3A31B986D9500389E41 /* libRCTMaterialKit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTMaterialKit.a;
+			remoteRef = 4264D3A21B986D9500389E41 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		42D5E8621B892BC800688341 /* libRCTMapboxGL.a */ = {
