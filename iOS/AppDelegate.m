@@ -6,6 +6,8 @@
 #import "GAI.h"
 #import "GAIFields.h"
 #import "GAIDictionaryBuilder.h"
+#import "RCTBridge.h"
+#import "RCTEventDispatcher.h"
 
 @implementation AppDelegate
 
@@ -115,7 +117,8 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
                     }
                     completion: ^(BOOL finished){
                       if (finished) {
-                        [mainViewController.view.batchedBridge.eventDispatcher sendAppEventWithName:ReturnToHomeEvent body:@{
+                        RCTBridge *bridge = [(RCTRootView *)self.window.rootViewController.view bridge];
+                        [bridge.eventDispatcher sendAppEventWithName:ReturnToHomeEvent body:@{
                           @"returnToHome": @"true"
                         }];
                       }

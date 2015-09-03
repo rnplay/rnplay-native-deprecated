@@ -24,7 +24,8 @@ var {
   StyleSheet,
   Text,
   View,
-  StatusBarIOS
+  StatusBarIOS,
+  NativeAppEventEmitter,
 } = React;
 
 // globals are bad, we make an exception here for now
@@ -45,7 +46,6 @@ var RNPlayNative = React.createClass({
   },
 
   componentDidMount() {
-    StatusBarIOS.setStyle('light-content');
     LinkingIOS.addEventListener('url', this._processURL);
 
     var url = LinkingIOS.popInitialURL();
@@ -55,15 +55,19 @@ var RNPlayNative = React.createClass({
 
     this.returnSubscription = NativeAppEventEmitter.addListener('returnToHome',
       (data) => {
-        console.log(data);
-        if (this.onReturn) {
-          this.onreturn();
+        if (this._onReturn) {
+          this._onReturn();
         }
       });
   },
 
   componentWillUnmount() {
     LinkingIOS.removeEventListener('url', this._processURL);
+    this.returnSubscription.remove();
+  },
+
+  _onReturn() {
+    StatusBarIOS.setHidden(false);
   },
 
   _processURL(e) {
