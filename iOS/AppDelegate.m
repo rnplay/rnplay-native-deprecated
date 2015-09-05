@@ -74,6 +74,7 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:initialJSBundleURL
                                                       moduleName:initialModuleName
+                                                      initialProperties:NULL
                                                    launchOptions:launchOptions];
 
   rootView.loadingView = [self spinner];

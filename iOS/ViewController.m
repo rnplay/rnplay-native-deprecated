@@ -18,7 +18,8 @@
 - (void)reloadWithJSBundleURL:(NSURL *)JSBundleURL moduleNamed:(NSString *)moduleName appName:(NSString *)appName {
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:JSBundleURL
                                                       moduleName:moduleName
-                                                   launchOptions:nil];
+                                                      initialProperties: NULL
+                                                      launchOptions:nil];
 
   if (appName == nil) {
     appName = @"app";
