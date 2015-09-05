@@ -43,6 +43,7 @@
 		42CE1E881B80FE6A00EA8CA4 /* WebViewBridge in Resources */ = {isa = PBXBuildFile; fileRef = 42CE1E871B80FE6A00EA8CA4 /* WebViewBridge */; };
 		42D5E8731B892BDD00688341 /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D5E8621B892BC800688341 /* libRCTMapboxGL.a */; };
 		42D8D3111B221FBB00B7BAEF /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D8D3101B221FBB00B7BAEF /* libRCTVideo.a */; };
+		42D987E51B9A1520008D63C2 /* libReactNativeVersionsIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D987E21B9A150E008D63C2 /* libReactNativeVersionsIOS.a */; };
 		42DF0C6B1B3D679700AA060D /* libActivityView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42DF0C6A1B3D678800AA060D /* libActivityView.a */; };
 		42F2283C1AF7E25B00A26CF9 /* photo-camera5.png in Resources */ = {isa = PBXBuildFile; fileRef = 42F2283B1AF7E25B00A26CF9 /* photo-camera5.png */; };
 		42F228431AF7E4D000A26CF9 /* libRNOverlay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F228421AF7E4BE00A26CF9 /* libRNOverlay.a */; };
@@ -216,6 +217,20 @@
 			remoteGlobalIDString = C5DBB34B1AF2EF2B00E611A9;
 			remoteInfo = RCTMapboxGLTests;
 		};
+		42D987E11B9A150E008D63C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 42D987DC1B9A150E008D63C2 /* ReactNativeVersionsIOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 558465821B76C5AA00A48C67;
+			remoteInfo = ReactNativeVersionsIOS;
+		};
+		42D987E31B9A150E008D63C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 42D987DC1B9A150E008D63C2 /* ReactNativeVersionsIOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5584658D1B76C5AA00A48C67;
+			remoteInfo = ReactNativeVersionsIOSTests;
+		};
 		42DF0C691B3D678800AA060D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 42DF0C651B3D678800AA060D /* ActivityView.xcodeproj */;
@@ -345,6 +360,7 @@
 		42D5E8521B892BC700688341 /* RCTMapboxGL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTMapboxGL.xcodeproj; path = "node_modules/react-native-mapbox-gl/RCTMapboxGL.xcodeproj"; sourceTree = "<group>"; };
 		42D8D2FA1B221F7A00B7BAEF /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "node_modules/react-native-video/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
 		42D8D3101B221FBB00B7BAEF /* libRCTVideo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRCTVideo.a; path = "node_modules/react-native-video/build/Debug-iphoneos/libRCTVideo.a"; sourceTree = "<group>"; };
+		42D987DC1B9A150E008D63C2 /* ReactNativeVersionsIOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeVersionsIOS.xcodeproj; path = "node_modules/react-native-versions/ReactNativeVersionsIOS/ReactNativeVersionsIOS.xcodeproj"; sourceTree = "<group>"; };
 		42DF0C651B3D678800AA060D /* ActivityView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ActivityView.xcodeproj; path = "node_modules/react-native-activity-view/ActivityView.xcodeproj"; sourceTree = "<group>"; };
 		42DF0C6C1B3D67A900AA060D /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "node_modules/react-native-video/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
 		42F2283B1AF7E25B00A26CF9 /* photo-camera5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-camera5.png"; sourceTree = "<group>"; };
@@ -400,6 +416,7 @@
 				55B8F9F81B20A869002F65B0 /* libz.dylib in Frameworks */,
 				55B8F9FA1B20A873002F65B0 /* libsqlite3.dylib in Frameworks */,
 				BBE164331B223408001FC1AC /* libc++.dylib in Frameworks */,
+				42D987E51B9A1520008D63C2 /* libReactNativeVersionsIOS.a in Frameworks */,
 				4264D40A1B989D5300389E41 /* libRCTTableView.a in Frameworks */,
 				424043F71B91F02C00AE8C6E /* libRNGL.a in Frameworks */,
 				4264D3B41B986D9E00389E41 /* libRCTMaterialKit.a in Frameworks */,
@@ -651,6 +668,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		42D987DD1B9A150E008D63C2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				42D987E21B9A150E008D63C2 /* libReactNativeVersionsIOS.a */,
+				42D987E41B9A150E008D63C2 /* ReactNativeVersionsIOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		42DF0C661B3D678800AA060D /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -728,6 +754,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				42D987DC1B9A150E008D63C2 /* ReactNativeVersionsIOS.xcodeproj */,
 				4264D3E71B989D4A00389E41 /* RCTTableView.xcodeproj */,
 				4264D3921B986D9500389E41 /* RCTMaterialKit.xcodeproj */,
 				424043D41B91F01900AE8C6E /* RNGL.xcodeproj */,
@@ -961,6 +988,10 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
+					ProductGroup = 42D987DD1B9A150E008D63C2 /* Products */;
+					ProjectRef = 42D987DC1B9A150E008D63C2 /* ReactNativeVersionsIOS.xcodeproj */;
+				},
+				{
 					ProductGroup = 424043D51B91F01900AE8C6E /* Products */;
 					ProjectRef = 424043D41B91F01900AE8C6E /* RNGL.xcodeproj */;
 				},
@@ -1133,6 +1164,20 @@
 			remoteRef = 42D5E8631B892BC800688341 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		42D987E21B9A150E008D63C2 /* libReactNativeVersionsIOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativeVersionsIOS.a;
+			remoteRef = 42D987E11B9A150E008D63C2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		42D987E41B9A150E008D63C2 /* ReactNativeVersionsIOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ReactNativeVersionsIOSTests.xctest;
+			remoteRef = 42D987E31B9A150E008D63C2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		42DF0C6A1B3D678800AA060D /* libActivityView.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1297,7 +1342,7 @@
 					"$(SRCROOT)/node_modules/react-native/Libraries/**",
 					"$(SRCROOT)/../react-native/React/**",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
+				INFOPLIST_FILE = iOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1328,7 +1373,7 @@
 					"$(SRCROOT)/node_modules/react-native/Libraries/**",
 					"$(SRCROOT)/../react-native/React/**",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
+				INFOPLIST_FILE = iOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1359,7 +1404,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 13;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1407,7 +1452,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 13;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
