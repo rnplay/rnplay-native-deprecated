@@ -28,4 +28,10 @@ platform :ios do
     deliver(skip_deploy: true, force: true)
     # frameit
   end
+
+  desc "Build and upload to appetize.io"
+  lane :appetize do
+
+  end
+
 end
