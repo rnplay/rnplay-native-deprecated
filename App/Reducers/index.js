@@ -1,4 +1,4 @@
-import { FETCH_PROFILE, UPDATE_PROFILE, DELETE_PROFILE } from '../actions'
+import { FETCH_PROFILE, UPDATE_PROFILE, DELETE_PROFILE } from '../Actions'
 
 export default function profile(state = {}, action) {
 

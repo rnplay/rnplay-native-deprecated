@@ -16,7 +16,6 @@ var Home = require('../Screens/Home');
 var Guest = require('../Screens/Guest');
 var VersionManager = require('react-native-versions');
 
-var Art = require('art');
 var _ = require('lodash');
 
 var {
@@ -30,7 +29,7 @@ var {
 } = React;
 
 // globals are bad, we make an exception here for now
-global.PACKAGE = require('json!../../package.json');
+global.PACKAGE = require('../../package.json');
 var RN_VERSION = global.PACKAGE.dependencies['react-native'];
 global.RN_VERSION_DISPLAY = RN_VERSION;
 var githubPrefix = 'rnplay/react-native#';
@@ -86,7 +85,7 @@ var RNPlayNative = React.createClass({
 
   render() {
     return (
-      <View>
+      <View style={{flex: 1}}>
         <Home />
         <VersionManager
           appId="9e9aad73a03e4848f22b"
