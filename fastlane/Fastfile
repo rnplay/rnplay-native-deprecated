@@ -24,7 +24,6 @@ platform :ios do
   desc "Deploy a new version to the App Store"
   desc "** Full Markdown** Support: `code`"
   lane :deploy do
-    snapshot
     sigh
     deliver(skip_deploy: true, force: true)
     # frameit
