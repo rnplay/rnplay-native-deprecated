@@ -22,7 +22,12 @@ int const kFlipTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
 
 // Google Analytics configuration constants
 
-static NSString *const kGANPropertyId = @"UA-63760955-1";
+#if DEBUG
+  static NSString *const kGANPropertyId = @"UA-63760955-1";
+#else
+  static NSString *const kGANPropertyId = @"UA-63760955-2";
+#endif
+
 static NSTimeInterval const kGANDispatchInterval = 120.0;
 static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
 
