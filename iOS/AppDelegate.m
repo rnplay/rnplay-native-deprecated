@@ -8,6 +8,8 @@
 #import "GAIDictionaryBuilder.h"
 #import "RCTBridge.h"
 #import "RCTEventDispatcher.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 @implementation AppDelegate
 
@@ -45,6 +47,8 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+  [Fabric with:@[[Crashlytics class]]];
 
   [self initializeGoogleAnalytics];
 

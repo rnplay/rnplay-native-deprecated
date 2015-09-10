@@ -1550,8 +1550,9 @@ var i=t("NativeModules").Vibration,a=t("invariant"),s={vibrate:function(){a(void
 	var Signup = __webpack_require__(42);
 	var Home = __webpack_require__(43);
 	var Guest = __webpack_require__(83);
+	var VersionManager = __webpack_require__(85);
 	
-	var Art = __webpack_require__(85);
+	var Art = __webpack_require__(86);
 	var _ = __webpack_require__(67);
 	
 	var AppRegistry = React.AppRegistry;
@@ -1563,7 +1564,7 @@ var i=t("NativeModules").Vibration,a=t("invariant"),s={vibrate:function(){a(void
 	var NativeAppEventEmitter = React.NativeAppEventEmitter;
 	
 	// globals are bad, we make an exception here for now
-	global.PACKAGE = __webpack_require__(96);
+	global.PACKAGE = __webpack_require__(97);
 	var RN_VERSION = global.PACKAGE.dependencies['react-native'];
 	global.RN_VERSION_DISPLAY = RN_VERSION;
 	var githubPrefix = 'rnplay/react-native#';
@@ -1628,7 +1629,17 @@ var i=t("NativeModules").Vibration,a=t("invariant"),s={vibrate:function(){a(void
 	  },
 	
 	  render: function render() {
-	    return React.createElement(Home, null);
+	    return React.createElement(
+	      View,
+	      null,
+	      React.createElement(Home, null),
+	      React.createElement(VersionManager, {
+	        appId: '9e9aad73a03e4848f22b',
+	        apiId: '16c9d784280d14f2',
+	        apiSecret: '-LWACQqiO8az6c68rTEIjTA76i_nzPHDWJkxko3rogM',
+	        active: true,
+	        moduleName: 'RNPlayNative' })
+	    );
 	  }
 	});
 	
@@ -18796,18 +18807,181 @@ var i=t("NativeModules").Vibration,a=t("invariant"),s={vibrate:function(){a(void
 /* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var MODE = __webpack_require__(86);
-	MODE.Rectangle = __webpack_require__(87);
-	MODE.Pill = __webpack_require__(90);
-	MODE.Ellipse = __webpack_require__(91);
-	MODE.Wedge = __webpack_require__(92);
-	if (!MODE.Font) MODE.Font = __webpack_require__(93);
-	MODE.Transform = __webpack_require__(94);
-	MODE.Color = __webpack_require__(95);
-	module.exports = MODE;
+	'use strict';
+	
+	var React = __webpack_require__(2);
+	var View = React.View;
+	var PropTypes = React.PropTypes;
+	var StyleSheet = React.StyleSheet;
+	var Text = React.Text;
+	var TouchableOpacity = React.TouchableOpacity;
+	var AlertIOS = React.AlertIOS;
+	var Modal = React.Modal;
+	var VersionManager = React.NativeModules.VersionManager;
+	
+	var Versions = React.createClass({
+	  displayName: 'Versions',
+	
+	  propTypes: {
+	    /**
+	     * Determines whether the updater is active
+	     */
+	    active: React.PropTypes.bool,
+	    /**
+	     * top level application module name
+	     */
+	    moduleName: React.PropTypes.string.isRequired
+	  },
+	
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      active: false,
+	      moduleName: "ExampleApp"
+	    };
+	  },
+	
+	  closeModal: function closeModal() {
+	    this.setState({ modalVisible: false });
+	  },
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      modalVisible: false
+	    };
+	  },
+	
+	  updateToVersion: function updateToVersion(version) {
+	    var _this = this;
+	
+	    VersionManager.downloadVersionAsync(version).then(function (path) {
+	      VersionManager.loadJsVersion(version, path, _this.props.moduleName);
+	    })['catch'](function (err) {
+	      // error downloading the latest version
+	      console.log(err);
+	    });
+	  },
+	
+	  componentDidMount: function componentDidMount() {
+	    var _this2 = this;
+	
+	    if (this.props.active) {
+	      VersionManager.configure({
+	        appId: this.props.appId,
+	        apiId: this.props.apiId,
+	        apiSecret: this.props.apiSecret
+	      });
+	
+	      VersionManager.getCurrentJsVersion().then(function (currentVersion) {
+	        VersionManager.discoverLatestVersionAsync().then(function (latestVersionData) {
+	          var latestVersion = latestVersionData.version_number;
+	          if (latestVersion == currentVersion) {
+	            console.log("Already on the latest version!");
+	          } else {
+	            console.log("New version detected...");
+	            _this2.setState({ modalVisible: true, version: latestVersion });
+	            _this2.showAlert();
+	          }
+	        })['catch'](function (err) {
+	          // error fetching the latest version
+	          console.log(err);
+	        });
+	      })['catch'](function (err) {
+	        // error getting current version
+	        console.log(err);
+	      });
+	    }
+	  },
+	
+	  renderModal: function renderModal() {
+	    var _this3 = this;
+	
+	    return React.createElement(
+	      Modal,
+	      { animated: true, visible: this.state.modalVisible },
+	      React.createElement(
+	        Text,
+	        { style: styles.title },
+	        'Do you want to update to version ',
+	        this.state.version,
+	        '?'
+	      ),
+	      React.createElement(
+	        TouchableOpacity,
+	        { onPress: function () {
+	            return _this3.closeModal();
+	          } },
+	        React.createElement(
+	          Text,
+	          { style: styles.button },
+	          'Cancel'
+	        )
+	      ),
+	      React.createElement(
+	        TouchableOpacity,
+	        { onPress: function () {
+	            return _this3.updateToVersion(_this3.state.version);
+	          } },
+	        React.createElement(
+	          Text,
+	          { style: styles.button },
+	          'Update now'
+	        )
+	      )
+	    );
+	  },
+	
+	  showAlert: function showAlert() {
+	    var _this4 = this;
+	
+	    return AlertIOS.alert('Update available', 'Version ' + this.state.version, [{ text: 'Update', onPress: function onPress() {
+	        return _this4.updateToVersion(_this4.state.version);
+	      } }, { text: 'Cancel', onPress: function onPress() {
+	        return _this4.closeModal();
+	      } }]);
+	  },
+	
+	  render: function render() {
+	    return React.createElement(View, null);
+	  }
+	});
+	
+	var styles = StyleSheet.create({
+	  title: {
+	    fontSize: 15,
+	    fontWeight: "500",
+	    textAlign: 'center',
+	    marginBottom: 10
+	  },
+	  button: {
+	    fontSize: 15,
+	    fontWeight: "500",
+	    textAlign: 'center',
+	    borderWidth: 1,
+	    borderColor: '#aaa',
+	    borderRadius: 5,
+	    margin: 5,
+	    padding: 5
+	  }
+	});
+	
+	module.exports = Versions;
 
 /***/ },
 /* 86 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var MODE = __webpack_require__(87);
+	MODE.Rectangle = __webpack_require__(88);
+	MODE.Pill = __webpack_require__(91);
+	MODE.Ellipse = __webpack_require__(92);
+	MODE.Wedge = __webpack_require__(93);
+	if (!MODE.Font) MODE.Font = __webpack_require__(94);
+	MODE.Transform = __webpack_require__(95);
+	MODE.Color = __webpack_require__(96);
+	module.exports = MODE;
+
+/***/ },
+/* 87 */
 /***/ function(module, exports) {
 
 	function warning(){
@@ -18829,10 +19003,10 @@ var i=t("NativeModules").Vibration,a=t("invariant"),s={vibrate:function(){a(void
 
 
 /***/ },
-/* 87 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Shape = __webpack_require__(88);
+	var Shape = __webpack_require__(89);
 	
 	module.exports = Shape(function(width, height, radius){
 	
@@ -18879,11 +19053,11 @@ var i=t("NativeModules").Vibration,a=t("invariant"),s={vibrate:function(){a(void
 	});
 
 /***/ },
-/* 88 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Class = __webpack_require__(89);
-	var Mode = __webpack_require__(86);
+	var Class = __webpack_require__(90);
+	var Mode = __webpack_require__(87);
 	
 	module.exports = function(drawFunction){
 	
@@ -18912,7 +19086,7 @@ var i=t("NativeModules").Vibration,a=t("invariant"),s={vibrate:function(){a(void
 	};
 
 /***/ },
-/* 89 */
+/* 90 */
 /***/ function(module, exports) {
 
 	module.exports = function(mixins){
@@ -18932,10 +19106,10 @@ var i=t("NativeModules").Vibration,a=t("invariant"),s={vibrate:function(){a(void
 
 
 /***/ },
-/* 90 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Shape = __webpack_require__(88);
+	var Shape = __webpack_require__(89);
 	
 	module.exports = Shape(function(width, height){
 	
@@ -18974,10 +19148,10 @@ var i=t("NativeModules").Vibration,a=t("invariant"),s={vibrate:function(){a(void
 	});
 
 /***/ },
-/* 91 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Shape = __webpack_require__(88);
+	var Shape = __webpack_require__(89);
 	
 	module.exports = Shape(function(width, height){
 	
@@ -18995,10 +19169,10 @@ var i=t("NativeModules").Vibration,a=t("invariant"),s={vibrate:function(){a(void
 	});
 
 /***/ },
-/* 92 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Shape = __webpack_require__(88);
+	var Shape = __webpack_require__(89);
 	
 	module.exports = Shape(function(innerRadius, outerRadius, startAngle, endAngle){
 	
@@ -19035,10 +19209,10 @@ var i=t("NativeModules").Vibration,a=t("invariant"),s={vibrate:function(){a(void
 	});
 
 /***/ },
-/* 93 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Shape = __webpack_require__(88);
+	var Shape = __webpack_require__(89);
 	
 	var fonts = {};
 	
@@ -19176,10 +19350,10 @@ var i=t("NativeModules").Vibration,a=t("invariant"),s={vibrate:function(){a(void
 	module.exports = Font;
 
 /***/ },
-/* 94 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Class = __webpack_require__(89);
+	var Class = __webpack_require__(90);
 	
 	function Transform(xx, yx, xy, yy, x, y){
 		if (xx && typeof xx == 'object'){
@@ -19331,7 +19505,7 @@ var i=t("NativeModules").Vibration,a=t("invariant"),s={vibrate:function(){a(void
 
 
 /***/ },
-/* 95 */
+/* 96 */
 /***/ function(module, exports) {
 
 	var colors = {
@@ -19557,7 +19731,7 @@ var i=t("NativeModules").Vibration,a=t("invariant"),s={vibrate:function(){a(void
 	module.exports = Color;
 
 /***/ },
-/* 96 */
+/* 97 */
 /***/ function(module, exports) {
 
 	module.exports = {
