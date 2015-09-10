@@ -8,6 +8,8 @@
 #import "GAIDictionaryBuilder.h"
 #import "RCTBridge.h"
 #import "RCTEventDispatcher.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 @implementation AppDelegate
 
@@ -22,7 +24,12 @@ int const kFlipTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
 
 // Google Analytics configuration constants
 
-static NSString *const kGANPropertyId = @"UA-63760955-1";
+#if DEBUG
+  static NSString *const kGANPropertyId = @"UA-63760955-1";
+#else
+  static NSString *const kGANPropertyId = @"UA-63760955-2";
+#endif
+
 static NSTimeInterval const kGANDispatchInterval = 120.0;
 static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
 
@@ -40,6 +47,8 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+  [Fabric with:@[[Crashlytics class]]];
 
   [self initializeGoogleAnalytics];
 

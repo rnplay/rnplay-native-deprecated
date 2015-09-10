@@ -45,6 +45,8 @@
 		42D8D3111B221FBB00B7BAEF /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D8D3101B221FBB00B7BAEF /* libRCTVideo.a */; };
 		42D987E51B9A1520008D63C2 /* libReactNativeVersionsIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D987E21B9A150E008D63C2 /* libReactNativeVersionsIOS.a */; };
 		42DF0C6B1B3D679700AA060D /* libActivityView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42DF0C6A1B3D678800AA060D /* libActivityView.a */; };
+		42F188861BA2396A00E0E948 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F188841BA2396A00E0E948 /* Fabric.framework */; };
+		42F188871BA2396A00E0E948 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F188851BA2396A00E0E948 /* Crashlytics.framework */; };
 		42F2283C1AF7E25B00A26CF9 /* photo-camera5.png in Resources */ = {isa = PBXBuildFile; fileRef = 42F2283B1AF7E25B00A26CF9 /* photo-camera5.png */; };
 		42F228431AF7E4D000A26CF9 /* libRNOverlay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F228421AF7E4BE00A26CF9 /* libRNOverlay.a */; };
 		55B8F8881B1E4F24002F65B0 /* AppReloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8F8871B1E4F24002F65B0 /* AppReloader.m */; };
@@ -363,6 +365,8 @@
 		42D987DC1B9A150E008D63C2 /* ReactNativeVersionsIOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeVersionsIOS.xcodeproj; path = "node_modules/react-native-versions/ReactNativeVersionsIOS/ReactNativeVersionsIOS.xcodeproj"; sourceTree = "<group>"; };
 		42DF0C651B3D678800AA060D /* ActivityView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ActivityView.xcodeproj; path = "node_modules/react-native-activity-view/ActivityView.xcodeproj"; sourceTree = "<group>"; };
 		42DF0C6C1B3D67A900AA060D /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "node_modules/react-native-video/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
+		42F188841BA2396A00E0E948 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		42F188851BA2396A00E0E948 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		42F2283B1AF7E25B00A26CF9 /* photo-camera5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-camera5.png"; sourceTree = "<group>"; };
 		42F2283D1AF7E4BE00A26CF9 /* RNOverlay.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNOverlay.xcodeproj; path = "node_modules/react-native-overlay/RNOverlay.xcodeproj"; sourceTree = "<group>"; };
 		55B8F8861B1E4F24002F65B0 /* AppReloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppReloader.h; sourceTree = "<group>"; };
@@ -421,6 +425,7 @@
 				424043F71B91F02C00AE8C6E /* libRNGL.a in Frameworks */,
 				4264D3B41B986D9E00389E41 /* libRCTMaterialKit.a in Frameworks */,
 				42D5E8731B892BDD00688341 /* libRCTMapboxGL.a in Frameworks */,
+				42F188861BA2396A00E0E948 /* Fabric.framework in Frameworks */,
 				4250E8661B61924800D06A0B /* libRNKeychain.a in Frameworks */,
 				55B8F9F61B20A861002F65B0 /* SystemConfiguration.framework in Frameworks */,
 				4202C6801B617547007FE903 /* QuartzCore.framework in Frameworks */,
@@ -438,6 +443,7 @@
 				BB0C0AFF1B02FFB800BDEA30 /* libRCTSettings.a in Frameworks */,
 				4202C6871B61759A007FE903 /* libRNKeyboardEvents.a in Frameworks */,
 				BB0C0AEC1B02ACF800BDEA30 /* libART.a in Frameworks */,
+				42F188871BA2396A00E0E948 /* Crashlytics.framework in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -802,6 +808,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				42F188841BA2396A00E0E948 /* Fabric.framework */,
+				42F188851BA2396A00E0E948 /* Crashlytics.framework */,
 				55E1662F1B994EFD006817EA /* Fonts */,
 				4202C6751B6174FA007FE903 /* Settings.bundle */,
 				4202C6731B6174CE007FE903 /* MapboxGL.bundle */,
@@ -894,6 +902,11 @@
 			attributes = {
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = Facebook;
+				TargetAttributes = {
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = N4R7275KQM;
+					};
+				};
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "RNPlayNative" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1295,7 +1308,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "/bin/bash -l";
-			shellScript = "";
+			shellScript = "./Fabric.framework/run a90e498640897526faed1969eae7edb249e316e7 63e8bdada0fb8b75c2171444539bed079402b4f7d8adb95db9388573769bbf37";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1333,7 +1347,12 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Joshua Sierles (3UM82WXFWV)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -1348,8 +1367,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/GoogleAnalytics-3.12/**",
 				);
+				New_Setting1 = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Playground;
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1360,7 +1381,12 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Joshua Sierles (N4R7275KQM)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"RCT_DEBUG=1",
 					"RCT_DEV=1",
@@ -1379,8 +1405,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/GoogleAnalytics-3.12/**",
 				);
+				New_Setting1 = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Playground;
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1450,7 +1478,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Joshua Sierles (N4R7275KQM)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Joshua Sierles (N4R7275KQM)";
 				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = 15;
 				ENABLE_NS_ASSERTIONS = NO;
