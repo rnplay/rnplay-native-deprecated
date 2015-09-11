@@ -93,7 +93,7 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
                                                       initialProperties:NULL
                                                    launchOptions:launchOptions];
   
-   [(RNVVersionManager *)rootView.bridge.modules[@"VersionManager"] setDelegate:self];
+  [(RNVVersionManager *)rootView.bridge.modules[@"VersionManager"] setDelegate:self];
 
   rootView.loadingView = [self spinner];
   rootView.loadingViewFadeDelay = 0.0;
