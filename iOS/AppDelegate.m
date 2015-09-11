@@ -75,7 +75,7 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
     initialModuleName = @"UIExplorerApp";
   } else {
 
-    NSString *path = [VersionManager pathForCurrentVersion];
+    NSString *path = [RNVVersionManager pathForCurrentVersion];
     
     if (path) {
       initialJSBundleURL = [NSURL URLWithString:path];
@@ -93,7 +93,7 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
                                                       initialProperties:NULL
                                                    launchOptions:launchOptions];
   
-   [(VersionManager *)rootView.bridge.modules[@"VersionManager"] setDelegate:self];
+   [(RNVVersionManager *)rootView.bridge.modules[@"VersionManager"] setDelegate:self];
 
   rootView.loadingView = [self spinner];
   rootView.loadingViewFadeDelay = 0.0;
@@ -156,7 +156,7 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
                                                    launchOptions:nil];
   
   // The delegate needs to be set here since this is a new bridge.
-  [(VersionManager *)rootView.bridge.modules[@"VersionManager"] setDelegate:self];
+  [(RNVVersionManager *)rootView.bridge.modules[@"VersionManager"] setDelegate:self];
   
   [mainViewController setView:rootView];
   
@@ -195,7 +195,7 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
 }
 
 void uncaughtExceptionHandler(NSException *exception) {
-  [VersionManager revertCurrentVersionToPrevious];
+  [RNVVersionManager revertCurrentVersionToPrevious];
 }
 
 @end

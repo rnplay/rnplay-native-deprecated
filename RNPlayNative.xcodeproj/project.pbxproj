@@ -1360,7 +1360,7 @@
 					"$(SRCROOT)/node_modules/react-native/React/**",
 					"$(SRCROOT)/node_modules/react-native/Libraries/**",
 					"$(SRCROOT)/../react-native/React/**",
-					"$(SRCROOT)/node_modules/react-native-versions/**",
+					"$(SRCROOT)/node_modules/react-native-versions/ReactNativeVersionsIOS/**",
 				);
 				INFOPLIST_FILE = iOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1399,7 +1399,7 @@
 					"$(SRCROOT)/node_modules/react-native/React/**",
 					"$(SRCROOT)/node_modules/react-native/Libraries/**",
 					"$(SRCROOT)/../react-native/React/**",
-					"$(SRCROOT)/node_modules/react-native-versions/**",
+					"$(SRCROOT)/node_modules/react-native-versions/ReactNativeVersionsIOS/**",
 				);
 				INFOPLIST_FILE = iOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
