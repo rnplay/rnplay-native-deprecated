@@ -47,9 +47,9 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
+  
+  NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
   [Fabric with:@[[Crashlytics class]]];
-
   [self initializeGoogleAnalytics];
 
   NSURL *initialJSBundleURL;
@@ -75,8 +75,15 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
     initialModuleName = @"UIExplorerApp";
   } else {
 
-    initialJSBundleURL = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle"];
-    //initialJSBundleURL = [NSURL URLWithString:[[[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"] absoluteString]];
+    NSString *path = [VersionManager pathForCurrentVersion];
+    
+    if (path) {
+      initialJSBundleURL = [NSURL URLWithString:path];
+    } else {
+      initialJSBundleURL = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+    }
+    
+//    initialJSBundleURL = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle"];
 
     initialModuleName = @"RNPlayNative";
   }
@@ -85,6 +92,8 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
                                                       moduleName:initialModuleName
                                                       initialProperties:NULL
                                                    launchOptions:launchOptions];
+  
+   [(VersionManager *)rootView.bridge.modules[@"VersionManager"] setDelegate:self];
 
   rootView.loadingView = [self spinner];
   rootView.loadingViewFadeDelay = 0.0;
@@ -136,6 +145,30 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
   }
 }
 
+// React Native Versions delegate method...
+- (void)reloadAppWithBundlePath:(NSString *)bundlePath moduleName:(NSString *)moduleName {
+  
+  NSURL *JSBundleURL = [NSURL URLWithString:bundlePath];
+  
+  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:JSBundleURL
+                                                      moduleName:moduleName
+                                               initialProperties:nil
+                                                   launchOptions:nil];
+  
+  // The delegate needs to be set here since this is a new bridge.
+  [(VersionManager *)rootView.bridge.modules[@"VersionManager"] setDelegate:self];
+  
+  [mainViewController setView:rootView];
+  
+  [UIView transitionWithView:self.window
+                    duration:0.4f
+                     options:UIViewAnimationOptionTransitionFlipFromRight
+                  animations:^{
+                    self.window.rootViewController = mainViewController;
+                  }
+                  completion:NULL];
+}
+
 - (UIActivityIndicatorView *)spinner {
   UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] init];
   [spinner setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -159,6 +192,10 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
   id tracker = [[GAI sharedInstance] defaultTracker];
   [tracker set:kGAIScreenName value:@"Main"];
   [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
+
+void uncaughtExceptionHandler(NSException *exception) {
+  [VersionManager revertCurrentVersionToPrevious];
 }
 
 @end
