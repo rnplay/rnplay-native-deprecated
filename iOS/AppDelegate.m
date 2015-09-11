@@ -24,7 +24,7 @@ int const kFlipTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
 
 // Google Analytics configuration constants
 
-#if DEBUG
+#if RNPLAY_DEBUG
   static NSString *const kGANPropertyId = @"UA-63760955-1";
 #else
   static NSString *const kGANPropertyId = @"UA-63760955-2";
@@ -47,7 +47,7 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  
+
   NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
   [Fabric with:@[[Crashlytics class]]];
   [self initializeGoogleAnalytics];
@@ -76,13 +76,13 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
   } else {
 
     NSString *path = [RNVVersionManager pathForCurrentVersion];
-    
+
     if (path) {
       initialJSBundleURL = [NSURL URLWithString:path];
     } else {
       initialJSBundleURL = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
     }
-    
+
 //    initialJSBundleURL = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle"];
 
     initialModuleName = @"RNPlayNative";
@@ -92,7 +92,7 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
                                                       moduleName:initialModuleName
                                                       initialProperties:NULL
                                                    launchOptions:launchOptions];
-  
+
   [(RNVVersionManager *)rootView.bridge.modules[@"VersionManager"] setDelegate:self];
 
   rootView.loadingView = [self spinner];
@@ -147,19 +147,19 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
 
 // React Native Versions delegate method...
 - (void)reloadAppWithBundlePath:(NSString *)bundlePath moduleName:(NSString *)moduleName {
-  
+
   NSURL *JSBundleURL = [NSURL URLWithString:bundlePath];
-  
+
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:JSBundleURL
                                                       moduleName:moduleName
                                                initialProperties:nil
                                                    launchOptions:nil];
-  
+
   // The delegate needs to be set here since this is a new bridge.
   [(RNVVersionManager *)rootView.bridge.modules[@"VersionManager"] setDelegate:self];
-  
+
   [mainViewController setView:rootView];
-  
+
   [UIView transitionWithView:self.window
                     duration:0.4f
                      options:UIViewAnimationOptionTransitionFlipFromRight
