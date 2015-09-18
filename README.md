@@ -1,6 +1,6 @@
 ## React Native Playground Runner
 
-iOS app for running React Native apps from the [React Native
+Native app for iOS (and soon, Android), for running React Native apps from the [React Native
 Playground](http://rnplay.org). This is also the app that powers the
 in-browser simulators on the site.
 
