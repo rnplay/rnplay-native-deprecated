@@ -72,13 +72,17 @@ var AppList = React.createClass({
             this.state.page + 1:
             this.state.page;
 
-          this.setState({
-            data: data,
-            page,
-            dataSource: this.state.dataSource.cloneWithRows(data),
-            loaded: true,
-            hasError: false
-          });
+
+          var newData = this.state.data.concat(data);
+
+            this.setState({
+              data: newData,
+              page,
+              dataSource: this.state.dataSource.cloneWithRows(newData),
+              loaded: true,
+              hasError: false
+            });
+
         })
         .catch((e) => {
           this.setState({hasError: true});
