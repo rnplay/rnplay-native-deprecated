@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>17</string>
+	<string>18</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -47,6 +47,11 @@
 	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>UIAppFonts</key>
@@ -76,9 +81,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-        <key>NSAppTransportSecurity</key>
-        <dict>
-           <key>NSAllowsArbitraryLoads</key><true/>
-	</dict>
 </dict>
 </plist>
