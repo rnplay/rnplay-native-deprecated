@@ -59398,12 +59398,16 @@ var page=data.length?
 _this.state.page + 1:
 _this.state.page;
 
+
+var newData=_this.state.data.concat(data);
+
 _this.setState({
-data:data,
+data:newData,
 page:page,
-dataSource:_this.state.dataSource.cloneWithRows(data),
+dataSource:_this.state.dataSource.cloneWithRows(newData),
 loaded:true,
 hasError:false});}).
+
 
 
 catch(function(e){
