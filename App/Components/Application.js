@@ -26,6 +26,7 @@ var {
   View,
   StatusBarIOS,
   NativeAppEventEmitter,
+  Platform
 } = React;
 
 // globals are bad, we make an exception here for now
@@ -36,6 +37,8 @@ var githubPrefix = 'rnplay/react-native#';
 RN_VERSION = RN_VERSION.replace(githubPrefix, '').replace(/\./g,'').replace(/-/g, '')
 
 global.RN_VERSION = RN_VERSION;
+
+global.PLATFORM = Platform.OS;
 
 var RNPlayNative = React.createClass({
 

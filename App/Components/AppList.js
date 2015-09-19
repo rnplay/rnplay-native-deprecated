@@ -13,7 +13,7 @@ var {
   TouchableHighlight,
   View,
   Navigator,
-  PixelRatio,
+  PixelRatio
 } = React;
 
 var ActionSheetIOS = require('ActionSheetIOS');
@@ -72,11 +72,10 @@ var AppList = React.createClass({
             this.state.page + 1:
             this.state.page;
 
-          var newData = this.state.data.concat(data);
           this.setState({
-            data: newData,
+            data: data,
             page,
-            dataSource: this.state.dataSource.cloneWithRows(newData),
+            dataSource: this.state.dataSource.cloneWithRows(data),
             loaded: true,
             hasError: false
           });

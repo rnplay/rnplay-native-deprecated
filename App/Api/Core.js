@@ -1,9 +1,14 @@
-var BASE_URL = 'https://rnplay.org';  
+var BASE_URL = 'https://rnplay.org';
 
 var Api = {
 
   get(url) {
-    return fetch(BASE_URL + url).then((res) => res.json());
+    var platformParam = `?platform=${global.PLATFORM}`
+
+    if (url.contains('?')) {
+      platformParam = platformParam.replace("?", "&")
+    }
+    return fetch(BASE_URL + url + platformParam).then((res) => res.json());
   },
   post(url, body) {
     return fetch(BASE_URL + url, {
