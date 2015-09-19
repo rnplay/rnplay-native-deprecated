@@ -42,6 +42,7 @@
 		4250E8661B61924800D06A0B /* libRNKeychain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4250E8601B61923700D06A0B /* libRNKeychain.a */; };
 		4264D3B41B986D9E00389E41 /* libRCTMaterialKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4264D3A31B986D9500389E41 /* libRCTMaterialKit.a */; };
 		426E0EA71B83BF2800DCFBBC /* UIImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 426E0EA61B83BF2800DCFBBC /* UIImagePickerManager.m */; };
+		427EFA4D1BAE033B00DA8D5D /* weathericons-regular-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 427EFA4C1BAE033B00DA8D5D /* weathericons-regular-webfont.ttf */; };
 		42CE1E881B80FE6A00EA8CA4 /* WebViewBridge in Resources */ = {isa = PBXBuildFile; fileRef = 42CE1E871B80FE6A00EA8CA4 /* WebViewBridge */; };
 		42D8D3111B221FBB00B7BAEF /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D8D3101B221FBB00B7BAEF /* libRCTVideo.a */; };
 		42D987E51B9A1520008D63C2 /* libReactNativeVersionsIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D987E21B9A150E008D63C2 /* libReactNativeVersionsIOS.a */; };
@@ -368,6 +369,7 @@
 		4264D3921B986D9500389E41 /* RCTMaterialKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTMaterialKit.xcodeproj; path = "node_modules/react-native-material-kit/iOS/RCTMaterialKit.xcodeproj"; sourceTree = "<group>"; };
 		426E0EA51B83BF2800DCFBBC /* UIImagePickerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIImagePickerManager.h; path = "node_modules/react-native-image-picker/UIImagePickerManager/UIImagePickerManager.h"; sourceTree = "<group>"; };
 		426E0EA61B83BF2800DCFBBC /* UIImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIImagePickerManager.m; path = "node_modules/react-native-image-picker/UIImagePickerManager/UIImagePickerManager.m"; sourceTree = "<group>"; };
+		427EFA4C1BAE033B00DA8D5D /* weathericons-regular-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "weathericons-regular-webfont.ttf"; sourceTree = "<group>"; };
 		42CE1E871B80FE6A00EA8CA4 /* WebViewBridge */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WebViewBridge; path = "node_modules/react-native-webview-bridge/WebViewBridge"; sourceTree = "<group>"; };
 		42D5E8521B892BC700688341 /* RCTMapboxGL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTMapboxGL.xcodeproj; path = "node_modules/react-native-mapbox-gl/RCTMapboxGL.xcodeproj"; sourceTree = "<group>"; };
 		42D8D2FA1B221F7A00B7BAEF /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "node_modules/react-native-video/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
@@ -803,6 +805,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				427EFA4C1BAE033B00DA8D5D /* weathericons-regular-webfont.ttf */,
 				42FF2E071BACFC5700C3B66B /* Mapbox.bundle */,
 				42F188841BA2396A00E0E948 /* Fabric.framework */,
 				42F188851BA2396A00E0E948 /* Crashlytics.framework */,
@@ -1266,6 +1269,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				427EFA4D1BAE033B00DA8D5D /* weathericons-regular-webfont.ttf in Resources */,
 				55E1663E1B994EFE006817EA /* Octicons.ttf in Resources */,
 				4202C6761B6174FA007FE903 /* Settings.bundle in Resources */,
 				42FF2E081BACFC5700C3B66B /* Mapbox.bundle in Resources */,
@@ -1419,8 +1423,8 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1475,7 +1479,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 20;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1526,7 +1530,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Joshua Sierles (N4R7275KQM)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Joshua Sierles (N4R7275KQM)";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 20;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
