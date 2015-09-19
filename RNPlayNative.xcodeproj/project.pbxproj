@@ -21,7 +21,6 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		4202C6741B6174CE007FE903 /* MapboxGL.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4202C6731B6174CE007FE903 /* MapboxGL.bundle */; };
 		4202C6761B6174FA007FE903 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4202C6751B6174FA007FE903 /* Settings.bundle */; };
 		4202C6781B617525007FE903 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4202C6771B617525007FE903 /* CoreTelephony.framework */; };
 		4202C67A1B61752D007FE903 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4202C6791B61752D007FE903 /* GLKit.framework */; };
@@ -38,10 +37,8 @@
 		424BBF901B38C91E006C95AA /* libRNUserDefaultsIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424BBF8D1B38C917006C95AA /* libRNUserDefaultsIOS.a */; };
 		4250E8661B61924800D06A0B /* libRNKeychain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4250E8601B61923700D06A0B /* libRNKeychain.a */; };
 		4264D3B41B986D9E00389E41 /* libRCTMaterialKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4264D3A31B986D9500389E41 /* libRCTMaterialKit.a */; };
-		4264D40A1B989D5300389E41 /* libRCTTableView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4264D3FB1B989D4A00389E41 /* libRCTTableView.a */; };
 		426E0EA71B83BF2800DCFBBC /* UIImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 426E0EA61B83BF2800DCFBBC /* UIImagePickerManager.m */; };
 		42CE1E881B80FE6A00EA8CA4 /* WebViewBridge in Resources */ = {isa = PBXBuildFile; fileRef = 42CE1E871B80FE6A00EA8CA4 /* WebViewBridge */; };
-		42D5E8731B892BDD00688341 /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D5E8621B892BC800688341 /* libRCTMapboxGL.a */; };
 		42D8D3111B221FBB00B7BAEF /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D8D3101B221FBB00B7BAEF /* libRCTVideo.a */; };
 		42D987E51B9A1520008D63C2 /* libReactNativeVersionsIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D987E21B9A150E008D63C2 /* libReactNativeVersionsIOS.a */; };
 		42DF0C6B1B3D679700AA060D /* libActivityView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42DF0C6A1B3D678800AA060D /* libActivityView.a */; };
@@ -49,6 +46,9 @@
 		42F188871BA2396A00E0E948 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F188851BA2396A00E0E948 /* Crashlytics.framework */; };
 		42F2283C1AF7E25B00A26CF9 /* photo-camera5.png in Resources */ = {isa = PBXBuildFile; fileRef = 42F2283B1AF7E25B00A26CF9 /* photo-camera5.png */; };
 		42F228431AF7E4D000A26CF9 /* libRNOverlay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F228421AF7E4BE00A26CF9 /* libRNOverlay.a */; };
+		42FF2E051BACFACA00C3B66B /* libRNTableView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42FF2E041BACFAC600C3B66B /* libRNTableView.a */; };
+		42FF2E061BACFC1100C3B66B /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D5E8621B892BC800688341 /* libRCTMapboxGL.a */; };
+		42FF2E081BACFC5700C3B66B /* Mapbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 42FF2E071BACFC5700C3B66B /* Mapbox.bundle */; };
 		55B8F8881B1E4F24002F65B0 /* AppReloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8F8871B1E4F24002F65B0 /* AppReloader.m */; };
 		55B8F9F41B20A858002F65B0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8F9F31B20A858002F65B0 /* CoreData.framework */; };
 		55B8F9F61B20A861002F65B0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8F9F51B20A861002F65B0 /* SystemConfiguration.framework */; };
@@ -198,13 +198,6 @@
 			remoteGlobalIDString = 8A1B8E771B22E4E300DB45C2;
 			remoteInfo = RCTMaterialKit;
 		};
-		4264D3FA1B989D4A00389E41 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4264D3E71B989D4A00389E41 /* RCTTableView.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 873769951B7CD6E900F7C3C2;
-			remoteInfo = RCTTableView;
-		};
 		42D5E8611B892BC800688341 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 42D5E8521B892BC700688341 /* RCTMapboxGL.xcodeproj */;
@@ -253,6 +246,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNOverlay;
+		};
+		42FF2E031BACFAC600C3B66B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 42FF2DFF1BACFAC600C3B66B /* RNTableView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 873769951B7CD6E900F7C3C2;
+			remoteInfo = RNTableView;
 		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -355,7 +355,6 @@
 		424BBF771B38C917006C95AA /* RNUserDefaultsIOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNUserDefaultsIOS.xcodeproj; path = "node_modules/react-native-userdefaults-ios/RNUserDefaultsIOS.xcodeproj"; sourceTree = "<group>"; };
 		4250E8451B61923600D06A0B /* RNKeychain.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNKeychain.xcodeproj; path = "node_modules/react-native-keychain/RNKeychain.xcodeproj"; sourceTree = "<group>"; };
 		4264D3921B986D9500389E41 /* RCTMaterialKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTMaterialKit.xcodeproj; path = "node_modules/react-native-material-kit/iOS/RCTMaterialKit.xcodeproj"; sourceTree = "<group>"; };
-		4264D3E71B989D4A00389E41 /* RCTTableView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTTableView.xcodeproj; path = "node_modules/react-native-tableview/RCTTableView.xcodeproj"; sourceTree = "<group>"; };
 		426E0EA51B83BF2800DCFBBC /* UIImagePickerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIImagePickerManager.h; path = "node_modules/react-native-image-picker/UIImagePickerManager/UIImagePickerManager.h"; sourceTree = "<group>"; };
 		426E0EA61B83BF2800DCFBBC /* UIImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIImagePickerManager.m; path = "node_modules/react-native-image-picker/UIImagePickerManager/UIImagePickerManager.m"; sourceTree = "<group>"; };
 		42CE1E871B80FE6A00EA8CA4 /* WebViewBridge */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WebViewBridge; path = "node_modules/react-native-webview-bridge/WebViewBridge"; sourceTree = "<group>"; };
@@ -369,6 +368,8 @@
 		42F188851BA2396A00E0E948 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		42F2283B1AF7E25B00A26CF9 /* photo-camera5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-camera5.png"; sourceTree = "<group>"; };
 		42F2283D1AF7E4BE00A26CF9 /* RNOverlay.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNOverlay.xcodeproj; path = "node_modules/react-native-overlay/RNOverlay.xcodeproj"; sourceTree = "<group>"; };
+		42FF2DFF1BACFAC600C3B66B /* RNTableView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNTableView.xcodeproj; path = "node_modules/react-native-tableview/RNTableView.xcodeproj"; sourceTree = "<group>"; };
+		42FF2E071BACFC5700C3B66B /* Mapbox.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Mapbox.bundle; path = "node_modules/react-native-mapbox-gl/RCTMapboxGL/Mapbox.bundle"; sourceTree = "<group>"; };
 		55B8F8861B1E4F24002F65B0 /* AppReloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppReloader.h; sourceTree = "<group>"; };
 		55B8F8871B1E4F24002F65B0 /* AppReloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppReloader.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55B8F9F31B20A858002F65B0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -421,10 +422,9 @@
 				55B8F9FA1B20A873002F65B0 /* libsqlite3.dylib in Frameworks */,
 				BBE164331B223408001FC1AC /* libc++.dylib in Frameworks */,
 				42D987E51B9A1520008D63C2 /* libReactNativeVersionsIOS.a in Frameworks */,
-				4264D40A1B989D5300389E41 /* libRCTTableView.a in Frameworks */,
 				424043F71B91F02C00AE8C6E /* libRNGL.a in Frameworks */,
 				4264D3B41B986D9E00389E41 /* libRCTMaterialKit.a in Frameworks */,
-				42D5E8731B892BDD00688341 /* libRCTMapboxGL.a in Frameworks */,
+				42FF2E051BACFACA00C3B66B /* libRNTableView.a in Frameworks */,
 				42F188861BA2396A00E0E948 /* Fabric.framework in Frameworks */,
 				4250E8661B61924800D06A0B /* libRNKeychain.a in Frameworks */,
 				55B8F9F61B20A861002F65B0 /* SystemConfiguration.framework in Frameworks */,
@@ -449,6 +449,7 @@
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				42F228431AF7E4D000A26CF9 /* libRNOverlay.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
+				42FF2E061BACFC1100C3B66B /* libRCTMapboxGL.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
@@ -657,14 +658,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4264D3E81B989D4A00389E41 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4264D3FB1B989D4A00389E41 /* libRCTTableView.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		42D5E8531B892BC700688341 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -703,6 +696,14 @@
 			isa = PBXGroup;
 			children = (
 				42F228421AF7E4BE00A26CF9 /* libRNOverlay.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		42FF2E001BACFAC600C3B66B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				42FF2E041BACFAC600C3B66B /* libRNTableView.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -760,8 +761,8 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				42FF2DFF1BACFAC600C3B66B /* RNTableView.xcodeproj */,
 				42D987DC1B9A150E008D63C2 /* ReactNativeVersionsIOS.xcodeproj */,
-				4264D3E71B989D4A00389E41 /* RCTTableView.xcodeproj */,
 				4264D3921B986D9500389E41 /* RCTMaterialKit.xcodeproj */,
 				424043D41B91F01900AE8C6E /* RNGL.xcodeproj */,
 				42D5E8521B892BC700688341 /* RCTMapboxGL.xcodeproj */,
@@ -808,6 +809,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				42FF2E071BACFC5700C3B66B /* Mapbox.bundle */,
 				42F188841BA2396A00E0E948 /* Fabric.framework */,
 				42F188851BA2396A00E0E948 /* Crashlytics.framework */,
 				55E1662F1B994EFD006817EA /* Fonts */,
@@ -900,7 +902,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
@@ -973,10 +975,6 @@
 					ProjectRef = BB0C0AF91B02FFB100BDEA30 /* RCTSettings.xcodeproj */;
 				},
 				{
-					ProductGroup = 4264D3E81B989D4A00389E41 /* Products */;
-					ProjectRef = 4264D3E71B989D4A00389E41 /* RCTTableView.xcodeproj */;
-				},
-				{
 					ProductGroup = 832341B11AAA6A8300B99B32 /* Products */;
 					ProjectRef = 832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */;
 				},
@@ -1019,6 +1017,10 @@
 				{
 					ProductGroup = 42F2283E1AF7E4BE00A26CF9 /* Products */;
 					ProjectRef = 42F2283D1AF7E4BE00A26CF9 /* RNOverlay.xcodeproj */;
+				},
+				{
+					ProductGroup = 42FF2E001BACFAC600C3B66B /* Products */;
+					ProjectRef = 42FF2DFF1BACFAC600C3B66B /* RNTableView.xcodeproj */;
 				},
 				{
 					ProductGroup = 424BBF781B38C917006C95AA /* Products */;
@@ -1156,13 +1158,6 @@
 			remoteRef = 4264D3A21B986D9500389E41 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		4264D3FB1B989D4A00389E41 /* libRCTTableView.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTTableView.a;
-			remoteRef = 4264D3FA1B989D4A00389E41 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		42D5E8621B892BC800688341 /* libRCTMapboxGL.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1210,6 +1205,13 @@
 			fileType = archive.ar;
 			path = libRNOverlay.a;
 			remoteRef = 42F228411AF7E4BE00A26CF9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		42FF2E041BACFAC600C3B66B /* libRNTableView.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNTableView.a;
+			remoteRef = 42FF2E031BACFAC600C3B66B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {
@@ -1270,7 +1272,7 @@
 			files = (
 				55E1663E1B994EFE006817EA /* Octicons.ttf in Resources */,
 				4202C6761B6174FA007FE903 /* Settings.bundle in Resources */,
-				4202C6741B6174CE007FE903 /* MapboxGL.bundle in Resources */,
+				42FF2E081BACFC5700C3B66B /* Mapbox.bundle in Resources */,
 				42CE1E881B80FE6A00EA8CA4 /* WebViewBridge in Resources */,
 				1111D16C1B18E126007370BA /* Avenir Next.ttc in Resources */,
 				420C36CD1B2212FF008E8F87 /* RNVibrancy in Resources */,
@@ -1371,6 +1373,7 @@
 				);
 				New_Setting1 = "";
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = org.rnplay.playground;
 				PRODUCT_NAME = Playground;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1411,6 +1414,7 @@
 				);
 				New_Setting1 = "";
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = org.rnplay.playground;
 				PRODUCT_NAME = Playground;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1438,6 +1442,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 17;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
