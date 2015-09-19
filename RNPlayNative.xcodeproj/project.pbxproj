@@ -33,6 +33,10 @@
 		420C36CC1B2212FF008E8F87 /* RNBlur in Resources */ = {isa = PBXBuildFile; fileRef = 420C36CA1B2212FF008E8F87 /* RNBlur */; };
 		420C36CD1B2212FF008E8F87 /* RNVibrancy in Resources */ = {isa = PBXBuildFile; fileRef = 420C36CB1B2212FF008E8F87 /* RNVibrancy */; };
 		420C36EC1B2218E7008E8F87 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 420C36EB1B2218B9008E8F87 /* libBVLinearGradient.a */; };
+		4227206B1BADBB9E00B69238 /* BlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 422720681BADBB9E00B69238 /* BlurView.m */; settings = {ASSET_TAGS = (); }; };
+		4227206C1BADBB9E00B69238 /* BlurViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4227206A1BADBB9E00B69238 /* BlurViewManager.m */; settings = {ASSET_TAGS = (); }; };
+		422720911BADBBAC00B69238 /* VibrancyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4227208E1BADBBAC00B69238 /* VibrancyView.m */; settings = {ASSET_TAGS = (); }; };
+		422720921BADBBAC00B69238 /* VibrancyViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 422720901BADBBAC00B69238 /* VibrancyViewManager.m */; settings = {ASSET_TAGS = (); }; };
 		424043F71B91F02C00AE8C6E /* libRNGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424043EE1B91F01900AE8C6E /* libRNGL.a */; };
 		424BBF901B38C91E006C95AA /* libRNUserDefaultsIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424BBF8D1B38C917006C95AA /* libRNUserDefaultsIOS.a */; };
 		4250E8661B61924800D06A0B /* libRNKeychain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4250E8601B61923700D06A0B /* libRNKeychain.a */; };
@@ -54,7 +58,6 @@
 		55B8F9F61B20A861002F65B0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8F9F51B20A861002F65B0 /* SystemConfiguration.framework */; };
 		55B8F9F81B20A869002F65B0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8F9F71B20A869002F65B0 /* libz.dylib */; };
 		55B8F9FA1B20A873002F65B0 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8F9F91B20A873002F65B0 /* libsqlite3.dylib */; };
-		55B8FA161B20A928002F65B0 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8FA0A1B20A928002F65B0 /* libGoogleAnalyticsServices.a */; };
 		55E1662E1B994C63006817EA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55B8FA351B20BA27002F65B0 /* LaunchScreen.xib */; };
 		55E166381B994EFE006817EA /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 55E166301B994EFD006817EA /* Entypo.ttf */; };
 		55E166391B994EFE006817EA /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 55E166311B994EFD006817EA /* EvilIcons.ttf */; };
@@ -67,6 +70,7 @@
 		55FF68641B97284600257CB9 /* AppLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FF68631B97284600257CB9 /* AppLoadingView.m */; };
 		55FF68681B97830200257CB9 /* AppLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FF68671B97830200257CB9 /* AppLoadingView.xib */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		867C39BAACCCFA0CC845288E /* libPods-RNPlayNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F25AFDDDA6351DCA30B885B0 /* libPods-RNPlayNative.a */; };
 		BB0C0AEC1B02ACF800BDEA30 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB0C0ADF1B02ACE900BDEA30 /* libART.a */; };
 		BB0C0AF81B02FF7F00BDEA30 /* uiexplorer.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = BB0C0AF71B02FF7F00BDEA30 /* uiexplorer.jsbundle */; };
 		BB0C0AFF1B02FFB800BDEA30 /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB0C0AFE1B02FFB100BDEA30 /* libRCTSettings.a */; };
@@ -338,7 +342,6 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = iOS/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = iOS/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		4202C6731B6174CE007FE903 /* MapboxGL.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = MapboxGL.bundle; path = "node_modules/react-native-mapbox-gl/RCTMapboxGL/MapboxGL.bundle"; sourceTree = "<group>"; };
 		4202C6751B6174FA007FE903 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = "node_modules/react-native-mapbox-gl/RCTMapboxGL/Settings.bundle"; sourceTree = "<group>"; };
 		4202C6771B617525007FE903 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		4202C6791B61752D007FE903 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -351,6 +354,14 @@
 		420C36CA1B2212FF008E8F87 /* RNBlur */ = {isa = PBXFileReference; lastKnownFileType = folder; name = RNBlur; path = "node_modules/react-native-blur/RNBlur"; sourceTree = "<group>"; };
 		420C36CB1B2212FF008E8F87 /* RNVibrancy */ = {isa = PBXFileReference; lastKnownFileType = folder; name = RNVibrancy; path = "node_modules/react-native-blur/RNVibrancy"; sourceTree = "<group>"; };
 		420C36DC1B221876008E8F87 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
+		422720671BADBB9E00B69238 /* BlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlurView.h; path = "node_modules/react-native-blur/RNBlur/BlurView.h"; sourceTree = "<group>"; };
+		422720681BADBB9E00B69238 /* BlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BlurView.m; path = "node_modules/react-native-blur/RNBlur/BlurView.m"; sourceTree = "<group>"; };
+		422720691BADBB9E00B69238 /* BlurViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlurViewManager.h; path = "node_modules/react-native-blur/RNBlur/BlurViewManager.h"; sourceTree = "<group>"; };
+		4227206A1BADBB9E00B69238 /* BlurViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BlurViewManager.m; path = "node_modules/react-native-blur/RNBlur/BlurViewManager.m"; sourceTree = "<group>"; };
+		4227208D1BADBBAC00B69238 /* VibrancyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VibrancyView.h; path = "node_modules/react-native-blur/RNVibrancy/VibrancyView.h"; sourceTree = "<group>"; };
+		4227208E1BADBBAC00B69238 /* VibrancyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VibrancyView.m; path = "node_modules/react-native-blur/RNVibrancy/VibrancyView.m"; sourceTree = "<group>"; };
+		4227208F1BADBBAC00B69238 /* VibrancyViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VibrancyViewManager.h; path = "node_modules/react-native-blur/RNVibrancy/VibrancyViewManager.h"; sourceTree = "<group>"; };
+		422720901BADBBAC00B69238 /* VibrancyViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VibrancyViewManager.m; path = "node_modules/react-native-blur/RNVibrancy/VibrancyViewManager.m"; sourceTree = "<group>"; };
 		424043D41B91F01900AE8C6E /* RNGL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGL.xcodeproj; path = "node_modules/gl-react-native/RNGL.xcodeproj"; sourceTree = "<group>"; };
 		424BBF771B38C917006C95AA /* RNUserDefaultsIOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNUserDefaultsIOS.xcodeproj; path = "node_modules/react-native-userdefaults-ios/RNUserDefaultsIOS.xcodeproj"; sourceTree = "<group>"; };
 		4250E8451B61923600D06A0B /* RNKeychain.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNKeychain.xcodeproj; path = "node_modules/react-native-keychain/RNKeychain.xcodeproj"; sourceTree = "<group>"; };
@@ -376,17 +387,6 @@
 		55B8F9F51B20A861002F65B0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		55B8F9F71B20A869002F65B0 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		55B8F9F91B20A873002F65B0 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		55B8FA0A1B20A928002F65B0 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
-		55B8FA0C1B20A928002F65B0 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
-		55B8FA0D1B20A928002F65B0 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
-		55B8FA0E1B20A928002F65B0 /* GAIEcommerceFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceFields.h; sourceTree = "<group>"; };
-		55B8FA0F1B20A928002F65B0 /* GAIEcommerceProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceProduct.h; sourceTree = "<group>"; };
-		55B8FA101B20A928002F65B0 /* GAIEcommerceProductAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceProductAction.h; sourceTree = "<group>"; };
-		55B8FA111B20A928002F65B0 /* GAIEcommercePromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommercePromotion.h; sourceTree = "<group>"; };
-		55B8FA121B20A928002F65B0 /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIFields.h; sourceTree = "<group>"; };
-		55B8FA131B20A928002F65B0 /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAILogger.h; sourceTree = "<group>"; };
-		55B8FA141B20A928002F65B0 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
-		55B8FA151B20A928002F65B0 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
 		55B8FA361B20BA27002F65B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = iOS/Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		55E166301B994EFD006817EA /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
 		55E166311B994EFD006817EA /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
@@ -401,6 +401,7 @@
 		55FF68671B97830200257CB9 /* AppLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AppLoadingView.xib; path = iOS/AppLoadingView.xib; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		AC2F9B4735725E8BD57934B8 /* Pods-RNPlayNative.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNPlayNative.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RNPlayNative/Pods-RNPlayNative.debug.xcconfig"; sourceTree = "<group>"; };
 		BB0C0ADA1B02ACE900BDEA30 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
 		BB0C0AF71B02FF7F00BDEA30 /* uiexplorer.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = uiexplorer.jsbundle; path = iOS/uiexplorer.jsbundle; sourceTree = "<group>"; };
 		BB0C0AF91B02FFB100BDEA30 /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
@@ -409,8 +410,10 @@
 		BBA8F2691B0D267C009C7EB9 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = iOS/main.jsbundle; sourceTree = "<group>"; };
 		BBB0D2001B2231820043BDB0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BBB0D2021B2231CA0043BDB0 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		E2A5486E849E626600F70A74 /* Pods-RNPlayNative.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNPlayNative.release.xcconfig"; path = "Pods/Target Support Files/Pods-RNPlayNative/Pods-RNPlayNative.release.xcconfig"; sourceTree = "<group>"; };
 		EE49F76D1AFA1F8D002F30A8 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = iOS/ViewController.h; sourceTree = "<group>"; };
 		EE49F76E1AFA1F8D002F30A8 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = iOS/ViewController.m; sourceTree = "<group>"; };
+		F25AFDDDA6351DCA30B885B0 /* libPods-RNPlayNative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RNPlayNative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -434,7 +437,6 @@
 				4202C67A1B61752D007FE903 /* GLKit.framework in Frameworks */,
 				4202C6781B617525007FE903 /* CoreTelephony.framework in Frameworks */,
 				BBB0D2011B2231820043BDB0 /* Foundation.framework in Frameworks */,
-				55B8FA161B20A928002F65B0 /* libGoogleAnalyticsServices.a in Frameworks */,
 				55B8F9F41B20A858002F65B0 /* CoreData.framework in Frameworks */,
 				4202C69F1B6175F9007FE903 /* libRNVectorIcons.a in Frameworks */,
 				42DF0C6B1B3D679700AA060D /* libActivityView.a in Frameworks */,
@@ -458,6 +460,7 @@
 				BB978E0C1B1A7028003774EB /* libRCTCamera.a in Frameworks */,
 				424BBF901B38C91E006C95AA /* libRNUserDefaultsIOS.a in Frameworks */,
 				42D8D3111B221FBB00B7BAEF /* libRCTVideo.a in Frameworks */,
+				867C39BAACCCFA0CC845288E /* libPods-RNPlayNative.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,6 +590,7 @@
 				55B8F9F71B20A869002F65B0 /* libz.dylib */,
 				55B8F9F51B20A861002F65B0 /* SystemConfiguration.framework */,
 				55B8F9F31B20A858002F65B0 /* CoreData.framework */,
+				F25AFDDDA6351DCA30B885B0 /* libPods-RNPlayNative.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -708,30 +712,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		55B8FA091B20A928002F65B0 /* GoogleAnalytics-3.12 */ = {
+		4A001B5B53441613D6602821 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				55B8FA0B1B20A928002F65B0 /* Library */,
-				55B8FA0A1B20A928002F65B0 /* libGoogleAnalyticsServices.a */,
+				AC2F9B4735725E8BD57934B8 /* Pods-RNPlayNative.debug.xcconfig */,
+				E2A5486E849E626600F70A74 /* Pods-RNPlayNative.release.xcconfig */,
 			);
-			path = "GoogleAnalytics-3.12";
-			sourceTree = "<group>";
-		};
-		55B8FA0B1B20A928002F65B0 /* Library */ = {
-			isa = PBXGroup;
-			children = (
-				55B8FA0C1B20A928002F65B0 /* GAI.h */,
-				55B8FA0D1B20A928002F65B0 /* GAIDictionaryBuilder.h */,
-				55B8FA0E1B20A928002F65B0 /* GAIEcommerceFields.h */,
-				55B8FA0F1B20A928002F65B0 /* GAIEcommerceProduct.h */,
-				55B8FA101B20A928002F65B0 /* GAIEcommerceProductAction.h */,
-				55B8FA111B20A928002F65B0 /* GAIEcommercePromotion.h */,
-				55B8FA121B20A928002F65B0 /* GAIFields.h */,
-				55B8FA131B20A928002F65B0 /* GAILogger.h */,
-				55B8FA141B20A928002F65B0 /* GAITrackedViewController.h */,
-				55B8FA151B20A928002F65B0 /* GAITracker.h */,
-			);
-			path = Library;
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		55E1662F1B994EFD006817EA /* Fonts */ = {
@@ -761,6 +748,14 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				4227208D1BADBBAC00B69238 /* VibrancyView.h */,
+				4227208E1BADBBAC00B69238 /* VibrancyView.m */,
+				4227208F1BADBBAC00B69238 /* VibrancyViewManager.h */,
+				422720901BADBBAC00B69238 /* VibrancyViewManager.m */,
+				422720671BADBB9E00B69238 /* BlurView.h */,
+				422720681BADBB9E00B69238 /* BlurView.m */,
+				422720691BADBB9E00B69238 /* BlurViewManager.h */,
+				4227206A1BADBB9E00B69238 /* BlurViewManager.m */,
 				42FF2DFF1BACFAC600C3B66B /* RNTableView.xcodeproj */,
 				42D987DC1B9A150E008D63C2 /* ReactNativeVersionsIOS.xcodeproj */,
 				4264D3921B986D9500389E41 /* RCTMaterialKit.xcodeproj */,
@@ -779,7 +774,6 @@
 				420C36CA1B2212FF008E8F87 /* RNBlur */,
 				420C36CB1B2212FF008E8F87 /* RNVibrancy */,
 				420C36DC1B221876008E8F87 /* BVLinearGradient.xcodeproj */,
-				55B8FA091B20A928002F65B0 /* GoogleAnalytics-3.12 */,
 				BB978E061B1A7021003774EB /* RCTCamera.xcodeproj */,
 				42DF0C6C1B3D67A900AA060D /* RCTVideo.xcodeproj */,
 				BBA8F2621B0D258B009C7EB9 /* RCTWebSocket.xcodeproj */,
@@ -814,13 +808,13 @@
 				42F188851BA2396A00E0E948 /* Crashlytics.framework */,
 				55E1662F1B994EFD006817EA /* Fonts */,
 				4202C6751B6174FA007FE903 /* Settings.bundle */,
-				4202C6731B6174CE007FE903 /* MapboxGL.bundle */,
 				1111D15A1B18CB88007370BA /* Resources */,
 				13B07FAE1A68108700A75B9A /* RNPlayNative */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* RNPlayNativeTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				1B3EB094E6D4A5101602E36B /* Frameworks */,
+				4A001B5B53441613D6602821 /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -881,11 +875,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "RNPlayNative" */;
 			buildPhases = (
+				5C263DEA9555D51CBA617FBF /* Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				42F8A6DB1AF0E5D700ED7DBD /* ShellScript */,
 				BBE164321B2233FB001FC1AC /* Embed Frameworks */,
+				03BE263292F7D7E3B0D8CB1F /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1299,6 +1295,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		03BE263292F7D7E3B0D8CB1F /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RNPlayNative/Pods-RNPlayNative-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		42F8A6DB1AF0E5D700ED7DBD /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1313,6 +1324,21 @@
 			shellScript = "./Fabric.framework/run a90e498640897526faed1969eae7edb249e316e7 63e8bdada0fb8b75c2171444539bed079402b4f7d8adb95db9388573769bbf37";
 			showEnvVarsInLog = 0;
 		};
+		5C263DEA9555D51CBA617FBF /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1320,12 +1346,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				422720921BADBBAC00B69238 /* VibrancyViewManager.m in Sources */,
 				EE49F76F1AFA1F8D002F30A8 /* ViewController.m in Sources */,
+				4227206B1BADBB9E00B69238 /* BlurView.m in Sources */,
 				55FF68641B97284600257CB9 /* AppLoadingView.m in Sources */,
 				426E0EA71B83BF2800DCFBBC /* UIImagePickerManager.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				422720911BADBBAC00B69238 /* VibrancyView.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				55B8F8881B1E4F24002F65B0 /* AppReloader.m in Sources */,
+				4227206C1BADBB9E00B69238 /* BlurViewManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1345,6 +1375,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AC2F9B4735725E8BD57934B8 /* Pods-RNPlayNative.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1365,14 +1396,14 @@
 					"$(SRCROOT)/node_modules/react-native-versions/ReactNativeVersionsIOS/**",
 				);
 				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GoogleAnalytics-3.12/**",
 				);
 				New_Setting1 = "";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "${inherited}";
 				PRODUCT_BUNDLE_IDENTIFIER = org.rnplay.playground;
 				PRODUCT_NAME = Playground;
 				PROVISIONING_PROFILE = "";
@@ -1382,12 +1413,13 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E2A5486E849E626600F70A74 /* Pods-RNPlayNative.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1395,6 +1427,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"RCT_DEBUG=1",
 					"RCT_DEV=1",
+					"${inherited}",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1406,14 +1439,14 @@
 					"$(SRCROOT)/node_modules/react-native-versions/ReactNativeVersionsIOS/**",
 				);
 				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GoogleAnalytics-3.12/**",
 				);
 				New_Setting1 = "";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "${inherited}";
 				PRODUCT_BUNDLE_IDENTIFIER = org.rnplay.playground;
 				PRODUCT_NAME = Playground;
 				PROVISIONING_PROFILE = "";
