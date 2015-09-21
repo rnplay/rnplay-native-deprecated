@@ -15,7 +15,7 @@ var {
 var NavigationBar = React.createClass({
 
   getTitle() {
-   return (<Text style={styles.navTitle}>{this.props.title}</Text>);
+    return (<Text style={styles.navTitle}>{this.props.title}</Text>);
   },
 
   getLeftButton() {
@@ -83,9 +83,8 @@ var styles = StyleSheet.create({
     borderBottomColor: 'rgba(0, 0, 0, 0.5)',
     borderBottomWidth: 1 / PixelRatio.get(),
     justifyContent: 'space-between',
-    height: 60,
-    marginBottom: 9,
-    paddingTop: 15,
+    height: 65,
+    paddingTop: 20,
   },
   navButton: {
     flex: 0.3,

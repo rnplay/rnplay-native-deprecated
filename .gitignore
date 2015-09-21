@@ -38,3 +38,6 @@ fastlane/screenshots
 
 fastlane/*.xml
 .reploy
+
+# Android
+.gradle
