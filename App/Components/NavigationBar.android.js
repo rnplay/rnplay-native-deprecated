@@ -8,10 +8,6 @@ var {
 } = React;
 
 var NavigationBar = React.createClass({
-  _handleNavIconTap() {
-    console.log('navIcon tapped');
-  },
-
   render() {
     return (
       <ToolbarAndroid
@@ -19,7 +15,7 @@ var NavigationBar = React.createClass({
         navIcon={require("image!ic_menu_white_24dp")}
         onActionSelected={this.onActionSelected}
         titleColor="#fff"
-        onIconClicked={this._handleNavIconTap}
+        onIconClicked={this.props.handleNavIconTap}
         style={styles.toolbarAndroid} />
     );
   }

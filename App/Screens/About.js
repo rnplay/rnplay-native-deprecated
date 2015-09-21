@@ -43,7 +43,6 @@ var About = React.createClass({
     }
     return (
       <View style={styles.container}>
-        <NavigationBar title={'About'} />
         <ScrollView style={styles.contentContainer} automaticallyAdjustContentInsets={false}>
           <Text style={styles.heading}>React Native Playground</Text>
           <Image style={styles.logo} source={require('image!rnplay_logo_light_w_sand')} />

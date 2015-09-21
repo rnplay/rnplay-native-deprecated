@@ -13,12 +13,14 @@ var Settings = require('./Settings');
 var About = require('./About');
 var QRCodeReader = require('./QRCodeReader');
 var Icon = require('react-native-vector-icons/Ionicons');
+var NavigationBar = require('../Components/NavigationBar');
 
 var {
   AppRegistry,
   StyleSheet,
   TouchableOpacity,
-  TabBarIOS
+  TabBarIOS,
+  View,
 } = React;
 
 var Home = React.createClass({
@@ -83,7 +85,10 @@ var Home = React.createClass({
           accessibilityLabel="About Tab"
           selected={this.state.selectedTab === 'about'}
           onPress={() => { this.setState({ selectedTab: 'about', }); }}>
-          <About />
+          <View style={styles.container}>
+            <NavigationBar title={'About'} />
+            <About />
+          </View>
         </Icon.TabBarItem>
       </TabBarIOS>
     )
@@ -91,7 +96,8 @@ var Home = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  tabBar: {
+  container: {
+    flex: 1,
   }
 });
 

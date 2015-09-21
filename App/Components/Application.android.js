@@ -7,7 +7,7 @@
 
 var React = require('react-native');
 
-var About = require('../Screens/About');
+var Home = require('../Screens/Home');
 
 var {
   AppRegistry,
@@ -18,7 +18,7 @@ var RNPlayNative = React.createClass({
   render() {
     return (
       <View style={{flex: 1}}>
-        <About />
+        <Home />
       </View>
     )
   }
