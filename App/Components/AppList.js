@@ -28,6 +28,7 @@ var AppList = React.createClass({
     return {
       page: 1,
       data: [],
+      hasError: false,
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
@@ -40,22 +41,19 @@ var AppList = React.createClass({
 
   componentDidUpdate: function(prevProps) {
     if (prevProps.url !== this.props.url) {
-      this.setState({ loaded: false });
+      this.setState({ hasError: false, loaded: false, page: 1, data: [] });
       this.fetchApps();
     }
   },
 
-  fetchApps() {
+  fetchApps(page = 1) {
     if (!this.requestInFlight) {
-      this.setState({
-        hasError: false
-      });
-
       this.requestInFlight = true;
       var separator = this.props.url.indexOf('?') !== -1 ?
         '&' :
         '?';
-      var url = `${this.props.url}${separator}page=${this.state.page}`;
+      var url = `${this.props.url}${separator}page=${page}`;
+      console.log(page);
 
       Api.get(url)
         .then((data) => {
@@ -64,35 +62,33 @@ var AppList = React.createClass({
             if (Navigator.getContext(this)) {
               Navigator.getContext(this).replace({id: "login", error: data.error});
             }
-
             return;
           }
 
-          var page = data.length ?
-            this.state.page + 1:
-            this.state.page;
-
-
           var newData = this.state.data.concat(data);
 
-            this.setState({
-              data: newData,
-              page,
-              dataSource: this.state.dataSource.cloneWithRows(newData),
-              loaded: true,
-              hasError: false
-            });
-
+          this.setState({
+            data: newData,
+            dataSource: this.state.dataSource.cloneWithRows(newData),
+            loaded: true,
+            hasError: false
+          });
         })
         .catch((e) => {
           this.setState({hasError: true});
+          this.requestInFlight = false;
         })
         .finally(() => {
           this.requestInFlight = false;
         })
         .done();
-
     }
+  },
+
+  _handleEndReached() {
+    var nextPage = this.state.page += 1;
+    this.setState({ page: nextPage });
+    this.fetchApps(nextPage);
   },
 
   renderAppList() {
@@ -104,7 +100,7 @@ var AppList = React.createClass({
           initialPageSize={10}
           pageSize={5}
           onEndReachedThreshold={1200}
-          onEndReached={this.fetchApps}
+          onEndReached={this._handleEndReached}
           style={styles.listView} />
       </View>
     );

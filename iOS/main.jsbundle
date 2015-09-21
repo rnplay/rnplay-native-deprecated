@@ -1358,7 +1358,7 @@ throw new TypeError(
 
 var index=findIndex.call(this,predicate,context);
 return index === -1?undefined:this[index];}});}})();
-__d('RNPlayNative/index.ios.js',["react-native/Libraries/react-native/react-native.js","redux/lib/index.js","redux-thunk/lib/index.js","RNPlayNative/App/Reducers/index.js","react-redux/native.js","RNPlayNative/App/Components/Application.js"],function(global, require, module, exports) {  var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(_x,_x2,_x3){var _again=true;_function: while(_again) {var object=_x,property=_x2,receiver=_x3;desc = parent = getter = undefined;_again = false;if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {_x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactNative=require(
+__d('RNPlayNative/index.ios.js',["react-native/Libraries/react-native/react-native.js","redux/lib/index.js","redux-thunk/lib/index.js","RNPlayNative/App/Reducers/index.js","react-redux/native.js","RNPlayNative/App/Components/Application.ios.js"],function(global, require, module, exports) {  var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(_x,_x2,_x3){var _again=true;_function: while(_again) {var object=_x,property=_x2,receiver=_x3;desc = parent = getter = undefined;_again = false;if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {_x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactNative=require(
 
 'react-native/Libraries/react-native/react-native.js');var _reactNative2=_interopRequireDefault(_reactNative);var _redux=require(
 'redux/lib/index.js');var _reduxThunk=require(
@@ -1370,7 +1370,7 @@ __d('RNPlayNative/index.ios.js',["react-native/Libraries/react-native/react-nati
 
 
 'react-redux/native.js');var _AppComponentsApplication=require(
-'RNPlayNative/App/Components/Application.js');var _AppComponentsApplication2=_interopRequireDefault(_AppComponentsApplication);'use strict';var store=(0,_redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore)(_AppReducers2.default);var 
+'RNPlayNative/App/Components/Application.ios.js');var _AppComponentsApplication2=_interopRequireDefault(_AppComponentsApplication);'use strict';var store=(0,_redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore)(_AppReducers2.default);var 
 
 RNPlayNative=(function(_Component){_inherits(RNPlayNative,_Component);function RNPlayNative(){_classCallCheck(this,RNPlayNative);_get(Object.getPrototypeOf(RNPlayNative.prototype),'constructor',this).apply(this,arguments);}_createClass(RNPlayNative,[{key:'render',value:
 function render(){
@@ -53059,7 +53059,7 @@ throw error;}};
 
 module.exports = invariant;
 });
-__d('RNPlayNative/App/Components/Application.js',["react-native/Libraries/react-native/react-native.js","qs/lib/index.js","LinkingIOS","RNPlayNative/App/Utilities/reloadApp.js","RNPlayNative/App/Screens/Login.js","RNPlayNative/App/Screens/Signup.js","RNPlayNative/App/Screens/Home.js","RNPlayNative/App/Screens/Guest.js","react-native-versions/VersionManager.ios.js","lodash/index.js","RNPlayNative"],function(global, require, module, exports) {  'use strict';var _slicedToArray=(function(){function sliceIterator(arr,i){var _arr=[];var _n=true;var _d=false;var _e=undefined;try{for(var _i=arr[Symbol.iterator](),_s;!(_n = (_s = _i.next()).done);_n = true) {_arr.push(_s.value);if(i && _arr.length === i)break;}}catch(err) {_d = true;_e = err;}finally {try{if(!_n && _i['return'])_i['return']();}finally {if(_d)throw _e;}}return _arr;}return function(arr,i){if(Array.isArray(arr)){return arr;}else if(Symbol.iterator in Object(arr)){return sliceIterator(arr,i);}else {throw new TypeError('Invalid attempt to destructure non-iterable instance');}};})();
+__d('RNPlayNative/App/Components/Application.ios.js',["react-native/Libraries/react-native/react-native.js","qs/lib/index.js","LinkingIOS","RNPlayNative/App/Utilities/reloadApp.js","RNPlayNative/App/Screens/Login.js","RNPlayNative/App/Screens/Signup.js","RNPlayNative/App/Screens/Home.js","RNPlayNative/App/Screens/Guest.js","react-native-versions/VersionManager.ios.js","lodash/index.js","RNPlayNative"],function(global, require, module, exports) {  'use strict';var _slicedToArray=(function(){function sliceIterator(arr,i){var _arr=[];var _n=true;var _d=false;var _e=undefined;try{for(var _i=arr[Symbol.iterator](),_s;!(_n = (_s = _i.next()).done);_n = true) {_arr.push(_s.value);if(i && _arr.length === i)break;}}catch(err) {_d = true;_e = err;}finally {try{if(!_n && _i['return'])_i['return']();}finally {if(_d)throw _e;}}return _arr;}return function(arr,i){if(Array.isArray(arr)){return arr;}else if(Symbol.iterator in Object(arr)){return sliceIterator(arr,i);}else {throw new TypeError('Invalid attempt to destructure non-iterable instance');}};})();
 
 
 
@@ -53087,8 +53087,7 @@ AppRegistry=
 
 
 
-
-React.AppRegistry;var Navigator=React.Navigator;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;var StatusBarIOS=React.StatusBarIOS;var NativeAppEventEmitter=React.NativeAppEventEmitter;var Platform=React.Platform;
+React.AppRegistry;var Navigator=React.Navigator;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;var StatusBarIOS=React.StatusBarIOS;var NativeAppEventEmitter=React.NativeAppEventEmitter;
 
 
 global.PACKAGE = require('RNPlayNative');
@@ -53098,8 +53097,6 @@ var githubPrefix='rnplay/react-native#';
 RN_VERSION = RN_VERSION.replace(githubPrefix,'').replace(/\./g,'').replace(/-/g,'');
 
 global.RN_VERSION = RN_VERSION;
-
-global.PLATFORM = Platform.OS;
 
 var RNPlayNative=React.createClass({displayName:'RNPlayNative',
 
@@ -59199,7 +59196,7 @@ tabBar:{}});
 
 module.exports = Home;
 });
-__d('RNPlayNative/App/Screens/Explore.js',["react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Components/AppList.js","RNPlayNative/App/Screens/Search.js","Dimensions"],function(global, require, module, exports) {  'use strict';
+__d('RNPlayNative/App/Screens/Explore.js',["react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Screens/Search.js","Dimensions","RNPlayNative/App/Components/AppList.js"],function(global, require, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native.js');var 
 
@@ -59354,6 +59351,7 @@ getInitialState:function(){
 return {
 page:1,
 data:[],
+hasError:false,
 dataSource:new ListView.DataSource({
 rowHasChanged:function(row1,row2){return row1 !== row2;}})};},
 
@@ -59366,22 +59364,19 @@ this.fetchApps();},
 
 componentDidUpdate:function(prevProps){
 if(prevProps.url !== this.props.url){
-this.setState({loaded:false});
+this.setState({hasError:false,loaded:false,page:1,data:[]});
 this.fetchApps();}},
 
 
 
-fetchApps:function(){var _this=this;
+fetchApps:function(){var _this=this;var page=arguments.length <= 0 || arguments[0] === undefined?1:arguments[0];
 if(!this.requestInFlight){
-this.setState({
-hasError:false});
-
-
 this.requestInFlight = true;
 var separator=this.props.url.indexOf('?') !== -1?
 '&':
 '?';
-var url='' + this.props.url + separator + 'page=' + this.state.page;
+var url='' + this.props.url + separator + 'page=' + page;
+console.log(page);
 
 Api.get(url).
 then(function(data){
@@ -59390,28 +59385,21 @@ if(data.error){
 if(Navigator.getContext(_this)){
 Navigator.getContext(_this).replace({id:"login",error:data.error});}
 
-
 return;}
-
-
-var page=data.length?
-_this.state.page + 1:
-_this.state.page;
 
 
 var newData=_this.state.data.concat(data);
 
 _this.setState({
 data:newData,
-page:page,
 dataSource:_this.state.dataSource.cloneWithRows(newData),
 loaded:true,
 hasError:false});}).
 
 
-
 catch(function(e){
-_this.setState({hasError:true});}).
+_this.setState({hasError:true});
+_this.requestInFlight = false;}).
 
 finally(function(){
 _this.requestInFlight = false;}).
@@ -59419,6 +59407,11 @@ _this.requestInFlight = false;}).
 done();}},
 
 
+
+_handleEndReached:function(){
+var nextPage=this.state.page += 1;
+this.setState({page:nextPage});
+this.fetchApps(nextPage);},
 
 
 renderAppList:function(){
@@ -59430,7 +59423,7 @@ renderRow:this.renderApp,
 initialPageSize:10,
 pageSize:5,
 onEndReachedThreshold:1200,
-onEndReached:this.fetchApps,
+onEndReached:this._handleEndReached,
 style:styles.listView})));},
 
 
@@ -59700,9 +59693,9 @@ __d('RNPlayNative/App/Utilities/generateAppURL.js',[],function(global, require, 
 
 return "http://packager" + global.RN_VERSION + ".rnplay.org" + app.bundle_path;};
 });
-__d('image!network_error',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/joshua/rnplay/rnplay-native/iOS/Images.xcassets/network_error.imageset/network_error@3x.png","uri":"network_error","width":300,"height":267,"deprecated":true};
+__d('image!network_error',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/Dave/Dev/RNPlayNative/iOS/Images.xcassets/network_error.imageset/network_error@3x.png","uri":"network_error","width":300,"height":267,"deprecated":true};
 });
-__d('RNPlayNative/App/Screens/Search.js',["react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Components/AppList.js","RNPlayNative/App/Components/NoResults.js"],function(global, require, module, exports) {  'use strict';
+__d('RNPlayNative/App/Screens/Search.js',["react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Components/NoResults.js","RNPlayNative/App/Components/AppList.js"],function(global, require, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native.js');
 var AppList=require("RNPlayNative/App/Components/AppList.js");
@@ -60212,7 +60205,7 @@ backgroundColor:'transparent'}});
 
 module.exports = Overlay;
 });
-__d('RNPlayNative/App/Screens/MyApps.js',["redux/lib/index.js","react-redux/native.js","react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Api/Core.js","RNPlayNative/App/Components/AppList.js","RNPlayNative/App/Components/NavigationBar.js","RNPlayNative/App/Actions/index.js"],function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _redux=require(
+__d('RNPlayNative/App/Screens/MyApps.js',["redux/lib/index.js","react-redux/native.js","react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Api/Core.js","RNPlayNative/App/Components/NavigationBar.js","RNPlayNative/App/Actions/index.js","RNPlayNative/App/Components/AppList.js"],function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _redux=require(
 
 
 
@@ -72931,7 +72924,7 @@ root._ = _;}}).
 
 call(this);
 });
-__d('image!rnplay_logo_light_w_sand',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/joshua/rnplay/rnplay-native/iOS/Images.xcassets/rnplay_logo_light_w_sand.imageset/rnplay_logo_light_w_sand.png","uri":"rnplay_logo_light_w_sand","width":370,"height":370,"deprecated":true};
+__d('image!rnplay_logo_light_w_sand',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/Dave/Dev/RNPlayNative/android/app/build/intermediates/res/merged/debug/drawable/rnplay_logo_light_w_sand.png","uri":"rnplay_logo_light_w_sand","width":370,"height":370,"deprecated":true};
 });
 __d('RNPlayNative/App/Screens/QRCodeReader.js',["react-native/Libraries/react-native/react-native.js","react-native-camera/Camera.ios.js","RNPlayNative/App/Utilities/generateAppURL.js","Overlay","RNPlayNative/App/Utilities/reloadApp.js","Ionicons","react-timer-mixin/TimerMixin.js"],function(global, require, module, exports) {  'use strict';
 
@@ -74147,7 +74140,7 @@ color:'#2B608A'}});
 
 module.exports = Guest;
 });
-__d('image!photo-camera5',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/joshua/rnplay/rnplay-native/photo-camera5.png","uri":"photo-camera5","width":256,"height":256,"deprecated":true};
+__d('image!photo-camera5',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/Dave/Dev/RNPlayNative/photo-camera5.png","uri":"photo-camera5","width":256,"height":256,"deprecated":true};
 });
 __d('react-native-versions/VersionManager.ios.js',["react-native/Libraries/react-native/react-native.js"],function(global, require, module, exports) {  'use strict';
 
