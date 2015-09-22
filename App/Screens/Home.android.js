@@ -22,13 +22,23 @@ var {
   View,
   Text,
   TouchableOpacity,
+  ListView,
+  Image,
 } = React;
+
+var dataSource = new ListView.DataSource({
+  rowHasChanged: (row1, row2) => row1 !== row2,
+});
 
 var Home = React.createClass({
   getInitialState() {
     return {
       selectedScreen: this._getAboutScreen(),
     };
+  },
+
+  componentDidMount() {
+    this.drawer.openDrawer();
   },
 
   _getExploreScreen() {
@@ -73,15 +83,38 @@ var Home = React.createClass({
     this.setState({ selectedScreen });
   },
 
+  _renderMenuRow(menuItem) {
+    return (
+      <View style={{height: 50}}>
+        <TouchableOpacity onPress={() => this._handleScreenSelected(menuItem.component)}>
+          <Text style={{marginLeft: 50}}>{menuItem.title}</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  },
+
   render() {
     var navigationView = (
-      <View style={[styles.menuContainer, {backgroundColor: '#fff'}]}>
-        <TouchableOpacity onPress={() => this._handleScreenSelected(this._getExploreScreen())}>
-          <Text>Explore</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this._handleScreenSelected(this._getAboutScreen())}>
-          <Text>About</Text>
-        </TouchableOpacity>
+      <View style={[styles.container, {backgroundColor: '#fff'}]}>
+        <View style={{flex: 1, justifyContent: 'flex-end', backgroundColor: '#712FA9'}}>
+          <Text style={{color: '#fff', margin: 20, fontSize: 18}}>React Native Playground</Text>
+        </View>
+        <ListView
+          dataSource={dataSource.cloneWithRows([
+            {
+              id: 1,
+              title: 'Explore',
+              component: this._getExploreScreen(),
+            },
+            {
+              id: 2,
+              title: 'About',
+              component: this._getAboutScreen(),
+            },
+          ])}
+          renderRow={this._renderMenuRow}
+          style={{flex: 3, paddingTop: 50}}
+        />
       </View>
     );
 
@@ -100,11 +133,6 @@ var Home = React.createClass({
 
 var styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-  menuContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
     flex: 1,
   },
 });
