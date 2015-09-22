@@ -6,7 +6,7 @@
 'use strict';
 
 var React = require('react-native');
-// var Explore = require('./Explore');
+var Explore = require('./Explore');
 // var MyAppsContainer = require('./MyAppsContainer');
 // var CustomApp = require('./CustomApp');
 // var Settings = require('./Settings');
@@ -38,14 +38,14 @@ var Home = React.createClass({
   },
 
   componentDidMount() {
-    this.drawer.openDrawer();
+    // To better debug the drawer...
+    // this.drawer.openDrawer();
   },
 
   _getExploreScreen() {
     return {
       title: 'Explore',
-      // This needs to return the real explore screen...
-      component: this._renderAbout(),
+      component: this._renderExplore(),
     };
   },
 
@@ -54,6 +54,16 @@ var Home = React.createClass({
       title: 'About',
       component: this._renderAbout(),
     };
+  },
+
+  _renderExplore() {
+    return React.createClass({
+      render() {
+        return (
+          <Explore />
+        );
+      }
+    });
   },
 
   _renderAbout() {

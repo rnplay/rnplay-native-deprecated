@@ -13,7 +13,8 @@ var {
   TouchableHighlight,
   View,
   Navigator,
-  PixelRatio
+  PixelRatio,
+  Platform,
 } = React;
 
 var ActionSheetIOS = require('ActionSheetIOS');
@@ -22,6 +23,7 @@ var reloadApp = require('../Utilities/reloadApp');
 var Api = require("../Api/Core");
 var NoResults = require('../Components/NoResults');
 var generateAppURL = require('../Utilities/generateAppURL');
+var Spinner = require('./Spinner');
 
 var AppList = React.createClass({
   getInitialState() {
@@ -93,16 +95,14 @@ var AppList = React.createClass({
 
   renderAppList() {
     return (
-      <View style={styles.container}>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderApp}
-          initialPageSize={10}
-          pageSize={5}
-          onEndReachedThreshold={1200}
-          onEndReached={this._handleEndReached}
-          style={styles.listView} />
-      </View>
+      <ListView
+        style={{flex: 1}}
+        dataSource={this.state.dataSource}
+        renderRow={this.renderApp}
+        initialPageSize={10}
+        pageSize={5}
+        onEndReachedThreshold={1200}
+        onEndReached={this._handleEndReached} />
     );
   },
 
@@ -112,7 +112,9 @@ var AppList = React.createClass({
 
       return (
         <View style={styles.creator}>
-          <Image style={styles.avatar} resizeMode="contain" source={{uri: avatarUrl}} />
+          <View style={styles.avatarContainer}>
+            <Image style={styles.avatar} source={{uri: avatarUrl}} />
+          </View>
           <Text style={styles.username} numberOfLines={1}>{app.creator.username || 'guest'}</Text>
         </View>
       )
@@ -132,7 +134,7 @@ var AppList = React.createClass({
 
   renderApp(app) {
     return (
-      <View style={{marginBottom: 15}}>
+      <View style={{paddingTop: 10}}>
         <TouchableHighlight underlayColor="#F5F5F5" onLongPress={() => this.shareApp(app)}
                                                     onPress={() => this.selectApp(app)}>
           <View style={styles.appContainer}>
@@ -162,7 +164,7 @@ var AppList = React.createClass({
   renderLoading() {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicatorIOS color={'#712FA9'} style={styles.spinner} size="large" />
+        <Spinner isLoading={true} />
       </View>
     );
   },
@@ -233,11 +235,6 @@ var styles = StyleSheet.create({
     fontWeight:'700'
   },
 
-  listView: {
-    marginTop: -9,
-    paddingTop: 0,
-  },
-
   container: {
     flex: 1,
     backgroundColor: 'transparent',
@@ -246,16 +243,15 @@ var styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
     paddingBottom: 80,
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   appContainer: {
     overflow: 'hidden',
-    marginTop: -18,
     flexDirection: 'row',
     flex: 1,
     paddingBottom: 8,
-    paddingTop: 15,
     borderBottomWidth: 3 / PixelRatio.get(),
     borderBottomColor: "#eee"
   },
@@ -300,12 +296,19 @@ var styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  avatar: {
+  avatarContainer: {
     width: 30,
     height: 30,
     marginBottom: 5,
     borderRadius: 15,
     backgroundColor: "#000"
+  },
+
+  avatar: {
+    width: 30,
+    height: 30,
+    marginBottom: 5,
+    borderRadius: 15,
   },
 
   cancelButton: {
@@ -320,10 +323,6 @@ var styles = StyleSheet.create({
     fontFamily: 'Avenir Next',
     color: '#712FA9',
     width: deviceWidth - 70,
-    flex: 1,
-  },
-
-  spinner: {
     flex: 1,
   },
 });

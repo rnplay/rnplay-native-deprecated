@@ -10,6 +10,7 @@ var {
   View,
   ListView,
   TextInput,
+  Platform,
 } = React;
 
 var Explore = React.createClass({
@@ -70,11 +71,11 @@ var Explore = React.createClass({
 var styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    marginTop: 19,
   },
   searchRow: {
     backgroundColor: '#f3f3f3',
-    padding: 10,
-    marginBottom: 9,
+    padding: 5,
   },
   input: {
     height: 40,
@@ -83,7 +84,7 @@ var styles = StyleSheet.create({
     color: 'black',
   },
   inputContainer: {
-    borderBottomWidth: 1,
+    borderBottomWidth: Platform.OS === 'ios' ? 1 : null,
     borderColor: '#ccc',
     margin: 5,
     marginTop: 0,
