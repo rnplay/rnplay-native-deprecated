@@ -33,7 +33,7 @@ var About = React.createClass({
 
   renderModules() {
     return map(global.PACKAGE['dependencies'], (version, name) => {
-      return <Text style={styles.moduleText}>{name} {version}</Text>
+      return <Text key={name} style={styles.moduleText}>{name} {version}</Text>
     })
   },
 
