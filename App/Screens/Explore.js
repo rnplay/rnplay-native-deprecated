@@ -7,7 +7,6 @@ var {
   StyleSheet,
   Text,
   View,
-  StatusBarIOS,
   ScrollView,
   TouchableOpacity,
   Platform,
@@ -16,6 +15,7 @@ var {
 var AppList = require("../Components/AppList");
 var Search = require('../Screens/Search');
 var Colors = require('../Utilities/Colors');
+var StatusBar = require('../Components/StatusBar');
 
 var Explore = React.createClass({
   getInitialState() {
@@ -90,9 +90,7 @@ var Explore = React.createClass({
   },
 
   render() {
-    if (Platform.OS === 'ios') {
-      StatusBarIOS.setStyle('default');
-    }
+    StatusBar.setStyle('default');
 
     return (
       <View style={styles.mainContainer}>

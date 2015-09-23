@@ -6,11 +6,11 @@ var Api = require('../Api/Core');
 var {
   TouchableOpacity,
   View,
-  StatusBarIOS,
 } = React;
 
 var AppList = require("../Components/AppList");
 var NavigationBar = require('../Components/NavigationBar');
+var StatusBar = require('../Components/StatusBar');
 
 var MyApps = React.createClass({
 
@@ -21,9 +21,7 @@ var MyApps = React.createClass({
   },
 
   render() {
-    if (Platform.OS === 'ios') {
-      StatusBarIOS.setStyle('light-content');
-    }
+    StatusBar.setStyle('light-content');
 
     return (
       <View style={{flex: 1}}>

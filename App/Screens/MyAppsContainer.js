@@ -13,6 +13,7 @@ var Login = require('../Screens/Login');
 var Signup = require('../Screens/Signup');
 var MyApps = require('../Screens/MyApps');
 var Colors = require('../Utilities/Colors');
+var StatusBar = require('../Components/StatusBar');
 
 var DEFAULT_ROUTE = {id: 'my_apps'};
 
@@ -26,7 +27,6 @@ var {
   TouchableOpacity,
   View,
   Navigator,
-  StatusBarIOS,
   Platform,
 } = React;
 
@@ -54,9 +54,8 @@ var MyAppsContainer = React.createClass({
   },
 
   render() {
-    if (Platform.OS === 'ios') {
-      StatusBarIOS.setStyle('light-content');
-    }
+    StatusBar.setStyle('light-content');
+
     if(this.props.profile && this.props.profile.id){
       DEFAULT_ROUTE.id = 'my_apps';
     } else {

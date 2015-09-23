@@ -2,18 +2,19 @@
 
 var React = require('react-native');
 var NavigationBar = require('../Components/NavigationBar');
+var StatusBar = require('../Components/StatusBar');
 
 var {
   StyleSheet,
   Text,
   View,
-  StatusBarIOS,
 } = React;
 
 var Settings = React.createClass({
 
   render(){
-    StatusBarIOS.setStyle('light-content');
+    StatusBar.setStyle('light-content');
+
     return (
       <View style={styles.mainContainer}>
         <NavigationBar title={'Settings'} />

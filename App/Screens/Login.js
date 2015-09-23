@@ -6,6 +6,7 @@ var Api = require('../Api/Core');
 var Colors = require('../Utilities/Colors');
 var Alert = require('../Components/Alert');
 var Spinner = require('../Components/Spinner');
+var StatusBar = require('../Components/StatusBar');
 
 var {
   ActivityIndicatorIOS,
@@ -16,7 +17,6 @@ var {
   Text,
   TouchableHighlight,
   View,
-  StatusBarIOS,
   Platform,
   ToastAndroid,
 } = React;
@@ -80,9 +80,7 @@ var Login = React.createClass({
   },
 
   render() {
-    if (Platform.OS === 'ios') {
-      StatusBarIOS.setStyle('light-content');
-    }
+    StatusBar.setStyle('light-content');
 
     return (
       <View style={styles.mainContainer}>

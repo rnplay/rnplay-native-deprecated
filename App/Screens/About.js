@@ -3,13 +3,13 @@
 var React = require('react-native');
 var NavigationBar = require('../Components/NavigationBar');
 var Colors = require('../Utilities/Colors');
+var StatusBar = require('../Components/StatusBar');
 
 var {
   StyleSheet,
   Text,
   ScrollView,
   View,
-  StatusBarIOS,
   LinkingIOS,
   TouchableOpacity,
   Image,
@@ -39,9 +39,8 @@ var About = React.createClass({
   },
 
   render() {
-    if (Platform.OS === 'ios') {
-      StatusBarIOS.setStyle('light-content');
-    }
+    StatusBar.setStyle('light-content');
+
     return (
       <View style={styles.container}>
         <ScrollView style={styles.contentContainer} automaticallyAdjustContentInsets={false}>

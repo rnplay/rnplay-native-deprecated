@@ -4,12 +4,12 @@ var React = require('react-native');
 var Camera = require('react-native-camera');
 var generateAppURL = require('../Utilities/generateAppURL');
 var Overlay = require('react-native-overlay');
+var StatusBar = require('../Components/StatusBar');
 
 var {
   StyleSheet,
   Text,
   View,
-  StatusBarIOS,
   TouchableOpacity
 } = React;
 
@@ -39,7 +39,8 @@ var QRCodeReader = React.createClass({
   },
 
   render(){
-    StatusBarIOS.setStyle('default');
+    StatusBar.setStyle('default');
+
     return (
       this.state.cameraOpen ?
         <Overlay isVisible={true}>

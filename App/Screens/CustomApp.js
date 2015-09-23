@@ -5,6 +5,7 @@ var NavigationBar = require('../Components/NavigationBar');
 var Api = require('../Api/Core');
 var reloadApp = require('../Utilities/reloadApp');
 var Colors = require('../Utilities/Colors');
+var StatusBar = require('../Components/StatusBar');
 
 var {
   ActivityIndicatorIOS,
@@ -15,7 +16,6 @@ var {
   Text,
   TouchableHighlight,
   View,
-  StatusBarIOS,
 } = React;
 
 var CustomApp = React.createClass({
@@ -41,7 +41,7 @@ var CustomApp = React.createClass({
   },
 
   render() {
-    StatusBarIOS.setStyle('light-content');
+    StatusBar.setStyle('light-content');
 
     return (
       <View style={styles.mainContainer}>
