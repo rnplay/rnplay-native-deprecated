@@ -3,6 +3,7 @@
 var React = require('react-native');
 var AppList = require("../Components/AppList");
 var NoResults = require('../Components/NoResults');
+var Colors = require('../Utilities/Colors');
 
 var {
   StyleSheet,
@@ -74,7 +75,7 @@ var styles = StyleSheet.create({
     marginTop: 19,
   },
   searchRow: {
-    backgroundColor: '#f3f3f3',
+    backgroundColor: Colors.veryLightGrey,
     padding: 5,
   },
   input: {
@@ -85,7 +86,7 @@ var styles = StyleSheet.create({
   },
   inputContainer: {
     borderBottomWidth: Platform.OS === 'ios' ? 1 : null,
-    borderColor: '#ccc',
+    borderColor: Colors.lightGrey,
     margin: 5,
     marginTop: 0,
   },

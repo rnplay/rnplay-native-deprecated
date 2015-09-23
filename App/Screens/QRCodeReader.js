@@ -16,7 +16,7 @@ var {
 var reloadApp = require('../Utilities/reloadApp');
 var Icon = require('react-native-vector-icons/Ionicons');
 var TimerMixin = require('react-timer-mixin');
-
+var Colors = require('../Utilities/Colors');
 
 var QRCodeReader = React.createClass({
   mixins: [TimerMixin],
@@ -51,7 +51,7 @@ var QRCodeReader = React.createClass({
               <Icon name='close'
                 size={30}
                 style={styles.closeButton}
-                color='#fff' />
+                color='white' />
             </TouchableOpacity>
           </Camera>
         </Overlay> :
@@ -71,7 +71,7 @@ var QRCodeReader = React.createClass({
                 name='camera'
                 size={80}
                 style={styles.cameraButton}
-                color='#777'
+                color={Colors.grey}
               />
             </TouchableOpacity>
           </View>

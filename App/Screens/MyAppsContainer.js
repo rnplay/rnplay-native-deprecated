@@ -13,6 +13,7 @@ var NavigationBar = require('../Components/NavigationBar');
 var Login = require('../Screens/Login');
 var Signup = require('../Screens/Signup');
 var MyApps = require('../Screens/MyApps');
+var Colors = require('../Utilities/Colors');
 
 var DEFAULT_ROUTE = {id: 'my_apps'};
 
@@ -99,7 +100,7 @@ var styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 25,
     paddingBottom: 20,
-    color: '#888'
+    color: Colors.grey,
   },
   app: {
     fontSize: 20,

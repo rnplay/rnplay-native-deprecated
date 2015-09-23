@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react-native');
+var Colors = require('../Utilities/Colors');
 
 var {
   ToolbarAndroid,
@@ -14,7 +15,7 @@ var NavigationBar = React.createClass({
         title={this.props.title}
         navIcon={require("image!ic_menu_white_24dp")}
         onActionSelected={this.onActionSelected}
-        titleColor="#fff"
+        titleColor="white"
         onIconClicked={this.props.handleNavIconTap}
         style={styles.toolbarAndroid} />
     );
@@ -23,7 +24,7 @@ var NavigationBar = React.createClass({
 
 var styles = StyleSheet.create({
   toolbarAndroid: {
-    backgroundColor: '#712FA9',
+    backgroundColor: Colors.tintColor,
     height: 56,
   },
 });

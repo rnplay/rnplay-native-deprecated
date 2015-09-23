@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var Dimensions = require('Dimensions');
+var Colors = require('../Utilities/Colors');
 
 var {
   PixelRatio,
@@ -79,7 +80,7 @@ var styles = StyleSheet.create({
   navbarContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#712FA9',
+    backgroundColor: Colors.tintColor,
     borderBottomColor: 'rgba(0, 0, 0, 0.5)',
     borderBottomWidth: 1 / PixelRatio.get(),
     justifyContent: 'space-between',

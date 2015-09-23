@@ -4,6 +4,7 @@ var React = require('react-native');
 var NavigationBar = require('../Components/NavigationBar');
 var Api = require('../Api/Core');
 var reloadApp = require('../Utilities/reloadApp');
+var Colors = require('../Utilities/Colors');
 
 var {
   ActivityIndicatorIOS,
@@ -84,7 +85,7 @@ var CustomApp = React.createClass({
 
           <ActivityIndicatorIOS
             animating={this.state.isLoading}
-            color="#111"
+            color={Colors.tintColor}
             size="large">
           </ActivityIndicatorIOS>
         </ScrollView>
@@ -109,11 +110,11 @@ var styles = StyleSheet.create({
   helpText: {
     marginTop: 10,
     paddingHorizontal: 10,
-    color: "#888"
+    color: Colors.grey,
   },
   inputContainer: {
     borderBottomWidth: 1,
-    borderColor: '#cccccc',
+    borderColor: Colors.lightGrey,
     margin: 10,
   },
   input: {
@@ -123,7 +124,7 @@ var styles = StyleSheet.create({
     color: 'black',
   },
   button: {
-    backgroundColor: '#712FA9',
+    backgroundColor: Colors.tintColor,
     margin: 10
   },
   buttonText: {

@@ -24,6 +24,7 @@ var Api = require("../Api/Core");
 var NoResults = require('../Components/NoResults');
 var generateAppURL = require('../Utilities/generateAppURL');
 var Spinner = require('./Spinner');
+var Colors = require('../Utilities/Colors');
 
 var AppList = React.createClass({
   getInitialState() {
@@ -134,8 +135,7 @@ var AppList = React.createClass({
 
   renderApp(app) {
     return (
-      <View style={{paddingTop: 10}}>
-        <TouchableHighlight underlayColor="#F5F5F5" onLongPress={() => this.shareApp(app)}
+        <TouchableHighlight underlayColor={Colors.veryLightGrey} onLongPress={() => this.shareApp(app)}
                                                     onPress={() => this.selectApp(app)}>
           <View style={styles.appContainer}>
             <View style={styles.appTextDescription}>
@@ -152,7 +152,6 @@ var AppList = React.createClass({
             { this.renderCreator(app) }
           </View>
         </TouchableHighlight>
-      </View>
     );
   },
 
@@ -223,14 +222,14 @@ var styles = StyleSheet.create({
 
   retryButtonView: {
     height: 40,
-    backgroundColor:'#712FA9',
+    backgroundColor: Colors.tintColor,
   },
 
   retryButtonText: {
     padding:10,
     paddingLeft: 20,
     paddingRight: 20,
-    color:'#fff',
+    color:'white',
     textAlign:'center',
     fontWeight:'700'
   },
@@ -251,6 +250,7 @@ var styles = StyleSheet.create({
     overflow: 'hidden',
     flexDirection: 'row',
     flex: 1,
+    paddingTop: 10,
     paddingBottom: 8,
     borderBottomWidth: 3 / PixelRatio.get(),
     borderBottomColor: "#eee"
@@ -301,7 +301,7 @@ var styles = StyleSheet.create({
     height: 30,
     marginBottom: 5,
     borderRadius: 15,
-    backgroundColor: "#000"
+    backgroundColor: "black"
   },
 
   avatar: {
@@ -312,7 +312,7 @@ var styles = StyleSheet.create({
   },
 
   cancelButton: {
-    color: '#fff',
+    color: 'white',
     flex: 1,
     fontSize: 25,
     marginLeft: 20
@@ -321,7 +321,7 @@ var styles = StyleSheet.create({
   appTitle: {
     fontSize: 18,
     fontFamily: 'Avenir Next',
-    color: '#712FA9',
+    color: Colors.tintColor,
     width: deviceWidth - 70,
     flex: 1,
   },

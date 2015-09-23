@@ -21,6 +21,7 @@ var {
 var reloadApp = require('../Utilities/reloadApp');
 var Camera = require('react-native-camera');
 var Overlay = require('react-native-overlay');
+var Colors = require('../Utilities/Colors');
 
 var Api = require("../Api/Core");
 
@@ -173,7 +174,7 @@ var styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 25,
     paddingBottom: 20,
-    color: '#888'
+    color: Colors.grey,
   },
   app: {
     fontSize: 20,

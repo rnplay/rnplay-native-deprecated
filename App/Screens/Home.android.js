@@ -15,6 +15,7 @@ var About = require('./About');
 // var Icon = require('react-native-vector-icons/Ionicons');
 var DrawerLayout = require('react-native-drawer-layout');
 var NavigationBar = require('../Components/NavigationBar');
+var Colors = require('../Utilities/Colors');
 
 var {
   AppRegistry,
@@ -105,9 +106,9 @@ var Home = React.createClass({
 
   render() {
     var navigationView = (
-      <View style={[styles.container, {backgroundColor: '#fff'}]}>
-        <View style={{flex: 1, justifyContent: 'flex-end', backgroundColor: '#712FA9'}}>
-          <Text style={{color: '#fff', margin: 20, fontSize: 18}}>React Native Playground</Text>
+      <View style={[styles.container, {backgroundColor: 'white'}]}>
+        <View style={{flex: 1, justifyContent: 'flex-end', backgroundColor: Colors.tintColor}}>
+          <Text style={{color: 'white', margin: 20, fontSize: 18}}>React Native Playground</Text>
         </View>
         <ListView
           dataSource={dataSource.cloneWithRows([

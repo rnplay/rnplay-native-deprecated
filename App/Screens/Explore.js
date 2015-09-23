@@ -15,6 +15,7 @@ var {
 
 var AppList = require("../Components/AppList");
 var Search = require('../Screens/Search');
+var Colors = require('../Utilities/Colors');
 
 var Explore = React.createClass({
   getInitialState() {
@@ -61,7 +62,7 @@ var Explore = React.createClass({
     if (Platform.OS === 'ios') {
       return (
         <SegmentedControlIOS
-          tintColor={'#712FA9'}
+          tintColor={Colors.tintColor}
           values={this.state.values}
           style={styles.exploreViewPicker}
           selectedIndex={this.state.selectedIndex}
@@ -130,7 +131,7 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     paddingTop: 15,
     paddingBottom: 15,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     shadowColor: 'black',
     shadowOpacity: 0.1,
     shadowOffset: {width: 0, height: 3},
@@ -156,7 +157,7 @@ var styles = StyleSheet.create({
     fontSize: 16,
   },
   segmentedItemSelected: {
-    color: '#712FA9',
+    color: Colors.tintColor,
     fontWeight: 'bold',
   },
   exploreViewPicker: {

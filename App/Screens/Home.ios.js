@@ -14,6 +14,7 @@ var About = require('./About');
 var QRCodeReader = require('./QRCodeReader');
 var Icon = require('react-native-vector-icons/Ionicons');
 var NavigationBar = require('../Components/NavigationBar');
+var Colors = require('../Utilities/Colors');
 
 var {
   AppRegistry,
@@ -26,7 +27,7 @@ var {
 var Home = React.createClass({
   getInitialState() {
     return {
-      selectedTab: 'about',
+      selectedTab: 'qr_code_reader',
     };
   },
 
@@ -34,7 +35,7 @@ var Home = React.createClass({
     return (
       <TabBarIOS
         selectedTab={this.state.selectedTab}
-        tintColor={'#712FA9'}
+        tintColor={Colors.tintColor}
         style={styles.tabBar}
         barTintColor={'white'}>
         <Icon.TabBarItem

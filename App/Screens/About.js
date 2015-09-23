@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var NavigationBar = require('../Components/NavigationBar');
+var Colors = require('../Utilities/Colors');
 
 var {
   StyleSheet,
@@ -89,12 +90,12 @@ var styles = StyleSheet.create({
     flex: 1,
   },
   sendEmailText: {
-    color: '#712FA9',
+    color: Colors.tintColor,
     fontSize: 13,
     marginTop: -2,
   },
   link: {
-    color: "#712FA9"
+    color: Colors.tintColor,
   },
   emphasis: {
     fontStyle: "italic"
@@ -115,7 +116,7 @@ var styles = StyleSheet.create({
   },
   title: {
     fontWeight: 'bold',
-    color: "#444",
+    color: Colors.darkGrey,
     fontFamily: 'Avenir Next',
     paddingRight: 15,
     paddingLeft: 15,
@@ -125,7 +126,7 @@ var styles = StyleSheet.create({
   text: {
     fontFamily: 'Avenir Next',
     paddingRight: 15,
-    color: "#222",
+    color: Colors.midGrey,
     paddingLeft: 15,
     marginBottom: 20,
     fontSize: 14
@@ -133,7 +134,7 @@ var styles = StyleSheet.create({
   moduleText: {
     fontFamily: 'Avenir Next',
     paddingRight: 15,
-    color: "#222",
+    color: Colors.midGrey,
     paddingLeft: 15,
     fontSize: 14
   },

@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react-native');
+var Colors = require('../Utilities/Colors');
 
 var {
   ActivityIndicatorIOS,
@@ -10,7 +11,7 @@ class Spinner extends React.Component {
   render() {
     return (
       <ActivityIndicatorIOS
-        color={'#712FA9'}
+        color={Colors.tintColor}
         style={{flex: 1}}
         animating={this.props.isLoading}
         size="large" />
