@@ -6,6 +6,8 @@ var Api = require('../Api/Core');
 var reloadApp = require('../Utilities/reloadApp');
 var Colors = require('../Utilities/Colors');
 var StatusBar = require('../Components/StatusBar');
+var Alert = require('../Components/Alert');
+var Spinner = require('../Components/Spinner');
 
 var {
   ActivityIndicatorIOS,
@@ -16,6 +18,7 @@ var {
   Text,
   TouchableHighlight,
   View,
+  Platform,
 } = React;
 
 var CustomApp = React.createClass({
@@ -31,7 +34,7 @@ var CustomApp = React.createClass({
 
   handleSubmit() {
     if(!this.state.url || !this.state.appName) {
-      AlertIOS.alert('Error', 'Please fill in all fields',[{text: 'OK'}])
+      Alert.alert('Error', 'Please fill in all fields')
       return;
     }
 
@@ -45,7 +48,6 @@ var CustomApp = React.createClass({
 
     return (
       <View style={styles.mainContainer}>
-        <NavigationBar title="Direct URL" />
         <ScrollView>
           <Text style={styles.text}>
             Load your React Native app from any URL, such as your local packager or a javascript bundle.
@@ -83,11 +85,7 @@ var CustomApp = React.createClass({
 
           <Text style={styles.helpText}>Your app should support React Native <Text style={{fontWeight: "700"}}>{global.RN_VERSION_DISPLAY}</Text></Text>
 
-          <ActivityIndicatorIOS
-            animating={this.state.isLoading}
-            color={Colors.tintColor}
-            size="large">
-          </ActivityIndicatorIOS>
+          <Spinner isLoading={this.state.isLoading} />
         </ScrollView>
       </View>
     )
@@ -98,7 +96,8 @@ var styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    padding: Platform.OS === 'android' ? 15 : 0,
   },
   text: {
     fontFamily: 'Avenir Next',
@@ -113,9 +112,10 @@ var styles = StyleSheet.create({
     color: Colors.grey,
   },
   inputContainer: {
-    borderBottomWidth: 1,
+    borderBottomWidth: Platform.OS === 'ios' ? 1 : null,
     borderColor: Colors.lightGrey,
-    margin: 10,
+    margin: Platform.OS == 'ios' ? 10 : null,
+    marginBottom: Platform.OS === 'android' ? 10 : null,
   },
   input: {
     height: 40,
@@ -125,13 +125,16 @@ var styles = StyleSheet.create({
   },
   button: {
     backgroundColor: Colors.tintColor,
-    margin: 10
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: Platform.OS == 'ios' ? 10 : null,
+    marginBottom: Platform.OS === 'android' ? 10 : null,
+    height: 45,
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: 18,
     textAlign: 'center',
     color: 'white',
-    padding: 10,
     fontFamily: 'Avenir Next',
   },
 });

@@ -66,7 +66,10 @@ var Home = React.createClass({
             accessibilityLabel="Load your custom app"
             selected={this.state.selectedTab === 'custom-app'}
             onPress={() => { this.setState({selectedTab: 'custom-app',}); }}>
-          <CustomApp />
+          <View style={styles.container}>
+            <NavigationBar title={'Direct URL'} />
+            <CustomApp />
+          </View>
         </Icon.TabBarItem>
         <Icon.TabBarItem
             name="qr_code_reader"

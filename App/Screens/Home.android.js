@@ -8,7 +8,7 @@
 var React = require('react-native');
 var Explore = require('./Explore');
 var MyAppsContainer = require('./MyAppsContainer');
-// var CustomApp = require('./CustomApp');
+var CustomApp = require('./CustomApp');
 // var Settings = require('./Settings');
 var About = require('./About');
 // var QRCodeReader = require('./QRCodeReader');
@@ -57,6 +57,13 @@ var Home = React.createClass({
     };
   },
 
+  _getDirectUrlScreen() {
+    return {
+      title: 'Direct URL',
+      component: this._renderDirectUrl(),
+    };
+  },
+
   _getAboutScreen() {
     return {
       title: 'About',
@@ -79,6 +86,16 @@ var Home = React.createClass({
       render() {
         return (
           <MyAppsContainer />
+        );
+      }
+    });
+  },
+
+  _renderDirectUrl() {
+    return React.createClass({
+      render() {
+        return (
+          <CustomApp />
         );
       }
     });
@@ -141,6 +158,11 @@ var Home = React.createClass({
             },
             {
               id: 3,
+              title: 'Direct URL',
+              component: this._getDirectUrlScreen(),
+            },
+            {
+              id: 4,
               title: 'About',
               component: this._getAboutScreen(),
             },
