@@ -10,7 +10,7 @@ var Api = {
     }
     return fetch(BASE_URL + url + platformParam).then((res) => res.json());
   },
-  post(url, body) {
+  post(url, body = '') {
     return fetch(BASE_URL + url, {
       method: 'post',
         headers: {
