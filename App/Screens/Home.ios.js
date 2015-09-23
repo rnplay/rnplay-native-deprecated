@@ -27,7 +27,7 @@ var {
 var Home = React.createClass({
   getInitialState() {
     return {
-      selectedTab: 'qr_code_reader',
+      selectedTab: 'about',
     };
   },
 
@@ -56,7 +56,7 @@ var Home = React.createClass({
             accessibilityLabel="My Apps Tab"
             selected={this.state.selectedTab === 'my-apps'}
             onPress={() => { this.setState({selectedTab: 'my-apps',}); }}>
-          <MyAppsContainer />
+            <MyAppsContainer />
         </Icon.TabBarItem>
         <Icon.TabBarItem
             name="custom-app"

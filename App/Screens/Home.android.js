@@ -7,7 +7,7 @@
 
 var React = require('react-native');
 var Explore = require('./Explore');
-// var MyAppsContainer = require('./MyAppsContainer');
+var MyAppsContainer = require('./MyAppsContainer');
 // var CustomApp = require('./CustomApp');
 // var Settings = require('./Settings');
 var About = require('./About');
@@ -50,6 +50,13 @@ var Home = React.createClass({
     };
   },
 
+  _getMyAppsScreen() {
+    return {
+      title: 'My Apps',
+      component: this._renderMyApps(),
+    };
+  },
+
   _getAboutScreen() {
     return {
       title: 'About',
@@ -62,6 +69,16 @@ var Home = React.createClass({
       render() {
         return (
           <Explore />
+        );
+      }
+    });
+  },
+
+  _renderMyApps() {
+    return React.createClass({
+      render() {
+        return (
+          <MyAppsContainer />
         );
       }
     });
@@ -119,6 +136,11 @@ var Home = React.createClass({
             },
             {
               id: 2,
+              title: 'My Apps',
+              component: this._getMyAppsScreen(),
+            },
+            {
+              id: 3,
               title: 'About',
               component: this._getAboutScreen(),
             },

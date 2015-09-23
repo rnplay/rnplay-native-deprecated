@@ -6,7 +6,6 @@
 'use strict';
 
 var React = require('react-native');
-var Camera = require('react-native-camera');
 var Overlay = require('react-native-overlay');
 var Api = require("../Api/Core");
 var NavigationBar = require('../Components/NavigationBar');
@@ -28,6 +27,7 @@ var {
   View,
   Navigator,
   StatusBarIOS,
+  Platform,
 } = React;
 
 var MyAppsContainer = React.createClass({
@@ -36,7 +36,16 @@ var MyAppsContainer = React.createClass({
       case 'my_apps':
         return <MyApps navigator={nav} />;
       case 'login':
-        return <Login navigator={nav} error={route.error} />;
+        if (Platform.OS === 'ios') {
+          return (
+            <View style={{flex: 1}}>
+              <NavigationBar title={'Account Required'} />
+              <Login navigator={nav} error={route.error} />
+            </View>
+          );
+        } else {
+          return <Login navigator={nav} error={route.error} />;
+        }
       case 'signup':
         return <Signup navigator={nav} />;
       default:
@@ -45,7 +54,9 @@ var MyAppsContainer = React.createClass({
   },
 
   render() {
-    StatusBarIOS.setStyle('light-content');
+    if (Platform.OS === 'ios') {
+      StatusBarIOS.setStyle('light-content');
+    }
     if(this.props.profile && this.props.profile.id){
       DEFAULT_ROUTE.id = 'my_apps';
     } else {

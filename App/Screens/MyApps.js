@@ -21,7 +21,9 @@ var MyApps = React.createClass({
   },
 
   render() {
-    StatusBarIOS.setStyle('light-content');
+    if (Platform.OS === 'ios') {
+      StatusBarIOS.setStyle('light-content');
+    }
 
     return (
       <View style={{flex: 1}}>
