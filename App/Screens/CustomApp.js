@@ -11,7 +11,6 @@ var Spinner = require('../Components/Spinner');
 
 var {
   ActivityIndicatorIOS,
-  AlertIOS,
   ScrollView,
   StyleSheet,
   TextInput,

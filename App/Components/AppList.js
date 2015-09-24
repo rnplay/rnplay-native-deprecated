@@ -5,7 +5,6 @@ var React = require('react-native');
 var {
   ActivityIndicatorIOS,
   AppRegistry,
-  AlertIOS,
   Image,
   ListView,
   StyleSheet,

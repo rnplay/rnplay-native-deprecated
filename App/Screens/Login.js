@@ -10,7 +10,6 @@ var StatusBar = require('../Components/StatusBar');
 
 var {
   ActivityIndicatorIOS,
-  AlertIOS,
   ScrollView,
   StyleSheet,
   TextInput,
