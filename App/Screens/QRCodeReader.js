@@ -1,16 +1,17 @@
 'use strict';
 
 var React = require('react-native');
-var Camera = require('react-native-camera');
 var generateAppURL = require('../Utilities/generateAppURL');
 var Overlay = require('react-native-overlay');
 var StatusBar = require('../Components/StatusBar');
+var BarCodeReader = require('../Components/BarCodeReader');
 
 var {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform,
 } = React;
 
 var reloadApp = require('../Utilities/reloadApp');
@@ -38,23 +39,17 @@ var QRCodeReader = React.createClass({
     reloadApp(generateAppURL(app), app.module_name, app.name);
   },
 
+  onBarCodeClose() {
+    this.setState({cameraOpen: false});
+  },
+
   render(){
     StatusBar.setStyle('default');
 
     return (
       this.state.cameraOpen ?
         <Overlay isVisible={true}>
-          <Camera
-            ref="cam"
-            style={styles.camera}
-            onBarCodeRead={this.onBarCodeRead}>
-            <TouchableOpacity onPress={() => this.setState({cameraOpen: false}) } >
-              <Icon name='close'
-                size={30}
-                style={styles.closeButton}
-                color='white' />
-            </TouchableOpacity>
-          </Camera>
+          <BarCodeReader onRead={this.onBarCodeRead} onClose={this.onBarCodeClose} />
         </Overlay> :
           <View style={styles.container}>
             <Text style={styles.text}>

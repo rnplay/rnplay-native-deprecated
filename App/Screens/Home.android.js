@@ -11,7 +11,7 @@ var MyAppsContainer = require('./MyAppsContainer');
 var CustomApp = require('./CustomApp');
 // var Settings = require('./Settings');
 var About = require('./About');
-// var QRCodeReader = require('./QRCodeReader');
+var QRCodeReader = require('./QRCodeReader');
 // var Icon = require('react-native-vector-icons/Ionicons');
 var DrawerLayout = require('react-native-drawer-layout');
 var NavigationBar = require('../Components/NavigationBar');
@@ -64,6 +64,13 @@ var Home = React.createClass({
     };
   },
 
+  _getScanCodeScreen() {
+    return {
+      title: 'Scan Code',
+      component: this._renderScanCode(),
+    };
+  },
+
   _getAboutScreen() {
     return {
       title: 'About',
@@ -96,6 +103,16 @@ var Home = React.createClass({
       render() {
         return (
           <CustomApp />
+        );
+      }
+    });
+  },
+
+  _renderScanCode() {
+    return React.createClass({
+      render() {
+        return (
+          <QRCodeReader />
         );
       }
     });
@@ -163,6 +180,11 @@ var Home = React.createClass({
             },
             {
               id: 4,
+              title: 'Scan Code',
+              component: this._getScanCodeScreen(),
+            },
+            {
+              id: 5,
               title: 'About',
               component: this._getAboutScreen(),
             },
