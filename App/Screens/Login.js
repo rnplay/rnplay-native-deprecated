@@ -129,7 +129,8 @@ var styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    paddingTop: Platform.OS === 'android' ? 20 : null,
   },
   inputContainer: {
     borderBottomWidth: Platform.OS === 'ios' ? 1 : null,
