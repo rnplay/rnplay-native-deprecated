@@ -12,7 +12,7 @@ var CustomApp = require('./CustomApp');
 // var Settings = require('./Settings');
 var About = require('./About');
 var QRCodeReader = require('./QRCodeReader');
-// var Icon = require('react-native-vector-icons/Ionicons');
+var Icon = require('../Components/Icon');
 var DrawerLayout = require('react-native-drawer-layout');
 var NavigationBar = require('../Components/NavigationBar');
 var Colors = require('../Utilities/Colors');
@@ -31,104 +31,75 @@ var dataSource = new ListView.DataSource({
   rowHasChanged: (row1, row2) => row1 !== row2,
 });
 
+function getIconFor(item) {
+  return React.createClass({
+    render() {
+      return (
+        <Icon name={item} size={24} style={{marginLeft: 25}} color={Colors.grey} />
+      );
+    }
+  });
+}
+
+var MenuData = [
+  {
+    id: 1,
+    component: {
+      title: 'Explore',
+      component: Explore,
+    },
+    icon: getIconFor('search'),
+  },
+  {
+    id: 2,
+    component: {
+      title: 'My Apps',
+      component: MyAppsContainer,
+    },
+    icon: getIconFor('briefcase'),
+  },
+  {
+    id: 3,
+    component: {
+      title: 'Direct URL',
+      component: CustomApp,
+    },
+    icon: getIconFor('code'),
+  },
+  {
+    id: 4,
+    component: {
+      title: 'Scan Code',
+      component: QRCodeReader,
+    },
+    icon: getIconFor('camera'),
+  },
+  {
+    id: 5,
+    component: {
+      title: 'About',
+      component: About,
+    },
+    icon: getIconFor('help'),
+  },
+];
+
 var Home = React.createClass({
   getInitialState() {
     return {
-      selectedScreen: this._getAboutScreen(),
+      selectedScreen: {
+        title: 'About',
+        component: About,
+      },
     };
   },
 
   componentDidMount() {
     // To better debug the drawer...
-    // this.drawer.openDrawer();
+    this.drawer.openDrawer();
   },
 
-  _getExploreScreen() {
-    return {
-      title: 'Explore',
-      component: this._renderExplore(),
-    };
-  },
-
-  _getMyAppsScreen() {
-    return {
-      title: 'My Apps',
-      component: this._renderMyApps(),
-    };
-  },
-
-  _getDirectUrlScreen() {
-    return {
-      title: 'Direct URL',
-      component: this._renderDirectUrl(),
-    };
-  },
-
-  _getScanCodeScreen() {
-    return {
-      title: 'Scan Code',
-      component: this._renderScanCode(),
-    };
-  },
-
-  _getAboutScreen() {
-    return {
-      title: 'About',
-      component: this._renderAbout(),
-    };
-  },
-
-  _renderExplore() {
-    return React.createClass({
-      render() {
-        return (
-          <Explore />
-        );
-      }
-    });
-  },
-
-  _renderMyApps() {
-    return React.createClass({
-      render() {
-        return (
-          <MyAppsContainer />
-        );
-      }
-    });
-  },
-
-  _renderDirectUrl() {
-    return React.createClass({
-      render() {
-        return (
-          <CustomApp />
-        );
-      }
-    });
-  },
-
-  _renderScanCode() {
-    return React.createClass({
-      render() {
-        return (
-          <QRCodeReader />
-        );
-      }
-    });
-  },
-
-  _renderAbout() {
-    return React.createClass({
-      render() {
-        return (
-          <About />
-        );
-      }
-    });
-  },
-
-  _renderSelectedScreen: function() {
+  _renderSelectedScreen() {
     var Component = this.state.selectedScreen.component;
     return (
       <View style={styles.container}>
@@ -146,10 +117,14 @@ var Home = React.createClass({
   },
 
   _renderMenuRow(menuItem) {
+    var ItemIcon = menuItem.icon;
     return (
       <View style={{height: 50}}>
-        <TouchableOpacity onPress={() => this._handleScreenSelected(menuItem.component)}>
-          <Text style={{marginLeft: 50}}>{menuItem.title}</Text>
+        <TouchableOpacity style={{justifyContent: 'flex-start', flexDirection: 'row'}} onPress={() => this._handleScreenSelected(menuItem.component)}>
+          <ItemIcon />
+          <Text style={{marginLeft: 25}}>
+            {menuItem.component.title}
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -162,35 +137,9 @@ var Home = React.createClass({
           <Text style={{color: 'white', margin: 20, fontSize: 18}}>React Native Playground</Text>
         </View>
         <ListView
-          dataSource={dataSource.cloneWithRows([
-            {
-              id: 1,
-              title: 'Explore',
-              component: this._getExploreScreen(),
-            },
-            {
-              id: 2,
-              title: 'My Apps',
-              component: this._getMyAppsScreen(),
-            },
-            {
-              id: 3,
-              title: 'Direct URL',
-              component: this._getDirectUrlScreen(),
-            },
-            {
-              id: 4,
-              title: 'Scan Code',
-              component: this._getScanCodeScreen(),
-            },
-            {
-              id: 5,
-              title: 'About',
-              component: this._getAboutScreen(),
-            },
-          ])}
+          dataSource={dataSource.cloneWithRows(MenuData)}
           renderRow={this._renderMenuRow}
-          style={{flex: 3, paddingTop: 50}}
+          style={{flex: 3, paddingTop: 25}}
         />
       </View>
     );
