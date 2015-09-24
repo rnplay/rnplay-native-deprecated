@@ -1,6 +1,6 @@
 'use strict';
 
-import React, { AppRegistry, Component } from 'react-native'
+import React, { AppRegistry, Component, Platform } from 'react-native'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 import reducer from './Reducers'
@@ -20,6 +20,7 @@ var githubPrefix = 'rnplay/react-native#';
 RN_VERSION = RN_VERSION.replace(githubPrefix, '').replace(/\./g,'').replace(/-/g, '')
 
 global.RN_VERSION = RN_VERSION;
+global.PLATFORM = Platform.OS;
 
 class ApplicationBase extends Component {
   render() {

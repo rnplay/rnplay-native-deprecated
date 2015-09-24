@@ -1,7 +1,6 @@
 var BASE_URL = 'https://rnplay.org';
 
 var Api = {
-
   get(url) {
     var platformParam = `?platform=${global.PLATFORM}`
 
