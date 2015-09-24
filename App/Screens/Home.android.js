@@ -96,7 +96,7 @@ var Home = React.createClass({
 
   componentDidMount() {
     // To better debug the drawer...
-    this.drawer.openDrawer();
+    // this.drawer.openDrawer();
   },
 
   _renderSelectedScreen() {
