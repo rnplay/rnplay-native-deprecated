@@ -15,7 +15,7 @@ var {
 } = React;
 
 var reloadApp = require('../Utilities/reloadApp');
-var Icon = require('react-native-vector-icons/Ionicons');
+var Icon = require('../Components/Icon');
 var TimerMixin = require('react-timer-mixin');
 var Colors = require('../Utilities/Colors');
 
