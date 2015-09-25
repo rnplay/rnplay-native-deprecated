@@ -1,9 +1,7 @@
 package com.rnplaynative;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 
 import com.facebook.react.LifecycleState;
@@ -12,12 +10,7 @@ import com.facebook.react.ReactRootView;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
 
-import java.io.File;
-
 public class AppActivity extends Activity implements DefaultHardwareBackBtnHandler {
-
-    private static final String PREFS_DEBUG_SERVER_HOST_KEY = "debug_http_host";
-    private static final String JS_BUNDLE_FILE_NAME = "ReactNativeDevBundle.js";
 
     private ReactInstanceManager mReactInstanceManager;
     private ReactRootView mReactRootView;

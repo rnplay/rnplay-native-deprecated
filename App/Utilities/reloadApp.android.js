@@ -1,17 +1,14 @@
 'use strict';
 
 var AppReloader = require('NativeModules').AppReloader;
-// var UserDefaults = require('react-native-userdefaults-ios');
-// var Alert = require('../Components/Alert');
 
-module.exports = (bundleUrl, moduleName, appName, urlParams) => {
-  // console.log(`${bundleUrl} ${moduleName} ${appName} ${urlParams}`);
-  // Alert.alert('Sorry', 'This feature is not yet available for Android.');
-  urlParams = urlParams ? urlParams : '{}';
-  var params = JSON.parse(urlParams);
+module.exports = (bundleUrl, bundlePath, moduleName, appName, urlParams) => {
+  bundleUrl = bundleUrl.replace(/http:\/\/|https:\/\//g, '');
+  bundlePath = bundlePath.replace('ios.bundle', 'android');
+  bundlePath = bundlePath.replace('/js', 'js');
 
-  // UserDefaults.setObjectForKey(params, 'rnplayParams')
-  // .then(() => {
-    AppReloader.reloadAppWithURLString(bundleUrl, moduleName, appName);
-  // });
+  AppReloader.reloadAppWithURLString(bundleUrl,
+                                     bundlePath,
+                                     moduleName,
+                                     appName);
 };

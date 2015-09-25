@@ -27,6 +27,25 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Set up default RNPlayNative app values.
+        String packagerRoot = "";
+        String jsMainModuleName = "index.android";
+        String moduleName = "RNPlayNative";
+        Boolean liveReloadEnabled = false;
+
+        // Get the params that is passed in from Appetize.
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null && bundle.containsKey("packagerRoot")) {
+            packagerRoot = bundle.getString("packagerRoot");
+            if (packagerRoot != null && !packagerRoot.equals("")) {
+                packagerRoot = packagerRoot.replaceFirst("^(http://|https://)", "");
+                jsMainModuleName = bundle.getString("jsMainModuleName");
+                moduleName = bundle.getString("moduleName");
+                liveReloadEnabled = true;
+            }
+        }
+
+        // Delete any jsBundle that is here (could be a remnant from a crashed app)
         File nJSBundleTempFile = new File(getApplication().getFilesDir(), JS_BUNDLE_FILE_NAME);
         nJSBundleTempFile.delete();
 
@@ -34,8 +53,8 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
         // key to be 'true' as we always want live reload.
         SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplication());
         SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putString(PREFS_DEBUG_SERVER_HOST_KEY, "");
-        editor.putBoolean(PREFS_RELOAD_ON_JS_CHANGE_KEY, true);
+        editor.putString(PREFS_DEBUG_SERVER_HOST_KEY, packagerRoot);
+        editor.putBoolean(PREFS_RELOAD_ON_JS_CHANGE_KEY, liveReloadEnabled);
         editor.commit();
 
         mReactRootView = new ReactRootView(this);
@@ -43,14 +62,14 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
         mReactInstanceManager = ReactInstanceManager.builder()
                 .setApplication(getApplication())
                 .setBundleAssetName("index.android.bundle")
-                .setJSMainModuleName("index.android")
+                .setJSMainModuleName(jsMainModuleName)
                 .addPackage(new MainReactPackage())
                 .addPackage(new AppReloader())
                 .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
 
-        mReactRootView.startReactApplication(mReactInstanceManager, "RNPlayNative", null);
+        mReactRootView.startReactApplication(mReactInstanceManager, moduleName, null);
 
         setContentView(mReactRootView);
     }
