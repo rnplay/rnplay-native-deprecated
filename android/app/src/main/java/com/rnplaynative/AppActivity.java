@@ -14,10 +14,9 @@ import com.facebook.react.shell.MainReactPackage;
 
 import java.io.File;
 
-public class MainActivity extends Activity implements DefaultHardwareBackBtnHandler {
+public class AppActivity extends Activity implements DefaultHardwareBackBtnHandler {
 
     private static final String PREFS_DEBUG_SERVER_HOST_KEY = "debug_http_host";
-    private static final String PREFS_RELOAD_ON_JS_CHANGE_KEY = "reload_on_js_change";
     private static final String JS_BUNDLE_FILE_NAME = "ReactNativeDevBundle.js";
 
     private ReactInstanceManager mReactInstanceManager;
@@ -27,30 +26,26 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        File nJSBundleTempFile = new File(getApplication().getFilesDir(), JS_BUNDLE_FILE_NAME);
-        nJSBundleTempFile.delete();
-
-        // Resets the 'debug_http_host' url. Also sets the 'reload_on_js_change'
-        // key to be 'true' as we always want live reload.
-        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplication());
-        SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putString(PREFS_DEBUG_SERVER_HOST_KEY, "");
-        editor.putBoolean(PREFS_RELOAD_ON_JS_CHANGE_KEY, true);
-        editor.commit();
+        // Get 'jsMainModuleName' and 'moduleName' being passed in.
+        Bundle bundle = getIntent().getExtras();
+        String jsMainModuleName = bundle.getString("jsMainModuleName");
+        String moduleName = bundle.getString("moduleName");
 
         mReactRootView = new ReactRootView(this);
 
         mReactInstanceManager = ReactInstanceManager.builder()
                 .setApplication(getApplication())
                 .setBundleAssetName("index.android.bundle")
-                .setJSMainModuleName("index.android")
+                .setJSMainModuleName(jsMainModuleName)
                 .addPackage(new MainReactPackage())
-                .addPackage(new AppReloader())
                 .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
 
-        mReactRootView.startReactApplication(mReactInstanceManager, "RNPlayNative", null);
+        mReactRootView.startReactApplication(
+                mReactInstanceManager,
+                moduleName,
+                null);
 
         setContentView(mReactRootView);
     }
@@ -58,16 +53,6 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_MENU && mReactInstanceManager != null) {
-            //Delete the jsBundle file for this app.
-            File nJSBundleTempFile = new File(getApplication().getFilesDir(), JS_BUNDLE_FILE_NAME);
-            nJSBundleTempFile.delete();
-
-            // Resets the 'debug_http_host' url.
-            SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplication());
-            SharedPreferences.Editor editor = mPreferences.edit();
-            editor.putString(PREFS_DEBUG_SERVER_HOST_KEY, "");
-            editor.commit();
-
             mReactInstanceManager.showDevOptionsDialog();
             return true;
         }
@@ -76,7 +61,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
 
     @Override
     public void invokeDefaultOnBackPressed() {
-      super.onBackPressed();
+        super.onBackPressed();
     }
 
     @Override
