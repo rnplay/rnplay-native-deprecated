@@ -41,3 +41,6 @@ fastlane/*.xml
 
 # Android
 .gradle
+.idea
+local.properties
+*.iml
