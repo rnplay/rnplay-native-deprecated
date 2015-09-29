@@ -31,6 +31,10 @@ var Home = React.createClass({
     };
   },
 
+  componentDidMount() {
+    this.props.fetchProfile();
+  },
+
   render() {
     return (
       <TabBarIOS
@@ -105,4 +109,14 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = Home;
+// module.exports = Home;
+
+var {fetchProfile} = require('../Actions');
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux/native'
+
+export default connect(null,
+  (dispatch) => {
+    return bindActionCreators({fetchProfile}, dispatch)
+  }
+)(Home)

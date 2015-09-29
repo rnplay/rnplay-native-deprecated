@@ -95,6 +95,7 @@ var Home = React.createClass({
   },
 
   componentDidMount() {
+    this.props.fetchProfile();
     // To better debug the drawer...
     // this.drawer.openDrawer();
   },
@@ -163,4 +164,12 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = Home;
+var {fetchProfile} = require('../Actions');
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux/native'
+
+export default connect(null,
+  (dispatch) => {
+    return bindActionCreators({fetchProfile}, dispatch)
+  }
+)(Home)

@@ -336,4 +336,12 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = AppList;
+import { connect } from 'react-redux/native'
+
+export default connect(
+  (state) => {
+    return {
+      profile: state.profile
+    }
+  }
+)(AppList)
