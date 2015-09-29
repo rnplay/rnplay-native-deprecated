@@ -6,6 +6,7 @@ var Api = require('../Api/Core');
 var {
   TouchableOpacity,
   View,
+  Platform,
 } = React;
 
 var AppList = require("../Components/AppList");
@@ -20,16 +21,29 @@ var MyApps = React.createClass({
     this.props.navigator.replace({ id: 'login'});
   },
 
+  _renderIOSNavBar() {
+    if (Platform.OS === 'ios') {
+      return (
+        <NavigationBar
+          title={'My Apps'}
+          nextTitle={'Sign Out'}
+          onNext={this._signOut}/>
+      );
+    } else {
+      return <View />;
+    }
+  },
+
   render() {
     StatusBar.setStyle('light-content');
 
     return (
       <View style={{flex: 1}}>
-        <NavigationBar
-          title={'My Apps'}
-          nextTitle={'Sign Out'}
-          onNext={this._signOut}/>
-        <AppList url="/apps.json" hideCreator={true} />
+        {this._renderIOSNavBar()}
+        <AppList
+          url="/apps.json"
+          autoAdjustInsets={false}
+          hideCreator={true} />
       </View>
     )
   }
@@ -39,7 +53,12 @@ var {deleteProfile} = require('../Actions');
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native'
 
-export default connect(null,
+export default connect(
+  (state) => {
+    return {
+      profile: state.profile
+    }
+  },
   (dispatch) => {
     return bindActionCreators({deleteProfile}, dispatch)
   }

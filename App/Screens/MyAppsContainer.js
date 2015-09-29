@@ -64,7 +64,7 @@ var MyAppsContainer = React.createClass({
 
     return (
       <Navigator initialRoute={DEFAULT_ROUTE}
-                 renderScene={this.renderScene} />
+        renderScene={this.renderScene} />
     );
   }
 });
@@ -120,8 +120,6 @@ var styles = StyleSheet.create({
   }
 });
 
-var {updateProfile} = require('../Actions');
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native'
 
 export default connect(
