@@ -10,6 +10,7 @@ var {
   StyleSheet,
   Text,
   TouchableHighlight,
+  TouchableOpacity,
   View,
   Navigator,
   PixelRatio,
@@ -176,14 +177,14 @@ var AppList = React.createClass({
   renderRetry() {
     return (
       <View style={styles.retryButtonWrapper}>
-        <Image source={require("image!network_error")} style={{opacity: 0.9, marginBottom: 30}} />
-        <TouchableHighlight
+        <Image source={require("image!network_error")} style={{width: 300, height: 267, opacity: 0.9, marginBottom: 30}} />
+        <TouchableOpacity
           style={styles.retryButtonHighlight}
           onPress={() => this.fetchApps()}>
           <View style={styles.retryButtonView}>
             <Text style={styles.retryButtonText}>Connection failed. Retry?</Text>
           </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
     );
   },
@@ -211,21 +212,21 @@ var styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 80,
+    paddingBottom: 40,
   },
 
   retryButtonHighlight: {
-    borderRadius: 7,
     overflow: 'hidden',
   },
 
   retryButtonView: {
+    borderRadius: 7,
     height: 40,
     backgroundColor: Colors.tintColor,
+    justifyContent: 'center',
   },
 
   retryButtonText: {
-    padding:10,
     paddingLeft: 20,
     paddingRight: 20,
     color:'white',
