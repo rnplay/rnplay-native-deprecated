@@ -35,7 +35,9 @@ var Explore = React.createClass({
 
   renderList() {
     return(
-      <AppList url={this.state.searchUrl} />
+      <AppList
+        url={this.state.searchUrl}
+        autoAdjustInsets={false} />
     );
   },
 

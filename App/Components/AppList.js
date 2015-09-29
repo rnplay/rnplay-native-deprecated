@@ -111,6 +111,7 @@ var AppList = React.createClass({
         initialPageSize={10}
         pageSize={5}
         onEndReachedThreshold={1200}
+        automaticallyAdjustContentInsets={this.props.autoAdjustInsets}
         onEndReached={this._handleEndReached} />
     );
   },

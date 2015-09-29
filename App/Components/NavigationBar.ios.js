@@ -96,7 +96,7 @@ var styles = StyleSheet.create({
     color: 'white'
   },
   navTitle: {
-    flex: 0.7,
+    flex: 1.3,
     textAlign: 'center',
     color: 'white',
     fontFamily: 'Avenir Next',
