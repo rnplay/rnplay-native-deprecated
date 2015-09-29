@@ -80,7 +80,7 @@ var CustomApp = React.createClass({
 
           <Text style={styles.helpText}>The module name should match the registered top level component name.</Text>
 
-          <Text style={styles.helpText}>Your app should React Native <Text style={{fontWeight: "700"}}>{global.RN_VERSION_DISPLAY}</Text></Text>
+          <Text style={styles.helpText}>Your app should support React Native <Text style={{fontWeight: "700"}}>{global.RN_VERSION_DISPLAY}</Text></Text>
 
           <ActivityIndicatorIOS
             animating={this.state.isLoading}
