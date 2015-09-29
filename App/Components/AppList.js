@@ -56,11 +56,19 @@ var AppList = React.createClass({
         '&' :
         '?';
       var url = `${this.props.url}${separator}page=${page}`;
-      console.log(page);
 
-      Api.get(url)
+      var profileEmail = '';
+      var profileAuthToken = '';
+
+      if (this.props.profile) {
+        profileEmail = this.props.profile.email;
+        profileAuthToken = this.props.profile.authentication_token;
+      }
+
+      Api.get(url, profileEmail, profileAuthToken)
         .then((data) => {
           if (data.error) {
+            console.log('error: ' + data.error);
             // TODO: check for 401 Unauthorized
             if (Navigator.getContext(this)) {
               Navigator.getContext(this).replace({id: "login", error: data.error});
