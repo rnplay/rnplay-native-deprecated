@@ -45,13 +45,13 @@ public class AppReloaderModule extends ReactContextBaseJavaModule {
                                         final String appName) {
 
         // Set the 'debug_http_host' to the 'packagerRoot' that was passed in.
-        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getReactApplicationContext());
+        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(reactContext);
         SharedPreferences.Editor editor = mPreferences.edit();
         editor.putString(PREFS_DEBUG_SERVER_HOST_KEY, bundleUrl);
         editor.commit();
 
         // Delete the jsBundle file for the RNPlayNative main ap.
-        File nJSBundleTempFile = new File(getReactApplicationContext().getFilesDir(), JS_BUNDLE_FILE_NAME);
+        File nJSBundleTempFile = new File(reactContext.getFilesDir(), JS_BUNDLE_FILE_NAME);
         nJSBundleTempFile.delete();
 
         Log.d("RNPlayNative", "bundleUrl: " + bundleUrl + " bundlePath: " + bundlePath + " moduleName: " + moduleName + " appName: " + appName);

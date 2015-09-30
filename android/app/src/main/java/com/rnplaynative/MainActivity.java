@@ -31,7 +31,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
         String packagerRoot = "";
         String jsMainModuleName = "index.android";
         String moduleName = "RNPlayNative";
-        Boolean liveReloadEnabled = false;
+        Boolean liveReloadEnabled = true;
 
         // Get the params that is passed in from Appetize.
         Bundle bundle = getIntent().getExtras();
@@ -46,12 +46,12 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
         }
 
         // Delete any jsBundle that is here (could be a remnant from a crashed app)
-        File nJSBundleTempFile = new File(getApplication().getFilesDir(), JS_BUNDLE_FILE_NAME);
+        File nJSBundleTempFile = new File(this.getFilesDir(), JS_BUNDLE_FILE_NAME);
         nJSBundleTempFile.delete();
 
         // Resets the 'debug_http_host' url. Also sets the 'reload_on_js_change'
         // key to be 'true' as we always want live reload.
-        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplication());
+        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = mPreferences.edit();
         editor.putString(PREFS_DEBUG_SERVER_HOST_KEY, packagerRoot);
         editor.putBoolean(PREFS_RELOAD_ON_JS_CHANGE_KEY, liveReloadEnabled);
@@ -78,11 +78,11 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_MENU && mReactInstanceManager != null) {
             //Delete the jsBundle file for this app.
-            File nJSBundleTempFile = new File(getApplication().getFilesDir(), JS_BUNDLE_FILE_NAME);
+            File nJSBundleTempFile = new File(this.getFilesDir(), JS_BUNDLE_FILE_NAME);
             nJSBundleTempFile.delete();
 
             // Resets the 'debug_http_host' url.
-            SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplication());
+            SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = mPreferences.edit();
             editor.putString(PREFS_DEBUG_SERVER_HOST_KEY, "");
             editor.commit();
