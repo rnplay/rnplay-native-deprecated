@@ -66,14 +66,14 @@ var MenuData = [
     },
     icon: getIconFor('code'),
   },
-  {
-    id: 4,
-    component: {
-      title: 'Scan Code',
-      component: QRCodeReader,
-    },
-    icon: getIconFor('camera'),
-  },
+  // {
+  //   id: 4,
+  //   component: {
+  //     title: 'Scan Code',
+  //     component: QRCodeReader,
+  //   },
+  //   icon: getIconFor('camera'),
+  // },
   {
     id: 5,
     component: {
