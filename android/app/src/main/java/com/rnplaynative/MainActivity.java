@@ -29,9 +29,11 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
 
         // Set up default RNPlayNative app values.
         String packagerRoot = "";
+        String bundleAssetName = "index.android.bundle"; // For production.
         String jsMainModuleName = "index.android";
         String moduleName = "RNPlayNative";
         Boolean liveReloadEnabled = true;
+        Boolean useDevSupport = false;
 
         // Get the params that is passed in from Appetize.
         Bundle bundle = getIntent().getExtras();
@@ -39,9 +41,11 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
             packagerRoot = bundle.getString("packagerRoot");
             if (packagerRoot != null && !packagerRoot.equals("")) {
                 packagerRoot = packagerRoot.replaceFirst("^(http://|https://)", "");
+                bundleAssetName = "";
                 jsMainModuleName = bundle.getString("jsMainModuleName");
                 moduleName = bundle.getString("moduleName");
                 liveReloadEnabled = true;
+                useDevSupport = true;
             }
         }
 
@@ -61,11 +65,11 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
 
         mReactInstanceManager = ReactInstanceManager.builder()
                 .setApplication(getApplication())
-                .setBundleAssetName("index.android.bundle")
+                .setBundleAssetName(bundleAssetName)
                 .setJSMainModuleName(jsMainModuleName)
                 .addPackage(new MainReactPackage())
                 .addPackage(new AppReloader())
-                .setUseDeveloperSupport(BuildConfig.DEBUG)
+                .setUseDeveloperSupport(useDevSupport)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
 
@@ -77,16 +81,6 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_MENU && mReactInstanceManager != null) {
-            //Delete the jsBundle file for this app.
-            File nJSBundleTempFile = new File(this.getFilesDir(), JS_BUNDLE_FILE_NAME);
-            nJSBundleTempFile.delete();
-
-            // Resets the 'debug_http_host' url.
-            SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            SharedPreferences.Editor editor = mPreferences.edit();
-            editor.putString(PREFS_DEBUG_SERVER_HOST_KEY, "");
-            editor.commit();
-
             mReactInstanceManager.showDevOptionsDialog();
             return true;
         }
@@ -103,8 +97,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
         super.onPause();
 
         if (mReactInstanceManager != null) {
-            // TODO: Re-enable this somehow...
-            //mReactInstanceManager.onPause();
+            mReactInstanceManager.onPause();
         }
     }
 
@@ -113,8 +106,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
         super.onResume();
 
         if (mReactInstanceManager != null) {
-            // TODO: Re-enable this somehow...
-            //mReactInstanceManager.onResume(this);
+            mReactInstanceManager.onResume(this);
         }
     }
 }

@@ -28,10 +28,10 @@ public class AppActivity extends Activity implements DefaultHardwareBackBtnHandl
 
         mReactInstanceManager = ReactInstanceManager.builder()
                 .setApplication(getApplication())
-                .setBundleAssetName("index.android.bundle")
+                .setBundleAssetName("") // This should be empty since we are in Dev mode.
                 .setJSMainModuleName(jsMainModuleName)
                 .addPackage(new MainReactPackage())
-                .setUseDeveloperSupport(BuildConfig.DEBUG)
+                .setUseDeveloperSupport(true)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
 

@@ -9,6 +9,8 @@ module.exports = (bundleUrl, bundlePath, moduleName, appName, urlParams) => {
 
   UserDefaults.setObjectForKey(params, 'rnplayParams')
   .then(() => {
-    AppReloader.reloadAppWithURLString(bundleUrl + bundlePath, moduleName, appName);
+    AppReloader.reloadAppWithURLString(bundleUrl + bundlePath,
+                                       moduleName,
+                                       appName);
   });
 };

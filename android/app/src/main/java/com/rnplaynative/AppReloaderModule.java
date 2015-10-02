@@ -50,7 +50,7 @@ public class AppReloaderModule extends ReactContextBaseJavaModule {
         editor.putString(PREFS_DEBUG_SERVER_HOST_KEY, bundleUrl);
         editor.commit();
 
-        // Delete the jsBundle file for the RNPlayNative main ap.
+        // Delete the jsBundle file for the previously loaded app.
         File nJSBundleTempFile = new File(reactContext.getFilesDir(), JS_BUNDLE_FILE_NAME);
         nJSBundleTempFile.delete();
 
