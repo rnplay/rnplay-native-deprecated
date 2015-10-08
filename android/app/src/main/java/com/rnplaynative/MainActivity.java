@@ -12,6 +12,8 @@ import com.facebook.react.ReactRootView;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
 
+import com.eguma.barcodescanner.BarcodeScanner;
+
 import java.io.File;
 
 public class MainActivity extends Activity implements DefaultHardwareBackBtnHandler {
@@ -69,6 +71,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 .setJSMainModuleName(jsMainModuleName)
                 .addPackage(new MainReactPackage())
                 .addPackage(new AppReloader())
+                .addPackage(new BarcodeScanner())
                 .setUseDeveloperSupport(useDevSupport)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();

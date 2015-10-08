@@ -2,52 +2,47 @@
 
 var React = require('react-native');
 var Colors = require('../Utilities/Colors');
+var BarcodeScanner = require('react-native-barcodescanner');
 
 var {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
+  ToolbarAndroid,
 } = React;
 
 var BarCodeReader = React.createClass({
+  barcodeReceived(e) {
+    console.log('Barcode: ' + e.data);
+    console.log('Type: ' + e.type);
+    this.props.onRead(e);
+  },
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.text}>
-          Sorry, this feature is not yet implemented for Android.
-        </Text>
-        <TouchableOpacity style={styles.closeButton} onPress={this.props.onClose} >
-          <Text style={styles.buttonText}>Close</Text>
-        </TouchableOpacity>
+      <View style={{ flex: 1 }}>
+        <ToolbarAndroid
+          title='Close'
+          titleColor="white"
+          navIcon={require("image!ic_clear_white_36dp")}
+          onIconClicked={this.props.onClose}
+          style={styles.toolbarAndroid} />
+        <BarcodeScanner
+          onBarCodeRead={this.barcodeReceived}
+          style={{ flex: 1 }}
+          torchMode='off'
+          cameraType='back'
+        />
       </View>
     );
   }
 });
 
 var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 22,
-    textAlign: 'center',
-  },
-  closeButton: {
+  toolbarAndroid: {
     backgroundColor: Colors.tintColor,
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 20,
-    height: 45,
-    width: 300,
-  },
-  buttonText: {
-    fontSize: 18,
-    textAlign: 'center',
-    color: 'white',
-    fontFamily: 'Avenir Next',
+    height: 56,
   },
 });
 

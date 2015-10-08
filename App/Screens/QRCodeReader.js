@@ -36,7 +36,7 @@ var QRCodeReader = React.createClass({
       }
     )
 
-    reloadApp(generateAppURL(app), app.module_name, app.name);
+    reloadApp(generateAppURL(app), app.bundle_path, app.module_name, app.name);
   },
 
   onBarCodeClose() {
