@@ -113,6 +113,8 @@ var deviceWidth = require('Dimensions').get('window').width;
 var styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
+    marginTop: Platform.OS === 'ios' ? 20 : null,
+    marginBottom: Platform.OS === 'ios' ? 49 : null,
   },
   mainContainer: {
     marginTop: Platform.OS === 'ios' ? 20 : null,

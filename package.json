@@ -28,6 +28,7 @@
     "react-native-modal": "0.3.10",
     "react-native-overlay": "0.3.0",
     "react-native-side-menu": "0.14.2",
+    "react-native-spinkit": "0.0.5",
     "react-native-tableview": "^1.3.3",
     "react-native-userdefaults-ios": "0.1.3",
     "react-native-vector-icons": "0.7.2",

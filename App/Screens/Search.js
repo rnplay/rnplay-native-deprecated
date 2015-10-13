@@ -75,6 +75,7 @@ var styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     marginTop: 19,
+    marginBottom: Platform.OS === 'ios' ? 49 : null,
   },
   searchRow: {
     backgroundColor: Colors.veryLightGrey,

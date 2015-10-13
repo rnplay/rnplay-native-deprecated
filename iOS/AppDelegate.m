@@ -83,7 +83,7 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
       initialJSBundleURL = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
     }
 
-    initialJSBundleURL = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle"];
+    initialJSBundleURL = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios"];
 
     initialModuleName = @"RNPlayNative";
   }
