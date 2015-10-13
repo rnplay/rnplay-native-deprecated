@@ -22,9 +22,17 @@ through [Appetize.io](http://www.appetize.io) in the browser via RNPlay.
 
 - Clone the repo.
 - Run `npm install` in the project directory.
+
+#### iOS
 - Open the `RNPlayNative.xcodeproj` file in XCode.
 - Set the XCode build target to a plugged-in device.
 - Build the project for use on your phone.
+
+#### Android
+- Follow the instructions to [install the Android SDK & emulators](http://facebook.github.io/react-native/docs/android-setup.html).
+- Open up your emulator/device. (`android avd`)
+- Run `react-native run-android` in the root of the project to build the project, install on the emulator/device & start the packager.
+- If using a device, follows [these instructions](http://facebook.github.io/react-native/docs/running-on-device-android.html).
 
 ### Usage
 

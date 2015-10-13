@@ -13,12 +13,15 @@ var Settings = require('./Settings');
 var About = require('./About');
 var QRCodeReader = require('./QRCodeReader');
 var Icon = require('react-native-vector-icons/Ionicons');
+var NavigationBar = require('../Components/NavigationBar');
+var Colors = require('../Utilities/Colors');
 
 var {
   AppRegistry,
   StyleSheet,
   TouchableOpacity,
-  TabBarIOS
+  TabBarIOS,
+  View,
 } = React;
 
 var Home = React.createClass({
@@ -28,11 +31,15 @@ var Home = React.createClass({
     };
   },
 
+  componentDidMount() {
+    this.props.fetchProfile();
+  },
+
   render() {
     return (
       <TabBarIOS
         selectedTab={this.state.selectedTab}
-        tintColor={'#712FA9'}
+        tintColor={Colors.tintColor}
         style={styles.tabBar}
         barTintColor={'white'}>
         <Icon.TabBarItem
@@ -53,7 +60,7 @@ var Home = React.createClass({
             accessibilityLabel="My Apps Tab"
             selected={this.state.selectedTab === 'my-apps'}
             onPress={() => { this.setState({selectedTab: 'my-apps',}); }}>
-          <MyAppsContainer />
+            <MyAppsContainer />
         </Icon.TabBarItem>
         <Icon.TabBarItem
             name="custom-app"
@@ -63,7 +70,10 @@ var Home = React.createClass({
             accessibilityLabel="Load your custom app"
             selected={this.state.selectedTab === 'custom-app'}
             onPress={() => { this.setState({selectedTab: 'custom-app',}); }}>
-          <CustomApp />
+          <View style={styles.container}>
+            <NavigationBar title={'Direct URL'} />
+            <CustomApp />
+          </View>
         </Icon.TabBarItem>
         <Icon.TabBarItem
             name="qr_code_reader"
@@ -83,7 +93,10 @@ var Home = React.createClass({
           accessibilityLabel="About Tab"
           selected={this.state.selectedTab === 'about'}
           onPress={() => { this.setState({ selectedTab: 'about', }); }}>
-          <About />
+          <View style={styles.container}>
+            <NavigationBar title={'About'} />
+            <About />
+          </View>
         </Icon.TabBarItem>
       </TabBarIOS>
     )
@@ -91,8 +104,19 @@ var Home = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  tabBar: {
+  container: {
+    flex: 1,
   }
 });
 
-module.exports = Home;
+// module.exports = Home;
+
+var {fetchProfile} = require('../Actions');
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux/native'
+
+export default connect(null,
+  (dispatch) => {
+    return bindActionCreators({fetchProfile}, dispatch)
+  }
+)(Home)

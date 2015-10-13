@@ -5,15 +5,16 @@ var React = require('react-native');
 var {
   ActivityIndicatorIOS,
   AppRegistry,
-  AlertIOS,
   Image,
   ListView,
   StyleSheet,
   Text,
   TouchableHighlight,
+  TouchableOpacity,
   View,
   Navigator,
-  PixelRatio
+  PixelRatio,
+  Platform,
 } = React;
 
 var ActionSheetIOS = require('ActionSheetIOS');
@@ -22,6 +23,8 @@ var reloadApp = require('../Utilities/reloadApp');
 var Api = require("../Api/Core");
 var NoResults = require('../Components/NoResults');
 var generateAppURL = require('../Utilities/generateAppURL');
+var Spinner = require('./Spinner');
+var Colors = require('../Utilities/Colors');
 
 var AppList = React.createClass({
   getInitialState() {
@@ -53,11 +56,19 @@ var AppList = React.createClass({
         '&' :
         '?';
       var url = `${this.props.url}${separator}page=${page}`;
-      console.log(page);
 
-      Api.get(url)
+      var profileEmail = '';
+      var profileAuthToken = '';
+
+      if (this.props.profile) {
+        profileEmail = this.props.profile.email;
+        profileAuthToken = this.props.profile.authentication_token;
+      }
+
+      Api.get(url, profileEmail, profileAuthToken)
         .then((data) => {
           if (data.error) {
+            console.log('error: ' + data.error);
             // TODO: check for 401 Unauthorized
             if (Navigator.getContext(this)) {
               Navigator.getContext(this).replace({id: "login", error: data.error});
@@ -93,16 +104,15 @@ var AppList = React.createClass({
 
   renderAppList() {
     return (
-      <View style={styles.container}>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderApp}
-          initialPageSize={10}
-          pageSize={5}
-          onEndReachedThreshold={1200}
-          onEndReached={this._handleEndReached}
-          style={styles.listView} />
-      </View>
+      <ListView
+        style={{flex: 1}}
+        dataSource={this.state.dataSource}
+        renderRow={this.renderApp}
+        initialPageSize={10}
+        pageSize={5}
+        onEndReachedThreshold={1200}
+        automaticallyAdjustContentInsets={this.props.autoAdjustInsets}
+        onEndReached={this._handleEndReached} />
     );
   },
 
@@ -112,7 +122,9 @@ var AppList = React.createClass({
 
       return (
         <View style={styles.creator}>
-          <Image style={styles.avatar} resizeMode="contain" source={{uri: avatarUrl}} />
+          <View style={styles.avatarContainer}>
+            <Image style={styles.avatar} source={{uri: avatarUrl}} />
+          </View>
           <Text style={styles.username} numberOfLines={1}>{app.creator.username || 'guest'}</Text>
         </View>
       )
@@ -132,8 +144,7 @@ var AppList = React.createClass({
 
   renderApp(app) {
     return (
-      <View style={{marginBottom: 15}}>
-        <TouchableHighlight underlayColor="#F5F5F5" onLongPress={() => this.shareApp(app)}
+        <TouchableHighlight underlayColor={Colors.veryLightGrey} onLongPress={() => this.shareApp(app)}
                                                     onPress={() => this.selectApp(app)}>
           <View style={styles.appContainer}>
             <View style={styles.appTextDescription}>
@@ -150,19 +161,18 @@ var AppList = React.createClass({
             { this.renderCreator(app) }
           </View>
         </TouchableHighlight>
-      </View>
     );
   },
 
   selectApp(app) {
     Api.post("/apps/"+app.url_token+"/view.json");
-    reloadApp(generateAppURL(app), app.module_name, app.name);
+    reloadApp(generateAppURL(app), app.bundle_path, app.module_name, app.name);
   },
 
   renderLoading() {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicatorIOS color={'#712FA9'} style={styles.spinner} size="large" />
+        <Spinner isLoading={true} />
       </View>
     );
   },
@@ -176,14 +186,14 @@ var AppList = React.createClass({
   renderRetry() {
     return (
       <View style={styles.retryButtonWrapper}>
-        <Image source={require("image!network_error")} style={{opacity: 0.9, marginBottom: 30}} />
-        <TouchableHighlight
+        <Image source={require("image!network_error")} style={{width: 300, height: 267, opacity: 0.9, marginBottom: 30}} />
+        <TouchableOpacity
           style={styles.retryButtonHighlight}
           onPress={() => this.fetchApps()}>
           <View style={styles.retryButtonView}>
             <Text style={styles.retryButtonText}>Connection failed. Retry?</Text>
           </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
     );
   },
@@ -211,31 +221,26 @@ var styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 80,
+    paddingBottom: 40,
   },
 
   retryButtonHighlight: {
-    borderRadius: 7,
     overflow: 'hidden',
   },
 
   retryButtonView: {
+    borderRadius: 7,
     height: 40,
-    backgroundColor:'#712FA9',
+    backgroundColor: Colors.tintColor,
+    justifyContent: 'center',
   },
 
   retryButtonText: {
-    padding:10,
     paddingLeft: 20,
     paddingRight: 20,
-    color:'#fff',
+    color:'white',
     textAlign:'center',
     fontWeight:'700'
-  },
-
-  listView: {
-    marginTop: -9,
-    paddingTop: 0,
   },
 
   container: {
@@ -246,16 +251,16 @@ var styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
     paddingBottom: 80,
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   appContainer: {
     overflow: 'hidden',
-    marginTop: -18,
     flexDirection: 'row',
     flex: 1,
+    paddingTop: 10,
     paddingBottom: 8,
-    paddingTop: 15,
     borderBottomWidth: 3 / PixelRatio.get(),
     borderBottomColor: "#eee"
   },
@@ -300,16 +305,23 @@ var styles = StyleSheet.create({
     textAlign: 'center',
   },
 
+  avatarContainer: {
+    width: 30,
+    height: 30,
+    marginBottom: 5,
+    borderRadius: 15,
+    backgroundColor: "black"
+  },
+
   avatar: {
     width: 30,
     height: 30,
     marginBottom: 5,
     borderRadius: 15,
-    backgroundColor: "#000"
   },
 
   cancelButton: {
-    color: '#fff',
+    color: 'white',
     flex: 1,
     fontSize: 25,
     marginLeft: 20
@@ -318,14 +330,18 @@ var styles = StyleSheet.create({
   appTitle: {
     fontSize: 18,
     fontFamily: 'Avenir Next',
-    color: '#712FA9',
+    color: Colors.tintColor,
     width: deviceWidth - 70,
-    flex: 1,
-  },
-
-  spinner: {
     flex: 1,
   },
 });
 
-module.exports = AppList;
+import { connect } from 'react-redux/native'
+
+export default connect(
+  (state) => {
+    return {
+      profile: state.profile
+    }
+  }
+)(AppList)

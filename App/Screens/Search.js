@@ -3,6 +3,7 @@
 var React = require('react-native');
 var AppList = require("../Components/AppList");
 var NoResults = require('../Components/NoResults');
+var Colors = require('../Utilities/Colors');
 
 var {
   StyleSheet,
@@ -10,6 +11,7 @@ var {
   View,
   ListView,
   TextInput,
+  Platform,
 } = React;
 
 var Explore = React.createClass({
@@ -33,7 +35,9 @@ var Explore = React.createClass({
 
   renderList() {
     return(
-      <AppList url={this.state.searchUrl} />
+      <AppList
+        url={this.state.searchUrl}
+        autoAdjustInsets={false} />
     );
   },
 
@@ -70,11 +74,12 @@ var Explore = React.createClass({
 var styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    marginTop: 19,
+    marginBottom: Platform.OS === 'ios' ? 49 : null,
   },
   searchRow: {
-    backgroundColor: '#f3f3f3',
-    padding: 10,
-    marginBottom: 9,
+    backgroundColor: Colors.veryLightGrey,
+    padding: 5,
   },
   input: {
     height: 40,
@@ -83,8 +88,8 @@ var styles = StyleSheet.create({
     color: 'black',
   },
   inputContainer: {
-    borderBottomWidth: 1,
-    borderColor: '#ccc',
+    borderBottomWidth: Platform.OS === 'ios' ? 1 : null,
+    borderColor: Colors.lightGrey,
     margin: 5,
     marginTop: 0,
   },

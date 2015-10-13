@@ -6,13 +6,14 @@
 'use strict';
 
 var React = require('react-native');
-var Camera = require('react-native-camera');
 var Overlay = require('react-native-overlay');
 var Api = require("../Api/Core");
 var NavigationBar = require('../Components/NavigationBar');
 var Login = require('../Screens/Login');
 var Signup = require('../Screens/Signup');
 var MyApps = require('../Screens/MyApps');
+var Colors = require('../Utilities/Colors');
+var StatusBar = require('../Components/StatusBar');
 
 var DEFAULT_ROUTE = {id: 'my_apps'};
 
@@ -26,7 +27,7 @@ var {
   TouchableOpacity,
   View,
   Navigator,
-  StatusBarIOS,
+  Platform,
 } = React;
 
 var MyAppsContainer = React.createClass({
@@ -35,7 +36,16 @@ var MyAppsContainer = React.createClass({
       case 'my_apps':
         return <MyApps navigator={nav} />;
       case 'login':
-        return <Login navigator={nav} error={route.error} />;
+        if (Platform.OS === 'ios') {
+          return (
+            <View style={{flex: 1}}>
+              <NavigationBar title={'Account Required'} />
+              <Login navigator={nav} error={route.error} />
+            </View>
+          );
+        } else {
+          return <Login navigator={nav} error={route.error} />;
+        }
       case 'signup':
         return <Signup navigator={nav} />;
       default:
@@ -44,7 +54,8 @@ var MyAppsContainer = React.createClass({
   },
 
   render() {
-    StatusBarIOS.setStyle('light-content');
+    StatusBar.setStyle('light-content');
+
     if(this.props.profile && this.props.profile.id){
       DEFAULT_ROUTE.id = 'my_apps';
     } else {
@@ -53,7 +64,7 @@ var MyAppsContainer = React.createClass({
 
     return (
       <Navigator initialRoute={DEFAULT_ROUTE}
-                 renderScene={this.renderScene} />
+        renderScene={this.renderScene} />
     );
   }
 });
@@ -99,7 +110,7 @@ var styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 25,
     paddingBottom: 20,
-    color: '#888'
+    color: Colors.grey,
   },
   app: {
     fontSize: 20,
@@ -109,8 +120,6 @@ var styles = StyleSheet.create({
   }
 });
 
-var {updateProfile} = require('../Actions');
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native'
 
 export default connect(

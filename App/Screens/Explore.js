@@ -7,13 +7,15 @@ var {
   StyleSheet,
   Text,
   View,
-  StatusBarIOS,
   ScrollView,
   TouchableOpacity,
+  Platform,
 } = React;
 
 var AppList = require("../Components/AppList");
 var Search = require('../Screens/Search');
+var Colors = require('../Utilities/Colors');
+var StatusBar = require('../Components/StatusBar');
 
 var Explore = React.createClass({
   getInitialState() {
@@ -56,24 +58,48 @@ var Explore = React.createClass({
     });
   },
 
+  _renderSegmentedControl() {
+    if (Platform.OS === 'ios') {
+      return (
+        <SegmentedControlIOS
+          tintColor={Colors.tintColor}
+          values={this.state.values}
+          style={styles.exploreViewPicker}
+          selectedIndex={this.state.selectedIndex}
+          onValueChange={this._onValueChange} />
+      );
+    } else {
+      return(
+        <View style={styles.segmentedControl}>
+          {this.state.values.map(item => {
+            return (
+              <TouchableOpacity
+                key={item}
+                onPress={() => this._onValueChange(item)}
+                style={styles.segmentedItem}>
+                <Text style={[
+                  styles.segmentedItemText,
+                  this.state.value === item ? styles.segmentedItemSelected : null
+                ]}>{item}</Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      );
+    }
+  },
 
   render() {
-    StatusBarIOS.setStyle('default');
+    StatusBar.setStyle('default');
 
     return (
       <View style={styles.mainContainer}>
         {this.state.value == 'Picks' && this.renderPicks()}
         {this.state.value == 'Popular' && this.renderPopular()}
         {this.state.value == 'Search' && this.renderSearch()}
-
         <View style={styles.topContainer}>
           <View style={styles.segmentContainer}>
-            <SegmentedControlIOS
-              tintColor={'#712FA9'}
-              values={this.state.values}
-              style={styles.exploreViewPicker}
-              selectedIndex={this.state.selectedIndex}
-              onValueChange={this._onValueChange} />
+            {this._renderSegmentedControl()}
           </View>
         </View>
       </View>
@@ -87,14 +113,15 @@ var deviceWidth = require('Dimensions').get('window').width;
 var styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
-    paddingTop: 15,
+    marginTop: Platform.OS === 'ios' ? 20 : null,
+    marginBottom: Platform.OS === 'ios' ? 49 : null,
   },
   mainContainer: {
-    marginTop: 25,
+    marginTop: Platform.OS === 'ios' ? 20 : null,
     flex: 1,
     flexDirection: 'column',
     backgroundColor: 'white',
-    paddingTop: 50,
+    paddingTop: 40,
   },
   topContainer: {
     position: 'absolute',
@@ -102,10 +129,9 @@ var styles = StyleSheet.create({
     left: 0,
     right: 0,
     flexDirection: 'row',
-    paddingTop: 10,
+    paddingTop: 15,
     paddingBottom: 15,
-    marginBottom: 10,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     shadowColor: 'black',
     shadowOpacity: 0.1,
     shadowOffset: {width: 0, height: 3},
@@ -115,6 +141,24 @@ var styles = StyleSheet.create({
     flex: 1,
     marginRight: 30,
     marginLeft: 30,
+  },
+  segmentedControl: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    flexDirection: 'row'
+  },
+  segmentedItem: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  segmentedItemText: {
+    flex: 1,
+    fontSize: 16,
+  },
+  segmentedItemSelected: {
+    color: Colors.tintColor,
+    fontWeight: 'bold',
   },
   exploreViewPicker: {
     transform: [{scaleX: 1.1}, {scaleY: 1.1}],

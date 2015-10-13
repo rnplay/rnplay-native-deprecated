@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var Dimensions = require('Dimensions');
+var Colors = require('../Utilities/Colors');
 
 var {
   PixelRatio,
@@ -15,7 +16,7 @@ var {
 var NavigationBar = React.createClass({
 
   getTitle() {
-   return (<Text style={styles.navTitle}>{this.props.title}</Text>);
+    return (<Text style={styles.navTitle}>{this.props.title}</Text>);
   },
 
   getLeftButton() {
@@ -79,13 +80,12 @@ var styles = StyleSheet.create({
   navbarContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#712FA9',
+    backgroundColor: Colors.tintColor,
     borderBottomColor: 'rgba(0, 0, 0, 0.5)',
     borderBottomWidth: 1 / PixelRatio.get(),
     justifyContent: 'space-between',
-    height: 60,
-    marginBottom: 9,
-    paddingTop: 15,
+    height: 65,
+    paddingTop: 20,
   },
   navButton: {
     flex: 0.3,
@@ -96,7 +96,7 @@ var styles = StyleSheet.create({
     color: 'white'
   },
   navTitle: {
-    flex: 0.7,
+    flex: 1.3,
     textAlign: 'center',
     color: 'white',
     fontFamily: 'Avenir Next',

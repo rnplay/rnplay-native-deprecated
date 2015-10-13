@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react-native');
+var Colors = require('../Utilities/Colors');
 
 var {
   Text,
@@ -27,7 +28,7 @@ var styles = StyleSheet.create({
   noResultsText: {
     fontSize: 20,
     textAlign: 'center',
-    color: '#ccc',
+    color: Colors.lightGrey,
     fontFamily: 'Avenir Next',
   },
 });

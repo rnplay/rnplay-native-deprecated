@@ -3,6 +3,7 @@
 var React = require('react-native');
 var NavigationBar = require('../Components/NavigationBar');
 var Api = require('../Api/Core');
+var Colors = require('../Utilities/Colors');
 
 var {
   ActivityIndicatorIOS,
@@ -120,7 +121,7 @@ var Signup = React.createClass({
 
           <ActivityIndicatorIOS
             animating={this.state.isLoading}
-            color="#111"
+            color={Colors.tintColor}
             size="large">
           </ActivityIndicatorIOS>
         </ScrollView>
@@ -138,7 +139,7 @@ var styles = StyleSheet.create({
   },
   inputContainer: {
     borderBottomWidth: 1,
-    borderColor: '#cccccc',
+    borderColor: Colors.lightGrey,
     margin: 10,
   },
   input: {
@@ -148,7 +149,7 @@ var styles = StyleSheet.create({
     color: 'black',
   },
   button: {
-    backgroundColor: '#712FA9',
+    backgroundColor: Colors.tintColor,
     margin: 10
   },
   buttonText: {

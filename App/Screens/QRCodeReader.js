@@ -1,22 +1,23 @@
 'use strict';
 
 var React = require('react-native');
-var Camera = require('react-native-camera');
 var generateAppURL = require('../Utilities/generateAppURL');
 var Overlay = require('react-native-overlay');
+var StatusBar = require('../Components/StatusBar');
+var BarCodeReader = require('../Components/BarCodeReader');
 
 var {
   StyleSheet,
   Text,
   View,
-  StatusBarIOS,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform,
 } = React;
 
 var reloadApp = require('../Utilities/reloadApp');
-var Icon = require('react-native-vector-icons/Ionicons');
+var Icon = require('../Components/Icon');
 var TimerMixin = require('react-timer-mixin');
-
+var Colors = require('../Utilities/Colors');
 
 var QRCodeReader = React.createClass({
   mixins: [TimerMixin],
@@ -35,25 +36,20 @@ var QRCodeReader = React.createClass({
       }
     )
 
-    reloadApp(generateAppURL(app), app.module_name, app.name);
+    reloadApp(generateAppURL(app), app.bundle_path, app.module_name, app.name);
+  },
+
+  onBarCodeClose() {
+    this.setState({cameraOpen: false});
   },
 
   render(){
-    StatusBarIOS.setStyle('default');
+    StatusBar.setStyle('default');
+
     return (
       this.state.cameraOpen ?
         <Overlay isVisible={true}>
-          <Camera
-            ref="cam"
-            style={styles.camera}
-            onBarCodeRead={this.onBarCodeRead}>
-            <TouchableOpacity onPress={() => this.setState({cameraOpen: false}) } >
-              <Icon name='close'
-                size={30}
-                style={styles.closeButton}
-                color='#fff' />
-            </TouchableOpacity>
-          </Camera>
+          <BarCodeReader onRead={this.onBarCodeRead} onClose={this.onBarCodeClose} />
         </Overlay> :
           <View style={styles.container}>
             <Text style={styles.text}>
@@ -71,7 +67,7 @@ var QRCodeReader = React.createClass({
                 name='camera'
                 size={80}
                 style={styles.cameraButton}
-                color='#777'
+                color={Colors.grey}
               />
             </TouchableOpacity>
           </View>

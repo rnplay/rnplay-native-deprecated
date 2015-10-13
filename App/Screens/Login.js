@@ -3,17 +3,21 @@
 var React = require('react-native');
 var NavigationBar = require('../Components/NavigationBar');
 var Api = require('../Api/Core');
+var Colors = require('../Utilities/Colors');
+var Alert = require('../Components/Alert');
+var Spinner = require('../Components/Spinner');
+var StatusBar = require('../Components/StatusBar');
 
 var {
   ActivityIndicatorIOS,
-  AlertIOS,
   ScrollView,
   StyleSheet,
   TextInput,
   Text,
   TouchableHighlight,
   View,
-  StatusBarIOS,
+  Platform,
+  ToastAndroid,
 } = React;
 
 var Login = React.createClass({
@@ -38,12 +42,12 @@ var Login = React.createClass({
 
   handleSubmit() {
     if(!this.state.email || !this.state.password) {
-      AlertIOS.alert('Error', 'Please fill in all fields',[{text: 'OK'}])
+      Alert.alert('Error', 'Please fill in all fields');
       return;
     }
 
     if(this.state.password.length < 5) {
-      AlertIOS.alert('Error', 'Please enter a valid password',[{text: 'OK'}])
+      Alert.alert('Error', 'Please enter a valid password.');
       return;
     }
 
@@ -59,13 +63,13 @@ var Login = React.createClass({
 
     Api.post('/users/sign_in', params)
       .then((res) => {
-        if(res.error) {
+        if (res.error) {
           this.setState({
             isLoading: false,
             email: this.state.email,
             password: this.state.password
           });
-          AlertIOS.alert('Sign In Failed', this.state.error,[{text: 'OK'}]);
+          Alert.alert('Sign In Failed', res.error);
         } else {
           this.props.updateProfile(res);
           this.setState({ isLoading: false, error: false });
@@ -75,11 +79,10 @@ var Login = React.createClass({
   },
 
   render() {
-    StatusBarIOS.setStyle('light-content');
+    StatusBar.setStyle('light-content');
 
     return (
       <View style={styles.mainContainer}>
-        <NavigationBar title={'Account Required'} />
         <ScrollView>
           <View style={styles.inputContainer}>
             <TextInput
@@ -113,11 +116,7 @@ var Login = React.createClass({
           {this.props.error && this.renderError()}
 
           <View style={{alignItems: 'center'}}>
-            <ActivityIndicatorIOS
-              animating={this.state.isLoading}
-              color="#712FA9"
-              size="large">
-            </ActivityIndicatorIOS>
+            <Spinner isLoading={this.state.isLoading} />
           </View>
         </ScrollView>
       </View>
@@ -129,11 +128,12 @@ var styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    paddingTop: Platform.OS === 'android' ? 20 : null,
   },
   inputContainer: {
-    borderBottomWidth: 1,
-    borderColor: '#cccccc',
+    borderBottomWidth: Platform.OS === 'ios' ? 1 : null,
+    borderColor: Colors.lightGrey,
     margin: 10,
   },
   input: {
@@ -143,14 +143,16 @@ var styles = StyleSheet.create({
     color: 'black',
   },
   button: {
-    backgroundColor: '#712FA9',
-    margin: 10
+    backgroundColor: Colors.tintColor,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10,
+    height: 45,
   },
   buttonText: {
     fontSize: 18,
     textAlign: 'center',
     color: 'white',
-    padding: 10,
     fontFamily: 'Avenir Next',
   },
   errorContainer: {
