@@ -26,7 +26,9 @@ RCT_EXPORT_MODULE()
 RCT_EXPORT_METHOD(reloadAppWithURLString:(NSString *)URLString moduleNamed:(NSString *)moduleName appName:(NSString *)appName)
 {
   AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-  NSURL *JSBundleURL = [NSURL URLWithString:URLString];
+  
+  // TODO: Set Dev mode back to true if Dev Tools get fixed.
+  NSURL *JSBundleURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@?platform=ios&dev=false", URLString]];
   
   @try {
     ViewController *appViewController = [[ViewController alloc] init];
