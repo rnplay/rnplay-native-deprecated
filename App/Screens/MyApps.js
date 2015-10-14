@@ -7,6 +7,7 @@ var {
   TouchableOpacity,
   View,
   Platform,
+  StyleSheet,
 } = React;
 
 var AppList = require("../Components/AppList");
@@ -38,7 +39,7 @@ var MyApps = React.createClass({
     StatusBar.setStyle('light-content');
 
     return (
-      <View style={{flex: 1}}>
+      <View style={styles.container}>
         {this._renderIOSNavBar()}
         <AppList
           url="/apps.json"
@@ -47,6 +48,13 @@ var MyApps = React.createClass({
       </View>
     )
   }
+});
+
+var styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginBottom: Platform.OS === 'ios' ? 49 : null,
+  },
 });
 
 var {deleteProfile} = require('../Actions');
