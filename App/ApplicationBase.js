@@ -14,7 +14,8 @@ import Application from './Components/Application'
 
 // globals are bad, we make an exception here for now
 global.PACKAGE = require('../package.json');
-var RN_VERSION = global.PACKAGE.dependencies['react-native'];
+//TODO: Change this back when moving to 0.13 stable
+var RN_VERSION = '0.12.0'; //global.PACKAGE.dependencies['react-native'];
 global.RN_VERSION_DISPLAY = RN_VERSION;
 var githubPrefix = 'rnplay/react-native#';
 RN_VERSION = RN_VERSION.replace(githubPrefix, '').replace(/\./g,'').replace(/-/g, '')
