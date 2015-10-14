@@ -58,14 +58,14 @@ var MenuData = [
     },
     icon: getIconFor('briefcase'),
   },
-  {
-    id: 3,
-    component: {
-      title: 'Direct URL',
-      component: CustomApp,
-    },
-    icon: getIconFor('code'),
-  },
+  // {
+  //   id: 3,
+  //   component: {
+  //     title: 'Direct URL',
+  //     component: CustomApp,
+  //   },
+  //   icon: getIconFor('code'),
+  // },
   {
     id: 4,
     component: {
