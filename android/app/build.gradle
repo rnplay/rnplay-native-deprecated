@@ -3,9 +3,8 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
-
     defaultConfig {
-        applicationId "com.rnplaynative"
+        applicationId 'org.rnplay.playground'
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
