@@ -11,7 +11,7 @@
     "gl-react-native": "1.2.0",
     "lodash": "3.10.1",
     "qs": "5.1.0",
-    "react-native": "facebook/react-native",
+    "react-native": "rnplay/react-native#0.13.0-rc",
     "react-native-activity-view": "0.2.4",
     "react-native-addressbook": "1.2.0",
     "react-native-barcodescanner": "rnplay/react-native-barcodescanner",
