@@ -14,7 +14,6 @@ var Login = require('../Screens/Login');
 var Signup = require('../Screens/Signup');
 var Home = require('../Screens/Home');
 var Guest = require('../Screens/Guest');
-var VersionManager = require('react-native-versions');
 
 var _ = require('lodash');
 
@@ -78,12 +77,6 @@ var RNPlayNative = React.createClass({
     return (
       <View style={{flex: 1}}>
         <Home />
-        <VersionManager
-          appId="9e9aad73a03e4848f22b"
-          apiId="16c9d784280d14f2"
-          apiSecret="-LWACQqiO8az6c68rTEIjTA76i_nzPHDWJkxko3rogM"
-          active={true}
-          moduleName="RNPlayNative" />
       </View>
     )
   }

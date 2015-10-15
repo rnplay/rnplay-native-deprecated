@@ -8,12 +8,11 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "RNVVersionManager.h"
 
 extern float const kFlipTransitionDuration;
 extern int const kFlipTransitionType;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, RNVVersionManagerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic) bool shouldRotate;
 @property (nonatomic, strong) UIWindow *window;
