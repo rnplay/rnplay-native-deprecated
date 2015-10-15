@@ -55,6 +55,10 @@
 		42FF2E081BACFC5700C3B66B /* Mapbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 42FF2E071BACFC5700C3B66B /* Mapbox.bundle */; };
 		557821551BCED9CC00E9AACD /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 557821541BCED98000E9AACD /* libRCTCamera.a */; };
 		557821561BCED9CE00E9AACD /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5578214E1BCED97100E9AACD /* libRNSpinkit.a */; };
+		557821971BD0061200E9AACD /* BlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578218F1BD0061200E9AACD /* BlurView.m */; };
+		557821981BD0061200E9AACD /* BlurViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 557821911BD0061200E9AACD /* BlurViewManager.m */; };
+		557821991BD0061200E9AACD /* VibrancyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 557821941BD0061200E9AACD /* VibrancyView.m */; };
+		5578219A1BD0061200E9AACD /* VibrancyViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 557821961BD0061200E9AACD /* VibrancyViewManager.m */; };
 		55B8F8881B1E4F24002F65B0 /* AppReloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8F8871B1E4F24002F65B0 /* AppReloader.m */; };
 		55B8F9F41B20A858002F65B0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8F9F31B20A858002F65B0 /* CoreData.framework */; };
 		55B8F9F61B20A861002F65B0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8F9F51B20A861002F65B0 /* SystemConfiguration.framework */; };
@@ -380,6 +384,14 @@
 		42FF2E071BACFC5700C3B66B /* Mapbox.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Mapbox.bundle; path = "node_modules/react-native-mapbox-gl/RCTMapboxGL/Mapbox.bundle"; sourceTree = "<group>"; };
 		557821491BCED97100E9AACD /* RNSpinkit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSpinkit.xcodeproj; path = "node_modules/react-native-spinkit/ios/RNSpinkit.xcodeproj"; sourceTree = "<group>"; };
 		5578214F1BCED98000E9AACD /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
+		5578218E1BD0061200E9AACD /* BlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlurView.h; sourceTree = "<group>"; };
+		5578218F1BD0061200E9AACD /* BlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlurView.m; sourceTree = "<group>"; };
+		557821901BD0061200E9AACD /* BlurViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlurViewManager.h; sourceTree = "<group>"; };
+		557821911BD0061200E9AACD /* BlurViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlurViewManager.m; sourceTree = "<group>"; };
+		557821931BD0061200E9AACD /* VibrancyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VibrancyView.h; sourceTree = "<group>"; };
+		557821941BD0061200E9AACD /* VibrancyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VibrancyView.m; sourceTree = "<group>"; };
+		557821951BD0061200E9AACD /* VibrancyViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VibrancyViewManager.h; sourceTree = "<group>"; };
+		557821961BD0061200E9AACD /* VibrancyViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VibrancyViewManager.m; sourceTree = "<group>"; };
 		55B8F8861B1E4F24002F65B0 /* AppReloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppReloader.h; sourceTree = "<group>"; };
 		55B8F8871B1E4F24002F65B0 /* AppReloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppReloader.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55B8F9F31B20A858002F65B0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -727,6 +739,30 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		5578218D1BD0061200E9AACD /* RNBlur */ = {
+			isa = PBXGroup;
+			children = (
+				5578218E1BD0061200E9AACD /* BlurView.h */,
+				5578218F1BD0061200E9AACD /* BlurView.m */,
+				557821901BD0061200E9AACD /* BlurViewManager.h */,
+				557821911BD0061200E9AACD /* BlurViewManager.m */,
+			);
+			name = RNBlur;
+			path = "node_modules/react-native-blur/RNBlur";
+			sourceTree = "<group>";
+		};
+		557821921BD0061200E9AACD /* RNVibrancy */ = {
+			isa = PBXGroup;
+			children = (
+				557821931BD0061200E9AACD /* VibrancyView.h */,
+				557821941BD0061200E9AACD /* VibrancyView.m */,
+				557821951BD0061200E9AACD /* VibrancyViewManager.h */,
+				557821961BD0061200E9AACD /* VibrancyViewManager.m */,
+			);
+			name = RNVibrancy;
+			path = "node_modules/react-native-blur/RNVibrancy";
+			sourceTree = "<group>";
+		};
 		55E1662F1B994EFD006817EA /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -754,6 +790,8 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				5578218D1BD0061200E9AACD /* RNBlur */,
+				557821921BD0061200E9AACD /* RNVibrancy */,
 				5578214F1BCED98000E9AACD /* RCTCamera.xcodeproj */,
 				557821491BCED97100E9AACD /* RNSpinkit.xcodeproj */,
 				42A9E7E71BCB31140035670A /* AudioPlayerManager.h */,
@@ -1341,17 +1379,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				42A9E7F11BCB315F0035670A /* ViewSnapshotter.h in Sources */,
+				557821981BD0061200E9AACD /* BlurViewManager.m in Sources */,
 				42A9E7F21BCB315F0035670A /* ViewSnapshotter.m in Sources */,
 				EE49F76F1AFA1F8D002F30A8 /* ViewController.m in Sources */,
+				5578219A1BD0061200E9AACD /* VibrancyViewManager.m in Sources */,
 				42A9E7ED1BCB31330035670A /* AudioPlayerManager.h in Sources */,
 				42A9E7EB1BCB31140035670A /* AudioPlayerManager.m in Sources */,
 				42A9E7EC1BCB31140035670A /* AudioRecorderManager.m in Sources */,
 				42A9E7EE1BCB313A0035670A /* AudioRecorderManager.h in Sources */,
+				557821971BD0061200E9AACD /* BlurView.m in Sources */,
 				55FF68641B97284600257CB9 /* AppLoadingView.m in Sources */,
 				426E0EA71B83BF2800DCFBBC /* UIImagePickerManager.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				55B8F8881B1E4F24002F65B0 /* AppReloader.m in Sources */,
+				557821991BD0061200E9AACD /* VibrancyView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
