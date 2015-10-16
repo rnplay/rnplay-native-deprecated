@@ -53571,7 +53571,7 @@ Object.keys(componentOrElement));}
 
 module.exports = findDOMNode;
 });
-__d('RNPlayNative/App/ApplicationBase.js',["react-native/Libraries/react-native/react-native.js","redux/lib/index.js","redux-thunk/lib/index.js","RNPlayNative/App/Reducers/index.js","react-redux/native.js","RNPlayNative/App/Components/Application.ios.js","RNPlayNative"],function(global, require, module, exports) {  var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(_x,_x2,_x3){var _again=true;_function: while(_again) {var object=_x,property=_x2,receiver=_x3;desc = parent = getter = undefined;_again = false;if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {_x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactNative=require(
+__d('RNPlayNative/App/ApplicationBase.js',["react-native/Libraries/react-native/react-native.js","redux/lib/index.js","redux-thunk/lib/index.js","RNPlayNative/App/Reducers/index.js","react-redux/native.js","RNPlayNative","RNPlayNative/App/Components/Application.ios.js"],function(global, require, module, exports) {  var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(_x,_x2,_x3){var _again=true;_function: while(_again) {var object=_x,property=_x2,receiver=_x3;desc = parent = getter = undefined;_again = false;if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {_x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactNative=require(
 
 'react-native/Libraries/react-native/react-native.js');var _reactNative2=_interopRequireDefault(_reactNative);var _redux=require(
 'redux/lib/index.js');var _reduxThunk=require(
@@ -54997,7 +54997,7 @@ throw error;}};
 
 module.exports = invariant;
 });
-__d('RNPlayNative/App/Components/Application.ios.js',["react-native/Libraries/react-native/react-native.js","qs/lib/index.js","LinkingIOS","RNPlayNative/App/Utilities/reloadApp.ios.js","RNPlayNative/App/Screens/Login.js","RNPlayNative/App/Screens/Signup.js","RNPlayNative/App/Screens/Home.ios.js","RNPlayNative/App/Screens/Guest.js","react-native-versions/VersionManager.ios.js","lodash/index.js"],function(global, require, module, exports) {  'use strict';var _slicedToArray=(function(){function sliceIterator(arr,i){var _arr=[];var _n=true;var _d=false;var _e=undefined;try{for(var _i=arr[Symbol.iterator](),_s;!(_n = (_s = _i.next()).done);_n = true) {_arr.push(_s.value);if(i && _arr.length === i)break;}}catch(err) {_d = true;_e = err;}finally {try{if(!_n && _i['return'])_i['return']();}finally {if(_d)throw _e;}}return _arr;}return function(arr,i){if(Array.isArray(arr)){return arr;}else if(Symbol.iterator in Object(arr)){return sliceIterator(arr,i);}else {throw new TypeError('Invalid attempt to destructure non-iterable instance');}};})();
+__d('RNPlayNative/App/Components/Application.ios.js',["react-native/Libraries/react-native/react-native.js","qs/lib/index.js","LinkingIOS","RNPlayNative/App/Utilities/reloadApp.ios.js","RNPlayNative/App/Screens/Login.js","RNPlayNative/App/Screens/Signup.js","RNPlayNative/App/Screens/Home.ios.js","RNPlayNative/App/Screens/Guest.js","lodash/index.js"],function(global, require, module, exports) {  'use strict';var _slicedToArray=(function(){function sliceIterator(arr,i){var _arr=[];var _n=true;var _d=false;var _e=undefined;try{for(var _i=arr[Symbol.iterator](),_s;!(_n = (_s = _i.next()).done);_n = true) {_arr.push(_s.value);if(i && _arr.length === i)break;}}catch(err) {_d = true;_e = err;}finally {try{if(!_n && _i['return'])_i['return']();}finally {if(_d)throw _e;}}return _arr;}return function(arr,i){if(Array.isArray(arr)){return arr;}else if(Symbol.iterator in Object(arr)){return sliceIterator(arr,i);}else {throw new TypeError('Invalid attempt to destructure non-iterable instance');}};})();
 
 
 
@@ -55013,7 +55013,6 @@ var Login=require('RNPlayNative/App/Screens/Login.js');
 var Signup=require('RNPlayNative/App/Screens/Signup.js');
 var Home=require('RNPlayNative/App/Screens/Home.ios.js');
 var Guest=require('RNPlayNative/App/Screens/Guest.js');
-var VersionManager=require('react-native-versions/VersionManager.ios.js');
 
 var _=require('lodash/index.js');var 
 
@@ -55076,13 +55075,7 @@ reloadApp(bundle_url,module_name,params_json);}}},
 render:function(){
 return (
 React.createElement(View,{style:{flex:1}},
-React.createElement(Home,null),
-React.createElement(VersionManager,{
-appId:'9e9aad73a03e4848f22b',
-apiId:'16c9d784280d14f2',
-apiSecret:'-LWACQqiO8az6c68rTEIjTA76i_nzPHDWJkxko3rogM',
-active:true,
-moduleName:'RNPlayNative'})));}});
+React.createElement(Home,null)));}});
 
 
 
@@ -76392,149 +76385,6 @@ module.exports = Guest;
 });
 __d('image!photo-camera5',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/joshua/rnplay/rnplay-native/photo-camera5.png","uri":"photo-camera5","width":256,"height":256,"deprecated":true};
 });
-__d('react-native-versions/VersionManager.ios.js',["react-native/Libraries/react-native/react-native.js"],function(global, require, module, exports) {  'use strict';
-
-var React=require('react-native/Libraries/react-native/react-native.js');var 
-
-View=
-
-
-
-
-
-
-
-
-
-React.View;var PropTypes=React.PropTypes;var StyleSheet=React.StyleSheet;var Text=React.Text;var TouchableOpacity=React.TouchableOpacity;var AlertIOS=React.AlertIOS;var Modal=React.Modal;var VersionManager=React.NativeModules.VersionManager;
-
-var Versions=React.createClass({displayName:'Versions',
-propTypes:{
-
-
-
-active:React.PropTypes.bool,
-
-
-
-moduleName:React.PropTypes.string.isRequired},
-
-
-getDefaultProps:function(){
-return {
-active:false,
-moduleName:"ExampleApp"};},
-
-
-
-closeModal:function(){
-this.setState({modalVisible:false});},
-
-
-getInitialState:function(){
-return {
-modalVisible:false};},
-
-
-
-updateToVersion:function(version){var _this=this;
-var versionString=version.toString();
-VersionManager.downloadVersionAsync(versionString).
-then(function(path){
-VersionManager.loadJsVersion(versionString,path,_this.props.moduleName);}).
-
-catch(function(err){
-
-console.log(err);});},
-
-
-
-componentDidMount:function(){var _this2=this;
-if(this.props.active){
-VersionManager.configure({
-appId:this.props.appId,
-apiId:this.props.apiId,
-apiSecret:this.props.apiSecret});
-
-
-VersionManager.getCurrentJsVersion().
-then(function(currentVersion){
-VersionManager.discoverLatestVersionAsync().
-then(function(latestVersionData){
-var latestVersion=latestVersionData.version_number;
-if(latestVersion == currentVersion){
-console.log("Already on the latest version!");}else 
-{
-console.log("New version detected: " + latestVersion);
-_this2.setState({modalVisible:true,version:latestVersion,releaseNotes:latestVersionData.release_notes});
-_this2.showAlert();}}).
-
-
-catch(function(err){
-
-console.log(err);});}).
-
-
-catch(function(err){
-
-console.log(err);});}},
-
-
-
-
-renderModal:function(){var _this3=this;
-return (
-
-React.createElement(Modal,{animated:true,visible:this.state.modalVisible},
-React.createElement(Text,{style:styles.title},'Do you want to update to version ',this.state.version,'?'),
-React.createElement(TouchableOpacity,{onPress:function(){return _this3.closeModal();}},
-React.createElement(Text,{style:styles.button},'Cancel')),
-
-React.createElement(TouchableOpacity,{onPress:function(){return _this3.updateToVersion(_this3.state.version);}},
-React.createElement(Text,{style:styles.button},'Update now'))));},
-
-
-
-
-
-showAlert:function(){var _this4=this;
-
-return AlertIOS.alert('New version available: ' + 
-this.state.version,
-this.state.releaseNotes || "This version has no release notes.",
-[
-{text:'Update',onPress:function(){return _this4.updateToVersion(_this4.state.version);}},
-{text:'Cancel',onPress:function(){return _this4.closeModal();}}]);},
-
-
-
-
-render:function(){
-return React.createElement(View,null);}});
-
-
-
-var styles=StyleSheet.create({
-title:{
-fontSize:15,
-fontWeight:"500",
-textAlign:'center',
-marginBottom:10},
-
-button:{
-fontSize:15,
-fontWeight:"500",
-textAlign:'center',
-borderWidth:1,
-borderColor:'#aaa',
-borderRadius:5,
-margin:5,
-padding:5}});
-
-
-
-module.exports = Versions;
-});
 __d('RNPlayNative',[],function(global, require, module, exports) {  module.exports = {
   "name": "RNPlayNative",
   "version": "1.11.0",
@@ -76561,7 +76411,7 @@ __d('RNPlayNative',[],function(global, require, module, exports) {  module.expor
     "react-native-keyboardevents": "0.4.5",
     "react-native-keychain": "0.2.5",
     "react-native-linear-gradient": "1.1.0-alpha",
-    "react-native-mapbox-gl": "0.4.2",
+    "react-native-mapbox-gl": "rnplay/react-native-mapbox-gl",
     "react-native-material-kit": "0.2.0",
     "react-native-modal": "0.3.10",
     "react-native-overlay": "0.3.0",
