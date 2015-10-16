@@ -74,8 +74,8 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
     initialModuleName = @"UIExplorerApp";
   } else {
 
-    //initialJSBundleURL = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
-    initialJSBundleURL = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios"];
+    initialJSBundleURL = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+    // initialJSBundleURL = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios"];
 
     initialModuleName = @"RNPlayNative";
   }
@@ -84,6 +84,7 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
                                                       moduleName:initialModuleName
                                                       initialProperties:NULL
                                                    launchOptions:launchOptions];
+
 
   rootView.loadingView = [self spinner];
   rootView.loadingViewFadeDelay = 0.0;
@@ -106,6 +107,15 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
   [self.window addGestureRecognizer:exitGesture];
 
   return YES;
+}
+
+- (UIActivityIndicatorView *)spinner {
+
+  UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] init];
+  [spinner setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+  [spinner setColor:[UIColor colorWithRed:113.0f/255.0f green:47.0f/255.0f blue:169.0f/255.0f alpha:1.0f]];
+  [spinner startAnimating];
+  return spinner;
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
@@ -133,14 +143,6 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
                       }
                     }];
   }
-}
-
-- (UIActivityIndicatorView *)spinner {
-  UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] init];
-  [spinner setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
-  [spinner setColor:[UIColor colorWithRed:113.0f/255.0f green:47.0f/255.0f blue:169.0f/255.0f alpha:1.0f]];
-  [spinner startAnimating];
-  return spinner;
 }
 
 - (void)initializeGoogleAnalytics {
