@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.ndk.CrashlyticsNdk;
 import com.facebook.react.LifecycleState;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
@@ -14,6 +16,7 @@ import com.facebook.react.shell.MainReactPackage;
 
 import com.eguma.barcodescanner.BarcodeScanner;
 
+import io.fabric.sdk.android.Fabric;
 import java.io.File;
 
 public class MainActivity extends Activity implements DefaultHardwareBackBtnHandler {
@@ -28,14 +31,15 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
 
         // Set up default RNPlayNative app values.
         String packagerRoot = "";
         String bundleAssetName = "index.android.bundle"; // For production.
         String jsMainModuleName = "index.android";
         String moduleName = "RNPlayNative";
-        Boolean liveReloadEnabled = false;
-        Boolean useDevSupport = false;
+        Boolean liveReloadEnabled = true;
+        Boolean useDevSupport = true;
 
         // Get the params that is passed in from Appetize.
         Bundle bundle = getIntent().getExtras();
