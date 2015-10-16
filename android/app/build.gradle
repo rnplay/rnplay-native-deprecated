@@ -42,6 +42,7 @@ dependencies {
     //compile 'com.facebook.react:react-native:0.12.0-SNAPSHOT'
     compile project(':ReactAndroid')
     compile project(':ReactNativeBarcodescanner')
+    compile project(':reactnativemapboxgl')
     compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
         transitive = true;
     }

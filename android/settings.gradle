@@ -1,6 +1,7 @@
 rootProject.name = 'RNPlayNative'
 
-include ':app', ':ReactAndroid', ':ReactNativeBarcodescanner'
+include ':app', ':ReactAndroid', ':ReactNativeBarcodescanner', ':reactnativemapboxgl'
 
 project(':ReactAndroid').projectDir = new File(rootProject.projectDir, '../node_modules/react-native/ReactAndroid')
 project(':ReactNativeBarcodescanner').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-barcodescanner/android')
+project(':reactnativemapboxgl').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-mapbox-gl/android')
