@@ -43,4 +43,5 @@ fastlane/*.xml
 .gradle
 .idea
 local.properties
+fabric.properties
 *.iml
