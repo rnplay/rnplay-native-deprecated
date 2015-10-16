@@ -39,8 +39,8 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
         String bundleAssetName = "index.android.bundle"; // For production.
         String jsMainModuleName = "index.android";
         String moduleName = "RNPlayNative";
-        Boolean liveReloadEnabled = true;
-        Boolean useDevSupport = true;
+        Boolean liveReloadEnabled = false;
+        Boolean useDevSupport = false;
 
         // Get the params that is passed in from Appetize.
         Bundle bundle = getIntent().getExtras();

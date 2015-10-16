@@ -1424,7 +1424,7 @@ _reactNative2.default.createElement(_AppApplicationBase2.default,null));}}]);ret
 
 _reactNative.AppRegistry.registerComponent('RNPlayNative',function(){return RNPlayNative;});
 });
-__d('react-native/Libraries/react-native/react-native.js',["React","ActivityIndicatorIOS","DatePickerIOS","DrawerLayoutAndroid","Image","ListView","MapView","Modal","Navigator","NavigatorIOS","PickerIOS","ProgressBarAndroid","ProgressViewIOS","ScrollView","SegmentedControlIOS","SliderIOS","SnapshotViewIOS","Switch","SwitchAndroid","SwitchIOS","TabBarIOS","Text","TextInput","ToastAndroid","ToolbarAndroid","TouchableHighlight","TouchableNativeFeedback","TouchableOpacity","TouchableWithoutFeedback","View","ViewPagerAndroid","WebView","ActionSheetIOS","AdSupportIOS","AlertIOS","Animated","AppRegistry","AppStateIOS","AsyncStorage","BackAndroid","CameraRoll","Dimensions","Easing","ImagePickerIOS","InteractionManager","LayoutAnimation","LinkingIOS","NetInfo","PanResponder","PixelRatio","PushNotificationIOS","Settings","StatusBarIOS","StyleSheet","VibrationIOS","RCTDeviceEventEmitter","RCTNativeAppEventEmitter","NativeModules","Platform","processColor","requireNativeComponent","EdgeInsetsPropType","PointPropType","LinkedStateMixin","ReactComponentWithPureRenderMixin","NativeModules","ReactUpdates","cloneWithProps","ReactFragment","update","ReactDefaultPerf","ReactTestUtils"],function(global, require, module, exports) {  'use strict';
+__d('react-native/Libraries/react-native/react-native.js',["React","ActivityIndicatorIOS","DatePickerIOS","DrawerLayoutAndroid","Image","ListView","MapView","Modal","Navigator","NavigatorIOS","PickerIOS","ProgressBarAndroid","ProgressViewIOS","ScrollView","SegmentedControlIOS","SliderIOS","SnapshotView","Switch","SwitchAndroid","SwitchIOS","TabBarIOS","Text","TextInput","ToastAndroid","ToolbarAndroid","TouchableHighlight","TouchableNativeFeedback","TouchableOpacity","TouchableWithoutFeedback","View","ViewPagerAndroid","WebView","ActionSheetIOS","AdSupportIOS","AlertIOS","Animated","AppRegistry","AppStateIOS","AsyncStorage","BackAndroid","CameraRoll","Dimensions","Easing","ImagePickerIOS","InteractionManager","LayoutAnimation","LinkingIOS","NetInfo","PanResponder","PixelRatio","PushNotificationIOS","Settings","StatusBarIOS","StyleSheet","VibrationIOS","RCTDeviceEventEmitter","RCTNativeAppEventEmitter","NativeModules","Platform","processColor","requireNativeComponent","EdgeInsetsPropType","PointPropType","LinkedStateMixin","ReactComponentWithPureRenderMixin","NativeModules","ReactUpdates","cloneWithProps","ReactFragment","update","ReactDefaultPerf","ReactTestUtils"],function(global, require, module, exports) {  'use strict';
 
 
 
@@ -1460,7 +1460,7 @@ ProgressViewIOS:require('ProgressViewIOS'),
 ScrollView:require('ScrollView'),
 SegmentedControlIOS:require('SegmentedControlIOS'),
 SliderIOS:require('SliderIOS'),
-SnapshotViewIOS:require('SnapshotViewIOS'),
+SnapshotView:require('SnapshotView'),
 Switch:require('Switch'),
 SwitchAndroid:require('SwitchAndroid'),
 SwitchIOS:require('SwitchIOS'),
@@ -5143,7 +5143,7 @@ NodeHandle.injection.injectImplementation(UniversalWorkerNodeHandle);}
 module.exports = {
 inject:inject};
 });
-__d('InitializeJavaScriptAppEngine',["RCTDebugComponentOwnership","RCTDeviceEventEmitter","PerformanceLogger","ExceptionsManager","ErrorUtils","ExceptionsManager","Platform","checkFlowAtRuntime","JSTimers","NativeModules","Promise","XMLHttpRequest","FormData","fetch","Geolocation","WebSocket","BridgeProfiling","regenerator/runtime.js"],function(global, require, module, exports) {  var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
+__d('InitializeJavaScriptAppEngine',["RCTDebugComponentOwnership","RCTDeviceEventEmitter","PerformanceLogger","regenerator/runtime.js","ExceptionsManager","ErrorUtils","ExceptionsManager","Platform","checkFlowAtRuntime","JSTimers","NativeModules","Promise","XMLHttpRequest","FormData","fetch","Geolocation","WebSocket","BridgeProfiling"],function(global, require, module, exports) {  var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
 
 
 
@@ -5205,18 +5205,11 @@ console.log('Failed to print error: ',ee.message);}}
 
 
 function polyfillGlobal(name,newValue){var scope=arguments.length <= 2 || arguments[2] === undefined?GLOBAL:arguments[2];
-var descriptor=Object.getOwnPropertyDescriptor(scope,name) || {
-
-
-
-
-writable:true};
-
+var descriptor=Object.getOwnPropertyDescriptor(scope,name);
 
 if(scope[name] !== undefined){
 var backupName='original' + name[0].toUpperCase() + name.substr(1);
 Object.defineProperty(scope,backupName,_extends({},descriptor,{value:scope[name]}));}
-
 
 Object.defineProperty(scope,name,_extends({},descriptor,{value:newValue}));}
 
@@ -5465,7 +5458,6 @@ var stringifySafe=require('stringifySafe');
 var MODULE_IDS=0;
 var METHOD_IDS=1;
 var PARAMS=2;
-var MIN_TIME_BETWEEN_FLUSHES_MS=5;
 
 var SPY_MODE=false;
 
@@ -5494,9 +5486,9 @@ this._moduleTable = {};
 this._methodTable = {};
 this._callbacks = [];
 this._callbackID = 0;
-this._lastFlush = 0;
 
 [
+'processBatch',
 'invokeCallbackAndReturnFlushedQueue',
 'callFunctionReturnFlushedQueue',
 'flushedQueue'].
@@ -5510,36 +5502,48 @@ this._debugInfo = {};
 this._remoteModuleTable = {};
 this._remoteMethodTable = {};
 this._genLookupTables(
-remoteModules,this._remoteModuleTable,this._remoteMethodTable);}_createClass(MessageQueue,[{key:'callFunctionReturnFlushedQueue',value:
+remoteModules,this._remoteModuleTable,this._remoteMethodTable);}_createClass(MessageQueue,[{key:'processBatch',value:
 
 
 
 
 
-function callFunctionReturnFlushedQueue(module,method,args){var _this2=this;
+function processBatch(batch){var _this2=this;
 guard(function(){
-_this2.__callFunction(module,method,args);
+ReactUpdates.batchedUpdates(function(){
+batch.forEach(function(call){
+var method=call.method === 'callFunctionReturnFlushedQueue'?
+'__callFunction':'__invokeCallback';
+guard(function(){return _this2[method].apply(_this2,call.args);});});
+
+
 _this2.__callImmediates();});
 
 
+
+while(JSTimersExecution.immediates.length) {
+ReactUpdates.batchedUpdates(function(){
+_this2.__callImmediates();});}});
+
+
+
+
+return this.__flushedQueue();}},{key:'callFunctionReturnFlushedQueue',value:
+
+
+function callFunctionReturnFlushedQueue(module,method,args){var _this3=this;
+guard(function(){return _this3.__callFunction(module,method,args);});
 return this.flushedQueue();}},{key:'invokeCallbackAndReturnFlushedQueue',value:
 
 
-function invokeCallbackAndReturnFlushedQueue(cbID,args){var _this3=this;
-guard(function(){
-_this3.__invokeCallback(cbID,args);
-_this3.__callImmediates();});
-
-
+function invokeCallbackAndReturnFlushedQueue(cbID,args){var _this4=this;
+guard(function(){return _this4.__invokeCallback(cbID,args);});
 return this.flushedQueue();}},{key:'flushedQueue',value:
 
 
 function flushedQueue(){
 this.__callImmediates();
-
-var queue=this._queue;
-this._queue = [[],[],[]];
-return queue[0].length?queue:null;}},{key:'__callImmediates',value:
+return this.__flushedQueue();}},{key:'__callImmediates',value:
 
 
 
@@ -5549,8 +5553,13 @@ return queue[0].length?queue:null;}},{key:'__callImmediates',value:
 function __callImmediates(){
 BridgeProfiling.profile('JSTimersExecution.callImmediates()');
 guard(function(){return JSTimersExecution.callImmediates();});
-BridgeProfiling.profileEnd();}},{key:'__nativeCall',value:
+BridgeProfiling.profileEnd();}},{key:'__flushedQueue',value:
 
+
+function __flushedQueue(){
+var queue=this._queue;
+this._queue = [[],[],[]];
+return queue[0].length?queue:null;}},{key:'__nativeCall',value:
 
 function __nativeCall(module,method,params,onFail,onSucc){
 if(onFail || onSucc){
@@ -5567,14 +5576,6 @@ this._callbacks[this._callbackID++] = onSucc;}
 this._queue[MODULE_IDS].push(module);
 this._queue[METHOD_IDS].push(method);
 this._queue[PARAMS].push(params);
-
-var now=new Date().getTime();
-if(global.nativeFlushQueueImmediate && 
-now - this._lastFlush >= MIN_TIME_BETWEEN_FLUSHES_MS){
-global.nativeFlushQueueImmediate(this._queue);
-this._queue = [[],[],[]];
-this._lastFlush = now;}
-
 if(__DEV__ && SPY_MODE && isFinite(module)){
 console.log('JS->N : ' + this._remoteModuleTable[module] + '.' + 
 this._remoteMethodTable[module][method] + '(' + JSON.stringify(params) + ')');}}},{key:'__callFunction',value:
@@ -5583,7 +5584,6 @@ this._remoteMethodTable[module][method] + '(' + JSON.stringify(params) + ')');}}
 
 function __callFunction(module,method,args){
 BridgeProfiling.profile(function(){return module + '.' + method + '(' + stringifySafe(args) + ')';});
-this._lastFlush = new Date().getTime();
 if(isFinite(module)){
 method = this._methodTable[module][method];
 module = this._moduleTable[module];}
@@ -5599,7 +5599,6 @@ BridgeProfiling.profileEnd();}},{key:'__invokeCallback',value:
 function __invokeCallback(cbID,args){
 BridgeProfiling.profile(
 function(){return 'MessageQueue.invokeCallback(' + cbID + ', ' + stringifySafe(args) + ')';});
-this._lastFlush = new Date().getTime();
 var callback=this._callbacks[cbID];
 if(!callback || __DEV__){
 var debug=this._debugInfo[cbID >> 1];
@@ -14687,7 +14686,7 @@ event.message = ev.message;
 _this.onerror && _this.onerror(event);
 _this.dispatchEvent(event);
 _this._unregisterEvents();
-_this.readyState === _this.OPEN && _this._closeWebSocket(id);})];}}]);return WebSocket;})(WebSocketBase);
+_this._closeWebSocket(id);})];}}]);return WebSocket;})(WebSocketBase);
 
 
 
@@ -26182,7 +26181,13 @@ if(source && source.uri === ''){
 console.warn('source.uri should not be an empty string');}
 
 
-if(source && source.uri){var 
+if(source && source.uri){
+var isNetwork=source.uri.match(/^https?:/);
+invariant(
+!(isNetwork && source.isStatic),
+'Static image URIs cannot start with "http": "' + source.uri + '"');var 
+
+
 width=source.width;var height=source.height;
 var style=flattenStyle([{width:width,height:height},styles.base,this.props.style]);
 
@@ -26231,16 +26236,7 @@ uiViewClassName:'RCTImageView'});
 
 module.exports = Image;
 });
-__d('resolveAssetSource',["AssetRegistry","PixelRatio","Platform","NativeModules"],function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,'__esModule',{value:true});
-
-
-
-
-
-
-
-
-
+__d('resolveAssetSource',["AssetRegistry","PixelRatio","Platform","NativeModules"],function(global, require, module, exports) {  'use strict';
 
 
 
@@ -26262,6 +26258,10 @@ var SourceCode=require('NativeModules').SourceCode;
 var _serverURL;
 
 function getDevServerURL(){
+if(!__DEV__){
+
+return null;}
+
 if(_serverURL === undefined){
 var scriptURL=SourceCode.scriptURL;
 var match=scriptURL && scriptURL.match(/^https?:\/\/.*?\//);
@@ -26357,12 +26357,23 @@ return null;}
 
 function assetToImageSource(asset){
 var devServerURL=getDevServerURL();
+if(devServerURL){
 return {
 __packager_asset:true,
 width:asset.width,
 height:asset.height,
-uri:devServerURL?getPathOnDevserver(devServerURL,asset):getPathInArchive(asset),
-scale:pickScale(asset.scales,PixelRatio.get())};}
+uri:getPathOnDevserver(devServerURL,asset),
+isStatic:false,
+scale:pickScale(asset.scales,PixelRatio.get())};}else 
+
+{
+return {
+__packager_asset:true,
+width:asset.width,
+height:asset.height,
+uri:getPathInArchive(asset),
+isStatic:true};}}
+
 
 
 
@@ -26961,9 +26972,6 @@ break;}}var _props=
 this.props;var renderScrollComponent=_props.renderScrollComponent;var props=_objectWithoutProperties(_props,['renderScrollComponent']);
 if(!props.scrollEventThrottle){
 props.scrollEventThrottle = DEFAULT_SCROLL_CALLBACK_THROTTLE;}
-
-if(props.removeClippedSubviews === undefined){
-props.removeClippedSubviews = true;}
 
 Object.assign(props,{
 onScroll:this._onScroll,
@@ -30992,7 +31000,7 @@ this.emit(arg.eventType,arg.data,arg.didEmitCallback);}}}]);return NavigationEve
 
 module.exports = NavigationEventEmitter;
 });
-__d('NavigatorBreadcrumbNavigationBar',["NavigatorBreadcrumbNavigationBarStyles","NavigatorNavigationBarStylesAndroid","NavigatorNavigationBarStylesIOS","Platform","React","StyleSheet","View","invariant","immutable/dist/immutable.js"],function(global, require, module, exports) {  'use strict';
+__d('NavigatorBreadcrumbNavigationBar',["NavigatorBreadcrumbNavigationBarStyles","NavigatorNavigationBarStylesAndroid","NavigatorNavigationBarStylesIOS","Platform","React","StyleSheet","View","immutable/dist/immutable.js","invariant"],function(global, require, module, exports) {  'use strict';
 
 
 
@@ -40162,7 +40170,7 @@ __d('SliderIOS',["UnimplementedView"],function(global, require, module, exports)
 
 module.exports = require('UnimplementedView');
 });
-__d('SnapshotViewIOS',["UnimplementedView"],function(global, require, module, exports) {  'use strict';
+__d('SnapshotView',["Platform","React","StyleSheet","NativeModules","View","requireNativeComponent"],function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
 
 
 
@@ -40174,7 +40182,52 @@ __d('SnapshotViewIOS',["UnimplementedView"],function(global, require, module, ex
 
 
 
-module.exports = require('UnimplementedView');
+
+var Platform=require('Platform');
+var React=require('React');
+var StyleSheet=require('StyleSheet');var _require=
+require('NativeModules');var TestModule=_require.TestModule;
+var View=require('View');
+
+var requireNativeComponent=require('requireNativeComponent');
+
+var SnapshotView=React.createClass({displayName:'SnapshotView',
+onDefaultAction:function(event){
+TestModule.verifySnapshot(TestModule.markTestPassed);},
+
+
+render:function(){
+var testIdentifier=this.props.testIdentifier || 'test';
+var onSnapshotReady=this.props.onSnapshotReady || this.onDefaultAction;
+return (
+React.createElement(RCTSnapshot,_extends({
+style:style.snapshot},
+this.props,{
+onSnapshotReady:onSnapshotReady,
+testIdentifier:testIdentifier})));},
+
+
+
+
+propTypes:{
+
+onSnapshotReady:React.PropTypes.func,
+
+testIdentifier:React.PropTypes.string}});
+
+
+
+var style=StyleSheet.create({
+snapshot:{
+flex:1}});
+
+
+
+var RCTSnapshot=Platform.OS === 'ios'?
+requireNativeComponent('RCTSnapshot',SnapshotView):
+View;
+
+module.exports = SnapshotView;
 });
 __d('Switch',["Platform","NativeMethodsMixin","React","StyleSheet","requireNativeComponent"],function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
 
@@ -51318,27 +51371,6 @@ var NOTIF_REGISTER_EVENT='remoteNotificationsRegistered';var
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 PushNotificationIOS=(function(){_createClass(PushNotificationIOS,null,[{key:'presentLocalNotification',value:
 
 
@@ -52798,7 +52830,7 @@ Object.keys(componentOrElement));}
 
 module.exports = findDOMNode;
 });
-__d('RNPlayNative/App/ApplicationBase.js',["react-native/Libraries/react-native/react-native.js","redux/lib/index.js","RNPlayNative/package.json","RNPlayNative/App/Reducers/index.js","RNPlayNative/App/Components/Application.android.js","redux-thunk/lib/index.js","react-redux/native.js"],function(global, require, module, exports) {  var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(_x,_x2,_x3){var _again=true;_function: while(_again) {var object=_x,property=_x2,receiver=_x3;desc = parent = getter = undefined;_again = false;if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {_x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactNative=require(
+__d('RNPlayNative/App/ApplicationBase.js',["react-native/Libraries/react-native/react-native.js","redux/lib/index.js","redux-thunk/lib/index.js","RNPlayNative/App/Reducers/index.js","react-redux/native.js","RNPlayNative/App/Components/Application.android.js","RNPlayNative/package.json"],function(global, require, module, exports) {  var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(_x,_x2,_x3){var _again=true;_function: while(_again) {var object=_x,property=_x2,receiver=_x3;desc = parent = getter = undefined;_again = false;if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {_x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactNative=require(
 
 'react-native/Libraries/react-native/react-native.js');var _reactNative2=_interopRequireDefault(_reactNative);var _redux=require(
 'redux/lib/index.js');var _reduxThunk=require(
@@ -52815,7 +52847,7 @@ __d('RNPlayNative/App/ApplicationBase.js',["react-native/Libraries/react-native/
 
 global.PACKAGE = require('RNPlayNative/package.json');
 
-var RN_VERSION='0.12.0';
+var RN_VERSION='0.13.0-rc';
 global.RN_VERSION_DISPLAY = RN_VERSION;
 var githubPrefix='rnplay/react-native#';
 RN_VERSION = RN_VERSION.replace(githubPrefix,'').replace(/\./g,'').replace(/-/g,'');
@@ -53419,7 +53451,7 @@ profile:null});
 default:
 return state;}}module.exports = exports.default;
 });
-__d('RNPlayNative/App/Actions/index.js',["react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Api/Core.js"],function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});exports.fetchProfile = fetchProfile;exports.updateProfile = updateProfile;exports.deleteProfile = deleteProfile;function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}var _ApiCore=require('RNPlayNative/App/Api/Core.js');var _ApiCore2=_interopRequireDefault(_ApiCore);var _reactNative=require(
+__d('RNPlayNative/App/Actions/index.js',["RNPlayNative/App/Api/Core.js","react-native/Libraries/react-native/react-native.js"],function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});exports.fetchProfile = fetchProfile;exports.updateProfile = updateProfile;exports.deleteProfile = deleteProfile;function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}var _ApiCore=require('RNPlayNative/App/Api/Core.js');var _ApiCore2=_interopRequireDefault(_ApiCore);var _reactNative=require(
 
 'react-native/Libraries/react-native/react-native.js');
 
@@ -54145,7 +54177,7 @@ React.createElement(Home,null)));}});
 
 module.exports = RNPlayNative;
 });
-__d('RNPlayNative/App/Screens/Home.android.js',["redux/lib/index.js","react-redux/native.js","react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Screens/Explore.js","RNPlayNative/App/Utilities/Colors.js","RNPlayNative/App/Actions/index.js","RNPlayNative/App/Screens/MyAppsContainer.js","RNPlayNative/App/Screens/CustomApp.js","RNPlayNative/App/Screens/About.js","RNPlayNative/App/Screens/QRCodeReader.js","RNPlayNative/App/Components/Icon.android.js","RNPlayNative/App/Components/NavigationBar.android.js","react-native-drawer-layout/index.js"],function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _redux=require(
+__d('RNPlayNative/App/Screens/Home.android.js',["redux/lib/index.js","react-redux/native.js","react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Screens/Explore.js","RNPlayNative/App/Screens/MyAppsContainer.js","RNPlayNative/App/Screens/CustomApp.js","RNPlayNative/App/Screens/About.js","RNPlayNative/App/Screens/QRCodeReader.js","RNPlayNative/App/Components/Icon.android.js","react-native-drawer-layout/index.js","RNPlayNative/App/Components/NavigationBar.android.js","RNPlayNative/App/Utilities/Colors.js","RNPlayNative/App/Actions/index.js"],function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _redux=require(
 
 
 
@@ -54321,7 +54353,7 @@ return (0,_redux.bindActionCreators)({fetchProfile:fetchProfile},dispatch);})(
 
 Home);module.exports = exports.default;
 });
-__d('RNPlayNative/App/Screens/Explore.js',["react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Components/AppList.js","RNPlayNative/App/Screens/Search.js","RNPlayNative/App/Utilities/Colors.js","Dimensions","RNPlayNative/App/Components/StatusBar.android.js"],function(global, require, module, exports) {  'use strict';
+__d('RNPlayNative/App/Screens/Explore.js',["react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Components/AppList.js","RNPlayNative/App/Screens/Search.js","RNPlayNative/App/Utilities/Colors.js","RNPlayNative/App/Components/StatusBar.android.js","Dimensions"],function(global, require, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native.js');var 
 
@@ -54935,9 +54967,9 @@ return React.createElement(View,null);}}}]);return Spinner;})(React.Component);
 
 module.exports = Spinner;
 });
-__d('image!network_error',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/Dave/Dev/RNPlayNative/android/app/src/main/res/drawable/network_error.png","uri":"network_error","width":900,"height":801,"deprecated":true};
+__d('image!network_error',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/Dave/Dev/RNPlayNative/iOS/Images.xcassets/network_error.imageset/network_error@3x.png","uri":"network_error","width":300,"height":267,"deprecated":true};
 });
-__d('RNPlayNative/App/Screens/Search.js',["react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Components/NoResults.js","RNPlayNative/App/Utilities/Colors.js","RNPlayNative/App/Components/AppList.js"],function(global, require, module, exports) {  'use strict';
+__d('RNPlayNative/App/Screens/Search.js',["react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Components/AppList.js","RNPlayNative/App/Components/NoResults.js","RNPlayNative/App/Utilities/Colors.js"],function(global, require, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native.js');
 var AppList=require("RNPlayNative/App/Components/AppList.js");
@@ -55041,7 +55073,7 @@ __d('RNPlayNative/App/Components/StatusBar.android.js',[],function(global, requi
 module.exports = {
 setStyle:function(style){}};
 });
-__d('RNPlayNative/App/Screens/MyAppsContainer.js',["react-redux/native.js","react-native/Libraries/react-native/react-native.js","Overlay","RNPlayNative/App/Api/Core.js","RNPlayNative/App/Components/NavigationBar.android.js","RNPlayNative/App/Utilities/Colors.js","RNPlayNative/App/Components/StatusBar.android.js","RNPlayNative/App/Screens/Login.js","RNPlayNative/App/Screens/Signup.js","RNPlayNative/App/Screens/MyApps.js"],function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _reactReduxNative=require(
+__d('RNPlayNative/App/Screens/MyAppsContainer.js',["react-redux/native.js","react-native/Libraries/react-native/react-native.js","Overlay","RNPlayNative/App/Api/Core.js","RNPlayNative/App/Components/NavigationBar.android.js","RNPlayNative/App/Screens/Login.js","RNPlayNative/App/Screens/Signup.js","RNPlayNative/App/Screens/MyApps.js","RNPlayNative/App/Utilities/Colors.js","RNPlayNative/App/Components/StatusBar.android.js"],function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _reactReduxNative=require(
 
 
 
@@ -55280,7 +55312,7 @@ height:56}});
 
 module.exports = NavigationBar;
 });
-__d('image!ic_menu_white_24dp',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/Dave/Dev/RNPlayNative/android/app/src/main/res/drawable-xxxhdpi/ic_menu_white_24dp.png","uri":"ic_menu_white_24dp","width":96,"height":96,"deprecated":true};
+__d('image!ic_menu_white_24dp',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/Dave/Dev/RNPlayNative/android/app/src/main/res/drawable-hdpi/ic_menu_white_24dp.png","uri":"ic_menu_white_24dp","width":36,"height":36,"deprecated":true};
 });
 __d('RNPlayNative/App/Screens/Login.js',["redux/lib/index.js","react-redux/native.js","react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Components/NavigationBar.android.js","RNPlayNative/App/Api/Core.js","RNPlayNative/App/Utilities/Colors.js","RNPlayNative/App/Components/Alert.android.js","RNPlayNative/App/Components/Spinner.android.js","RNPlayNative/App/Components/StatusBar.android.js","RNPlayNative/App/Actions/index.js"],function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _redux=require(
 
@@ -55708,8 +55740,16 @@ __d('RNPlayNative/App/Screens/MyApps.js',["redux/lib/index.js","react-redux/nati
 
 
 
+
+
+
+
+
+
+
+
 'redux/lib/index.js');var _reactReduxNative=require(
-'react-redux/native.js');'use strict';var React=require('react-native/Libraries/react-native/react-native.js');var Api=require('RNPlayNative/App/Api/Core.js');var TouchableOpacity=React.TouchableOpacity;var View=React.View;var Platform=React.Platform;var AppList=require("RNPlayNative/App/Components/AppList.js");var NavigationBar=require('RNPlayNative/App/Components/NavigationBar.android.js');var StatusBar=require('RNPlayNative/App/Components/StatusBar.android.js');var MyApps=React.createClass({displayName:'MyApps',_signOut:function(){Api.delete('/users/sign_out');this.props.deleteProfile();this.props.navigator.replace({id:'login'});},_renderIOSNavBar:function(){if(Platform.OS === 'ios'){return React.createElement(NavigationBar,{title:'My Apps',nextTitle:'Sign Out',onNext:this._signOut});}else {return React.createElement(View,null);}},render:function(){StatusBar.setStyle('light-content');return React.createElement(View,{style:{flex:1}},this._renderIOSNavBar(),React.createElement(AppList,{url:'/apps.json',autoAdjustInsets:false,hideCreator:true}));}});var _require=require('RNPlayNative/App/Actions/index.js');var deleteProfile=_require.deleteProfile;exports.default = 
+'react-redux/native.js');'use strict';var React=require('react-native/Libraries/react-native/react-native.js');var Api=require('RNPlayNative/App/Api/Core.js');var TouchableOpacity=React.TouchableOpacity;var View=React.View;var Platform=React.Platform;var StyleSheet=React.StyleSheet;var AppList=require("RNPlayNative/App/Components/AppList.js");var NavigationBar=require('RNPlayNative/App/Components/NavigationBar.android.js');var StatusBar=require('RNPlayNative/App/Components/StatusBar.android.js');var MyApps=React.createClass({displayName:'MyApps',_signOut:function(){Api.delete('/users/sign_out');this.props.deleteProfile();this.props.navigator.replace({id:'login'});},_renderIOSNavBar:function(){if(Platform.OS === 'ios'){return React.createElement(NavigationBar,{title:'My Apps',nextTitle:'Sign Out',onNext:this._signOut});}else {return React.createElement(View,null);}},render:function(){StatusBar.setStyle('light-content');return React.createElement(View,{style:styles.container},this._renderIOSNavBar(),React.createElement(AppList,{url:'/apps.json',autoAdjustInsets:false,hideCreator:true}));}});var styles=StyleSheet.create({container:{flex:1,marginBottom:Platform.OS === 'ios'?49:null}});var _require=require('RNPlayNative/App/Actions/index.js');var deleteProfile=_require.deleteProfile;exports.default = 
 
 (0,_reactReduxNative.connect)(
 function(state){
@@ -68369,7 +68409,7 @@ root._ = _;}}).
 
 call(this);
 });
-__d('image!rnplay_logo_light_w_sand',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/Dave/Dev/RNPlayNative/android/app/src/main/res/drawable/rnplay_logo_light_w_sand.png","uri":"rnplay_logo_light_w_sand","width":370,"height":370,"deprecated":true};
+__d('image!rnplay_logo_light_w_sand',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/Dave/Dev/RNPlayNative/iOS/Images.xcassets/rnplay_logo_light_w_sand.imageset/rnplay_logo_light_w_sand.png","uri":"rnplay_logo_light_w_sand","width":370,"height":370,"deprecated":true};
 });
 __d('RNPlayNative/App/Screens/QRCodeReader.js',["react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Utilities/generateAppURL.js","Overlay","RNPlayNative/App/Components/StatusBar.android.js","RNPlayNative/App/Components/BarCodeReader.android.js","RNPlayNative/App/Utilities/reloadApp.android.js","RNPlayNative/App/Components/Icon.android.js","react-timer-mixin/TimerMixin.js","RNPlayNative/App/Utilities/Colors.js"],function(global, require, module, exports) {  'use strict';
 
@@ -68589,7 +68629,7 @@ nativeOnly:{onChange:true}});
 
 module.exports = BarcodeScannerView;
 });
-__d('image!ic_clear_white_36dp',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"path":"/Users/Dave/Dev/RNPlayNative/android/app/src/main/res/drawable-xxxhdpi/ic_clear_white_36dp.png","uri":"ic_clear_white_36dp","width":144,"height":144,"deprecated":true};
+__d('image!ic_clear_white_36dp',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/Dave/Dev/RNPlayNative/android/app/src/main/res/drawable-hdpi/ic_clear_white_36dp.png","uri":"ic_clear_white_36dp","width":54,"height":54,"deprecated":true};
 });
 __d('RNPlayNative/App/Components/Icon.android.js',["react-native/Libraries/react-native/react-native.js"],function(global, require, module, exports) {  'use strict';
 
@@ -69005,7 +69045,7 @@ __d('RNPlayNative/package.json',[],function(global, require, module, exports) { 
     "gl-react-native": "1.2.0",
     "lodash": "3.10.1",
     "qs": "5.1.0",
-    "react-native": "facebook/react-native",
+    "react-native": "rnplay/react-native#0.13.0-rc",
     "react-native-activity-view": "0.2.4",
     "react-native-addressbook": "1.2.0",
     "react-native-barcodescanner": "rnplay/react-native-barcodescanner",
@@ -69017,7 +69057,7 @@ __d('RNPlayNative/package.json',[],function(global, require, module, exports) { 
     "react-native-keyboardevents": "0.4.5",
     "react-native-keychain": "0.2.5",
     "react-native-linear-gradient": "1.1.0-alpha",
-    "react-native-mapbox-gl": "0.4.2",
+    "react-native-mapbox-gl": "rnplay/react-native-mapbox-gl",
     "react-native-material-kit": "0.2.0",
     "react-native-modal": "0.3.10",
     "react-native-overlay": "0.3.0",
