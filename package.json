@@ -24,7 +24,7 @@
     "react-native-keyboardevents": "0.4.5",
     "react-native-keychain": "0.2.5",
     "react-native-linear-gradient": "1.1.0-alpha",
-    "react-native-mapbox-gl": "rnplay/react-native-mapbox-gl",
+    "react-native-mapbox-gl": "1.0.0",
     "react-native-material-kit": "0.2.0",
     "react-native-modal": "0.3.10",
     "react-native-overlay": "0.3.0",
