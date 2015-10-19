@@ -1,4 +1,4 @@
-package com.rnplaynative;
+package org.rnplay.playground;
 
 import android.content.Intent;
 import android.content.SharedPreferences;

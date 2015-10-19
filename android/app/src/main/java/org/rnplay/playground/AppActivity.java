@@ -1,4 +1,4 @@
-package com.rnplaynative;
+package org.rnplay.playground;
 
 import android.app.Activity;
 import android.os.Bundle;

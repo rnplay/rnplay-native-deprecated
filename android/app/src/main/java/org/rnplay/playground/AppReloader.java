@@ -1,4 +1,4 @@
-package com.rnplaynative;
+package org.rnplay.playground;
 
 import java.util.ArrayList;
 import java.util.Collections;

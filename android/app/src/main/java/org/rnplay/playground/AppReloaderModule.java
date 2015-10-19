@@ -1,4 +1,4 @@
-package com.rnplaynative;
+package org.rnplay.playground;
 
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
@@ -6,8 +6,6 @@ import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-
-import java.io.File;
 
 /**
  * {@link NativeModule} that allows loading of RN Playground Apps
