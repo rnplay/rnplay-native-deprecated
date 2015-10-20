@@ -45,3 +45,4 @@ fastlane/*.xml
 local.properties
 fabric.properties
 *.iml
+*.keystore
