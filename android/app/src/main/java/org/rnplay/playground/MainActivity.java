@@ -15,6 +15,7 @@ import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
 
 import com.eguma.barcodescanner.BarcodeScanner;
+import com.mapbox.reactnativemapboxgl.ReactNativeMapboxGLPackage;
 
 import io.fabric.sdk.android.Fabric;
 import java.io.File;
@@ -76,6 +77,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 .addPackage(new MainReactPackage())
                 .addPackage(new AppReloader())
                 .addPackage(new BarcodeScanner())
+                .addPackage(new ReactNativeMapboxGLPackage())
                 .setUseDeveloperSupport(useDevSupport)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
