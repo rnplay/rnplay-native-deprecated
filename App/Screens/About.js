@@ -38,6 +38,14 @@ var About = React.createClass({
     })
   },
 
+  _renderExitScreenText() {
+    if (Platform.OS === 'ios') {
+      return "Tap and hold the screen with two fingers simultaneously for 1.5 seconds.";
+    } else {
+      return "Press the hardware back button on your device.";
+    }
+  },
+
   render() {
     StatusBar.setStyle('light-content');
 
@@ -47,10 +55,10 @@ var About = React.createClass({
           <Text style={styles.heading}>React Native Playground</Text>
           <Image style={styles.logo} source={require('image!rnplay_logo_light_w_sand')} />
           <Text style={styles.title}>Run React Native apps from rnplay.org directly on your device.</Text>
-          <Text style={styles.text}>Get started by trying apps on the <Text style={styles.emphasis}>Explore</Text> tab, or login to your rnplay.org account in <Text style={styles.emphasis}>My Apps</Text>.</Text>
+          <Text style={styles.text}>Get started by trying apps on the <Text style={styles.emphasis}>Explore</Text> screen, or login to your rnplay.org account in <Text style={styles.emphasis}>My Apps</Text>.</Text>
 
           <Text style={styles.title}>How do I exit a loaded app?</Text>
-          <Text style={styles.text}>Tap and hold the screen with two fingers simultaneously for 1.5 seconds.</Text>
+          <Text style={styles.text}>{this._renderExitScreenText()}</Text>
 
           <Text style={styles.title}>What does target mean?</Text>
           <Text style={styles.text}>The target React Native version for an app. An app might not behave if the target is different than the our bundled React Native version.</Text>
