@@ -16,6 +16,7 @@
 		1111D1681B18CC4B007370BA /* foundation-icons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1111D1481B18CB73007370BA /* foundation-icons.ttf */; };
 		1111D16A1B18CC4B007370BA /* zocial-regular-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1111D14A1B18CB73007370BA /* zocial-regular-webfont.ttf */; };
 		1111D16C1B18E126007370BA /* Avenir Next.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 1111D16B1B18E126007370BA /* Avenir Next.ttc */; };
+		1176AA5F1BD71006003345F4 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1176AA541BD70FF7003345F4 /* libRNFS.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -120,6 +121,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 832C81801AAF6DEF007FA2F7;
 			remoteInfo = RCTVibration;
+		};
+		1176AA531BD70FF7003345F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1176AA3B1BD70FF6003345F4 /* RNFS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F12AFB9B1ADAF8F800E0535D;
+			remoteInfo = RNFS;
 		};
 		146834031AC3E56700842450 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -324,6 +332,7 @@
 		1111D1491B18CB73007370BA /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ionicons.ttf; path = "node_modules/react-native-icons/ios/ReactNativeIcons/Libraries/FontAwesomeKit/ionicons.ttf"; sourceTree = "<group>"; };
 		1111D14A1B18CB73007370BA /* zocial-regular-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zocial-regular-webfont.ttf"; path = "node_modules/react-native-icons/ios/ReactNativeIcons/Libraries/FontAwesomeKit/zocial-regular-webfont.ttf"; sourceTree = "<group>"; };
 		1111D16B1B18E126007370BA /* Avenir Next.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir Next.ttc"; sourceTree = "<group>"; };
+		1176AA3B1BD70FF6003345F4 /* RNFS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Playground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Playground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = AppDelegate.h; path = iOS/AppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = AppDelegate.m; path = iOS/AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -414,6 +423,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1176AA5F1BD71006003345F4 /* libRNFS.a in Frameworks */,
 				55B8F9F81B20A869002F65B0 /* libz.dylib in Frameworks */,
 				55B8F9FA1B20A873002F65B0 /* libsqlite3.dylib in Frameworks */,
 				BBE164331B223408001FC1AC /* libc++.dylib in Frameworks */,
@@ -534,6 +544,14 @@
 				1111D14A1B18CB73007370BA /* zocial-regular-webfont.ttf */,
 			);
 			name = Fonts;
+			sourceTree = "<group>";
+		};
+		1176AA3C1BD70FF6003345F4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1176AA541BD70FF7003345F4 /* libRNFS.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		13B07FAE1A68108700A75B9A /* RNPlayNative */ = {
@@ -762,6 +780,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				1176AA3B1BD70FF6003345F4 /* RNFS.xcodeproj */,
 				421CDAAF1BD11A130024B0F2 /* RCTMapboxGL.xcodeproj */,
 				42512DB81BD115170003C7DD /* Mapbox.bundle */,
 				42512DB91BD115170003C7DD /* Settings.bundle */,
@@ -995,6 +1014,10 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
+					ProductGroup = 1176AA3C1BD70FF6003345F4 /* Products */;
+					ProjectRef = 1176AA3B1BD70FF6003345F4 /* RNFS.xcodeproj */;
+				},
+				{
 					ProductGroup = 424043D51B91F01900AE8C6E /* Products */;
 					ProjectRef = 424043D41B91F01900AE8C6E /* RNGL.xcodeproj */;
 				},
@@ -1068,6 +1091,13 @@
 			fileType = archive.ar;
 			path = libRCTVibration.a;
 			remoteRef = 00C302E31ABCB9EE00DB3ED1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1176AA541BD70FF7003345F4 /* libRNFS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFS.a;
+			remoteRef = 1176AA531BD70FF7003345F4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		146834041AC3E56700842450 /* libReact.a */ = {
