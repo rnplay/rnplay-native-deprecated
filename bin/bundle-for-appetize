@@ -1,0 +1,11 @@
+#!/bin/bash
+
+PATHS=`find ~/Library/Developer/Xcode/DerivedData -type d -maxdepth 1 -type d -name "RNPlayNative*"`
+LATEST_PATH=`ls -1drt $PATHS | tail -n1`
+CURRENT_DIR=`pwd`
+cd $LATEST_PATH/Build/Products/Debug-iphonesimulator
+zip -r ReployNative-ios .
+cp ReployNative-ios.zip $CURRENT_DIR/builds/
+cd $CURRENT_DIR
+scp builds/ReployNative-ios.zip app@reploy.io:~/rails/reploy/public
+curl -H "Content-Type: application/json" -d @appetize-ios.json https://api.appetize.io/v1/app/update
