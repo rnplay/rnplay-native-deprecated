@@ -34,8 +34,8 @@
 		424043F71B91F02C00AE8C6E /* libRNGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424043EE1B91F01900AE8C6E /* libRNGL.a */; };
 		424BBF901B38C91E006C95AA /* libRNUserDefaultsIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424BBF8D1B38C917006C95AA /* libRNUserDefaultsIOS.a */; };
 		4250E8661B61924800D06A0B /* libRNKeychain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4250E8601B61923700D06A0B /* libRNKeychain.a */; };
-		42512DBA1BD115170003C7DD /* Mapbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 42512DB81BD115170003C7DD /* Mapbox.bundle */; settings = {ASSET_TAGS = (); }; };
-		42512DBB1BD115170003C7DD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 42512DB91BD115170003C7DD /* Settings.bundle */; settings = {ASSET_TAGS = (); }; };
+		42512DBA1BD115170003C7DD /* Mapbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 42512DB81BD115170003C7DD /* Mapbox.bundle */; };
+		42512DBB1BD115170003C7DD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 42512DB91BD115170003C7DD /* Settings.bundle */; };
 		426E0EA71B83BF2800DCFBBC /* UIImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 426E0EA61B83BF2800DCFBBC /* UIImagePickerManager.m */; };
 		427EFA4D1BAE033B00DA8D5D /* weathericons-regular-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 427EFA4C1BAE033B00DA8D5D /* weathericons-regular-webfont.ttf */; };
 		42A9E7EB1BCB31140035670A /* AudioPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A9E7E81BCB31140035670A /* AudioPlayerManager.m */; };

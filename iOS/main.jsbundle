@@ -1127,15 +1127,11 @@ table:consoleTablePolyfill};
 
 
 
-if(__DEV__ && originalConsole){
 Object.keys(global.console).forEach(function(methodName){
 var reactNativeMethod=global.console[methodName];
-if(originalConsole[methodName]){
 global.console[methodName] = function(){
 originalConsole[methodName].apply(originalConsole,arguments);
-reactNativeMethod.apply(global.console,arguments);};}});}}
-
-
+reactNativeMethod.apply(global.console,arguments);};});}
 
 
 
@@ -1390,7 +1386,7 @@ _reactNative2.default.createElement(_AppApplicationBase2.default,null));}}]);ret
 
 _reactNative.AppRegistry.registerComponent('RNPlayNative',function(){return RNPlayNative;});
 });
-__d('react-native/Libraries/react-native/react-native.js',["React","ActivityIndicatorIOS","DatePickerIOS","DrawerLayoutAndroid","Image","ListView","MapView","Modal","Navigator","NavigatorIOS","PickerIOS","ProgressBarAndroid","ProgressViewIOS","ScrollView","SegmentedControlIOS","SliderIOS","SnapshotView","Switch","SwitchAndroid","SwitchIOS","TabBarIOS","Text","TextInput","ToastAndroid","ToolbarAndroid","TouchableHighlight","TouchableNativeFeedback","TouchableOpacity","TouchableWithoutFeedback","View","ViewPagerAndroid","WebView","ActionSheetIOS","AdSupportIOS","AlertIOS","Animated","AppRegistry","AppStateIOS","AsyncStorage","BackAndroid","CameraRoll","Dimensions","Easing","ImagePickerIOS","InteractionManager","LayoutAnimation","LinkingIOS","NetInfo","PanResponder","PixelRatio","PushNotificationIOS","Settings","StatusBarIOS","StyleSheet","VibrationIOS","RCTDeviceEventEmitter","RCTNativeAppEventEmitter","NativeModules","Platform","processColor","requireNativeComponent","EdgeInsetsPropType","PointPropType","LinkedStateMixin","ReactComponentWithPureRenderMixin","NativeModules","ReactUpdates","cloneWithProps","ReactFragment","update","ReactDefaultPerf","ReactTestUtils"],function(global, require, module, exports) {  'use strict';
+__d('react-native/Libraries/react-native/react-native.js',["React","ActivityIndicatorIOS","DatePickerIOS","DrawerLayoutAndroid","Image","ListView","MapView","Modal","Navigator","NavigatorIOS","PickerIOS","ProgressBarAndroid","ProgressViewIOS","ScrollView","SegmentedControlIOS","SliderIOS","SwitchAndroid","SwitchIOS","TabBarIOS","Text","TextInput","ToastAndroid","ToolbarAndroid","TouchableHighlight","TouchableNativeFeedback","TouchableOpacity","TouchableWithoutFeedback","View","WebView","ActionSheetIOS","AdSupportIOS","AlertIOS","Animated","AppRegistry","AppStateIOS","AsyncStorage","BackAndroid","CameraRoll","Dimensions","Easing","ImagePickerIOS","InteractionManager","LayoutAnimation","LinkingIOS","NetInfo","PanResponder","PixelRatio","PushNotificationIOS","Settings","StatusBarIOS","StyleSheet","VibrationIOS","RCTDeviceEventEmitter","RCTNativeAppEventEmitter","NativeModules","Platform","processColor","requireNativeComponent","EdgeInsetsPropType","PointPropType","LinkedStateMixin","ReactComponentWithPureRenderMixin","NativeModules","ReactUpdates","cloneWithProps","ReactFragment","update","ReactDefaultPerf","ReactTestUtils"],function(global, require, module, exports) {  'use strict';
 
 
 
@@ -1426,8 +1422,6 @@ ProgressViewIOS:require('ProgressViewIOS'),
 ScrollView:require('ScrollView'),
 SegmentedControlIOS:require('SegmentedControlIOS'),
 SliderIOS:require('SliderIOS'),
-SnapshotView:require('SnapshotView'),
-Switch:require('Switch'),
 SwitchAndroid:require('SwitchAndroid'),
 SwitchIOS:require('SwitchIOS'),
 TabBarIOS:require('TabBarIOS'),
@@ -1440,7 +1434,6 @@ TouchableNativeFeedback:require('TouchableNativeFeedback'),
 TouchableOpacity:require('TouchableOpacity'),
 TouchableWithoutFeedback:require('TouchableWithoutFeedback'),
 View:require('View'),
-ViewPagerAndroid:require('ViewPagerAndroid'),
 WebView:require('WebView'),
 
 
@@ -1479,7 +1472,6 @@ requireNativeComponent:require('requireNativeComponent'),
 
 EdgeInsetsPropType:require('EdgeInsetsPropType'),
 PointPropType:require('PointPropType'),
-
 
 addons:{
 LinkedStateMixin:require('LinkedStateMixin'),
@@ -5109,7 +5101,7 @@ NodeHandle.injection.injectImplementation(UniversalWorkerNodeHandle);}
 module.exports = {
 inject:inject};
 });
-__d('InitializeJavaScriptAppEngine',["RCTDebugComponentOwnership","RCTDeviceEventEmitter","PerformanceLogger","regenerator/runtime.js","ExceptionsManager","ErrorUtils","ExceptionsManager","Platform","checkFlowAtRuntime","JSTimers","NativeModules","Promise","XMLHttpRequest","FormData","fetch","Geolocation","WebSocket","BridgeProfiling"],function(global, require, module, exports) {  var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
+__d('InitializeJavaScriptAppEngine',["RCTDebugComponentOwnership","RCTDeviceEventEmitter","PerformanceLogger","ExceptionsManager","ErrorUtils","ExceptionsManager","Platform","checkFlowAtRuntime","JSTimers","NativeModules","Promise","XMLHttpRequest","FormData","fetch","Geolocation","WebSocket","BridgeProfiling","regenerator/runtime.js"],function(global, require, module, exports) {  require(
 
 
 
@@ -5134,7 +5126,7 @@ __d('InitializeJavaScriptAppEngine',["RCTDebugComponentOwnership","RCTDeviceEven
 
 
 
-require('RCTDebugComponentOwnership');
+'RCTDebugComponentOwnership');
 require('RCTDeviceEventEmitter');
 require('PerformanceLogger');
 require('regenerator/runtime.js');
@@ -5155,31 +5147,6 @@ console.log('Failed to print error: ',ee.message);}}
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function polyfillGlobal(name,newValue){var scope=arguments.length <= 2 || arguments[2] === undefined?GLOBAL:arguments[2];
-var descriptor=Object.getOwnPropertyDescriptor(scope,name);
-
-if(scope[name] !== undefined){
-var backupName='original' + name[0].toUpperCase() + name.substr(1);
-Object.defineProperty(scope,backupName,_extends({},descriptor,{value:scope[name]}));}
-
-Object.defineProperty(scope,name,_extends({},descriptor,{value:newValue}));}
-
-
 function setUpRedBoxErrorHandler(){
 var ErrorUtils=require('ErrorUtils');
 ErrorUtils.setGlobalHandler(handleError);}
@@ -5195,7 +5162,7 @@ ExceptionsManager.installConsoleErrorReporter();}}
 
 
 
-function setUpFlowChecker(){
+function setupFlowChecker(){
 if(__DEV__){
 var checkFlowAtRuntime=require('checkFlowAtRuntime');
 checkFlowAtRuntime();}}
@@ -5247,31 +5214,29 @@ GLOBAL.Promise = require('Promise');}
 function setUpXHR(){
 
 
-polyfillGlobal('XMLHttpRequest',require('XMLHttpRequest'));
-polyfillGlobal('FormData',require('FormData'));
+GLOBAL.XMLHttpRequest = require('XMLHttpRequest');
+GLOBAL.FormData = require('FormData');
 
 var fetchPolyfill=require('fetch');
-polyfillGlobal('fetch',fetchPolyfill.fetch);
-polyfillGlobal('Headers',fetchPolyfill.Headers);
-polyfillGlobal('Request',fetchPolyfill.Request);
-polyfillGlobal('Response',fetchPolyfill.Response);}
+GLOBAL.fetch = fetchPolyfill.fetch;
+GLOBAL.Headers = fetchPolyfill.Headers;
+GLOBAL.Request = fetchPolyfill.Request;
+GLOBAL.Response = fetchPolyfill.Response;}
 
 
 function setUpGeolocation(){
 GLOBAL.navigator = GLOBAL.navigator || {};
-polyfillGlobal('geolocation',require('Geolocation'),GLOBAL.navigator);}
+GLOBAL.navigator.geolocation = require('Geolocation');}
 
 
 function setUpWebSockets(){
-polyfillGlobal('WebSocket',require('WebSocket'));}
+GLOBAL.WebSocket = require('WebSocket');}
 
 
-function setUpProfile(){
+function setupProfile(){
 console.profile = console.profile || GLOBAL.nativeTraceBeginSection || function(){};
 console.profileEnd = console.profileEnd || GLOBAL.nativeTraceEndSection || function(){};
-if(__DEV__){
-require('BridgeProfiling').swizzleReactPerf();}}
-
+require('BridgeProfiling').swizzleReactPerf();}
 
 
 function setUpProcessEnv(){
@@ -5282,12 +5247,6 @@ GLOBAL.process.env.NODE_ENV = __DEV__?'development':'production';}}
 
 
 
-function setUpNumber(){
-Number.EPSILON = Number.EPSILON || Math.pow(2,-52);
-Number.MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || Math.pow(2,53) - 1;
-Number.MIN_SAFE_INTEGER = Number.MIN_SAFE_INTEGER || -(Math.pow(2,53) - 1);}
-
-
 setUpRedBoxErrorHandler();
 setUpTimers();
 setUpAlert();
@@ -5296,10 +5255,9 @@ setUpXHR();
 setUpRedBoxConsoleErrorHandler();
 setUpGeolocation();
 setUpWebSockets();
-setUpProfile();
+setupProfile();
 setUpProcessEnv();
-setUpFlowChecker();
-setUpNumber();
+setupFlowChecker();
 });
 __d('RCTDebugComponentOwnership',["NativeModules","InspectorUtils","ReactNativeTagHandles"],function(global, require, module, exports) {  'use strict';
 
@@ -5482,19 +5440,11 @@ var method=call.method === 'callFunctionReturnFlushedQueue'?
 '__callFunction':'__invokeCallback';
 guard(function(){return _this2[method].apply(_this2,call.args);});});
 
+BridgeProfiling.profile('ReactUpdates.batchedUpdates()');});
 
-_this2.__callImmediates();});
+BridgeProfiling.profileEnd();});
 
-
-
-while(JSTimersExecution.immediates.length) {
-ReactUpdates.batchedUpdates(function(){
-_this2.__callImmediates();});}});
-
-
-
-
-return this.__flushedQueue();}},{key:'callFunctionReturnFlushedQueue',value:
+return this.flushedQueue();}},{key:'callFunctionReturnFlushedQueue',value:
 
 
 function callFunctionReturnFlushedQueue(module,method,args){var _this3=this;
@@ -5508,24 +5458,16 @@ return this.flushedQueue();}},{key:'flushedQueue',value:
 
 
 function flushedQueue(){
-this.__callImmediates();
-return this.__flushedQueue();}},{key:'__callImmediates',value:
-
-
-
-
-
-
-function __callImmediates(){
 BridgeProfiling.profile('JSTimersExecution.callImmediates()');
 guard(function(){return JSTimersExecution.callImmediates();});
-BridgeProfiling.profileEnd();}},{key:'__flushedQueue',value:
-
-
-function __flushedQueue(){
+BridgeProfiling.profileEnd();
 var queue=this._queue;
 this._queue = [[],[],[]];
 return queue[0].length?queue:null;}},{key:'__nativeCall',value:
+
+
+
+
 
 function __nativeCall(module,method,params,onFail,onSucc){
 if(onFail || onSucc){
@@ -5693,24 +5635,9 @@ __d('BridgeProfiling',["ReactPerf"],function(global, require, module, exports) {
 var GLOBAL=GLOBAL || this;
 var TRACE_TAG_REACT_APPS=1 << 17;
 
-var _enabled=false;
-var _ReactPerf=null;
-function ReactPerf(){
-if(!_ReactPerf){
-_ReactPerf = require('ReactPerf');}
-
-return _ReactPerf;}
-
-
 var BridgeProfiling={
-setEnabled:function(enabled){
-_enabled = enabled;
-
-ReactPerf().enableMeasure = enabled;},
-
-
 profile:function(profileName){
-if(_enabled){
+if(GLOBAL.__BridgeProfilingIsProfiling){
 profileName = typeof profileName === 'function'?
 profileName():profileName;
 console.profile(TRACE_TAG_REACT_APPS,profileName);}},
@@ -5718,27 +5645,28 @@ console.profile(TRACE_TAG_REACT_APPS,profileName);}},
 
 
 profileEnd:function(){
-if(_enabled){
+if(GLOBAL.__BridgeProfilingIsProfiling){
 console.profileEnd(TRACE_TAG_REACT_APPS);}},
 
 
 
-reactPerfMeasure:function(objName,fnName,func){
+swizzleReactPerf:function(){
+var ReactPerf=require('ReactPerf');
+var originalMeasure=ReactPerf.measure;
+ReactPerf.measure = function(objName,fnName,func){
+func = originalMeasure.apply(ReactPerf,arguments);
 return function(component){
-if(!_enabled){
-return func.apply(this,arguments);}
+if(GLOBAL.__BridgeProfilingIsProfiling){
+var name=this._instance && this._instance.constructor && (
+this._instance.constructor.displayName || 
+this._instance.constructor.name);
+BridgeProfiling.profile(objName + '.' + fnName + '(' + name + ')');}
 
-
-var name=objName === 'ReactCompositeComponent' && this.getName() || '';
-BridgeProfiling.profile(objName + '.' + fnName + '(' + name + ')');
 var ret=func.apply(this,arguments);
 BridgeProfiling.profileEnd();
-return ret;};},
+return ret;};};}};
 
 
-
-swizzleReactPerf:function(){
-ReactPerf().injection.injectMeasure(BridgeProfiling.reactPerfMeasure);}};
 
 
 
@@ -14548,7 +14476,8 @@ console.error.apply(console,arguments);}};
 
 module.exports = logError;
 });
-__d('WebSocket',["RCTDeviceEventEmitter","NativeModules","Platform","WebSocketBase","WebSocketEvent"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(_x,_x2,_x3){var _again=true;_function: while(_again) {var object=_x,property=_x2,receiver=_x3;desc = parent = getter = undefined;_again = false;if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {_x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
+__d('WebSocket',["RCTDeviceEventEmitter","NativeModules","WebSocketBase"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(_x,_x2,_x3){var _again=true;_function: while(_again) {var object=_x,property=_x2,receiver=_x3;desc = parent = getter = undefined;_again = false;if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {_x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
+
 
 
 
@@ -14561,19 +14490,11 @@ __d('WebSocket',["RCTDeviceEventEmitter","NativeModules","Platform","WebSocketBa
 
 
 var RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');
-var RCTWebSocketModule=require('NativeModules').WebSocketModule;
+var RCTWebSocketManager=require('NativeModules').WebSocketManager;
 
-var Platform=require('Platform');
 var WebSocketBase=require('WebSocketBase');
-var WebSocketEvent=require('WebSocketEvent');
 
-var WebSocketId=0;
-var CLOSE_NORMAL=1000;var 
-
-
-
-
-
+var WebSocketId=0;var 
 
 WebSocket=(function(_WebSocketBase){_inherits(WebSocket,_WebSocketBase);function WebSocket(){_classCallCheck(this,WebSocket);_get(Object.getPrototypeOf(WebSocket.prototype),'constructor',this).apply(this,arguments);}_createClass(WebSocket,[{key:'connectToSocketImpl',value:
 
@@ -14581,40 +14502,25 @@ WebSocket=(function(_WebSocketBase){_inherits(WebSocket,_WebSocketBase);function
 
 function connectToSocketImpl(url){
 this._socketId = WebSocketId++;
-
-RCTWebSocketModule.connect(url,this._socketId);
-
+RCTWebSocketManager.connect(url,this._socketId);
 this._registerEvents(this._socketId);}},{key:'closeConnectionImpl',value:
 
 
-function closeConnectionImpl(code,reason){
-this._closeWebSocket(this._socketId,code,reason);}},{key:'cancelConnectionImpl',value:
+function closeConnectionImpl(){
+RCTWebSocketManager.close(this._socketId);}},{key:'cancelConnectionImpl',value:
 
 
 function cancelConnectionImpl(){
-this._closeWebSocket(this._socketId);}},{key:'sendStringImpl',value:
+RCTWebSocketManager.close(this._socketId);}},{key:'sendStringImpl',value:
 
 
 function sendStringImpl(message){
-RCTWebSocketModule.send(message,this._socketId);}},{key:'sendArrayBufferImpl',value:
+RCTWebSocketManager.send(message,this._socketId);}},{key:'sendArrayBufferImpl',value:
 
 
 function sendArrayBufferImpl(){
 
-console.warn('Sending ArrayBuffers is not yet supported');}},{key:'_closeWebSocket',value:
-
-
-function _closeWebSocket(id,code,reason){
-if(Platform.OS === 'android'){
-
-
-
-var statusCode=typeof code === 'number'?code:CLOSE_NORMAL;
-var closeReason=typeof reason === 'string'?reason:'';
-RCTWebSocketModule.close(statusCode,closeReason,id);}else 
-{
-RCTWebSocketModule.close(id);}}},{key:'_unregisterEvents',value:
-
+console.warn('Sending ArrayBuffers is not yet supported');}},{key:'_unregisterEvents',value:
 
 
 function _unregisterEvents(){
@@ -14622,50 +14528,52 @@ this._subs.forEach(function(e){return e.remove();});
 this._subs = [];}},{key:'_registerEvents',value:
 
 
-function _registerEvents(id){var _this=this;
+function _registerEvents(id){
 this._subs = [
-RCTDeviceEventEmitter.addListener('websocketMessage',function(ev){
+RCTDeviceEventEmitter.addListener(
+'websocketMessage',
+(function(ev){
 if(ev.id !== id){
 return;}
 
-var event=new WebSocketEvent('message',{
-data:ev.data});
+this.onmessage && this.onmessage({
+data:ev.data});}).
 
-_this.onmessage && _this.onmessage(event);
-_this.dispatchEvent(event);}),
+bind(this)),
 
-RCTDeviceEventEmitter.addListener('websocketOpen',function(ev){
+RCTDeviceEventEmitter.addListener(
+'websocketOpen',
+(function(ev){
 if(ev.id !== id){
 return;}
 
-_this.readyState = _this.OPEN;
-var event=new WebSocketEvent('open');
-_this.onopen && _this.onopen(event);
-_this.dispatchEvent(event);}),
+this.readyState = this.OPEN;
+this.onopen && this.onopen();}).
+bind(this)),
 
-RCTDeviceEventEmitter.addListener('websocketClosed',function(ev){
+RCTDeviceEventEmitter.addListener(
+'websocketClosed',
+(function(ev){
 if(ev.id !== id){
 return;}
 
-_this.readyState = _this.CLOSED;
-var event=new WebSocketEvent('close');
-event.code = ev.code;
-event.reason = ev.reason;
-_this.onclose && _this.onclose(event);
-_this.dispatchEvent(event);
-_this._unregisterEvents();
-_this._closeWebSocket(id);}),
+this.readyState = this.CLOSED;
+this.onclose && this.onclose(ev);
+this._unregisterEvents();
+RCTWebSocketManager.close(id);}).
+bind(this)),
 
-RCTDeviceEventEmitter.addListener('websocketFailed',function(ev){
+RCTDeviceEventEmitter.addListener(
+'websocketFailed',
+(function(ev){
 if(ev.id !== id){
 return;}
 
-var event=new WebSocketEvent('error');
-event.message = ev.message;
-_this.onerror && _this.onerror(event);
-_this.dispatchEvent(event);
-_this._unregisterEvents();
-_this._closeWebSocket(id);})];}}]);return WebSocket;})(WebSocketBase);
+this.onerror && this.onerror(new Error(ev.message));
+this._unregisterEvents();
+RCTWebSocketManager.close(id);}).
+bind(this))];}}]);return WebSocket;})(WebSocketBase);
+
 
 
 
@@ -14673,7 +14581,7 @@ _this._closeWebSocket(id);})];}}]);return WebSocket;})(WebSocketBase);
 
 module.exports = WebSocket;
 });
-__d('WebSocketBase',["event-target-shim/lib/EventTarget.js"],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(_x,_x2,_x3){var _again=true;_function: while(_again) {var object=_x,property=_x2,receiver=_x3;desc = parent = getter = undefined;_again = false;if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {_x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
+__d('WebSocketBase',[],function(global, require, module, exports) {  'use strict';var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}var 
 
 
 
@@ -14685,12 +14593,11 @@ __d('WebSocketBase',["event-target-shim/lib/EventTarget.js"],function(global, re
 
 
 
-var EventTarget=require('event-target-shim/lib/EventTarget.js');var 
 
 
 
 
-WebSocketBase=(function(_EventTarget){_inherits(WebSocketBase,_EventTarget);
+WebSocketBase=(function(){
 
 
 
@@ -14709,7 +14616,6 @@ WebSocketBase=(function(_EventTarget){_inherits(WebSocketBase,_EventTarget);
 
 
 function WebSocketBase(url,protocols){_classCallCheck(this,WebSocketBase);
-_get(Object.getPrototypeOf(WebSocketBase.prototype),'constructor',this).call(this);
 this.CONNECTING = 0;
 this.OPEN = 1;
 this.CLOSING = 2;
@@ -14766,381 +14672,12 @@ throw new Error('Subclass must define sendStringImpl method');}},{key:'sendArray
 
 
 function sendArrayBufferImpl(){
-throw new Error('Subclass must define sendArrayBufferImpl method');}}]);return WebSocketBase;})(EventTarget);
+throw new Error('Subclass must define sendArrayBufferImpl method');}}]);return WebSocketBase;})();
+
 
 
 
 module.exports = WebSocketBase;
-});
-__d('event-target-shim/lib/EventTarget.js',["event-target-shim/lib/commons.js","event-target-shim/lib/CustomEventTarget.js","event-target-shim/lib/EventWrapper.js"],function(global, require, module, exports) {  "use strict";
-
-Object.defineProperty(exports,"__esModule",{
-value:true});
-
-exports["default"] = EventTarget;
-
-var _commons=require("event-target-shim/lib/commons.js");
-
-var _CustomEventTarget=require("event-target-shim/lib/CustomEventTarget.js");
-
-var _EventWrapper=require("event-target-shim/lib/EventWrapper.js");
-
-var HAS_EVENTTARGET_INTERFACE=typeof window !== "undefined" && typeof window.EventTarget !== "undefined";
-
-function EventTarget(){
-for(var _len=arguments.length,types=Array(_len),_key=0;_key < _len;_key++) {
-types[_key] = arguments[_key];}
-
-
-if(this instanceof EventTarget){
-
-
-
-
-
-
-
-
-
-Object.defineProperty(this,_commons.LISTENERS,{value:Object.create(null)});}else 
-if(types.length > 0){
-
-
-
-
-
-return (0,_CustomEventTarget.defineCustomEventTarget)(EventTarget,types);}else 
-{
-throw new TypeError("Cannot call a class as a function");}}
-
-
-
-EventTarget.prototype = Object.create((HAS_EVENTTARGET_INTERFACE?window.EventTarget:Object).prototype,{
-constructor:{
-value:EventTarget,
-writable:true,
-configurable:true},
-
-
-addEventListener:{
-value:function addEventListener(type,listener){
-var capture=arguments[2] === undefined?false:arguments[2];
-
-if(listener == null){
-return false;}
-
-if(typeof listener !== "function"){
-throw new TypeError("listener should be a function.");}
-
-
-var kind=capture?_commons.CAPTURE:_commons.BUBBLE;
-var node=this[_commons.LISTENERS][type];
-if(node == null){
-this[_commons.LISTENERS][type] = (0,_commons.newNode)(listener,kind);
-return true;}
-
-
-var prev=null;
-while(node != null) {
-if(node.listener === listener && node.kind === kind){
-
-return false;}
-
-prev = node;
-node = node.next;}
-
-
-prev.next = (0,_commons.newNode)(listener,kind);
-return true;},
-
-configurable:true,
-writable:true},
-
-
-removeEventListener:{
-value:function removeEventListener(type,listener){
-var capture=arguments[2] === undefined?false:arguments[2];
-
-if(listener == null){
-return false;}
-
-
-var kind=capture?_commons.CAPTURE:_commons.BUBBLE;
-var prev=null;
-var node=this[_commons.LISTENERS][type];
-while(node != null) {
-if(node.listener === listener && node.kind === kind){
-if(prev == null){
-this[_commons.LISTENERS][type] = node.next;}else 
-{
-prev.next = node.next;}
-
-return true;}
-
-
-prev = node;
-node = node.next;}
-
-
-return false;},
-
-configurable:true,
-writable:true},
-
-
-dispatchEvent:{
-value:function dispatchEvent(event){
-
-var node=this[_commons.LISTENERS][event.type];
-if(node == null){
-return true;}
-
-
-
-event = (0,_EventWrapper.createEventWrapper)(event,this);
-
-
-
-while(node != null) {
-node.listener.call(this,event);
-if(event[_EventWrapper.STOP_IMMEDIATE_PROPAGATION_FLAG]){
-break;}
-
-node = node.next;}
-
-
-return !event.defaultPrevented;},
-
-configurable:true,
-writable:true}});
-
-
-module.exports = exports["default"];
-});
-__d('event-target-shim/lib/commons.js',[],function(global, require, module, exports) {  "use strict";
-
-Object.defineProperty(exports,"__esModule",{
-value:true});
-
-exports.newNode = newNode;
-var symbol=typeof Symbol !== "undefined"?Symbol:function Symbol(name){
-return "[[" + name + "_" + Math.random().toFixed(8).slice(2) + "]]";};
-
-
-exports.symbol = symbol;
-var LISTENERS=symbol("listeners");
-exports.LISTENERS = LISTENERS;
-var CAPTURE=1;
-exports.CAPTURE = CAPTURE;
-var BUBBLE=2;
-exports.BUBBLE = BUBBLE;
-var ATTRIBUTE=3;
-
-exports.ATTRIBUTE = ATTRIBUTE;
-
-
-function newNode(listener,kind){
-return {listener:listener,kind:kind,next:null};}
-});
-__d('event-target-shim/lib/CustomEventTarget.js',["event-target-shim/lib/commons.js"],function(global, require, module, exports) {  "use strict";
-
-Object.defineProperty(exports,"__esModule",{
-value:true});
-
-exports.defineCustomEventTarget = defineCustomEventTarget;
-
-var _commons=require("event-target-shim/lib/commons.js");
-
-function getAttributeListener(eventTarget,type){
-var node=eventTarget[_commons.LISTENERS][type];
-while(node != null) {
-if(node.kind === _commons.ATTRIBUTE){
-return node.listener;}
-
-node = node.next;}
-
-return null;}
-
-
-function setAttributeListener(eventTarget,type,listener){
-if(listener != null && typeof listener !== "function"){
-throw new TypeError("listener should be a function.");}
-
-
-var prev=null;
-var node=eventTarget[_commons.LISTENERS][type];
-while(node != null) {
-if(node.kind === _commons.ATTRIBUTE){
-
-if(prev == null){
-eventTarget[_commons.LISTENERS][type] = node.next;}else 
-{
-prev.next = node.next;}}else 
-
-{
-prev = node;}
-
-
-node = node.next;}
-
-
-
-if(listener != null){
-if(prev == null){
-eventTarget[_commons.LISTENERS][type] = (0,_commons.newNode)(listener,_commons.ATTRIBUTE);}else 
-{
-prev.next = (0,_commons.newNode)(listener,_commons.ATTRIBUTE);}}}
-
-
-
-
-function defineCustomEventTarget(EventTargetBase,types){
-function EventTarget(){
-EventTargetBase.call(this);}
-
-
-var descripter={
-constructor:{
-value:EventTarget,
-configurable:true,
-writable:true}};
-
-
-
-types.forEach(function(type){
-descripter["on" + type] = {
-get:function get(){
-return getAttributeListener(this,type);},
-
-set:function set(listener){
-setAttributeListener(this,type,listener);},
-
-configurable:true,
-enumerable:true};});
-
-
-
-EventTarget.prototype = Object.create(EventTargetBase.prototype,descripter);
-
-return EventTarget;}
-});
-__d('event-target-shim/lib/EventWrapper.js',["event-target-shim/lib/commons.js"],function(global, require, module, exports) {  "use strict";
-
-Object.defineProperty(exports,"__esModule",{
-value:true});
-
-exports.createEventWrapper = createEventWrapper;
-
-var _commons=require("event-target-shim/lib/commons.js");
-
-var STOP_IMMEDIATE_PROPAGATION_FLAG=(0,_commons.symbol)("stop_immediate_propagation_flag");
-
-exports.STOP_IMMEDIATE_PROPAGATION_FLAG = STOP_IMMEDIATE_PROPAGATION_FLAG;
-var CANCELED_FLAG=(0,_commons.symbol)("canceled_flag");
-var ORIGINAL_EVENT=(0,_commons.symbol)("original_event");
-
-var wrapperPrototypeDefinition={
-stopPropagation:{
-value:function stopPropagation(){
-var e=this[ORIGINAL_EVENT];
-if(typeof e.stopPropagation === "function"){
-e.stopPropagation();}},
-
-
-writable:true,
-configurable:true},
-
-
-stopImmediatePropagation:{
-value:function stopImmediatePropagation(){
-this[STOP_IMMEDIATE_PROPAGATION_FLAG] = true;
-
-var e=this[ORIGINAL_EVENT];
-if(typeof e.stopImmediatePropagation === "function"){
-e.stopImmediatePropagation();}},
-
-
-writable:true,
-configurable:true},
-
-
-preventDefault:{
-value:function preventDefault(){
-if(this.cancelable === true){
-this[CANCELED_FLAG] = true;}
-
-
-var e=this[ORIGINAL_EVENT];
-if(typeof e.preventDefault === "function"){
-e.preventDefault();}},
-
-
-writable:true,
-configurable:true},
-
-
-defaultPrevented:{
-get:function get(){
-return this[CANCELED_FLAG];},
-
-enumerable:true,
-configurable:true}};
-
-
-
-function createEventWrapper(event,eventTarget){
-var timeStamp=typeof event.timeStamp === "number"?event.timeStamp:Date.now();
-
-var props={
-type:{value:event.type,enumerable:true},
-target:{value:eventTarget,enumerable:true},
-currentTarget:{value:eventTarget,enumerable:true},
-eventPhase:{value:2,enumerable:true},
-bubbles:{value:Boolean(event.bubbles),enumerable:true},
-cancelable:{value:Boolean(event.cancelable),enumerable:true},
-timeStamp:{value:timeStamp,enumerable:true},
-isTrusted:{value:false,enumerable:true}};
-
-if(typeof event.detail !== "undefined"){
-props.detail = {value:event.detail,enumerable:true};}
-
-
-var retv=Object.create(Object.create(event,wrapperPrototypeDefinition),props);
-Object.defineProperty(retv,STOP_IMMEDIATE_PROPAGATION_FLAG,{value:false,writable:true});
-Object.defineProperty(retv,CANCELED_FLAG,{value:false,writable:true});
-Object.defineProperty(retv,ORIGINAL_EVENT,{value:event});
-
-return retv;}
-});
-__d('WebSocketEvent',[],function(global, require, module, exports) {  'use strict';function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}var 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-WebSocketEvent=
-function WebSocketEvent(type,eventInitDict){_classCallCheck(this,WebSocketEvent);
-this.type = type.toString();
-Object.assign(this,eventInitDict);};
-
-
-
-module.exports = WebSocketEvent;
 });
 __d('EventPluginHub',["EventPluginRegistry","EventPluginUtils","accumulateInto","forEachAccumulated","invariant","warning"],function(global, require, module, exports) {  'use strict';
 
@@ -19630,7 +19167,8 @@ var Constructor=function(element){
 this._currentElement = element;
 
 this._rootNodeID = null;
-this._renderedChildren = null;};
+this._renderedChildren = null;
+this.previousFlattenedStyle = null;};
 
 Constructor.displayName = viewConfig.uiViewClassName;
 Constructor.viewConfig = viewConfig;
@@ -19643,7 +19181,7 @@ return Constructor;};
 
 module.exports = createReactNativeComponentClass;
 });
-__d('ReactNativeBaseComponent',["NativeMethodsMixin","ReactNativeAttributePayload","ReactNativeEventEmitter","ReactNativeStyleAttributes","ReactNativeTagHandles","ReactMultiChild","NativeModules","deepFreezeAndThrowOnMutationInDev","warning"],function(global, require, module, exports) {  'use strict';
+__d('ReactNativeBaseComponent',["NativeMethodsMixin","ReactNativeEventEmitter","ReactNativeStyleAttributes","ReactNativeTagHandles","ReactMultiChild","NativeModules","styleDiffer","deepFreezeAndThrowOnMutationInDev","diffRawProperties","flattenStyle","precomputeStyle","warning"],function(global, require, module, exports) {  'use strict';
 
 
 
@@ -19657,14 +19195,17 @@ __d('ReactNativeBaseComponent',["NativeMethodsMixin","ReactNativeAttributePayloa
 
 
 var NativeMethodsMixin=require('NativeMethodsMixin');
-var ReactNativeAttributePayload=require('ReactNativeAttributePayload');
 var ReactNativeEventEmitter=require('ReactNativeEventEmitter');
 var ReactNativeStyleAttributes=require('ReactNativeStyleAttributes');
 var ReactNativeTagHandles=require('ReactNativeTagHandles');
 var ReactMultiChild=require('ReactMultiChild');
 var RCTUIManager=require('NativeModules').UIManager;
 
+var styleDiffer=require('styleDiffer');
 var deepFreezeAndThrowOnMutationInDev=require('deepFreezeAndThrowOnMutationInDev');
+var diffRawProperties=require('diffRawProperties');
+var flattenStyle=require('flattenStyle');
+var precomputeStyle=require('precomputeStyle');
 var warning=require('warning');
 
 var registrationNames=ReactNativeEventEmitter.registrationNames;
@@ -19781,15 +19322,68 @@ manageChildren(containerTag,null,null,createdTags,indexes,null);}},
 
 
 
+
+computeUpdatedProperties:function(prevProps,nextProps,validAttributes){
+if(__DEV__){
+for(var key in nextProps) {
+if(nextProps.hasOwnProperty(key) && 
+nextProps[key] && 
+validAttributes[key]){
+deepFreezeAndThrowOnMutationInDev(nextProps[key]);}}}
+
+
+
+
+var updatePayload=diffRawProperties(
+null,
+prevProps,
+nextProps,
+validAttributes);
+
+
+for(var key in updatePayload) {
+var process=validAttributes[key] && validAttributes[key].process;
+if(process){
+updatePayload[key] = process(updatePayload[key]);}}
+
+
+
+
+
+
+
+
+if(styleDiffer(nextProps.style,prevProps.style)){
+var nextFlattenedStyle=precomputeStyle(
+flattenStyle(nextProps.style),
+this.viewConfig.validAttributes);
+
+updatePayload = diffRawProperties(
+updatePayload,
+this.previousFlattenedStyle,
+nextFlattenedStyle,
+ReactNativeStyleAttributes);
+
+this.previousFlattenedStyle = nextFlattenedStyle;}
+
+
+return updatePayload;},
+
+
+
+
+
+
+
+
+
+
+
 receiveComponent:function(nextElement,transaction,context){
 var prevElement=this._currentElement;
 this._currentElement = nextElement;
 
-if(__DEV__){
-deepFreezeAndThrowOnMutationInDev(this._currentElement.props);}
-
-
-var updatePayload=ReactNativeAttributePayload.diff(
+var updatePayload=this.computeUpdatedProperties(
 prevElement.props,
 nextElement.props,
 this.viewConfig.validAttributes);
@@ -19851,11 +19445,9 @@ this._rootNodeID = rootID;
 
 var tag=ReactNativeTagHandles.allocateTag();
 
-if(__DEV__){
-deepFreezeAndThrowOnMutationInDev(this._currentElement.props);}
-
-
-var updatePayload=ReactNativeAttributePayload.create(
+this.previousFlattenedStyle = {};
+var updatePayload=this.computeUpdatedProperties(
+{},
 this._currentElement.props,
 this.viewConfig.validAttributes);
 
@@ -19895,7 +19487,7 @@ NativeMethodsMixin);
 
 module.exports = ReactNativeBaseComponent;
 });
-__d('NativeMethodsMixin',["NativeModules","ReactNativeAttributePayload","TextInputState","findNodeHandle","invariant"],function(global, require, module, exports) {  'use strict';
+__d('NativeMethodsMixin',["NativeModules","TextInputState","findNodeHandle","flattenStyle","invariant","mergeFast","precomputeStyle"],function(global, require, module, exports) {  'use strict';
 
 
 
@@ -19910,35 +19502,14 @@ __d('NativeMethodsMixin',["NativeModules","ReactNativeAttributePayload","TextInp
 
 var NativeModules=require('NativeModules');
 var RCTUIManager=NativeModules.UIManager;
-var ReactNativeAttributePayload=require('ReactNativeAttributePayload');
 var TextInputState=require('TextInputState');
 
 var findNodeHandle=require('findNodeHandle');
+var flattenStyle=require('flattenStyle');
 var invariant=require('invariant');
+var mergeFast=require('mergeFast');
+var precomputeStyle=require('precomputeStyle');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function warnForStyleProps(props,validAttributes){
-for(var key in validAttributes.style) {
-if(!(validAttributes[key] || props[key] === undefined)){
-console.error(
-'You are setting the style `{ ' + key + ': ... }` as a prop. You ' + 
-'should nest it in a style object. ' + 
-'E.g. `{ style: { ' + key + ': ... } }`');}}}
 
 
 
@@ -19957,35 +19528,10 @@ console.error(
 
 
 var NativeMethodsMixin={
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 measure:function(callback){
 RCTUIManager.measure(
 findNodeHandle(this),
 mountSafeCallback(this,callback));},
-
-
-
-
-
-
-
-
 
 
 
@@ -20007,33 +19553,58 @@ mountSafeCallback(this,onSuccess));},
 
 
 
-
 setNativeProps:function(nativeProps){
-if(__DEV__){
-warnForStyleProps(nativeProps,this.viewConfig.validAttributes);}
 
 
-var updatePayload=ReactNativeAttributePayload.create(
-nativeProps,
+
+
+
+var hasOnlyStyle=true;
+for(var key in nativeProps) {
+if(key !== 'style'){
+hasOnlyStyle = false;
+break;}}
+
+
+
+var validAttributes=this.viewConfig.validAttributes;
+var hasProcessedProps=false;
+var processedProps={};
+for(var key in nativeProps) {
+var process=validAttributes[key] && validAttributes[key].process;
+if(process){
+hasProcessedProps = true;
+processedProps[key] = process(nativeProps[key]);}}
+
+
+
+var style=precomputeStyle(
+flattenStyle(processedProps.style || nativeProps.style),
 this.viewConfig.validAttributes);
+
+
+var props=null;
+if(hasOnlyStyle){
+props = style;}else 
+{
+props = nativeProps;
+if(hasProcessedProps){
+props = mergeFast(props,processedProps);}
+
+if(style){
+props = mergeFast(props,style);}}
+
 
 
 RCTUIManager.updateView(
 findNodeHandle(this),
 this.viewConfig.uiViewClassName,
-updatePayload);},
-
-
-
-
+props);},
 
 
 
 focus:function(){
 TextInputState.focusTextInput(findNodeHandle(this));},
-
-
-
 
 
 blur:function(){
@@ -20087,7 +19658,11 @@ return callback.apply(context,arguments);};};
 
 module.exports = NativeMethodsMixin;
 });
-__d('ReactNativeAttributePayload',["Platform","deepDiffer","styleDiffer","flattenStyle"],function(global, require, module, exports) {  'use strict';
+__d('TextInputState',["Platform","NativeModules"],function(global, require, module, exports) {  'use strict';
+
+
+
+
 
 
 
@@ -20101,427 +19676,64 @@ __d('ReactNativeAttributePayload',["Platform","deepDiffer","styleDiffer","flatte
 
 
 var Platform=require('Platform');
+var RCTUIManager=require('NativeModules').UIManager;
 
-var deepDiffer=require('deepDiffer');
-var styleDiffer=require('styleDiffer');
-var flattenStyle=require('flattenStyle');
-
+var TextInputState={
 
 
 
-
+_currentlyFocusedID:null,
 
 
 
 
 
+currentlyFocusedField:function(){
+return this._currentlyFocusedID;},
 
 
 
 
-function translateKey(propKey){
-if(propKey === 'transform'){
 
 
 
-
+focusTextInput:function(textFieldID){
+if(this._currentlyFocusedID !== textFieldID && textFieldID !== null){
+this._currentlyFocusedID = textFieldID;
+if(Platform.OS === 'ios'){
+RCTUIManager.focus(textFieldID);}else 
 if(Platform.OS === 'android'){
-return 'decomposedMatrix';}else 
-{
-return 'transformMatrix';}}
+RCTUIManager.dispatchViewManagerCommand(
+textFieldID,
+RCTUIManager.AndroidTextInput.Commands.focusTextInput,
+null);}}},
 
 
-return propKey;}
 
 
-function defaultDiffer(prevProp,nextProp){
-if(typeof nextProp !== 'object' || nextProp === null){
 
-return true;}else 
-{
 
-return deepDiffer(prevProp,nextProp);}}
 
 
 
-function diffNestedProperty(
-updatePayload,
-prevProp,
-nextProp,
-validAttributes)
-{
 
+blurTextInput:function(textFieldID){
+if(this._currentlyFocusedID === textFieldID && textFieldID !== null){
+this._currentlyFocusedID = null;
+if(Platform.OS === 'ios'){
+RCTUIManager.blur(textFieldID);}else 
+if(Platform.OS === 'android'){
+RCTUIManager.dispatchViewManagerCommand(
+textFieldID,
+RCTUIManager.AndroidTextInput.Commands.blurTextInput,
+null);}}}};
 
 
 
 
-if(!styleDiffer(prevProp,nextProp)){
-return updatePayload;}
 
 
-
-
-var previousFlattenedStyle=flattenStyle(prevProp);
-var nextFlattenedStyle=flattenStyle(nextProp);
-
-if(!previousFlattenedStyle || !nextFlattenedStyle){
-if(nextFlattenedStyle){
-return addProperties(
-updatePayload,
-nextFlattenedStyle,
-validAttributes);}
-
-
-if(previousFlattenedStyle){
-return clearProperties(
-updatePayload,
-previousFlattenedStyle,
-validAttributes);}
-
-
-return updatePayload;}
-
-
-
-return diffProperties(
-updatePayload,
-previousFlattenedStyle,
-nextFlattenedStyle,
-validAttributes);}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function clearNestedProperty(
-updatePayload,
-prevProp,
-validAttributes)
-{
-
-return diffNestedProperty(updatePayload,prevProp,{},validAttributes);}
-
-
-
-
-
-
-
-
-function diffProperties(
-updatePayload,
-prevProps,
-nextProps,
-validAttributes)
-{
-var attributeConfig;
-var nextProp;
-var prevProp;
-
-for(var propKey in nextProps) {
-attributeConfig = validAttributes[propKey];
-if(!attributeConfig){
-continue;}
-
-
-var altKey=translateKey(propKey);
-if(!validAttributes[altKey]){
-
-altKey = propKey;}
-
-
-if(updatePayload && updatePayload[altKey] !== undefined){
-
-
-continue;}
-
-prevProp = prevProps[propKey];
-nextProp = nextProps[propKey];
-
-
-
-if(typeof nextProp === 'function'){
-nextProp = true;
-
-
-if(typeof prevProp === 'function'){
-prevProp = true;}}
-
-
-
-if(prevProp === nextProp){
-continue;}
-
-
-
-if(typeof attributeConfig !== 'object'){
-
-if(defaultDiffer(prevProp,nextProp)){
-
-(updatePayload || (updatePayload = {}))[altKey] = nextProp;}}else 
-
-if(typeof attributeConfig.diff === 'function' || 
-typeof attributeConfig.process === 'function'){
-
-var shouldUpdate=prevProp === undefined || (
-typeof attributeConfig.diff === 'function'?
-attributeConfig.diff(prevProp,nextProp):
-defaultDiffer(prevProp,nextProp));
-
-if(shouldUpdate){
-var nextValue=typeof attributeConfig.process === 'function'?
-attributeConfig.process(nextProp):
-nextProp;
-(updatePayload || (updatePayload = {}))[altKey] = nextValue;}}else 
-
-{
-
-updatePayload = diffNestedProperty(
-updatePayload,
-prevProp,
-nextProp,
-attributeConfig);}}
-
-
-
-
-
-
-
-for(var propKey in prevProps) {
-if(nextProps[propKey] !== undefined){
-continue;}
-
-attributeConfig = validAttributes[propKey];
-if(!attributeConfig){
-continue;}
-
-
-prevProp = prevProps[propKey];
-if(prevProp === undefined){
-continue;}
-
-
-if(typeof attributeConfig !== 'object' || 
-typeof attributeConfig.diff === 'function' || 
-typeof attributeConfig.process === 'function'){
-
-
-
-(updatePayload || (updatePayload = {}))[translateKey(propKey)] = null;}else 
-{
-
-
-
-updatePayload = clearNestedProperty(
-updatePayload,
-prevProp,
-attributeConfig);}}
-
-
-
-return updatePayload;}
-
-
-
-
-
-function addProperties(
-updatePayload,
-props,
-validAttributes)
-{
-return diffProperties(updatePayload,{},props,validAttributes);}
-
-
-
-
-
-
-function clearProperties(
-updatePayload,
-prevProps,
-validAttributes)
-{
-return diffProperties(updatePayload,prevProps,{},validAttributes);}
-
-
-var ReactNativeAttributePayload={
-
-create:function(
-props,
-validAttributes)
-{
-return addProperties(
-null,
-props,
-validAttributes);},
-
-
-
-diff:function(
-prevProps,
-nextProps,
-validAttributes)
-{
-return diffProperties(
-null,
-prevProps,
-nextProps,
-validAttributes);}};
-
-
-
-
-
-module.exports = ReactNativeAttributePayload;
-});
-__d('deepDiffer',[],function(global, require, module, exports) {  'use strict';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var deepDiffer=function(one,two){
-if(one === two){
-
-return false;}
-
-if(typeof one === 'function' && typeof two === 'function'){
-
-return false;}
-
-if(typeof one !== 'object' || one === null){
-
-return one !== two;}
-
-if(typeof two !== 'object' || two === null){
-
-
-return true;}
-
-if(one.constructor !== two.constructor){
-return true;}
-
-if(Array.isArray(one)){
-
-var len=one.length;
-if(two.length !== len){
-return true;}
-
-for(var ii=0;ii < len;ii++) {
-if(deepDiffer(one[ii],two[ii])){
-return true;}}}else 
-
-
-{
-for(var key in one) {
-if(deepDiffer(one[key],two[key])){
-return true;}}
-
-
-for(var twoKey in two) {
-
-
-if(one[twoKey] === undefined && two[twoKey] !== undefined){
-return true;}}}
-
-
-
-return false;};
-
-
-module.exports = deepDiffer;
-});
-__d('styleDiffer',["deepDiffer"],function(global, require, module, exports) {  'use strict';
-
-
-
-
-
-
-
-
-
-
-
-
-var deepDiffer=require('deepDiffer');
-
-function styleDiffer(a,b){
-return !styleEqual(a,b);}
-
-
-function styleEqual(a,b){
-if(!a){
-return !b;}
-
-if(!b){
-return !a;}
-
-if(typeof a !== typeof b){
-return false;}
-
-if(typeof a === 'number'){
-return a === b;}
-
-
-if(Array.isArray(a)){
-if(!Array.isArray(b) || a.length !== b.length){
-return false;}
-
-for(var i=0;i < a.length;++i) {
-if(!styleEqual(a[i],b[i])){
-return false;}}
-
-
-return true;}
-
-
-for(var key in a) {
-if(deepDiffer(a[key],b[key])){
-return false;}}
-
-
-
-for(var key in b) {
-if(!a.hasOwnProperty(key)){
-return false;}}
-
-
-
-return true;}
-
-
-module.exports = styleDiffer;
+module.exports = TextInputState;
 });
 __d('flattenStyle',["StyleSheetTypes","StyleSheetRegistry","invariant"],function(global, require, module, exports) {  'use strict';
 
@@ -20623,7 +19835,7 @@ return style;}}]);return StyleSheetRegistry;})();
 
 module.exports = StyleSheetRegistry;
 });
-__d('TextInputState',["Platform","NativeModules"],function(global, require, module, exports) {  'use strict';
+__d('mergeFast',[],function(global, require, module, exports) {  'use strict';
 
 
 
@@ -20640,113 +19852,25 @@ __d('TextInputState',["Platform","NativeModules"],function(global, require, modu
 
 
 
-var Platform=require('Platform');
-var RCTUIManager=require('NativeModules').UIManager;
 
-var TextInputState={
 
 
 
-_currentlyFocusedID:null,
 
+var mergeFast=function(one,two){
+var ret={};
+for(var keyOne in one) {
+ret[keyOne] = one[keyOne];}
 
-
-
-
-currentlyFocusedField:function(){
-return this._currentlyFocusedID;},
-
-
-
-
-
-
-
-focusTextInput:function(textFieldID){
-if(this._currentlyFocusedID !== textFieldID && textFieldID !== null){
-this._currentlyFocusedID = textFieldID;
-if(Platform.OS === 'ios'){
-RCTUIManager.focus(textFieldID);}else 
-if(Platform.OS === 'android'){
-RCTUIManager.dispatchViewManagerCommand(
-textFieldID,
-RCTUIManager.AndroidTextInput.Commands.focusTextInput,
-null);}}},
-
-
-
-
-
-
-
-
-
-
-blurTextInput:function(textFieldID){
-if(this._currentlyFocusedID === textFieldID && textFieldID !== null){
-this._currentlyFocusedID = null;
-if(Platform.OS === 'ios'){
-RCTUIManager.blur(textFieldID);}else 
-if(Platform.OS === 'android'){
-RCTUIManager.dispatchViewManagerCommand(
-textFieldID,
-RCTUIManager.AndroidTextInput.Commands.blurTextInput,
-null);}}}};
-
-
-
-
-
-
-module.exports = TextInputState;
-});
-__d('ReactNativeEventEmitter',["EventPluginHub","ReactEventEmitterMixin","ReactNativeTagHandles","NodeHandle","EventConstants","merge","warning"],function(global, require, module, exports) {  'use strict';
-
-
-
-
-
-
-
-
-
-
-
-
-var EventPluginHub=require('EventPluginHub');
-var ReactEventEmitterMixin=require('ReactEventEmitterMixin');
-var ReactNativeTagHandles=require('ReactNativeTagHandles');
-var NodeHandle=require('NodeHandle');
-var EventConstants=require('EventConstants');
-
-var merge=require('merge');
-var warning=require('warning');
-
-var topLevelTypes=EventConstants.topLevelTypes;
-
-
-
-
-
-
-
-var EMPTY_NATIVE_EVENT={};
-
-
-
-
-
-
-
-
-var touchSubsequence=function(touches,indices){
-var ret=[];
-for(var i=0;i < indices.length;i++) {
-ret.push(touches[indices[i]]);}
+for(var keyTwo in two) {
+ret[keyTwo] = two[keyTwo];}
 
 return ret;};
 
 
+module.exports = mergeFast;
+});
+__d('precomputeStyle',["MatrixMath","ReactNativeStyleAttributes","Platform","deepFreezeAndThrowOnMutationInDev","invariant","stringifySafe"],function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
 
 
 
@@ -20758,54 +19882,68 @@ return ret;};
 
 
 
-var removeTouchesAtIndices=function(
-touches,
-indices)
-{
-var rippedOut=[];
 
+var MatrixMath=require('MatrixMath');
+var ReactNativeStyleAttributes=require('ReactNativeStyleAttributes');
+var Platform=require('Platform');
 
-var temp=touches;
-for(var i=0;i < indices.length;i++) {
-var index=indices[i];
-rippedOut.push(touches[index]);
-temp[index] = null;}
+var deepFreezeAndThrowOnMutationInDev=require('deepFreezeAndThrowOnMutationInDev');
+var invariant=require('invariant');
+var stringifySafe=require('stringifySafe');
 
-var fillAt=0;
-for(var j=0;j < temp.length;j++) {
-var cur=temp[j];
-if(cur !== null){
-temp[fillAt++] = cur;}}
 
 
-temp.length = fillAt;
-return rippedOut;};
 
 
+function precomputeStyle(style,validAttributes){
+if(!style){
+return style;}
 
 
+var hasPreprocessKeys=false;
+for(var i=0,keys=Object.keys(style);i < keys.length;i++) {
+var key=keys[i];
+if(_processor(key,validAttributes)){
+hasPreprocessKeys = true;
+break;}}
 
 
 
+if(!hasPreprocessKeys && !style.transform){
+return style;}
 
 
+var newStyle=_extends({},style);
+for(var i=0,keys=Object.keys(style);i < keys.length;i++) {
+var key=keys[i];
+var process=_processor(key,validAttributes);
+if(process){
+newStyle[key] = process(newStyle[key]);}}
 
 
-var ReactNativeEventEmitter=merge(ReactEventEmitterMixin,{
 
-registrationNames:EventPluginHub.registrationNameModules,
+if(style.transform){
+invariant(
+!style.transformMatrix,
+'transformMatrix and transform styles cannot be used on the same component');
 
-putListener:EventPluginHub.putListener,
 
-getListener:EventPluginHub.getListener,
+newStyle = _precomputeTransforms(newStyle);}
 
-deleteListener:EventPluginHub.deleteListener,
 
-deleteAllListeners:EventPluginHub.deleteAllListeners,
+deepFreezeAndThrowOnMutationInDev(newStyle);
+return newStyle;}
 
 
+function _processor(key,validAttributes){
+var process=validAttributes[key] && validAttributes[key].process;
+if(!process){
+process = 
+ReactNativeStyleAttributes[key] && 
+ReactNativeStyleAttributes[key].process;}
 
 
+return process;}
 
 
 
@@ -20813,159 +19951,765 @@ deleteAllListeners:EventPluginHub.deleteAllListeners,
 
 
 
-_receiveRootNodeIDEvent:function(
-rootNodeID,
-topLevelType,
-nativeEventParam)
-{
-var nativeEvent=nativeEventParam || EMPTY_NATIVE_EVENT;
-ReactNativeEventEmitter.handleTopLevel(
-topLevelType,
-rootNodeID,
-rootNodeID,
-nativeEvent,
-nativeEvent.target);},
 
 
 
+function _precomputeTransforms(style){var 
+transform=style.transform;
+var result=MatrixMath.createIdentityMatrix();
 
-
-
-
-
-
-
-receiveEvent:function(
-tag,
-topLevelType,
-nativeEventParam)
-{
-var rootNodeID=ReactNativeTagHandles.tagToRootNodeID[tag];
-ReactNativeEventEmitter._receiveRootNodeIDEvent(
-rootNodeID,
-topLevelType,
-nativeEventParam);},
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-receiveTouches:function(
-eventTopLevelType,
-touches,
-changedIndices)
-{
-var changedTouches=
-eventTopLevelType === topLevelTypes.topTouchEnd || 
-eventTopLevelType === topLevelTypes.topTouchCancel?
-removeTouchesAtIndices(touches,changedIndices):
-touchSubsequence(touches,changedIndices);
-
-for(var jj=0;jj < changedTouches.length;jj++) {
-var touch=changedTouches[jj];
-
-
-touch.changedTouches = changedTouches;
-touch.touches = touches;
-var nativeEvent=touch;
-var rootNodeID=null;
-var target=nativeEvent.target;
-if(target !== null && target !== undefined){
-if(target < ReactNativeTagHandles.tagsStartAt){
+transform.forEach(function(transformation){
+var key=Object.keys(transformation)[0];
+var value=transformation[key];
 if(__DEV__){
-warning(
-false,
-'A view is reporting that a touch occured on tag zero.');}}else 
+_validateTransform(key,value,transformation);}
 
+
+switch(key){
+case 'matrix':
+MatrixMath.multiplyInto(result,result,value);
+break;
+case 'perspective':
+_multiplyTransform(result,MatrixMath.reusePerspectiveCommand,[value]);
+break;
+case 'rotateX':
+_multiplyTransform(result,MatrixMath.reuseRotateXCommand,[_convertToRadians(value)]);
+break;
+case 'rotateY':
+_multiplyTransform(result,MatrixMath.reuseRotateYCommand,[_convertToRadians(value)]);
+break;
+case 'rotate':
+case 'rotateZ':
+_multiplyTransform(result,MatrixMath.reuseRotateZCommand,[_convertToRadians(value)]);
+break;
+case 'scale':
+_multiplyTransform(result,MatrixMath.reuseScaleCommand,[value]);
+break;
+case 'scaleX':
+_multiplyTransform(result,MatrixMath.reuseScaleXCommand,[value]);
+break;
+case 'scaleY':
+_multiplyTransform(result,MatrixMath.reuseScaleYCommand,[value]);
+break;
+case 'translate':
+_multiplyTransform(result,MatrixMath.reuseTranslate3dCommand,[value[0],value[1],value[2] || 0]);
+break;
+case 'translateX':
+_multiplyTransform(result,MatrixMath.reuseTranslate2dCommand,[value,0]);
+break;
+case 'translateY':
+_multiplyTransform(result,MatrixMath.reuseTranslate2dCommand,[0,value]);
+break;
+case 'skewX':
+_multiplyTransform(result,MatrixMath.reuseSkewXCommand,[_convertToRadians(value)]);
+break;
+case 'skewY':
+_multiplyTransform(result,MatrixMath.reuseSkewYCommand,[_convertToRadians(value)]);
+break;
+default:
+throw new Error('Invalid transform name: ' + key);}});
+
+
+
+
+
+
+
+if(Platform.OS === 'android'){
+return _extends({},
+style,{
+transformMatrix:result,
+decomposedMatrix:MatrixMath.decomposeMatrix(result)});}
+
+
+return _extends({},
+style,{
+transformMatrix:result});}
+
+
+
+
+
+
+function _multiplyTransform(
+result,
+matrixMathFunction,
+args)
+{
+var matrixToApply=MatrixMath.createIdentityMatrix();
+var argsWithIdentity=[matrixToApply].concat(args);
+matrixMathFunction.apply(this,argsWithIdentity);
+MatrixMath.multiplyInto(result,result,matrixToApply);}
+
+
+
+
+
+
+function _convertToRadians(value){
+var floatValue=parseFloat(value,10);
+return value.indexOf('rad') > -1?floatValue:floatValue * Math.PI / 180;}
+
+
+function _validateTransform(key,value,transformation){
+invariant(
+!value.getValue,
+'You passed an Animated.Value to a normal component. ' + 
+'You need to wrap that component in an Animated. For example, ' + 
+'replace <View /> by <Animated.View />.');
+
+
+var multivalueTransforms=[
+'matrix',
+'translate'];
+
+if(multivalueTransforms.indexOf(key) !== -1){
+invariant(
+Array.isArray(value),
+'Transform with key of %s must have an array as the value: %s',
+key,
+stringifySafe(transformation));}
+
+
+switch(key){
+case 'matrix':
+invariant(
+value.length === 9 || value.length === 16,
+'Matrix transform must have a length of 9 (2d) or 16 (3d). ' + 
+'Provided matrix has a length of %s: %s',
+value.length,
+stringifySafe(transformation));
+
+break;
+case 'translate':
+break;
+case 'rotateX':
+case 'rotateY':
+case 'rotateZ':
+case 'rotate':
+case 'skewX':
+case 'skewY':
+invariant(
+typeof value === 'string',
+'Transform with key of "%s" must be a string: %s',
+key,
+stringifySafe(transformation));
+
+invariant(
+value.indexOf('deg') > -1 || value.indexOf('rad') > -1,
+'Rotate transform must be expressed in degrees (deg) or radians ' + 
+'(rad): %s',
+stringifySafe(transformation));
+
+break;
+default:
+invariant(
+typeof value === 'number',
+'Transform with key of "%s" must be a number: %s',
+key,
+stringifySafe(transformation));}}
+
+
+
+
+module.exports = precomputeStyle;
+});
+__d('MatrixMath',["invariant"],function(global, require, module, exports) {  'use strict';
+
+
+
+
+
+
+
+var invariant=require('invariant');
+
+
+
+
+
+var MatrixMath={
+createIdentityMatrix:function(){
+return [
+1,0,0,0,
+0,1,0,0,
+0,0,1,0,
+0,0,0,1];},
+
+
+
+createCopy:function(m){
+return [
+m[0],m[1],m[2],m[3],
+m[4],m[5],m[6],m[7],
+m[8],m[9],m[10],m[11],
+m[12],m[13],m[14],m[15]];},
+
+
+
+createOrthographic:function(left,right,bottom,top,near,far){
+var a=2 / (right - left);
+var b=2 / (top - bottom);
+var c=-2 / (far - near);
+
+var tx=-(right + left) / (right - left);
+var ty=-(top + bottom) / (top - bottom);
+var tz=-(far + near) / (far - near);
+
+return [
+a,0,0,0,
+0,b,0,0,
+0,0,c,0,
+tx,ty,tz,1];},
+
+
+
+createFrustum:function(left,right,bottom,top,near,far){
+var r_width=1 / (right - left);
+var r_height=1 / (top - bottom);
+var r_depth=1 / (near - far);
+var x=2 * (near * r_width);
+var y=2 * (near * r_height);
+var A=(right + left) * r_width;
+var B=(top + bottom) * r_height;
+var C=(far + near) * r_depth;
+var D=2 * (far * near * r_depth);
+return [
+x,0,0,0,
+0,y,0,0,
+A,B,C,-1,
+0,0,D,0];},
+
+
+
+createPerspective:function(fovInRadians,aspect,near,far){
+var h=1 / Math.tan(fovInRadians);
+var r_depth=1 / (near - far);
+var C=(far + near) * r_depth;
+var D=2 * (far * near * r_depth);
+return [
+h / aspect,0,0,0,
+0,h,0,0,
+0,0,C,-1,
+0,0,D,0];},
+
+
+
+createTranslate2d:function(x,y){
+var mat=MatrixMath.createIdentityMatrix();
+MatrixMath.reuseTranslate2dCommand(mat,x,y);
+return mat;},
+
+
+reuseTranslate2dCommand:function(matrixCommand,x,y){
+matrixCommand[12] = x;
+matrixCommand[13] = y;},
+
+
+reuseTranslate3dCommand:function(matrixCommand,x,y,z){
+matrixCommand[12] = x;
+matrixCommand[13] = y;
+matrixCommand[14] = z;},
+
+
+createScale:function(factor){
+var mat=MatrixMath.createIdentityMatrix();
+MatrixMath.reuseScaleCommand(mat,factor);
+return mat;},
+
+
+reuseScaleCommand:function(matrixCommand,factor){
+matrixCommand[0] = factor;
+matrixCommand[5] = factor;},
+
+
+reuseScale3dCommand:function(matrixCommand,x,y,z){
+matrixCommand[0] = x;
+matrixCommand[5] = y;
+matrixCommand[10] = z;},
+
+
+reusePerspectiveCommand:function(matrixCommand,p){
+matrixCommand[11] = -1 / p;},
+
+
+reuseScaleXCommand:function(matrixCommand,factor){
+matrixCommand[0] = factor;},
+
+
+reuseScaleYCommand:function(matrixCommand,factor){
+matrixCommand[5] = factor;},
+
+
+reuseScaleZCommand:function(matrixCommand,factor){
+matrixCommand[10] = factor;},
+
+
+reuseRotateXCommand:function(matrixCommand,radians){
+matrixCommand[5] = Math.cos(radians);
+matrixCommand[6] = Math.sin(radians);
+matrixCommand[9] = -Math.sin(radians);
+matrixCommand[10] = Math.cos(radians);},
+
+
+reuseRotateYCommand:function(matrixCommand,amount){
+matrixCommand[0] = Math.cos(amount);
+matrixCommand[2] = -Math.sin(amount);
+matrixCommand[8] = Math.sin(amount);
+matrixCommand[10] = Math.cos(amount);},
+
+
+
+reuseRotateZCommand:function(matrixCommand,radians){
+matrixCommand[0] = Math.cos(radians);
+matrixCommand[1] = Math.sin(radians);
+matrixCommand[4] = -Math.sin(radians);
+matrixCommand[5] = Math.cos(radians);},
+
+
+createRotateZ:function(radians){
+var mat=MatrixMath.createIdentityMatrix();
+MatrixMath.reuseRotateZCommand(mat,radians);
+return mat;},
+
+
+reuseSkewXCommand:function(matrixCommand,radians){
+matrixCommand[4] = Math.sin(radians);
+matrixCommand[5] = Math.cos(radians);},
+
+
+reuseSkewYCommand:function(matrixCommand,radians){
+matrixCommand[0] = Math.cos(radians);
+matrixCommand[1] = Math.sin(radians);},
+
+
+multiplyInto:function(out,a,b){
+var a00=a[0],a01=a[1],a02=a[2],a03=a[3],
+a10=a[4],a11=a[5],a12=a[6],a13=a[7],
+a20=a[8],a21=a[9],a22=a[10],a23=a[11],
+a30=a[12],a31=a[13],a32=a[14],a33=a[15];
+
+var b0=b[0],b1=b[1],b2=b[2],b3=b[3];
+out[0] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+out[1] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+out[2] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+out[3] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+
+b0 = b[4];b1 = b[5];b2 = b[6];b3 = b[7];
+out[4] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+out[5] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+out[6] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+out[7] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+
+b0 = b[8];b1 = b[9];b2 = b[10];b3 = b[11];
+out[8] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+out[9] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+out[10] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+out[11] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+
+b0 = b[12];b1 = b[13];b2 = b[14];b3 = b[15];
+out[12] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+out[13] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+out[14] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+out[15] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;},
+
+
+determinant:function(matrix){var 
+
+m00=
+
+
+
+matrix[0];var m01=matrix[1];var m02=matrix[2];var m03=matrix[3];var m10=matrix[4];var m11=matrix[5];var m12=matrix[6];var m13=matrix[7];var m20=matrix[8];var m21=matrix[9];var m22=matrix[10];var m23=matrix[11];var m30=matrix[12];var m31=matrix[13];var m32=matrix[14];var m33=matrix[15];
+return (
+m03 * m12 * m21 * m30 - m02 * m13 * m21 * m30 - 
+m03 * m11 * m22 * m30 + m01 * m13 * m22 * m30 + 
+m02 * m11 * m23 * m30 - m01 * m12 * m23 * m30 - 
+m03 * m12 * m20 * m31 + m02 * m13 * m20 * m31 + 
+m03 * m10 * m22 * m31 - m00 * m13 * m22 * m31 - 
+m02 * m10 * m23 * m31 + m00 * m12 * m23 * m31 + 
+m03 * m11 * m20 * m32 - m01 * m13 * m20 * m32 - 
+m03 * m10 * m21 * m32 + m00 * m13 * m21 * m32 + 
+m01 * m10 * m23 * m32 - m00 * m11 * m23 * m32 - 
+m02 * m11 * m20 * m33 + m01 * m12 * m20 * m33 + 
+m02 * m10 * m21 * m33 - m00 * m12 * m21 * m33 - 
+m01 * m10 * m22 * m33 + m00 * m11 * m22 * m33);},
+
+
+
+
+
+
+
+
+
+
+inverse:function(matrix){
+var det=MatrixMath.determinant(matrix);
+if(!det){
+return matrix;}var 
+
+
+m00=
+
+
+
+matrix[0];var m01=matrix[1];var m02=matrix[2];var m03=matrix[3];var m10=matrix[4];var m11=matrix[5];var m12=matrix[6];var m13=matrix[7];var m20=matrix[8];var m21=matrix[9];var m22=matrix[10];var m23=matrix[11];var m30=matrix[12];var m31=matrix[13];var m32=matrix[14];var m33=matrix[15];
+return [
+(m12 * m23 * m31 - m13 * m22 * m31 + m13 * m21 * m32 - m11 * m23 * m32 - m12 * m21 * m33 + m11 * m22 * m33) / det,
+(m03 * m22 * m31 - m02 * m23 * m31 - m03 * m21 * m32 + m01 * m23 * m32 + m02 * m21 * m33 - m01 * m22 * m33) / det,
+(m02 * m13 * m31 - m03 * m12 * m31 + m03 * m11 * m32 - m01 * m13 * m32 - m02 * m11 * m33 + m01 * m12 * m33) / det,
+(m03 * m12 * m21 - m02 * m13 * m21 - m03 * m11 * m22 + m01 * m13 * m22 + m02 * m11 * m23 - m01 * m12 * m23) / det,
+(m13 * m22 * m30 - m12 * m23 * m30 - m13 * m20 * m32 + m10 * m23 * m32 + m12 * m20 * m33 - m10 * m22 * m33) / det,
+(m02 * m23 * m30 - m03 * m22 * m30 + m03 * m20 * m32 - m00 * m23 * m32 - m02 * m20 * m33 + m00 * m22 * m33) / det,
+(m03 * m12 * m30 - m02 * m13 * m30 - m03 * m10 * m32 + m00 * m13 * m32 + m02 * m10 * m33 - m00 * m12 * m33) / det,
+(m02 * m13 * m20 - m03 * m12 * m20 + m03 * m10 * m22 - m00 * m13 * m22 - m02 * m10 * m23 + m00 * m12 * m23) / det,
+(m11 * m23 * m30 - m13 * m21 * m30 + m13 * m20 * m31 - m10 * m23 * m31 - m11 * m20 * m33 + m10 * m21 * m33) / det,
+(m03 * m21 * m30 - m01 * m23 * m30 - m03 * m20 * m31 + m00 * m23 * m31 + m01 * m20 * m33 - m00 * m21 * m33) / det,
+(m01 * m13 * m30 - m03 * m11 * m30 + m03 * m10 * m31 - m00 * m13 * m31 - m01 * m10 * m33 + m00 * m11 * m33) / det,
+(m03 * m11 * m20 - m01 * m13 * m20 - m03 * m10 * m21 + m00 * m13 * m21 + m01 * m10 * m23 - m00 * m11 * m23) / det,
+(m12 * m21 * m30 - m11 * m22 * m30 - m12 * m20 * m31 + m10 * m22 * m31 + m11 * m20 * m32 - m10 * m21 * m32) / det,
+(m01 * m22 * m30 - m02 * m21 * m30 + m02 * m20 * m31 - m00 * m22 * m31 - m01 * m20 * m32 + m00 * m21 * m32) / det,
+(m02 * m11 * m30 - m01 * m12 * m30 - m02 * m10 * m31 + m00 * m12 * m31 + m01 * m10 * m32 - m00 * m11 * m32) / det,
+(m01 * m12 * m20 - m02 * m11 * m20 + m02 * m10 * m21 - m00 * m12 * m21 - m01 * m10 * m22 + m00 * m11 * m22) / det];},
+
+
+
+
+
+
+transpose:function(m){
+return [
+m[0],m[4],m[8],m[12],
+m[1],m[5],m[9],m[13],
+m[2],m[6],m[10],m[14],
+m[3],m[7],m[11],m[15]];},
+
+
+
+
+
+
+multiplyVectorByMatrix:function(
+v,
+m)
+{var 
+vx=v[0];var vy=v[1];var vz=v[2];var vw=v[3];
+return [
+vx * m[0] + vy * m[4] + vz * m[8] + vw * m[12],
+vx * m[1] + vy * m[5] + vz * m[9] + vw * m[13],
+vx * m[2] + vy * m[6] + vz * m[10] + vw * m[14],
+vx * m[3] + vy * m[7] + vz * m[11] + vw * m[15]];},
+
+
+
+
+
+
+v3Length:function(a){
+return Math.sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);},
+
+
+
+
+
+v3Normalize:function(
+vector,
+v3Length)
+{
+var im=1 / (v3Length || MatrixMath.v3Length(vector));
+return [
+vector[0] * im,
+vector[1] * im,
+vector[2] * im];},
+
+
+
+
+
+
+
+v3Dot:function(a,b){
+return a[0] * b[0] + 
+a[1] * b[1] + 
+a[2] * b[2];},
+
+
+
+
+
+
+v3Combine:function(
+a,
+b,
+aScale,
+bScale)
+{
+return [
+aScale * a[0] + bScale * b[0],
+aScale * a[1] + bScale * b[1],
+aScale * a[2] + bScale * b[2]];},
+
+
+
+
+
+
+
+v3Cross:function(a,b){
+return [
+a[1] * b[2] - a[2] * b[1],
+a[2] * b[0] - a[0] * b[2],
+a[0] * b[1] - a[1] * b[0]];},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+quaternionToDegreesXYZ:function(q,matrix,row){var 
+qx=q[0];var qy=q[1];var qz=q[2];var qw=q[3];
+var qw2=qw * qw;
+var qx2=qx * qx;
+var qy2=qy * qy;
+var qz2=qz * qz;
+var test=qx * qy + qz * qw;
+var unit=qw2 + qx2 + qy2 + qz2;
+var conv=180 / Math.PI;
+
+if(test > 0.49999 * unit){
+return [0,2 * Math.atan2(qx,qw) * conv,90];}
+
+if(test < -0.49999 * unit){
+return [0,-2 * Math.atan2(qx,qw) * conv,-90];}
+
+
+return [
+MatrixMath.roundTo3Places(
+Math.atan2(2 * qx * qw - 2 * qy * qz,1 - 2 * qx2 - 2 * qz2) * conv),
+
+MatrixMath.roundTo3Places(
+Math.atan2(2 * qy * qw - 2 * qx * qz,1 - 2 * qy2 - 2 * qz2) * conv),
+
+MatrixMath.roundTo3Places(
+Math.asin(2 * qx * qy + 2 * qz * qw) * conv)];},
+
+
+
+
+
+
+
+
+roundTo3Places:function(n){
+var arr=n.toString().split('e');
+return Math.round(arr[0] + 'e' + (arr[1]?+arr[1] - 3:3)) * 0.001;},
+
+
+
+
+
+
+
+
+
+
+
+
+
+decomposeMatrix:function(transformMatrix){
+
+invariant(
+transformMatrix.length === 16,
+'Matrix decomposition needs a list of 3d matrix values, received %s',
+transformMatrix);
+
+
+
+var perspective=[];
+var quaternion=[];
+var scale=[];
+var skew=[];
+var translation=[];
+
+
+
+if(!transformMatrix[15]){
+return;}
+
+var matrix=[];
+var perspectiveMatrix=[];
+for(var i=0;i < 4;i++) {
+matrix.push([]);
+for(var j=0;j < 4;j++) {
+var value=transformMatrix[i * 4 + j] / transformMatrix[15];
+matrix[i].push(value);
+perspectiveMatrix.push(j === 3?0:value);}}
+
+
+perspectiveMatrix[15] = 1;
+
+
+if(!MatrixMath.determinant(perspectiveMatrix)){
+return;}
+
+
+
+if(matrix[0][3] !== 0 || matrix[1][3] !== 0 || matrix[2][3] !== 0){
+
+
+var rightHandSide=[
+matrix[0][3],
+matrix[1][3],
+matrix[2][3],
+matrix[3][3]];
+
+
+
+
+var inversePerspectiveMatrix=MatrixMath.inverse3x3(
+perspectiveMatrix);
+
+var transposedInversePerspectiveMatrix=MatrixMath.transpose4x4(
+inversePerspectiveMatrix);
+
+var perspective=MatrixMath.multiplyVectorByMatrix(
+rightHandSide,
+transposedInversePerspectiveMatrix);}else 
 
 {
-rootNodeID = NodeHandle.getRootNodeID(target);}}
 
-
-ReactNativeEventEmitter._receiveRootNodeIDEvent(
-rootNodeID,
-eventTopLevelType,
-nativeEvent);}}});
+perspective[0] = perspective[1] = perspective[2] = 0;
+perspective[3] = 1;}
 
 
 
+for(var i=0;i < 3;i++) {
+translation[i] = matrix[3][i];}
 
 
-module.exports = ReactNativeEventEmitter;
+
+
+var row=[];
+for(i = 0;i < 3;i++) {
+row[i] = [
+matrix[i][0],
+matrix[i][1],
+matrix[i][2]];}
+
+
+
+
+scale[0] = MatrixMath.v3Length(row[0]);
+row[0] = MatrixMath.v3Normalize(row[0],scale[0]);
+
+
+skew[0] = MatrixMath.v3Dot(row[0],row[1]);
+row[1] = MatrixMath.v3Combine(row[1],row[0],1.0,-skew[0]);
+
+
+skew[0] = MatrixMath.v3Dot(row[0],row[1]);
+row[1] = MatrixMath.v3Combine(row[1],row[0],1.0,-skew[0]);
+
+
+scale[1] = MatrixMath.v3Length(row[1]);
+row[1] = MatrixMath.v3Normalize(row[1],scale[1]);
+skew[0] /= scale[1];
+
+
+skew[1] = MatrixMath.v3Dot(row[0],row[2]);
+row[2] = MatrixMath.v3Combine(row[2],row[0],1.0,-skew[1]);
+skew[2] = MatrixMath.v3Dot(row[1],row[2]);
+row[2] = MatrixMath.v3Combine(row[2],row[1],1.0,-skew[2]);
+
+
+scale[2] = MatrixMath.v3Length(row[2]);
+row[2] = MatrixMath.v3Normalize(row[2],scale[2]);
+skew[1] /= scale[2];
+skew[2] /= scale[2];
+
+
+
+
+var pdum3=MatrixMath.v3Cross(row[1],row[2]);
+if(MatrixMath.v3Dot(row[0],pdum3) < 0){
+for(i = 0;i < 3;i++) {
+scale[i] *= -1;
+row[i][0] *= -1;
+row[i][1] *= -1;
+row[i][2] *= -1;}}
+
+
+
+
+quaternion[0] = 
+0.5 * Math.sqrt(Math.max(1 + row[0][0] - row[1][1] - row[2][2],0));
+quaternion[1] = 
+0.5 * Math.sqrt(Math.max(1 - row[0][0] + row[1][1] - row[2][2],0));
+quaternion[2] = 
+0.5 * Math.sqrt(Math.max(1 - row[0][0] - row[1][1] + row[2][2],0));
+quaternion[3] = 
+0.5 * Math.sqrt(Math.max(1 + row[0][0] + row[1][1] + row[2][2],0));
+
+if(row[2][1] > row[1][2]){
+quaternion[0] = -quaternion[0];}
+
+if(row[0][2] > row[2][0]){
+quaternion[1] = -quaternion[1];}
+
+if(row[1][0] > row[0][1]){
+quaternion[2] = -quaternion[2];}
+
+
+
+var rotationDegrees;
+if(
+quaternion[0] < 0.001 && quaternion[0] >= 0 && 
+quaternion[1] < 0.001 && quaternion[1] >= 0)
+{
+
+rotationDegrees = [0,0,MatrixMath.roundTo3Places(
+Math.atan2(row[0][1],row[0][0]) * 180 / Math.PI)];}else 
+
+{
+rotationDegrees = MatrixMath.quaternionToDegreesXYZ(quaternion,matrix,row);}
+
+
+
+return {
+rotationDegrees:rotationDegrees,
+perspective:perspective,
+quaternion:quaternion,
+scale:scale,
+skew:skew,
+translation:translation,
+
+rotate:rotationDegrees[2],
+scaleX:scale[0],
+scaleY:scale[1],
+translateX:translation[0],
+translateY:translation[1]};}};
+
+
+
+
+
+module.exports = MatrixMath;
 });
-__d('ReactEventEmitterMixin',["EventPluginHub"],function(global, require, module, exports) {  'use strict';
-
-
-
-
-
-
-
-
-
-
-
-
-var EventPluginHub=require('EventPluginHub');
-
-function runEventQueueInBatch(events){
-EventPluginHub.enqueueEvents(events);
-EventPluginHub.processEventQueue();}
-
-
-var ReactEventEmitterMixin={
-
-
-
-
-
-
-
-
-
-
-handleTopLevel:function(
-topLevelType,
-topLevelTarget,
-topLevelTargetID,
-nativeEvent,
-nativeEventTarget){
-var events=EventPluginHub.extractEvents(
-topLevelType,
-topLevelTarget,
-topLevelTargetID,
-nativeEvent,
-nativeEventTarget);
-
-runEventQueueInBatch(events);}};
-
-
-
-module.exports = ReactEventEmitterMixin;
-});
-__d('ReactNativeStyleAttributes',["ImageStylePropTypes","TextStylePropTypes","ViewStylePropTypes","keyMirror","matricesDiffer","processColor","processTransform","sizesDiffer"],function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
+__d('ReactNativeStyleAttributes',["ImageStylePropTypes","TextStylePropTypes","ViewStylePropTypes","keyMirror","matricesDiffer","processColor","sizesDiffer"],function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
 
 
 
@@ -20986,7 +20730,6 @@ var ViewStylePropTypes=require('ViewStylePropTypes');
 var keyMirror=require('keyMirror');
 var matricesDiffer=require('matricesDiffer');
 var processColor=require('processColor');
-var processTransform=require('processTransform');
 var sizesDiffer=require('sizesDiffer');
 
 var ReactNativeStyleAttributes=_extends({},
@@ -20995,7 +20738,6 @@ keyMirror(TextStylePropTypes),
 keyMirror(ImageStylePropTypes));
 
 
-ReactNativeStyleAttributes.transform = {process:processTransform};
 ReactNativeStyleAttributes.transformMatrix = {diff:matricesDiffer};
 ReactNativeStyleAttributes.shadowOffset = {diff:sizesDiffer};
 
@@ -21603,22 +21345,6 @@ __d('TransformPropTypes',["ReactPropTypes"],function(global, require, module, ex
 
 var ReactPropTypes=require('ReactPropTypes');
 
-var ArrayOfNumberPropType=ReactPropTypes.arrayOf(ReactPropTypes.number);
-
-var TransformMatrixPropType=function(
-props,
-propName,
-componentName)
-{
-if(props.transform && props.transformMatrix){
-return new Error(
-'transformMatrix and transform styles cannot be used on the same ' + 
-'component');}
-
-
-return ArrayOfNumberPropType(props,propName,componentName);};
-
-
 var TransformPropTypes={
 transform:ReactPropTypes.arrayOf(
 ReactPropTypes.oneOfType([
@@ -21636,7 +21362,7 @@ ReactPropTypes.shape({skewX:ReactPropTypes.string}),
 ReactPropTypes.shape({skewY:ReactPropTypes.string})])),
 
 
-transformMatrix:TransformMatrixPropType};
+transformMatrix:ReactPropTypes.arrayOf(ReactPropTypes.number)};
 
 
 module.exports = TransformPropTypes;
@@ -21760,11 +21486,6 @@ borderTopRightRadius:ReactPropTypes.number,
 borderBottomLeftRadius:ReactPropTypes.number,
 borderBottomRightRadius:ReactPropTypes.number,
 borderStyle:ReactPropTypes.oneOf(['solid','dotted','dashed']),
-borderWidth:ReactPropTypes.number,
-borderTopWidth:ReactPropTypes.number,
-borderRightWidth:ReactPropTypes.number,
-borderBottomWidth:ReactPropTypes.number,
-borderLeftWidth:ReactPropTypes.number,
 opacity:ReactPropTypes.number,
 overflow:ReactPropTypes.oneOf(['visible','hidden']),
 shadowColor:ReactPropTypes.string,
@@ -21822,7 +21543,7 @@ one[15] !== two[15];};
 
 module.exports = matricesDiffer;
 });
-__d('processColor',["tinycolor","Platform"],function(global, require, module, exports) {  'use strict';
+__d('processColor',["Platform","tinycolor2/tinycolor.js"],function(global, require, module, exports) {  'use strict';
 
 
 
@@ -21834,9 +21555,8 @@ __d('processColor',["tinycolor","Platform"],function(global, require, module, ex
 
 
 
-var tinycolor=require('tinycolor');
+var tinycolor=require('tinycolor2/tinycolor.js');
 var Platform=require('Platform');
-
 
 function processColor(color){
 if(!color || typeof color === 'number'){
@@ -21844,12 +21564,8 @@ return color;}else
 if(color instanceof Array){
 return color.map(processColor);}else 
 {
-var color=tinycolor(color);
-if(color.isValid()){
-var rgb=color.toRgb();
-
-
-var colorInt=Math.round(rgb.a * 255) * (1 << 24) + rgb.r * (1 << 16) + rgb.g * (1 << 8) + rgb.b;
+var hexString=tinycolor(color).toHex8();
+var colorInt=parseInt(hexString,16);
 if(Platform.OS === 'android'){
 
 
@@ -21857,56 +21573,294 @@ if(Platform.OS === 'android'){
 
 colorInt = colorInt | 0x0;}
 
-return colorInt;}
-
-return 0;}}
+return colorInt;}}
 
 
 
 module.exports = processColor;
 });
-__d('tinycolor',[],function(global, require, module, exports) {  'use strict';
+__d('tinycolor2/tinycolor.js',[],function(global, require, module, exports) {  (
 
 
 
-
-
-
-
-
+function(){
 
 var trimLeft=/^[\s,#]+/,
 trimRight=/\s+$/,
 tinyCounter=0,
-mathRound=Math.round,
-mathMin=Math.min,
-mathMax=Math.max;
+math=Math,
+mathRound=math.round,
+mathMin=math.min,
+mathMax=math.max,
+mathRandom=math.random;
 
 function tinycolor(color,opts){
+
+color = color?color:'';
+opts = opts || {};
+
+
+if(color instanceof tinycolor){
+return color;}
+
 
 if(!(this instanceof tinycolor)){
 return new tinycolor(color,opts);}
 
 
-color = color?color:'';
-opts = opts || {};
-
 var rgb=inputToRGB(color);
+this._originalInput = color,
 this._r = rgb.r,
 this._g = rgb.g,
 this._b = rgb.b,
 this._a = rgb.a,
+this._roundA = mathRound(100 * this._a) / 100,
+this._format = opts.format || rgb.format;
+this._gradientType = opts.gradientType;
 
-this._ok = rgb.ok;}
+
+
+
+
+if(this._r < 1){this._r = mathRound(this._r);}
+if(this._g < 1){this._g = mathRound(this._g);}
+if(this._b < 1){this._b = mathRound(this._b);}
+
+this._ok = rgb.ok;
+this._tc_id = tinyCounter++;}
 
 
 tinycolor.prototype = {
+isDark:function(){
+return this.getBrightness() < 128;},
+
+isLight:function(){
+return !this.isDark();},
+
+isValid:function(){
+return this._ok;},
+
+getOriginalInput:function(){
+return this._originalInput;},
+
+getFormat:function(){
+return this._format;},
+
+getAlpha:function(){
+return this._a;},
+
+getBrightness:function(){
+
+var rgb=this.toRgb();
+return (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;},
+
+getLuminance:function(){
+
+var rgb=this.toRgb();
+var RsRGB,GsRGB,BsRGB,R,G,B;
+RsRGB = rgb.r / 255;
+GsRGB = rgb.g / 255;
+BsRGB = rgb.b / 255;
+
+if(RsRGB <= 0.03928){R = RsRGB / 12.92;}else {R = Math.pow((RsRGB + 0.055) / 1.055,2.4);}
+if(GsRGB <= 0.03928){G = GsRGB / 12.92;}else {G = Math.pow((GsRGB + 0.055) / 1.055,2.4);}
+if(BsRGB <= 0.03928){B = BsRGB / 12.92;}else {B = Math.pow((BsRGB + 0.055) / 1.055,2.4);}
+return 0.2126 * R + 0.7152 * G + 0.0722 * B;},
+
+setAlpha:function(value){
+this._a = boundAlpha(value);
+this._roundA = mathRound(100 * this._a) / 100;
+return this;},
+
+toHsv:function(){
+var hsv=rgbToHsv(this._r,this._g,this._b);
+return {h:hsv.h * 360,s:hsv.s,v:hsv.v,a:this._a};},
+
+toHsvString:function(){
+var hsv=rgbToHsv(this._r,this._g,this._b);
+var h=mathRound(hsv.h * 360),s=mathRound(hsv.s * 100),v=mathRound(hsv.v * 100);
+return this._a == 1?
+"hsv(" + h + ", " + s + "%, " + v + "%)":
+"hsva(" + h + ", " + s + "%, " + v + "%, " + this._roundA + ")";},
+
+toHsl:function(){
+var hsl=rgbToHsl(this._r,this._g,this._b);
+return {h:hsl.h * 360,s:hsl.s,l:hsl.l,a:this._a};},
+
+toHslString:function(){
+var hsl=rgbToHsl(this._r,this._g,this._b);
+var h=mathRound(hsl.h * 360),s=mathRound(hsl.s * 100),l=mathRound(hsl.l * 100);
+return this._a == 1?
+"hsl(" + h + ", " + s + "%, " + l + "%)":
+"hsla(" + h + ", " + s + "%, " + l + "%, " + this._roundA + ")";},
+
+toHex:function(allow3Char){
+return rgbToHex(this._r,this._g,this._b,allow3Char);},
+
+toHexString:function(allow3Char){
+return '#' + this.toHex(allow3Char);},
+
+toHex8:function(){
+return rgbaToHex(this._r,this._g,this._b,this._a);},
+
+toHex8String:function(){
+return '#' + this.toHex8();},
+
 toRgb:function(){
 return {r:mathRound(this._r),g:mathRound(this._g),b:mathRound(this._b),a:this._a};},
 
-isValid:function(){
-return this._ok;}};
+toRgbString:function(){
+return this._a == 1?
+"rgb(" + mathRound(this._r) + ", " + mathRound(this._g) + ", " + mathRound(this._b) + ")":
+"rgba(" + mathRound(this._r) + ", " + mathRound(this._g) + ", " + mathRound(this._b) + ", " + this._roundA + ")";},
 
+toPercentageRgb:function(){
+return {r:mathRound(bound01(this._r,255) * 100) + "%",g:mathRound(bound01(this._g,255) * 100) + "%",b:mathRound(bound01(this._b,255) * 100) + "%",a:this._a};},
+
+toPercentageRgbString:function(){
+return this._a == 1?
+"rgb(" + mathRound(bound01(this._r,255) * 100) + "%, " + mathRound(bound01(this._g,255) * 100) + "%, " + mathRound(bound01(this._b,255) * 100) + "%)":
+"rgba(" + mathRound(bound01(this._r,255) * 100) + "%, " + mathRound(bound01(this._g,255) * 100) + "%, " + mathRound(bound01(this._b,255) * 100) + "%, " + this._roundA + ")";},
+
+toName:function(){
+if(this._a === 0){
+return "transparent";}
+
+
+if(this._a < 1){
+return false;}
+
+
+return hexNames[rgbToHex(this._r,this._g,this._b,true)] || false;},
+
+toFilter:function(secondColor){
+var hex8String='#' + rgbaToHex(this._r,this._g,this._b,this._a);
+var secondHex8String=hex8String;
+var gradientType=this._gradientType?"GradientType = 1, ":"";
+
+if(secondColor){
+var s=tinycolor(secondColor);
+secondHex8String = s.toHex8String();}
+
+
+return "progid:DXImageTransform.Microsoft.gradient(" + gradientType + "startColorstr=" + hex8String + ",endColorstr=" + secondHex8String + ")";},
+
+toString:function(format){
+var formatSet=!!format;
+format = format || this._format;
+
+var formattedString=false;
+var hasAlpha=this._a < 1 && this._a >= 0;
+var needsAlphaFormat=!formatSet && hasAlpha && (format === "hex" || format === "hex6" || format === "hex3" || format === "name");
+
+if(needsAlphaFormat){
+
+
+if(format === "name" && this._a === 0){
+return this.toName();}
+
+return this.toRgbString();}
+
+if(format === "rgb"){
+formattedString = this.toRgbString();}
+
+if(format === "prgb"){
+formattedString = this.toPercentageRgbString();}
+
+if(format === "hex" || format === "hex6"){
+formattedString = this.toHexString();}
+
+if(format === "hex3"){
+formattedString = this.toHexString(true);}
+
+if(format === "hex8"){
+formattedString = this.toHex8String();}
+
+if(format === "name"){
+formattedString = this.toName();}
+
+if(format === "hsl"){
+formattedString = this.toHslString();}
+
+if(format === "hsv"){
+formattedString = this.toHsvString();}
+
+
+return formattedString || this.toHexString();},
+
+
+_applyModification:function(fn,args){
+var color=fn.apply(null,[this].concat([].slice.call(args)));
+this._r = color._r;
+this._g = color._g;
+this._b = color._b;
+this.setAlpha(color._a);
+return this;},
+
+lighten:function(){
+return this._applyModification(lighten,arguments);},
+
+brighten:function(){
+return this._applyModification(brighten,arguments);},
+
+darken:function(){
+return this._applyModification(darken,arguments);},
+
+desaturate:function(){
+return this._applyModification(desaturate,arguments);},
+
+saturate:function(){
+return this._applyModification(saturate,arguments);},
+
+greyscale:function(){
+return this._applyModification(greyscale,arguments);},
+
+spin:function(){
+return this._applyModification(spin,arguments);},
+
+
+_applyCombination:function(fn,args){
+return fn.apply(null,[this].concat([].slice.call(args)));},
+
+analogous:function(){
+return this._applyCombination(analogous,arguments);},
+
+complement:function(){
+return this._applyCombination(complement,arguments);},
+
+monochromatic:function(){
+return this._applyCombination(monochromatic,arguments);},
+
+splitcomplement:function(){
+return this._applyCombination(splitcomplement,arguments);},
+
+triad:function(){
+return this._applyCombination(triad,arguments);},
+
+tetrad:function(){
+return this._applyCombination(tetrad,arguments);}};
+
+
+
+
+
+tinycolor.fromRatio = function(color,opts){
+if(typeof color == "object"){
+var newColor={};
+for(var i in color) {
+if(color.hasOwnProperty(i)){
+if(i === "a"){
+newColor[i] = color[i];}else 
+
+{
+newColor[i] = convertToPercentage(color[i]);}}}
+
+
+
+color = newColor;}
+
+
+return tinycolor(color,opts);};
 
 
 
@@ -21925,6 +21879,7 @@ return this._ok;}};
 
 
 function inputToRGB(color){
+
 var rgb={r:0,g:0,b:0};
 var a=1;
 var ok=false;
@@ -21937,19 +21892,22 @@ color = stringInputToObject(color);}
 if(typeof color == "object"){
 if(color.hasOwnProperty("r") && color.hasOwnProperty("g") && color.hasOwnProperty("b")){
 rgb = rgbToRgb(color.r,color.g,color.b);
-ok = true;}else 
+ok = true;
+format = String(color.r).substr(-1) === "%"?"prgb":"rgb";}else 
 
 if(color.hasOwnProperty("h") && color.hasOwnProperty("s") && color.hasOwnProperty("v")){
 color.s = convertToPercentage(color.s);
 color.v = convertToPercentage(color.v);
 rgb = hsvToRgb(color.h,color.s,color.v);
-ok = true;}else 
+ok = true;
+format = "hsv";}else 
 
 if(color.hasOwnProperty("h") && color.hasOwnProperty("s") && color.hasOwnProperty("l")){
 color.s = convertToPercentage(color.s);
 color.l = convertToPercentage(color.l);
 rgb = hslToRgb(color.h,color.s,color.l);
-ok = true;}
+ok = true;
+format = "hsl";}
 
 
 if(color.hasOwnProperty("a")){
@@ -21961,6 +21919,7 @@ a = boundAlpha(a);
 
 return {
 ok:ok,
+format:color.format || format,
 r:mathMin(255,mathMax(rgb.r,0)),
 g:mathMin(255,mathMax(rgb.g,0)),
 b:mathMin(255,mathMax(rgb.b,0)),
@@ -21986,6 +21945,37 @@ r:bound01(r,255) * 255,
 g:bound01(g,255) * 255,
 b:bound01(b,255) * 255};}
 
+
+
+
+
+
+
+function rgbToHsl(r,g,b){
+
+r = bound01(r,255);
+g = bound01(g,255);
+b = bound01(b,255);
+
+var max=mathMax(r,g,b),min=mathMin(r,g,b);
+var h,s,l=(max + min) / 2;
+
+if(max == min){
+h = s = 0;}else 
+
+{
+var d=max - min;
+s = l > 0.5?d / (2 - max - min):d / (max + min);
+switch(max){
+case r:h = (g - b) / d + (g < b?6:0);break;
+case g:h = (b - r) / d + 2;break;
+case b:h = (r - g) / d + 4;break;}
+
+
+h /= 6;}
+
+
+return {h:h,s:s,l:l};}
 
 
 
@@ -22026,7 +22016,38 @@ return {r:r * 255,g:g * 255,b:b * 255};}
 
 
 
+function rgbToHsv(r,g,b){
+
+r = bound01(r,255);
+g = bound01(g,255);
+b = bound01(b,255);
+
+var max=mathMax(r,g,b),min=mathMin(r,g,b);
+var h,s,v=max;
+
+var d=max - min;
+s = max === 0?0:d / max;
+
+if(max == min){
+h = 0;}else 
+
+{
+switch(max){
+case r:h = (g - b) / d + (g < b?6:0);break;
+case g:h = (b - r) / d + 2;break;
+case b:h = (r - g) / d + 4;break;}
+
+h /= 6;}
+
+return {h:h,s:s,v:v};}
+
+
+
+
+
+
 function hsvToRgb(h,s,v){
+
 h = bound01(h,360) * 6;
 s = bound01(s,100);
 v = bound01(v,100);
@@ -22042,6 +22063,308 @@ g=[t,v,v,q,p,p][mod],
 b=[p,p,t,v,v,q][mod];
 
 return {r:r * 255,g:g * 255,b:b * 255};}
+
+
+
+
+
+
+function rgbToHex(r,g,b,allow3Char){
+
+var hex=[
+pad2(mathRound(r).toString(16)),
+pad2(mathRound(g).toString(16)),
+pad2(mathRound(b).toString(16))];
+
+
+
+if(allow3Char && hex[0].charAt(0) == hex[0].charAt(1) && hex[1].charAt(0) == hex[1].charAt(1) && hex[2].charAt(0) == hex[2].charAt(1)){
+return hex[0].charAt(0) + hex[1].charAt(0) + hex[2].charAt(0);}
+
+
+return hex.join("");}
+
+
+
+
+
+function rgbaToHex(r,g,b,a){
+
+var hex=[
+pad2(convertDecimalToHex(a)),
+pad2(mathRound(r).toString(16)),
+pad2(mathRound(g).toString(16)),
+pad2(mathRound(b).toString(16))];
+
+
+return hex.join("");}
+
+
+
+
+tinycolor.equals = function(color1,color2){
+if(!color1 || !color2){return false;}
+return tinycolor(color1).toRgbString() == tinycolor(color2).toRgbString();};
+
+tinycolor.random = function(){
+return tinycolor.fromRatio({
+r:mathRandom(),
+g:mathRandom(),
+b:mathRandom()});};
+
+
+
+
+
+
+
+
+
+function desaturate(color,amount){
+amount = amount === 0?0:amount || 10;
+var hsl=tinycolor(color).toHsl();
+hsl.s -= amount / 100;
+hsl.s = clamp01(hsl.s);
+return tinycolor(hsl);}
+
+
+function saturate(color,amount){
+amount = amount === 0?0:amount || 10;
+var hsl=tinycolor(color).toHsl();
+hsl.s += amount / 100;
+hsl.s = clamp01(hsl.s);
+return tinycolor(hsl);}
+
+
+function greyscale(color){
+return tinycolor(color).desaturate(100);}
+
+
+function lighten(color,amount){
+amount = amount === 0?0:amount || 10;
+var hsl=tinycolor(color).toHsl();
+hsl.l += amount / 100;
+hsl.l = clamp01(hsl.l);
+return tinycolor(hsl);}
+
+
+function brighten(color,amount){
+amount = amount === 0?0:amount || 10;
+var rgb=tinycolor(color).toRgb();
+rgb.r = mathMax(0,mathMin(255,rgb.r - mathRound(255 * -(amount / 100))));
+rgb.g = mathMax(0,mathMin(255,rgb.g - mathRound(255 * -(amount / 100))));
+rgb.b = mathMax(0,mathMin(255,rgb.b - mathRound(255 * -(amount / 100))));
+return tinycolor(rgb);}
+
+
+function darken(color,amount){
+amount = amount === 0?0:amount || 10;
+var hsl=tinycolor(color).toHsl();
+hsl.l -= amount / 100;
+hsl.l = clamp01(hsl.l);
+return tinycolor(hsl);}
+
+
+
+
+function spin(color,amount){
+var hsl=tinycolor(color).toHsl();
+var hue=(mathRound(hsl.h) + amount) % 360;
+hsl.h = hue < 0?360 + hue:hue;
+return tinycolor(hsl);}
+
+
+
+
+
+
+
+function complement(color){
+var hsl=tinycolor(color).toHsl();
+hsl.h = (hsl.h + 180) % 360;
+return tinycolor(hsl);}
+
+
+function triad(color){
+var hsl=tinycolor(color).toHsl();
+var h=hsl.h;
+return [
+tinycolor(color),
+tinycolor({h:(h + 120) % 360,s:hsl.s,l:hsl.l}),
+tinycolor({h:(h + 240) % 360,s:hsl.s,l:hsl.l})];}
+
+
+
+function tetrad(color){
+var hsl=tinycolor(color).toHsl();
+var h=hsl.h;
+return [
+tinycolor(color),
+tinycolor({h:(h + 90) % 360,s:hsl.s,l:hsl.l}),
+tinycolor({h:(h + 180) % 360,s:hsl.s,l:hsl.l}),
+tinycolor({h:(h + 270) % 360,s:hsl.s,l:hsl.l})];}
+
+
+
+function splitcomplement(color){
+var hsl=tinycolor(color).toHsl();
+var h=hsl.h;
+return [
+tinycolor(color),
+tinycolor({h:(h + 72) % 360,s:hsl.s,l:hsl.l}),
+tinycolor({h:(h + 216) % 360,s:hsl.s,l:hsl.l})];}
+
+
+
+function analogous(color,results,slices){
+results = results || 6;
+slices = slices || 30;
+
+var hsl=tinycolor(color).toHsl();
+var part=360 / slices;
+var ret=[tinycolor(color)];
+
+for(hsl.h = (hsl.h - (part * results >> 1) + 720) % 360;--results;) {
+hsl.h = (hsl.h + part) % 360;
+ret.push(tinycolor(hsl));}
+
+return ret;}
+
+
+function monochromatic(color,results){
+results = results || 6;
+var hsv=tinycolor(color).toHsv();
+var h=hsv.h,s=hsv.s,v=hsv.v;
+var ret=[];
+var modification=1 / results;
+
+while(results--) {
+ret.push(tinycolor({h:h,s:s,v:v}));
+v = (v + modification) % 1;}
+
+
+return ret;}
+
+
+
+
+
+tinycolor.mix = function(color1,color2,amount){
+amount = amount === 0?0:amount || 50;
+
+var rgb1=tinycolor(color1).toRgb();
+var rgb2=tinycolor(color2).toRgb();
+
+var p=amount / 100;
+var w=p * 2 - 1;
+var a=rgb2.a - rgb1.a;
+
+var w1;
+
+if(w * a == -1){
+w1 = w;}else 
+{
+w1 = (w + a) / (1 + w * a);}
+
+
+w1 = (w1 + 1) / 2;
+
+var w2=1 - w1;
+
+var rgba={
+r:rgb2.r * w1 + rgb1.r * w2,
+g:rgb2.g * w1 + rgb1.g * w2,
+b:rgb2.b * w1 + rgb1.b * w2,
+a:rgb2.a * p + rgb1.a * (1 - p)};
+
+
+return tinycolor(rgba);};
+
+
+
+
+
+
+
+
+
+tinycolor.readability = function(color1,color2){
+var c1=tinycolor(color1);
+var c2=tinycolor(color2);
+return (Math.max(c1.getLuminance(),c2.getLuminance()) + 0.05) / (Math.min(c1.getLuminance(),c2.getLuminance()) + 0.05);};
+
+
+
+
+
+
+
+
+
+
+
+
+
+tinycolor.isReadable = function(color1,color2,wcag2){
+var readability=tinycolor.readability(color1,color2);
+var wcag2Parms,out;
+
+out = false;
+
+wcag2Parms = validateWCAG2Parms(wcag2);
+switch(wcag2Parms.level + wcag2Parms.size){
+case "AAsmall":
+case "AAAlarge":
+out = readability >= 4.5;
+break;
+case "AAlarge":
+out = readability >= 3;
+break;
+case "AAAsmall":
+out = readability >= 7;
+break;}
+
+return out;};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+tinycolor.mostReadable = function(baseColor,colorList,args){
+var bestColor=null;
+var bestScore=0;
+var readability;
+var includeFallbackColors,level,size;
+args = args || {};
+includeFallbackColors = args.includeFallbackColors;
+level = args.level;
+size = args.size;
+
+for(var i=0;i < colorList.length;i++) {
+readability = tinycolor.readability(baseColor,colorList[i]);
+if(readability > bestScore){
+bestScore = readability;
+bestColor = tinycolor(colorList[i]);}}
+
+
+
+if(tinycolor.isReadable(baseColor,bestColor,{"level":level,"size":size}) || !includeFallbackColors){
+return bestColor;}else 
+
+{
+args.includeFallbackColors = false;
+return tinycolor.mostReadable(baseColor,["#fff","#000"],args);}};
+
+
 
 
 
@@ -22200,6 +22523,24 @@ yellowgreen:"9acd32"};
 
 
 
+var hexNames=tinycolor.hexNames = flip(names);
+
+
+
+
+
+
+function flip(o){
+var flipped={};
+for(var i in o) {
+if(o.hasOwnProperty(i)){
+flipped[o[i]] = i;}}
+
+
+return flipped;}
+
+
+
 function boundAlpha(a){
 a = parseFloat(a);
 
@@ -22223,12 +22564,17 @@ n = parseInt(n * max,10) / 100;}
 
 
 
-if(Math.abs(n - max) < 0.000001){
+if(math.abs(n - max) < 0.000001){
 return 1;}
 
 
 
 return n % max / parseFloat(max);}
+
+
+
+function clamp01(val){
+return mathMin(1,mathMax(0,val));}
 
 
 
@@ -22248,6 +22594,11 @@ return typeof n === "string" && n.indexOf('%') != -1;}
 
 
 
+function pad2(c){
+return c.length == 1?'0' + c:'' + c;}
+
+
+
 function convertToPercentage(n){
 if(n <= 1){
 n = n * 100 + "%";}
@@ -22256,7 +22607,17 @@ n = n * 100 + "%";}
 return n;}
 
 
+
+function convertDecimalToHex(d){
+return Math.round(parseFloat(d) * 255).toString(16);}
+
+
+function convertHexToDecimal(h){
+return parseIntFromHex(h) / 255;}
+
+
 var matchers=(function(){
+
 
 var CSS_INTEGER="[-\\+]?\\d+%?";
 
@@ -22280,7 +22641,8 @@ hsla:new RegExp("hsla" + PERMISSIVE_MATCH4),
 hsv:new RegExp("hsv" + PERMISSIVE_MATCH3),
 hsva:new RegExp("hsva" + PERMISSIVE_MATCH4),
 hex3:/^([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,
-hex6:/^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/};})();
+hex6:/^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/,
+hex8:/^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/};})();
 
 
 
@@ -22288,6 +22650,7 @@ hex6:/^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/};})();
 
 
 function stringInputToObject(color){
+
 color = color.replace(trimLeft,'').replace(trimRight,'').toLowerCase();
 var named=false;
 if(names[color]){
@@ -22321,6 +22684,15 @@ return {h:match[1],s:match[2],v:match[3]};}
 if(match = matchers.hsva.exec(color)){
 return {h:match[1],s:match[2],v:match[3],a:match[4]};}
 
+if(match = matchers.hex8.exec(color)){
+return {
+a:convertHexToDecimal(match[1]),
+r:parseIntFromHex(match[2]),
+g:parseIntFromHex(match[3]),
+b:parseIntFromHex(match[4]),
+format:named?"name":"hex8"};}
+
+
 if(match = matchers.hex6.exec(color)){
 return {
 r:parseIntFromHex(match[1]),
@@ -22341,781 +22713,32 @@ format:named?"name":"hex"};}
 return false;}
 
 
-module.exports = tinycolor;
-});
-__d('processTransform',["MatrixMath","Platform","invariant","stringifySafe"],function(global, require, module, exports) {  'use strict';
+function validateWCAG2Parms(parms){
 
 
+var level,size;
+parms = parms || {"level":"AA","size":"small"};
+level = (parms.level || "AA").toUpperCase();
+size = (parms.size || "small").toLowerCase();
+if(level !== "AA" && level !== "AAA"){
+level = "AA";}
 
+if(size !== "small" && size !== "large"){
+size = "small";}
 
+return {"level":level,"size":size};}
 
 
+if(typeof module !== "undefined" && module.exports){
+module.exports = tinycolor;}else 
 
 
+if(typeof define === 'function' && define.amd){
+define(function(){return tinycolor;});}else 
 
-
-
-
-var MatrixMath=require('MatrixMath');
-var Platform=require('Platform');
-
-var invariant=require('invariant');
-var stringifySafe=require('stringifySafe');
-
-
-
-
-
-
-
-
-
-function processTransform(transform){
-var result=MatrixMath.createIdentityMatrix();
-
-transform.forEach(function(transformation){
-var key=Object.keys(transformation)[0];
-var value=transformation[key];
-if(__DEV__){
-_validateTransform(key,value,transformation);}
-
-
-switch(key){
-case 'matrix':
-MatrixMath.multiplyInto(result,result,value);
-break;
-case 'perspective':
-_multiplyTransform(result,MatrixMath.reusePerspectiveCommand,[value]);
-break;
-case 'rotateX':
-_multiplyTransform(result,MatrixMath.reuseRotateXCommand,[_convertToRadians(value)]);
-break;
-case 'rotateY':
-_multiplyTransform(result,MatrixMath.reuseRotateYCommand,[_convertToRadians(value)]);
-break;
-case 'rotate':
-case 'rotateZ':
-_multiplyTransform(result,MatrixMath.reuseRotateZCommand,[_convertToRadians(value)]);
-break;
-case 'scale':
-_multiplyTransform(result,MatrixMath.reuseScaleCommand,[value]);
-break;
-case 'scaleX':
-_multiplyTransform(result,MatrixMath.reuseScaleXCommand,[value]);
-break;
-case 'scaleY':
-_multiplyTransform(result,MatrixMath.reuseScaleYCommand,[value]);
-break;
-case 'translate':
-_multiplyTransform(result,MatrixMath.reuseTranslate3dCommand,[value[0],value[1],value[2] || 0]);
-break;
-case 'translateX':
-_multiplyTransform(result,MatrixMath.reuseTranslate2dCommand,[value,0]);
-break;
-case 'translateY':
-_multiplyTransform(result,MatrixMath.reuseTranslate2dCommand,[0,value]);
-break;
-case 'skewX':
-_multiplyTransform(result,MatrixMath.reuseSkewXCommand,[_convertToRadians(value)]);
-break;
-case 'skewY':
-_multiplyTransform(result,MatrixMath.reuseSkewYCommand,[_convertToRadians(value)]);
-break;
-default:
-throw new Error('Invalid transform name: ' + key);}});
-
-
-
-
-
-
-
-if(Platform.OS === 'android'){
-return MatrixMath.decomposeMatrix(result);}
-
-return result;}
-
-
-
-
-
-function _multiplyTransform(
-result,
-matrixMathFunction,
-args)
-{
-var matrixToApply=MatrixMath.createIdentityMatrix();
-var argsWithIdentity=[matrixToApply].concat(args);
-matrixMathFunction.apply(this,argsWithIdentity);
-MatrixMath.multiplyInto(result,result,matrixToApply);}
-
-
-
-
-
-
-function _convertToRadians(value){
-var floatValue=parseFloat(value,10);
-return value.indexOf('rad') > -1?floatValue:floatValue * Math.PI / 180;}
-
-
-function _validateTransform(key,value,transformation){
-invariant(
-!value.getValue,
-'You passed an Animated.Value to a normal component. ' + 
-'You need to wrap that component in an Animated. For example, ' + 
-'replace <View /> by <Animated.View />.');
-
-
-var multivalueTransforms=[
-'matrix',
-'translate'];
-
-if(multivalueTransforms.indexOf(key) !== -1){
-invariant(
-Array.isArray(value),
-'Transform with key of %s must have an array as the value: %s',
-key,
-stringifySafe(transformation));}
-
-
-switch(key){
-case 'matrix':
-invariant(
-value.length === 9 || value.length === 16,
-'Matrix transform must have a length of 9 (2d) or 16 (3d). ' + 
-'Provided matrix has a length of %s: %s',
-value.length,
-stringifySafe(transformation));
-
-break;
-case 'translate':
-break;
-case 'rotateX':
-case 'rotateY':
-case 'rotateZ':
-case 'rotate':
-case 'skewX':
-case 'skewY':
-invariant(
-typeof value === 'string',
-'Transform with key of "%s" must be a string: %s',
-key,
-stringifySafe(transformation));
-
-invariant(
-value.indexOf('deg') > -1 || value.indexOf('rad') > -1,
-'Rotate transform must be expressed in degrees (deg) or radians ' + 
-'(rad): %s',
-stringifySafe(transformation));
-
-break;
-default:
-invariant(
-typeof value === 'number',
-'Transform with key of "%s" must be a number: %s',
-key,
-stringifySafe(transformation));}}
-
-
-
-
-module.exports = processTransform;
-});
-__d('MatrixMath',["invariant"],function(global, require, module, exports) {  'use strict';
-
-
-
-
-
-
-
-var invariant=require('invariant');
-
-
-
-
-
-var MatrixMath={
-createIdentityMatrix:function(){
-return [
-1,0,0,0,
-0,1,0,0,
-0,0,1,0,
-0,0,0,1];},
-
-
-
-createCopy:function(m){
-return [
-m[0],m[1],m[2],m[3],
-m[4],m[5],m[6],m[7],
-m[8],m[9],m[10],m[11],
-m[12],m[13],m[14],m[15]];},
-
-
-
-createOrthographic:function(left,right,bottom,top,near,far){
-var a=2 / (right - left);
-var b=2 / (top - bottom);
-var c=-2 / (far - near);
-
-var tx=-(right + left) / (right - left);
-var ty=-(top + bottom) / (top - bottom);
-var tz=-(far + near) / (far - near);
-
-return [
-a,0,0,0,
-0,b,0,0,
-0,0,c,0,
-tx,ty,tz,1];},
-
-
-
-createFrustum:function(left,right,bottom,top,near,far){
-var r_width=1 / (right - left);
-var r_height=1 / (top - bottom);
-var r_depth=1 / (near - far);
-var x=2 * (near * r_width);
-var y=2 * (near * r_height);
-var A=(right + left) * r_width;
-var B=(top + bottom) * r_height;
-var C=(far + near) * r_depth;
-var D=2 * (far * near * r_depth);
-return [
-x,0,0,0,
-0,y,0,0,
-A,B,C,-1,
-0,0,D,0];},
-
-
-
-createPerspective:function(fovInRadians,aspect,near,far){
-var h=1 / Math.tan(fovInRadians);
-var r_depth=1 / (near - far);
-var C=(far + near) * r_depth;
-var D=2 * (far * near * r_depth);
-return [
-h / aspect,0,0,0,
-0,h,0,0,
-0,0,C,-1,
-0,0,D,0];},
-
-
-
-createTranslate2d:function(x,y){
-var mat=MatrixMath.createIdentityMatrix();
-MatrixMath.reuseTranslate2dCommand(mat,x,y);
-return mat;},
-
-
-reuseTranslate2dCommand:function(matrixCommand,x,y){
-matrixCommand[12] = x;
-matrixCommand[13] = y;},
-
-
-reuseTranslate3dCommand:function(matrixCommand,x,y,z){
-matrixCommand[12] = x;
-matrixCommand[13] = y;
-matrixCommand[14] = z;},
-
-
-createScale:function(factor){
-var mat=MatrixMath.createIdentityMatrix();
-MatrixMath.reuseScaleCommand(mat,factor);
-return mat;},
-
-
-reuseScaleCommand:function(matrixCommand,factor){
-matrixCommand[0] = factor;
-matrixCommand[5] = factor;},
-
-
-reuseScale3dCommand:function(matrixCommand,x,y,z){
-matrixCommand[0] = x;
-matrixCommand[5] = y;
-matrixCommand[10] = z;},
-
-
-reusePerspectiveCommand:function(matrixCommand,p){
-matrixCommand[11] = -1 / p;},
-
-
-reuseScaleXCommand:function(matrixCommand,factor){
-matrixCommand[0] = factor;},
-
-
-reuseScaleYCommand:function(matrixCommand,factor){
-matrixCommand[5] = factor;},
-
-
-reuseScaleZCommand:function(matrixCommand,factor){
-matrixCommand[10] = factor;},
-
-
-reuseRotateXCommand:function(matrixCommand,radians){
-matrixCommand[5] = Math.cos(radians);
-matrixCommand[6] = Math.sin(radians);
-matrixCommand[9] = -Math.sin(radians);
-matrixCommand[10] = Math.cos(radians);},
-
-
-reuseRotateYCommand:function(matrixCommand,amount){
-matrixCommand[0] = Math.cos(amount);
-matrixCommand[2] = -Math.sin(amount);
-matrixCommand[8] = Math.sin(amount);
-matrixCommand[10] = Math.cos(amount);},
-
-
-
-reuseRotateZCommand:function(matrixCommand,radians){
-matrixCommand[0] = Math.cos(radians);
-matrixCommand[1] = Math.sin(radians);
-matrixCommand[4] = -Math.sin(radians);
-matrixCommand[5] = Math.cos(radians);},
-
-
-createRotateZ:function(radians){
-var mat=MatrixMath.createIdentityMatrix();
-MatrixMath.reuseRotateZCommand(mat,radians);
-return mat;},
-
-
-reuseSkewXCommand:function(matrixCommand,radians){
-matrixCommand[4] = Math.sin(radians);
-matrixCommand[5] = Math.cos(radians);},
-
-
-reuseSkewYCommand:function(matrixCommand,radians){
-matrixCommand[0] = Math.cos(radians);
-matrixCommand[1] = Math.sin(radians);},
-
-
-multiplyInto:function(out,a,b){
-var a00=a[0],a01=a[1],a02=a[2],a03=a[3],
-a10=a[4],a11=a[5],a12=a[6],a13=a[7],
-a20=a[8],a21=a[9],a22=a[10],a23=a[11],
-a30=a[12],a31=a[13],a32=a[14],a33=a[15];
-
-var b0=b[0],b1=b[1],b2=b[2],b3=b[3];
-out[0] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-out[1] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-out[2] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-out[3] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-
-b0 = b[4];b1 = b[5];b2 = b[6];b3 = b[7];
-out[4] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-out[5] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-out[6] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-out[7] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-
-b0 = b[8];b1 = b[9];b2 = b[10];b3 = b[11];
-out[8] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-out[9] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-out[10] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-out[11] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-
-b0 = b[12];b1 = b[13];b2 = b[14];b3 = b[15];
-out[12] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-out[13] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-out[14] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-out[15] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;},
-
-
-determinant:function(matrix){var 
-
-m00=
-
-
-
-matrix[0];var m01=matrix[1];var m02=matrix[2];var m03=matrix[3];var m10=matrix[4];var m11=matrix[5];var m12=matrix[6];var m13=matrix[7];var m20=matrix[8];var m21=matrix[9];var m22=matrix[10];var m23=matrix[11];var m30=matrix[12];var m31=matrix[13];var m32=matrix[14];var m33=matrix[15];
-return (
-m03 * m12 * m21 * m30 - m02 * m13 * m21 * m30 - 
-m03 * m11 * m22 * m30 + m01 * m13 * m22 * m30 + 
-m02 * m11 * m23 * m30 - m01 * m12 * m23 * m30 - 
-m03 * m12 * m20 * m31 + m02 * m13 * m20 * m31 + 
-m03 * m10 * m22 * m31 - m00 * m13 * m22 * m31 - 
-m02 * m10 * m23 * m31 + m00 * m12 * m23 * m31 + 
-m03 * m11 * m20 * m32 - m01 * m13 * m20 * m32 - 
-m03 * m10 * m21 * m32 + m00 * m13 * m21 * m32 + 
-m01 * m10 * m23 * m32 - m00 * m11 * m23 * m32 - 
-m02 * m11 * m20 * m33 + m01 * m12 * m20 * m33 + 
-m02 * m10 * m21 * m33 - m00 * m12 * m21 * m33 - 
-m01 * m10 * m22 * m33 + m00 * m11 * m22 * m33);},
-
-
-
-
-
-
-
-
-
-
-inverse:function(matrix){
-var det=MatrixMath.determinant(matrix);
-if(!det){
-return matrix;}var 
-
-
-m00=
-
-
-
-matrix[0];var m01=matrix[1];var m02=matrix[2];var m03=matrix[3];var m10=matrix[4];var m11=matrix[5];var m12=matrix[6];var m13=matrix[7];var m20=matrix[8];var m21=matrix[9];var m22=matrix[10];var m23=matrix[11];var m30=matrix[12];var m31=matrix[13];var m32=matrix[14];var m33=matrix[15];
-return [
-(m12 * m23 * m31 - m13 * m22 * m31 + m13 * m21 * m32 - m11 * m23 * m32 - m12 * m21 * m33 + m11 * m22 * m33) / det,
-(m03 * m22 * m31 - m02 * m23 * m31 - m03 * m21 * m32 + m01 * m23 * m32 + m02 * m21 * m33 - m01 * m22 * m33) / det,
-(m02 * m13 * m31 - m03 * m12 * m31 + m03 * m11 * m32 - m01 * m13 * m32 - m02 * m11 * m33 + m01 * m12 * m33) / det,
-(m03 * m12 * m21 - m02 * m13 * m21 - m03 * m11 * m22 + m01 * m13 * m22 + m02 * m11 * m23 - m01 * m12 * m23) / det,
-(m13 * m22 * m30 - m12 * m23 * m30 - m13 * m20 * m32 + m10 * m23 * m32 + m12 * m20 * m33 - m10 * m22 * m33) / det,
-(m02 * m23 * m30 - m03 * m22 * m30 + m03 * m20 * m32 - m00 * m23 * m32 - m02 * m20 * m33 + m00 * m22 * m33) / det,
-(m03 * m12 * m30 - m02 * m13 * m30 - m03 * m10 * m32 + m00 * m13 * m32 + m02 * m10 * m33 - m00 * m12 * m33) / det,
-(m02 * m13 * m20 - m03 * m12 * m20 + m03 * m10 * m22 - m00 * m13 * m22 - m02 * m10 * m23 + m00 * m12 * m23) / det,
-(m11 * m23 * m30 - m13 * m21 * m30 + m13 * m20 * m31 - m10 * m23 * m31 - m11 * m20 * m33 + m10 * m21 * m33) / det,
-(m03 * m21 * m30 - m01 * m23 * m30 - m03 * m20 * m31 + m00 * m23 * m31 + m01 * m20 * m33 - m00 * m21 * m33) / det,
-(m01 * m13 * m30 - m03 * m11 * m30 + m03 * m10 * m31 - m00 * m13 * m31 - m01 * m10 * m33 + m00 * m11 * m33) / det,
-(m03 * m11 * m20 - m01 * m13 * m20 - m03 * m10 * m21 + m00 * m13 * m21 + m01 * m10 * m23 - m00 * m11 * m23) / det,
-(m12 * m21 * m30 - m11 * m22 * m30 - m12 * m20 * m31 + m10 * m22 * m31 + m11 * m20 * m32 - m10 * m21 * m32) / det,
-(m01 * m22 * m30 - m02 * m21 * m30 + m02 * m20 * m31 - m00 * m22 * m31 - m01 * m20 * m32 + m00 * m21 * m32) / det,
-(m02 * m11 * m30 - m01 * m12 * m30 - m02 * m10 * m31 + m00 * m12 * m31 + m01 * m10 * m32 - m00 * m11 * m32) / det,
-(m01 * m12 * m20 - m02 * m11 * m20 + m02 * m10 * m21 - m00 * m12 * m21 - m01 * m10 * m22 + m00 * m11 * m22) / det];},
-
-
-
-
-
-
-transpose:function(m){
-return [
-m[0],m[4],m[8],m[12],
-m[1],m[5],m[9],m[13],
-m[2],m[6],m[10],m[14],
-m[3],m[7],m[11],m[15]];},
-
-
-
-
-
-
-multiplyVectorByMatrix:function(
-v,
-m)
-{var 
-vx=v[0];var vy=v[1];var vz=v[2];var vw=v[3];
-return [
-vx * m[0] + vy * m[4] + vz * m[8] + vw * m[12],
-vx * m[1] + vy * m[5] + vz * m[9] + vw * m[13],
-vx * m[2] + vy * m[6] + vz * m[10] + vw * m[14],
-vx * m[3] + vy * m[7] + vz * m[11] + vw * m[15]];},
-
-
-
-
-
-
-v3Length:function(a){
-return Math.sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);},
-
-
-
-
-
-v3Normalize:function(
-vector,
-v3Length)
-{
-var im=1 / (v3Length || MatrixMath.v3Length(vector));
-return [
-vector[0] * im,
-vector[1] * im,
-vector[2] * im];},
-
-
-
-
-
-
-
-v3Dot:function(a,b){
-return a[0] * b[0] + 
-a[1] * b[1] + 
-a[2] * b[2];},
-
-
-
-
-
-
-v3Combine:function(
-a,
-b,
-aScale,
-bScale)
-{
-return [
-aScale * a[0] + bScale * b[0],
-aScale * a[1] + bScale * b[1],
-aScale * a[2] + bScale * b[2]];},
-
-
-
-
-
-
-
-v3Cross:function(a,b){
-return [
-a[1] * b[2] - a[2] * b[1],
-a[2] * b[0] - a[0] * b[2],
-a[0] * b[1] - a[1] * b[0]];},
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-quaternionToDegreesXYZ:function(q,matrix,row){var 
-qx=q[0];var qy=q[1];var qz=q[2];var qw=q[3];
-var qw2=qw * qw;
-var qx2=qx * qx;
-var qy2=qy * qy;
-var qz2=qz * qz;
-var test=qx * qy + qz * qw;
-var unit=qw2 + qx2 + qy2 + qz2;
-var conv=180 / Math.PI;
-
-if(test > 0.49999 * unit){
-return [0,2 * Math.atan2(qx,qw) * conv,90];}
-
-if(test < -0.49999 * unit){
-return [0,-2 * Math.atan2(qx,qw) * conv,-90];}
-
-
-return [
-MatrixMath.roundTo3Places(
-Math.atan2(2 * qx * qw - 2 * qy * qz,1 - 2 * qx2 - 2 * qz2) * conv),
-
-MatrixMath.roundTo3Places(
-Math.atan2(2 * qy * qw - 2 * qx * qz,1 - 2 * qy2 - 2 * qz2) * conv),
-
-MatrixMath.roundTo3Places(
-Math.asin(2 * qx * qy + 2 * qz * qw) * conv)];},
-
-
-
-
-
-
-
-
-roundTo3Places:function(n){
-var arr=n.toString().split('e');
-return Math.round(arr[0] + 'e' + (arr[1]?+arr[1] - 3:3)) * 0.001;},
-
-
-
-
-
-
-
-
-
-
-
-
-
-decomposeMatrix:function(transformMatrix){
-
-invariant(
-transformMatrix.length === 16,
-'Matrix decomposition needs a list of 3d matrix values, received %s',
-transformMatrix);
-
-
-
-var perspective=[];
-var quaternion=[];
-var scale=[];
-var skew=[];
-var translation=[];
-
-
-
-if(!transformMatrix[15]){
-return;}
-
-var matrix=[];
-var perspectiveMatrix=[];
-for(var i=0;i < 4;i++) {
-matrix.push([]);
-for(var j=0;j < 4;j++) {
-var value=transformMatrix[i * 4 + j] / transformMatrix[15];
-matrix[i].push(value);
-perspectiveMatrix.push(j === 3?0:value);}}
-
-
-perspectiveMatrix[15] = 1;
-
-
-if(!MatrixMath.determinant(perspectiveMatrix)){
-return;}
-
-
-
-if(matrix[0][3] !== 0 || matrix[1][3] !== 0 || matrix[2][3] !== 0){
-
-
-var rightHandSide=[
-matrix[0][3],
-matrix[1][3],
-matrix[2][3],
-matrix[3][3]];
-
-
-
-
-var inversePerspectiveMatrix=MatrixMath.inverse3x3(
-perspectiveMatrix);
-
-var transposedInversePerspectiveMatrix=MatrixMath.transpose4x4(
-inversePerspectiveMatrix);
-
-var perspective=MatrixMath.multiplyVectorByMatrix(
-rightHandSide,
-transposedInversePerspectiveMatrix);}else 
 
 {
-
-perspective[0] = perspective[1] = perspective[2] = 0;
-perspective[3] = 1;}
-
-
-
-for(var i=0;i < 3;i++) {
-translation[i] = matrix[3][i];}
-
-
-
-
-var row=[];
-for(i = 0;i < 3;i++) {
-row[i] = [
-matrix[i][0],
-matrix[i][1],
-matrix[i][2]];}
-
-
-
-
-scale[0] = MatrixMath.v3Length(row[0]);
-row[0] = MatrixMath.v3Normalize(row[0],scale[0]);
-
-
-skew[0] = MatrixMath.v3Dot(row[0],row[1]);
-row[1] = MatrixMath.v3Combine(row[1],row[0],1.0,-skew[0]);
-
-
-skew[0] = MatrixMath.v3Dot(row[0],row[1]);
-row[1] = MatrixMath.v3Combine(row[1],row[0],1.0,-skew[0]);
-
-
-scale[1] = MatrixMath.v3Length(row[1]);
-row[1] = MatrixMath.v3Normalize(row[1],scale[1]);
-skew[0] /= scale[1];
-
-
-skew[1] = MatrixMath.v3Dot(row[0],row[2]);
-row[2] = MatrixMath.v3Combine(row[2],row[0],1.0,-skew[1]);
-skew[2] = MatrixMath.v3Dot(row[1],row[2]);
-row[2] = MatrixMath.v3Combine(row[2],row[1],1.0,-skew[2]);
-
-
-scale[2] = MatrixMath.v3Length(row[2]);
-row[2] = MatrixMath.v3Normalize(row[2],scale[2]);
-skew[1] /= scale[2];
-skew[2] /= scale[2];
-
-
-
-
-var pdum3=MatrixMath.v3Cross(row[1],row[2]);
-if(MatrixMath.v3Dot(row[0],pdum3) < 0){
-for(i = 0;i < 3;i++) {
-scale[i] *= -1;
-row[i][0] *= -1;
-row[i][1] *= -1;
-row[i][2] *= -1;}}
-
-
-
-
-quaternion[0] = 
-0.5 * Math.sqrt(Math.max(1 + row[0][0] - row[1][1] - row[2][2],0));
-quaternion[1] = 
-0.5 * Math.sqrt(Math.max(1 - row[0][0] + row[1][1] - row[2][2],0));
-quaternion[2] = 
-0.5 * Math.sqrt(Math.max(1 - row[0][0] - row[1][1] + row[2][2],0));
-quaternion[3] = 
-0.5 * Math.sqrt(Math.max(1 + row[0][0] + row[1][1] + row[2][2],0));
-
-if(row[2][1] > row[1][2]){
-quaternion[0] = -quaternion[0];}
-
-if(row[0][2] > row[2][0]){
-quaternion[1] = -quaternion[1];}
-
-if(row[1][0] > row[0][1]){
-quaternion[2] = -quaternion[2];}
-
-
-
-var rotationDegrees;
-if(
-quaternion[0] < 0.001 && quaternion[0] >= 0 && 
-quaternion[1] < 0.001 && quaternion[1] >= 0)
-{
-
-rotationDegrees = [0,0,MatrixMath.roundTo3Places(
-Math.atan2(row[0][1],row[0][0]) * 180 / Math.PI)];}else 
-
-{
-rotationDegrees = MatrixMath.quaternionToDegreesXYZ(quaternion,matrix,row);}
-
-
-
-return {
-rotationDegrees:rotationDegrees,
-perspective:perspective,
-quaternion:quaternion,
-scale:scale,
-skew:skew,
-translation:translation,
-
-rotate:rotationDegrees[2],
-scaleX:scale[0],
-scaleY:scale[1],
-translateX:translation[0],
-translateY:translation[1]};}};
-
-
-
-
-
-module.exports = MatrixMath;
+window.tinycolor = tinycolor;}})();
 });
 __d('sizesDiffer',[],function(global, require, module, exports) {  'use strict';
 
@@ -23136,6 +22759,337 @@ one.height !== two.height);};
 
 
 module.exports = sizesDiffer;
+});
+__d('deepFreezeAndThrowOnMutationInDev',[],function(global, require, module, exports) {  'use strict';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function deepFreezeAndThrowOnMutationInDev(object){
+if(__DEV__){
+if(typeof object !== 'object' || 
+object === null || 
+Object.isFrozen(object) || 
+Object.isSealed(object)){
+return;}
+
+
+for(var key in object) {
+if(object.hasOwnProperty(key)){
+object.__defineGetter__(key,identity.bind(null,object[key]));
+object.__defineSetter__(key,throwOnImmutableMutation.bind(null,key));
+deepFreezeAndThrowOnMutationInDev(object[key]);}}
+
+
+Object.freeze(object);
+Object.seal(object);}}
+
+
+
+function throwOnImmutableMutation(key,value){
+throw Error(
+'You attempted to set the key `' + key + '` with the value `' + 
+JSON.stringify(value) + '` on an object that is meant to be immutable ' + 
+'and has been frozen.');}
+
+
+
+function identity(value){
+return value;}
+
+
+module.exports = deepFreezeAndThrowOnMutationInDev;
+});
+__d('ReactNativeEventEmitter',["EventPluginHub","ReactEventEmitterMixin","ReactNativeTagHandles","NodeHandle","EventConstants","merge","warning"],function(global, require, module, exports) {  'use strict';
+
+
+
+
+
+
+
+
+
+
+
+
+var EventPluginHub=require('EventPluginHub');
+var ReactEventEmitterMixin=require('ReactEventEmitterMixin');
+var ReactNativeTagHandles=require('ReactNativeTagHandles');
+var NodeHandle=require('NodeHandle');
+var EventConstants=require('EventConstants');
+
+var merge=require('merge');
+var warning=require('warning');
+
+var topLevelTypes=EventConstants.topLevelTypes;
+
+
+
+
+
+
+
+var EMPTY_NATIVE_EVENT={};
+
+
+
+
+
+
+
+
+var touchSubsequence=function(touches,indices){
+var ret=[];
+for(var i=0;i < indices.length;i++) {
+ret.push(touches[indices[i]]);}
+
+return ret;};
+
+
+
+
+
+
+
+
+
+
+
+
+
+var removeTouchesAtIndices=function(
+touches,
+indices)
+{
+var rippedOut=[];
+
+
+var temp=touches;
+for(var i=0;i < indices.length;i++) {
+var index=indices[i];
+rippedOut.push(touches[index]);
+temp[index] = null;}
+
+var fillAt=0;
+for(var j=0;j < temp.length;j++) {
+var cur=temp[j];
+if(cur !== null){
+temp[fillAt++] = cur;}}
+
+
+temp.length = fillAt;
+return rippedOut;};
+
+
+
+
+
+
+
+
+
+
+
+var ReactNativeEventEmitter=merge(ReactEventEmitterMixin,{
+
+registrationNames:EventPluginHub.registrationNameModules,
+
+putListener:EventPluginHub.putListener,
+
+getListener:EventPluginHub.getListener,
+
+deleteListener:EventPluginHub.deleteListener,
+
+deleteAllListeners:EventPluginHub.deleteAllListeners,
+
+
+
+
+
+
+
+
+
+
+
+_receiveRootNodeIDEvent:function(
+rootNodeID,
+topLevelType,
+nativeEventParam)
+{
+var nativeEvent=nativeEventParam || EMPTY_NATIVE_EVENT;
+ReactNativeEventEmitter.handleTopLevel(
+topLevelType,
+rootNodeID,
+rootNodeID,
+nativeEvent,
+nativeEvent.target);},
+
+
+
+
+
+
+
+
+
+
+receiveEvent:function(
+tag,
+topLevelType,
+nativeEventParam)
+{
+var rootNodeID=ReactNativeTagHandles.tagToRootNodeID[tag];
+ReactNativeEventEmitter._receiveRootNodeIDEvent(
+rootNodeID,
+topLevelType,
+nativeEventParam);},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+receiveTouches:function(
+eventTopLevelType,
+touches,
+changedIndices)
+{
+var changedTouches=
+eventTopLevelType === topLevelTypes.topTouchEnd || 
+eventTopLevelType === topLevelTypes.topTouchCancel?
+removeTouchesAtIndices(touches,changedIndices):
+touchSubsequence(touches,changedIndices);
+
+for(var jj=0;jj < changedTouches.length;jj++) {
+var touch=changedTouches[jj];
+
+
+touch.changedTouches = changedTouches;
+touch.touches = touches;
+var nativeEvent=touch;
+var rootNodeID=null;
+var target=nativeEvent.target;
+if(target !== null && target !== undefined){
+if(target < ReactNativeTagHandles.tagsStartAt){
+if(__DEV__){
+warning(
+false,
+'A view is reporting that a touch occured on tag zero.');}}else 
+
+
+{
+rootNodeID = NodeHandle.getRootNodeID(target);}}
+
+
+ReactNativeEventEmitter._receiveRootNodeIDEvent(
+rootNodeID,
+eventTopLevelType,
+nativeEvent);}}});
+
+
+
+
+
+module.exports = ReactNativeEventEmitter;
+});
+__d('ReactEventEmitterMixin',["EventPluginHub"],function(global, require, module, exports) {  'use strict';
+
+
+
+
+
+
+
+
+
+
+
+
+var EventPluginHub=require('EventPluginHub');
+
+function runEventQueueInBatch(events){
+EventPluginHub.enqueueEvents(events);
+EventPluginHub.processEventQueue();}
+
+
+var ReactEventEmitterMixin={
+
+
+
+
+
+
+
+
+
+
+handleTopLevel:function(
+topLevelType,
+topLevelTarget,
+topLevelTargetID,
+nativeEvent,
+nativeEventTarget){
+var events=EventPluginHub.extractEvents(
+topLevelType,
+topLevelTarget,
+topLevelTargetID,
+nativeEvent,
+nativeEventTarget);
+
+runEventQueueInBatch(events);}};
+
+
+
+module.exports = ReactEventEmitterMixin;
 });
 __d('ReactMultiChild',["ReactComponentEnvironment","ReactMultiChildUpdateTypes","ReactReconciler","ReactChildReconciler"],function(global, require, module, exports) {  'use strict';
 
@@ -23749,7 +23703,69 @@ return result;}
 
 module.exports = flattenChildren;
 });
-__d('deepFreezeAndThrowOnMutationInDev',[],function(global, require, module, exports) {  'use strict';
+__d('styleDiffer',["deepDiffer"],function(global, require, module, exports) {  'use strict';
+
+
+
+
+
+
+
+
+
+
+
+
+var deepDiffer=require('deepDiffer');
+
+function styleDiffer(a,b){
+return !styleEqual(a,b);}
+
+
+function styleEqual(a,b){
+if(!a){
+return !b;}
+
+if(!b){
+return !a;}
+
+if(typeof a !== typeof b){
+return false;}
+
+if(typeof a === 'number'){
+return a === b;}
+
+
+if(Array.isArray(a)){
+if(!Array.isArray(b) || a.length !== b.length){
+return false;}
+
+for(var i=0;i < a.length;++i) {
+if(!styleEqual(a[i],b[i])){
+return false;}}
+
+
+return true;}
+
+
+for(var key in a) {
+if(deepDiffer(a[key],b[key])){
+return false;}}
+
+
+
+for(var key in b) {
+if(!a.hasOwnProperty(key)){
+return false;}}
+
+
+
+return true;}
+
+
+module.exports = styleDiffer;
+});
+__d('deepDiffer',[],function(global, require, module, exports) {  'use strict';
 
 
 
@@ -23765,6 +23781,58 @@ __d('deepFreezeAndThrowOnMutationInDev',[],function(global, require, module, exp
 
 
 
+var deepDiffer=function(one,two){
+if(one === two){
+
+return false;}
+
+if(typeof one === 'function' && typeof two === 'function'){
+
+return false;}
+
+if(typeof one !== 'object' || one === null){
+
+return one !== two;}
+
+if(typeof two !== 'object' || two === null){
+
+
+return true;}
+
+if(one.constructor !== two.constructor){
+return true;}
+
+if(Array.isArray(one)){
+
+var len=one.length;
+if(two.length !== len){
+return true;}
+
+for(var ii=0;ii < len;ii++) {
+if(deepDiffer(one[ii],two[ii])){
+return true;}}}else 
+
+
+{
+for(var key in one) {
+if(deepDiffer(one[key],two[key])){
+return true;}}
+
+
+for(var twoKey in two) {
+
+
+if(one[twoKey] === undefined && two[twoKey] !== undefined){
+return true;}}}
+
+
+
+return false;};
+
+
+module.exports = deepDiffer;
+});
+__d('diffRawProperties',["deepDiffer"],function(global, require, module, exports) {  'use strict';
 
 
 
@@ -23777,43 +23845,111 @@ __d('deepFreezeAndThrowOnMutationInDev',[],function(global, require, module, exp
 
 
 
+var deepDiffer=require('deepDiffer');
 
 
 
-function deepFreezeAndThrowOnMutationInDev(object){
-if(__DEV__){
-if(typeof object !== 'object' || 
-object === null || 
-Object.isFrozen(object) || 
-Object.isSealed(object)){
-return;}
-
-
-for(var key in object) {
-if(object.hasOwnProperty(key)){
-object.__defineGetter__(key,identity.bind(null,object[key]));
-object.__defineSetter__(key,throwOnImmutableMutation.bind(null,key));
-deepFreezeAndThrowOnMutationInDev(object[key]);}}
-
-
-Object.freeze(object);
-Object.seal(object);}}
 
 
 
-function throwOnImmutableMutation(key,value){
-throw Error(
-'You attempted to set the key `' + key + '` with the value `' + 
-JSON.stringify(value) + '` on an object that is meant to be immutable ' + 
-'and has been frozen.');}
 
 
 
-function identity(value){
-return value;}
 
 
-module.exports = deepFreezeAndThrowOnMutationInDev;
+
+function diffRawProperties(
+updatePayload,
+prevProps,
+nextProps,
+validAttributes)
+{
+var validAttributeConfig;
+var nextProp;
+var prevProp;
+var isScalar;
+var shouldUpdate;
+var differ;
+
+if(nextProps){
+for(var propKey in nextProps) {
+validAttributeConfig = validAttributes[propKey];
+if(!validAttributeConfig){
+continue;}
+
+prevProp = prevProps && prevProps[propKey];
+nextProp = nextProps[propKey];
+
+
+
+if(typeof prevProp === 'function'){
+prevProp = true;}
+
+if(typeof nextProp === 'function'){
+nextProp = true;}
+
+
+if(prevProp !== nextProp){
+
+
+differ = validAttributeConfig.diff || deepDiffer;
+isScalar = typeof nextProp !== 'object' || nextProp === null;
+shouldUpdate = isScalar || !prevProp || differ(prevProp,nextProp);
+if(shouldUpdate){
+updatePayload = updatePayload || {};
+updatePayload[propKey] = nextProp;}}}}
+
+
+
+
+
+
+
+
+if(prevProps){
+for(var propKey in prevProps) {
+validAttributeConfig = validAttributes[propKey];
+if(!validAttributeConfig){
+continue;}
+
+if(updatePayload && updatePayload[propKey] !== undefined){
+continue;}
+
+prevProp = prevProps[propKey];
+nextProp = nextProps && nextProps[propKey];
+
+
+
+if(typeof prevProp === 'function'){
+prevProp = true;}
+
+if(typeof nextProp === 'function'){
+nextProp = true;}
+
+
+if(prevProp !== nextProp){
+if(nextProp === undefined){
+nextProp = null;}
+
+
+
+differ = validAttributeConfig.diff || deepDiffer;
+isScalar = typeof nextProp !== 'object' || nextProp === null;
+shouldUpdate = 
+isScalar && 
+prevProp !== nextProp || 
+differ(prevProp,nextProp);
+if(shouldUpdate){
+updatePayload = updatePayload || {};
+updatePayload[propKey] = nextProp;}}}}
+
+
+
+
+return updatePayload;}
+
+
+module.exports = diffRawProperties;
 });
 __d('RCTEventEmitter',["ReactNativeEventEmitter"],function(global, require, module, exports) {  'use strict';
 
@@ -24561,7 +24697,7 @@ ViewToExport = View;}
 
 module.exports = ViewToExport;
 });
-__d('ReactNativeViewAttributes',["ReactNativeStyleAttributes"],function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
+__d('ReactNativeViewAttributes',["merge"],function(global, require, module, exports) {  'use strict';
 
 
 
@@ -24574,7 +24710,7 @@ __d('ReactNativeViewAttributes',["ReactNativeStyleAttributes"],function(global, 
 
 
 
-var ReactNativeStyleAttributes=require('ReactNativeStyleAttributes');
+var merge=require('merge');
 
 var ReactNativeViewAttributes={};
 
@@ -24593,11 +24729,10 @@ onLayout:true,
 onAccessibilityTap:true,
 onMagicTap:true,
 collapsable:true,
-needsOffscreenAlphaCompositing:true,
-style:ReactNativeStyleAttributes};
+needsOffscreenAlphaCompositing:true};
 
 
-ReactNativeViewAttributes.RCTView = _extends({},
+ReactNativeViewAttributes.RCTView = merge(
 ReactNativeViewAttributes.UIView,{
 
 
@@ -24723,7 +24858,7 @@ return chainedCheckType;}
 
 module.exports = createStrictShapeTypeChecker;
 });
-__d('requireNativeComponent',["verifyPropTypes","NativeModules","ReactNativeStyleAttributes","UnimplementedView","createReactNativeComponentClass","insetsDiffer","pointsDiffer","matricesDiffer","processColor","sizesDiffer","verifyPropTypes","warning"],function(global, require, module, exports) {  var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
+__d('requireNativeComponent',["verifyPropTypes","NativeModules","UnimplementedView","createReactNativeComponentClass","insetsDiffer","pointsDiffer","matricesDiffer","processColor","sizesDiffer","verifyPropTypes","warning"],function(global, require, module, exports) {  var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
 
 
 
@@ -24737,7 +24872,6 @@ __d('requireNativeComponent',["verifyPropTypes","NativeModules","ReactNativeStyl
 'use strict';
 
 var RCTUIManager=require('NativeModules').UIManager;
-var ReactNativeStyleAttributes=require('ReactNativeStyleAttributes');
 var UnimplementedView=require('UnimplementedView');
 
 var createReactNativeComponentClass=require('createReactNativeComponentClass');
@@ -24800,14 +24934,6 @@ useAttribute = true;}
 
 
 viewConfig.validAttributes[key] = useAttribute?attribute:true;}
-
-
-
-
-
-
-
-viewConfig.validAttributes.style = ReactNativeStyleAttributes;
 
 if(__DEV__){
 componentInterface && verifyPropTypes(
@@ -25176,7 +25302,7 @@ __d('DrawerLayoutAndroid',["UnimplementedView"],function(global, require, module
 
 module.exports = require('UnimplementedView');
 });
-__d('Image',["EdgeInsetsPropType","ImageResizeMode","ImageStylePropTypes","NativeMethodsMixin","NativeModules","ReactPropTypes","React","ReactNativeViewAttributes","View","StyleSheet","StyleSheetPropType","flattenStyle","invariant","requireNativeComponent","resolveAssetSource","warning"],function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
+__d('Image',["EdgeInsetsPropType","ImageResizeMode","ImageStylePropTypes","NativeMethodsMixin","NativeModules","ReactPropTypes","React","ReactNativeViewAttributes","StyleSheet","StyleSheetPropType","flattenStyle","invariant","requireNativeComponent","resolveAssetSource","warning"],function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
 
 
 
@@ -25197,7 +25323,6 @@ var NativeModules=require('NativeModules');
 var PropTypes=require('ReactPropTypes');
 var React=require('React');
 var ReactNativeViewAttributes=require('ReactNativeViewAttributes');
-var View=require('View');
 var StyleSheet=require('StyleSheet');
 var StyleSheetPropType=require('StyleSheetPropType');
 
@@ -25331,10 +25456,6 @@ uiViewClassName:'UIView',
 validAttributes:ReactNativeViewAttributes.UIView},
 
 
-contextTypes:{
-isInAParentText:React.PropTypes.bool},
-
-
 render:function(){
 for(var prop in cfg.nativeOnly) {
 if(this.props[prop] !== undefined){
@@ -25348,11 +25469,6 @@ var defaultSource=this.props.defaultSource && resolveAssetSource(this.props.defa
 width=source.width;var height=source.height;
 var style=flattenStyle([{width:width,height:height},styles.base,this.props.style]) || {};
 
-if(source.uri === ''){
-console.warn('source.uri should not be an empty string');
-return React.createElement(View,_extends({},this.props,{style:style}));}
-
-
 var isNetwork=source.uri && source.uri.match(/^https?:/);
 var RawImage=isNetwork?RCTNetworkImageView:RCTImageView;
 var resizeMode=this.props.resizeMode || (style || {}).resizeMode || 'cover';
@@ -25364,9 +25480,6 @@ if(isNetwork && tintColor){
 RawImage = RCTImageView;}
 
 
-if(this.context.isInAParentText){
-return React.createElement(RCTVirtualImage,{source:source});}else 
-{
 return (
 React.createElement(RawImage,_extends({},
 this.props,{
@@ -25374,8 +25487,7 @@ style:style,
 resizeMode:resizeMode,
 tintColor:tintColor,
 src:source.uri,
-defaultImageSrc:defaultSource.uri})));}}});
-
+defaultImageSrc:defaultSource.uri})));}});
 
 
 
@@ -25397,7 +25509,6 @@ progressHandlerRegistered:true}};
 
 var RCTImageView=requireNativeComponent('RCTImageView',Image,cfg);
 var RCTNetworkImageView=NativeModules.NetworkImageViewManager?requireNativeComponent('RCTNetworkImageView',Image,cfg):RCTImageView;
-var RCTVirtualImage=requireNativeComponent('RCTVirtualImage',Image);
 
 module.exports = Image;
 });
@@ -25550,16 +25661,13 @@ function assetToImageSource(asset){
 var devServerURL=getDevServerURL();
 if(devServerURL){
 return {
-__packager_asset:true,
 width:asset.width,
 height:asset.height,
 uri:getPathOnDevserver(devServerURL,asset),
-isStatic:false,
-scale:pickScale(asset.scales,PixelRatio.get())};}else 
+isStatic:false};}else 
 
 {
 return {
-__packager_asset:true,
 width:asset.width,
 height:asset.height,
 uri:getPathInArchive(asset),
@@ -25775,7 +25883,7 @@ return dimensions[dim];}}]);return Dimensions;})();
 
 module.exports = Dimensions;
 });
-__d('ListView',["ListViewDataSource","React","NativeModules","NativeModules","ScrollView","ScrollResponder","StaticRenderer","react-timer-mixin/TimerMixin.js","isEmpty","logError","merge"],function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};function _objectWithoutProperties(obj,keys){var target={};for(var i in obj) {if(keys.indexOf(i) >= 0)continue;if(!Object.prototype.hasOwnProperty.call(obj,i))continue;target[i] = obj[i];}return target;}
+__d('ListView',["ListViewDataSource","React","NativeModules","NativeModules","ScrollView","ScrollResponder","StaticRenderer","isEmpty","logError","merge","react-timer-mixin/TimerMixin.js"],function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};function _objectWithoutProperties(obj,keys){var target={};for(var i in obj) {if(keys.indexOf(i) >= 0)continue;if(!Object.prototype.hasOwnProperty.call(obj,i))continue;target[i] = obj[i];}return target;}
 
 
 
@@ -26229,23 +26337,10 @@ _updateChildFrames:function(childFrames){
 this._updateVisibleRows(childFrames);},
 
 
-_maybeCallOnEndReached:function(event){
-if(this.props.onEndReached && 
-this.scrollProperties.contentLength !== this._sentEndForContentLength && 
-this._getDistanceFromEnd(this.scrollProperties) < this.props.onEndReachedThreshold && 
-this.state.curRenderedRowsCount === this.props.dataSource.getRowCount()){
-this._sentEndForContentLength = this.scrollProperties.contentLength;
-this.props.onEndReached(event);
-return true;}
-
-return false;},
-
-
 _renderMoreRowsIfNeeded:function(){
 if(this.scrollProperties.contentLength === null || 
 this.scrollProperties.visibleLength === null || 
 this.state.curRenderedRowsCount === this.props.dataSource.getRowCount()){
-this._maybeCallOnEndReached();
 return;}
 
 
@@ -26360,7 +26455,14 @@ this.scrollProperties.offset = e.nativeEvent.contentOffset[
 isVertical?'y':'x'];
 
 this._updateVisibleRows(e.nativeEvent.updatedChildFrames);
-if(!this._maybeCallOnEndReached(e)){
+var nearEnd=this._getDistanceFromEnd(this.scrollProperties) < this.props.onEndReachedThreshold;
+if(nearEnd && 
+this.props.onEndReached && 
+this.scrollProperties.contentLength !== this._sentEndForContentLength && 
+this.state.curRenderedRowsCount === this.props.dataSource.getRowCount()){
+this._sentEndForContentLength = this.scrollProperties.contentLength;
+this.props.onEndReached(e);}else 
+{
 this._renderMoreRowsIfNeeded();}
 
 
@@ -27495,7 +27597,7 @@ return false;},
 scrollResponderHandleStartShouldSetResponderCapture:function(e){
 
 var currentlyFocusedTextInput=TextInputState.currentlyFocusedField();
-if(!this.props.keyboardShouldPersistTaps && 
+if(this.props.keyboardShouldPersistTaps === false && 
 currentlyFocusedTextInput != null && 
 e.target !== currentlyFocusedTextInput){
 return true;}
@@ -27556,7 +27658,7 @@ this.props.onResponderRelease && this.props.onResponderRelease(e);
 
 
 var currentlyFocusedTextInput=TextInputState.currentlyFocusedField();
-if(!this.props.keyboardShouldPersistTaps && 
+if(this.props.keyboardShouldPersistTaps === false && 
 currentlyFocusedTextInput != null && 
 e.target !== currentlyFocusedTextInput && 
 !this.state.observedScrollSinceBecomingResponder && 
@@ -27669,7 +27771,7 @@ if(Platform.OS === 'android'){
 RCTUIManager.dispatchViewManagerCommand(
 React.findNodeHandle(this),
 RCTUIManager.RCTScrollView.Commands.scrollTo,
-[Math.round(offsetX),Math.round(offsetY)]);}else 
+[offsetX,offsetY]);}else 
 
 {
 RCTUIManager.scrollTo(
@@ -28354,18 +28456,6 @@ var View=require('View');
 var requireNativeComponent=require('requireNativeComponent');
 var RCTModalHostView=requireNativeComponent('RCTModalHostView',null);var 
 
-
-
-
-
-
-
-
-
-
-
-
-
 Modal=(function(_React$Component){_inherits(Modal,_React$Component);function Modal(){_classCallCheck(this,Modal);_get(Object.getPrototypeOf(Modal.prototype),'constructor',this).apply(this,arguments);}_createClass(Modal,[{key:'render',value:
 function render(){
 if(this.props.visible === false){
@@ -28409,7 +28499,7 @@ top:0}});
 
 module.exports = Modal;
 });
-__d('Navigator',["NativeModules","Dimensions","InteractionMixin","Map","NavigationContext","NavigatorBreadcrumbNavigationBar","NavigatorNavigationBar","NavigatorSceneConfigs","PanResponder","React","StyleSheet","Subscribable","react-timer-mixin/TimerMixin.js","View","clamp","flattenStyle","invariant","rebound/rebound.js"],function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
+__d('Navigator',["NativeModules","Dimensions","InteractionMixin","Map","NavigationContext","NavigatorBreadcrumbNavigationBar","NavigatorNavigationBar","NavigatorSceneConfigs","PanResponder","React","StaticContainer.react","StyleSheet","Subscribable","react-timer-mixin/TimerMixin.js","View","clamp","flattenStyle","invariant","rebound/rebound.js"],function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
 
 
 
@@ -28448,6 +28538,7 @@ var NavigatorNavigationBar=require('NavigatorNavigationBar');
 var NavigatorSceneConfigs=require('NavigatorSceneConfigs');
 var PanResponder=require('PanResponder');
 var React=require('React');
+var StaticContainer=require('StaticContainer.react');
 var StyleSheet=require('StyleSheet');
 var Subscribable=require('Subscribable');
 var TimerMixin=require('react-timer-mixin/TimerMixin.js');
@@ -29896,7 +29987,7 @@ this.emit(arg.eventType,arg.data,arg.didEmitCallback);}}}]);return NavigationEve
 
 module.exports = NavigationEventEmitter;
 });
-__d('NavigatorBreadcrumbNavigationBar',["NavigatorBreadcrumbNavigationBarStyles","NavigatorNavigationBarStylesAndroid","NavigatorNavigationBarStylesIOS","Platform","React","StyleSheet","View","immutable/dist/immutable.js","invariant"],function(global, require, module, exports) {  'use strict';
+__d('NavigatorBreadcrumbNavigationBar',["NavigatorBreadcrumbNavigationBarStyles","NavigatorNavigationBarStyles","React","StaticContainer.react","StyleSheet","View","invariant","immutable/dist/immutable.js"],function(global, require, module, exports) {  'use strict';
 
 
 
@@ -29925,10 +30016,9 @@ __d('NavigatorBreadcrumbNavigationBar',["NavigatorBreadcrumbNavigationBarStyles"
 
 
 var NavigatorBreadcrumbNavigationBarStyles=require('NavigatorBreadcrumbNavigationBarStyles');
-var NavigatorNavigationBarStylesAndroid=require('NavigatorNavigationBarStylesAndroid');
-var NavigatorNavigationBarStylesIOS=require('NavigatorNavigationBarStylesIOS');
-var Platform=require('Platform');
+var NavigatorNavigationBarStyles=require('NavigatorNavigationBarStyles');
 var React=require('React');
+var StaticContainer=require('StaticContainer.react');
 var StyleSheet=require('StyleSheet');
 var View=require('View');var _require=
 
@@ -29937,8 +30027,6 @@ require('immutable/dist/immutable.js');var Map=_require.Map;
 var invariant=require('invariant');
 
 var Interpolators=NavigatorBreadcrumbNavigationBarStyles.Interpolators;
-var NavigatorNavigationBarStyles=Platform.OS === 'android'?
-NavigatorNavigationBarStylesAndroid:NavigatorNavigationBarStylesIOS;
 var PropTypes=React.PropTypes;
 
 
@@ -30178,7 +30266,7 @@ right:0}});
 
 module.exports = NavigatorBreadcrumbNavigationBar;
 });
-__d('NavigatorBreadcrumbNavigationBarStyles',["Dimensions","NavigatorNavigationBarStylesIOS","buildStyleInterpolator","merge"],function(global, require, module, exports) {  'use strict';
+__d('NavigatorBreadcrumbNavigationBarStyles',["Dimensions","NavigatorNavigationBarStyles","buildStyleInterpolator","merge"],function(global, require, module, exports) {  'use strict';
 
 
 
@@ -30207,14 +30295,14 @@ __d('NavigatorBreadcrumbNavigationBarStyles',["Dimensions","NavigatorNavigationB
 
 
 var Dimensions=require('Dimensions');
-var NavigatorNavigationBarStylesIOS=require('NavigatorNavigationBarStylesIOS');
+var NavigatorNavigationBarStyles=require('NavigatorNavigationBarStyles');
 
 var buildStyleInterpolator=require('buildStyleInterpolator');
 var merge=require('merge');
 
 var SCREEN_WIDTH=Dimensions.get('window').width;
-var STATUS_BAR_HEIGHT=NavigatorNavigationBarStylesIOS.General.StatusBarHeight;
-var NAV_BAR_HEIGHT=NavigatorNavigationBarStylesIOS.General.NavBarHeight;
+var STATUS_BAR_HEIGHT=NavigatorNavigationBarStyles.General.StatusBarHeight;
+var NAV_BAR_HEIGHT=NavigatorNavigationBarStyles.General.NavBarHeight;
 
 var SPACING=4;
 var ICON_WIDTH=40;
@@ -30405,7 +30493,7 @@ IconHeight:NAV_BAR_HEIGHT,
 SeparatorWidth:SEPARATOR_WIDTH,
 SeparatorHeight:NAV_BAR_HEIGHT};
 });
-__d('NavigatorNavigationBarStylesIOS',["Dimensions","buildStyleInterpolator","merge"],function(global, require, module, exports) {  'use strict';
+__d('NavigatorNavigationBarStyles',["Dimensions","buildStyleInterpolator","merge"],function(global, require, module, exports) {  'use strict';
 
 
 
@@ -31139,7 +31227,7 @@ return Function(createFunctionString(anims))();};
 
 module.exports = buildStyleInterpolator;
 });
-__d('NavigatorNavigationBarStylesAndroid',["buildStyleInterpolator","merge"],function(global, require, module, exports) {  'use strict';
+__d('StaticContainer.react',["React","onlyChild"],function(global, require, module, exports) {  var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(_x,_x2,_x3){var _again=true;_function: while(_again) {var object=_x,property=_x2,receiver=_x3;desc = parent = getter = undefined;_again = false;if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {_x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
 
 
 
@@ -31160,159 +31248,39 @@ __d('NavigatorNavigationBarStylesAndroid',["buildStyleInterpolator","merge"],fun
 
 
 
+var React=require('React');
 
+var onlyChild=require('onlyChild');var 
 
 
 
 
 
 
-var buildStyleInterpolator=require('buildStyleInterpolator');
-var merge=require('merge');
 
 
-var NAV_BAR_HEIGHT=56;
-var TITLE_LEFT=72;
-var BUTTON_SIZE=24;
-var TOUCH_TARGT_SIZE=48;
-var BUTTON_HORIZONTAL_MARGIN=16;
 
-var BUTTON_EFFECTIVE_MARGIN=BUTTON_HORIZONTAL_MARGIN - (TOUCH_TARGT_SIZE - BUTTON_SIZE) / 2;
-var NAV_ELEMENT_HEIGHT=NAV_BAR_HEIGHT;
 
-var BASE_STYLES={
-Title:{
-position:'absolute',
-bottom:0,
-left:0,
-right:0,
-alignItems:'flex-start',
-height:NAV_ELEMENT_HEIGHT,
-backgroundColor:'transparent',
-marginLeft:TITLE_LEFT},
 
-LeftButton:{
-position:'absolute',
-top:0,
-left:BUTTON_EFFECTIVE_MARGIN,
-overflow:'hidden',
-height:NAV_ELEMENT_HEIGHT,
-backgroundColor:'transparent'},
 
-RightButton:{
-position:'absolute',
-top:0,
-right:BUTTON_EFFECTIVE_MARGIN,
-overflow:'hidden',
-alignItems:'flex-end',
-height:NAV_ELEMENT_HEIGHT,
-backgroundColor:'transparent'}};
 
 
 
 
+StaticContainer=(function(_React$Component){_inherits(StaticContainer,_React$Component);function StaticContainer(){_classCallCheck(this,StaticContainer);_get(Object.getPrototypeOf(StaticContainer.prototype),'constructor',this).apply(this,arguments);}_createClass(StaticContainer,[{key:'shouldComponentUpdate',value:
 
+function shouldComponentUpdate(nextProps){
+return !!nextProps.shouldUpdate;}},{key:'render',value:
 
 
+function render(){
+var child=this.props.children;
+return child === null || child === false?null:onlyChild(child);}}]);return StaticContainer;})(React.Component);
 
 
 
-var Stages={
-Left:{
-Title:merge(BASE_STYLES.Title,{opacity:0}),
-LeftButton:merge(BASE_STYLES.LeftButton,{opacity:0}),
-RightButton:merge(BASE_STYLES.RightButton,{opacity:0})},
 
-Center:{
-Title:merge(BASE_STYLES.Title,{opacity:1}),
-LeftButton:merge(BASE_STYLES.LeftButton,{opacity:1}),
-RightButton:merge(BASE_STYLES.RightButton,{opacity:1})},
-
-Right:{
-Title:merge(BASE_STYLES.Title,{opacity:0}),
-LeftButton:merge(BASE_STYLES.LeftButton,{opacity:0}),
-RightButton:merge(BASE_STYLES.RightButton,{opacity:0})}};
-
-
-
-
-var opacityRatio=100;
-
-function buildSceneInterpolators(startStyles,endStyles){
-return {
-Title:buildStyleInterpolator({
-opacity:{
-type:'linear',
-from:startStyles.Title.opacity,
-to:endStyles.Title.opacity,
-min:0,
-max:1},
-
-left:{
-type:'linear',
-from:startStyles.Title.left,
-to:endStyles.Title.left,
-min:0,
-max:1,
-extrapolate:true}}),
-
-
-LeftButton:buildStyleInterpolator({
-opacity:{
-type:'linear',
-from:startStyles.LeftButton.opacity,
-to:endStyles.LeftButton.opacity,
-min:0,
-max:1,
-round:opacityRatio},
-
-left:{
-type:'linear',
-from:startStyles.LeftButton.left,
-to:endStyles.LeftButton.left,
-min:0,
-max:1}}),
-
-
-RightButton:buildStyleInterpolator({
-opacity:{
-type:'linear',
-from:startStyles.RightButton.opacity,
-to:endStyles.RightButton.opacity,
-min:0,
-max:1,
-round:opacityRatio},
-
-left:{
-type:'linear',
-from:startStyles.RightButton.left,
-to:endStyles.RightButton.left,
-min:0,
-max:1,
-extrapolate:true}})};}
-
-
-
-
-
-var Interpolators={
-
-RightToCenter:buildSceneInterpolators(Stages.Right,Stages.Center),
-
-CenterToLeft:buildSceneInterpolators(Stages.Center,Stages.Left),
-
-RightToLeft:buildSceneInterpolators(Stages.Right,Stages.Left)};
-
-
-
-module.exports = {
-General:{
-NavBarHeight:NAV_BAR_HEIGHT,
-StatusBarHeight:0,
-TotalNavHeight:NAV_BAR_HEIGHT},
-
-Interpolators:Interpolators,
-Stages:Stages};
+module.exports = StaticContainer;
 });
 __d('immutable/dist/immutable.js',[],function(global, require, module, exports) {  (
 
@@ -36273,7 +36241,7 @@ fromJS:fromJS};
 
 return Immutable;});
 });
-__d('NavigatorNavigationBar',["React","NavigatorNavigationBarStylesAndroid","NavigatorNavigationBarStylesIOS","Platform","StaticContainer.react","StyleSheet","View","immutable/dist/immutable.js"],function(global, require, module, exports) {  'use strict';
+__d('NavigatorNavigationBar',["React","NavigatorNavigationBarStyles","StaticContainer.react","StyleSheet","View","immutable/dist/immutable.js"],function(global, require, module, exports) {  'use strict';
 
 
 
@@ -36302,9 +36270,7 @@ __d('NavigatorNavigationBar',["React","NavigatorNavigationBarStylesAndroid","Nav
 
 
 var React=require('React');
-var NavigatorNavigationBarStylesAndroid=require('NavigatorNavigationBarStylesAndroid');
-var NavigatorNavigationBarStylesIOS=require('NavigatorNavigationBarStylesIOS');
-var Platform=require('Platform');
+var NavigatorNavigationBarStyles=require('NavigatorNavigationBarStyles');
 var StaticContainer=require('StaticContainer.react');
 var StyleSheet=require('StyleSheet');
 var View=require('View');var _require=
@@ -36312,9 +36278,6 @@ var View=require('View');var _require=
 require('immutable/dist/immutable.js');var Map=_require.Map;
 
 var COMPONENT_NAMES=['Title','LeftButton','RightButton'];
-
-var NavigatorNavigationBarStyles=Platform.OS === 'android'?
-NavigatorNavigationBarStylesAndroid:NavigatorNavigationBarStylesIOS;
 
 var navStatePresentedIndex=function(navState){
 if(navState.presentedIndex !== undefined){
@@ -36337,20 +36300,11 @@ navState:React.PropTypes.shape({
 routeStack:React.PropTypes.arrayOf(React.PropTypes.object),
 presentedIndex:React.PropTypes.number}),
 
-navigationStyles:React.PropTypes.object,
 style:View.propTypes.style},
 
 
 statics:{
-Styles:NavigatorNavigationBarStyles,
-StylesAndroid:NavigatorNavigationBarStylesAndroid,
-StylesIOS:NavigatorNavigationBarStylesIOS},
-
-
-getDefaultProps:function(){
-return {
-navigationStyles:NavigatorNavigationBarStyles};},
-
+Styles:NavigatorNavigationBarStyles},
 
 
 componentWillMount:function(){var _this=this;
@@ -36393,14 +36347,14 @@ var newDistToCenter=index - toIndex;
 var interpolate;
 if(oldDistToCenter > 0 && newDistToCenter === 0 || 
 newDistToCenter > 0 && oldDistToCenter === 0){
-interpolate = this.props.navigationStyles.Interpolators.RightToCenter;}else 
+interpolate = NavigatorNavigationBarStyles.Interpolators.RightToCenter;}else 
 if(oldDistToCenter < 0 && newDistToCenter === 0 || 
 newDistToCenter < 0 && oldDistToCenter === 0){
-interpolate = this.props.navigationStyles.Interpolators.CenterToLeft;}else 
+interpolate = NavigatorNavigationBarStyles.Interpolators.CenterToLeft;}else 
 if(oldDistToCenter === newDistToCenter){
-interpolate = this.props.navigationStyles.Interpolators.RightToCenter;}else 
+interpolate = NavigatorNavigationBarStyles.Interpolators.RightToCenter;}else 
 {
-interpolate = this.props.navigationStyles.Interpolators.RightToLeft;}
+interpolate = NavigatorNavigationBarStyles.Interpolators.RightToLeft;}
 
 
 COMPONENT_NAMES.forEach(function(componentName){
@@ -36425,9 +36379,6 @@ this._updateIndexProgress(progress,index,fromIndex,toIndex);}},
 
 
 render:function(){
-var navBarStyle={
-height:this.props.navigationStyles.General.TotalNavHeight};
-
 var navState=this.props.navState;
 var components=COMPONENT_NAMES.map(function(componentName){
 return navState.routeStack.map(
@@ -36436,7 +36387,7 @@ this._getComponent.bind(this,componentName));},
 this);
 
 return (
-React.createElement(View,{style:[styles.navBarContainer,navBarStyle,this.props.style]},
+React.createElement(View,{style:[styles.navBarContainer,this.props.style]},
 components));},
 
 
@@ -36464,8 +36415,7 @@ return null;}
 
 
 var initialStage=index === navStatePresentedIndex(this.props.navState)?
-this.props.navigationStyles.Stages.Center:
-this.props.navigationStyles.Stages.Left;
+NavigatorNavigationBarStyles.Stages.Center:NavigatorNavigationBarStyles.Stages.Left;
 rendered = 
 React.createElement(View,{
 ref:function(ref){
@@ -36486,6 +36436,7 @@ return rendered;}});
 var styles=StyleSheet.create({
 navBarContainer:{
 position:'absolute',
+height:NavigatorNavigationBarStyles.General.TotalNavHeight,
 top:0,
 left:0,
 right:0,
@@ -36494,61 +36445,6 @@ backgroundColor:'transparent'}});
 
 
 module.exports = NavigatorNavigationBar;
-});
-__d('StaticContainer.react',["React","onlyChild"],function(global, require, module, exports) {  var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(_x,_x2,_x3){var _again=true;_function: while(_again) {var object=_x,property=_x2,receiver=_x3;desc = parent = getter = undefined;_again = false;if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {_x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}}};function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var React=require('React');
-
-var onlyChild=require('onlyChild');var 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-StaticContainer=(function(_React$Component){_inherits(StaticContainer,_React$Component);function StaticContainer(){_classCallCheck(this,StaticContainer);_get(Object.getPrototypeOf(StaticContainer.prototype),'constructor',this).apply(this,arguments);}_createClass(StaticContainer,[{key:'shouldComponentUpdate',value:
-
-function shouldComponentUpdate(nextProps){
-return !!nextProps.shouldUpdate;}},{key:'render',value:
-
-
-function render(){
-var child=this.props.children;
-return child === null || child === false?null:onlyChild(child);}}]);return StaticContainer;})(React.Component);
-
-
-
-
-module.exports = StaticContainer;
 });
 __d('NavigatorSceneConfigs',["Dimensions","PixelRatio","buildStyleInterpolator"],function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
 
@@ -38832,7 +38728,7 @@ util.extend(exports,rebound);}else
 if(typeof window != 'undefined'){
 window.rebound = rebound;}})();
 });
-__d('NavigatorIOS',["EventEmitter","Image","NavigationContext","NativeModules","React","StaticContainer.react","StyleSheet","View","invariant","logError","requireNativeComponent","resolveAssetSource"],function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
+__d('NavigatorIOS',["EventEmitter","Image","NavigationContext","React","NativeModules","StyleSheet","StaticContainer.react","View","requireNativeComponent","invariant","logError"],function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
 
 
 
@@ -38848,16 +38744,15 @@ __d('NavigatorIOS',["EventEmitter","Image","NavigationContext","NativeModules","
 var EventEmitter=require('EventEmitter');
 var Image=require('Image');
 var NavigationContext=require('NavigationContext');
-var RCTNavigatorManager=require('NativeModules').NavigatorManager;
 var React=require('React');
-var StaticContainer=require('StaticContainer.react');
+var RCTNavigatorManager=require('NativeModules').NavigatorManager;
 var StyleSheet=require('StyleSheet');
+var StaticContainer=require('StaticContainer.react');
 var View=require('View');
 
+var requireNativeComponent=require('requireNativeComponent');
 var invariant=require('invariant');
 var logError=require('logError');
-var requireNativeComponent=require('requireNativeComponent');
-var resolveAssetSource=require('resolveAssetSource');
 
 var TRANSITIONER_REF='transitionerRef';
 
@@ -39438,12 +39333,12 @@ styles.stackItem,
 this.props.itemWrapperStyle,
 route.wrapperStyle],
 
-backButtonIcon:resolveAssetSource(route.backButtonIcon),
+backButtonIcon:this._imageNameFromSource(route.backButtonIcon),
 backButtonTitle:route.backButtonTitle,
-leftButtonIcon:resolveAssetSource(route.leftButtonIcon),
+leftButtonIcon:this._imageNameFromSource(route.leftButtonIcon),
 leftButtonTitle:route.leftButtonTitle,
 onNavLeftButtonTap:route.onLeftButtonPress,
-rightButtonIcon:resolveAssetSource(route.rightButtonIcon),
+rightButtonIcon:this._imageNameFromSource(route.rightButtonIcon),
 rightButtonTitle:route.rightButtonTitle,
 onNavRightButtonTap:route.onRightButtonPress,
 navigationBarHidden:this.props.navigationBarHidden,
@@ -39460,6 +39355,10 @@ route.passProps)))));},
 
 
 
+
+
+_imageNameFromSource:function(source){
+return source?source.uri:undefined;},
 
 
 renderNavigationStackItems:function(){
@@ -39962,193 +39861,6 @@ nativeOnly:{onChange:true}});
 
 module.exports = SliderIOS;
 });
-__d('SnapshotView',["Platform","React","StyleSheet","NativeModules","View","requireNativeComponent"],function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
-
-
-
-
-
-
-
-
-
-
-
-
-var Platform=require('Platform');
-var React=require('React');
-var StyleSheet=require('StyleSheet');var _require=
-require('NativeModules');var TestModule=_require.TestModule;
-var View=require('View');
-
-var requireNativeComponent=require('requireNativeComponent');
-
-var SnapshotView=React.createClass({displayName:'SnapshotView',
-onDefaultAction:function(event){
-TestModule.verifySnapshot(TestModule.markTestPassed);},
-
-
-render:function(){
-var testIdentifier=this.props.testIdentifier || 'test';
-var onSnapshotReady=this.props.onSnapshotReady || this.onDefaultAction;
-return (
-React.createElement(RCTSnapshot,_extends({
-style:style.snapshot},
-this.props,{
-onSnapshotReady:onSnapshotReady,
-testIdentifier:testIdentifier})));},
-
-
-
-
-propTypes:{
-
-onSnapshotReady:React.PropTypes.func,
-
-testIdentifier:React.PropTypes.string}});
-
-
-
-var style=StyleSheet.create({
-snapshot:{
-flex:1}});
-
-
-
-var RCTSnapshot=Platform.OS === 'ios'?
-requireNativeComponent('RCTSnapshot',SnapshotView):
-View;
-
-module.exports = SnapshotView;
-});
-__d('Switch',["Platform","NativeMethodsMixin","React","StyleSheet","requireNativeComponent"],function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
-
-
-
-
-
-
-
-var Platform=require('Platform');
-var NativeMethodsMixin=require('NativeMethodsMixin');
-var React=require('React');
-var StyleSheet=require('StyleSheet');
-
-var requireNativeComponent=require('requireNativeComponent');
-
-
-
-
-
-
-
-
-
-var Switch=React.createClass({displayName:'Switch',
-propTypes:{
-
-
-
-
-value:React.PropTypes.bool,
-
-
-
-
-disabled:React.PropTypes.bool,
-
-
-
-onValueChange:React.PropTypes.func,
-
-
-
-testID:React.PropTypes.string,
-
-
-
-
-
-tintColor:React.PropTypes.string,
-
-
-
-
-onTintColor:React.PropTypes.string,
-
-
-
-
-thumbTintColor:React.PropTypes.string},
-
-
-getDefaultProps:function(){
-return {
-value:false,
-disabled:false};},
-
-
-
-mixins:[NativeMethodsMixin],
-
-_rctSwitch:{},
-_onChange:function(event){
-this.props.onChange && this.props.onChange(event);
-this.props.onValueChange && this.props.onValueChange(event.nativeEvent.value);
-
-
-
-if(Platform.OS === 'android'){
-this._rctSwitch.setNativeProps({on:this.props.value});}else 
-{
-this._rctSwitch.setNativeProps({value:this.props.value});}},
-
-
-
-render:function(){var _this=this;
-var props=_extends({},this.props);
-props.onStartShouldSetResponder = function(){return true;};
-props.onResponderTerminationRequest = function(){return false;};
-if(Platform.OS === 'android'){
-props.enabled = !this.props.disabled;
-props.on = this.props.value;
-props.style = [styles.rctSwitchAndroid,this.props.style];}else 
-if(Platform.OS === 'ios'){
-props.style = [styles.rctSwitchIOS,this.props.style];}
-
-return (
-React.createElement(RCTSwitch,_extends({},
-props,{
-ref:function(ref){_this._rctSwitch = ref;},
-onChange:this._onChange})));}});
-
-
-
-
-
-var styles=StyleSheet.create({
-rctSwitchIOS:{
-height:31,
-width:51},
-
-rctSwitchAndroid:{
-height:27,
-width:40}});
-
-
-
-if(Platform.OS === 'android'){
-var RCTSwitch=requireNativeComponent('AndroidSwitch',null,{
-nativeOnly:{onChange:true,on:true,enabled:true}});}else 
-
-{
-var RCTSwitch=requireNativeComponent('RCTSwitch',Switch,{
-nativeOnly:{onChange:true}});}
-
-
-
-module.exports = Switch;
-});
 __d('SwitchAndroid',["UnimplementedView"],function(global, require, module, exports) {  'use strict';
 
 
@@ -40347,7 +40059,7 @@ var RCTTabBar=requireNativeComponent('RCTTabBar',TabBarIOS);
 
 module.exports = TabBarIOS;
 });
-__d('TabBarItemIOS',["Image","React","StaticContainer.react","StyleSheet","View","resolveAssetSource","requireNativeComponent"],function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
+__d('TabBarItemIOS',["Image","React","StaticContainer.react","StyleSheet","View","requireNativeComponent"],function(global, require, module, exports) {  'use strict';var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};
 
 
 
@@ -40364,7 +40076,6 @@ var React=require('React');
 var StaticContainer=require('StaticContainer.react');
 var StyleSheet=require('StyleSheet');
 var View=require('View');
-var resolveAssetSource=require('resolveAssetSource');
 
 var requireNativeComponent=require('requireNativeComponent');
 
@@ -40464,8 +40175,7 @@ this.props.badge;
 return (
 React.createElement(RCTTabBarItem,_extends({},
 this.props,{
-icon:this.props.systemIcon || resolveAssetSource(this.props.icon),
-selectedIcon:resolveAssetSource(this.props.selectedIcon),
+icon:this.props.systemIcon || this.props.icon,
 badge:badge,
 style:[styles.tab,this.props.style]}),
 tabContents));}});
@@ -41043,15 +40753,6 @@ var LONG_PRESS_ALLOWED_MOVEMENT=10;
 
 
 var TouchableMixin={
-
-
-
-componentWillUnmount:function(){
-this.touchableDelayTimeout && clearTimeout(this.touchableDelayTimeout);
-this.longPressDelayTimeout && clearTimeout(this.longPressDelayTimeout);
-this.pressOutDelayTimeout && clearTimeout(this.pressOutDelayTimeout);},
-
-
 
 
 
@@ -41635,7 +41336,6 @@ var AndroidTextInput=requireNativeComponent('AndroidTextInput',null);}else
 if(Platform.OS === 'ios'){
 var RCTTextView=requireNativeComponent('RCTTextView',null);
 var RCTTextField=requireNativeComponent('RCTTextField',null);}
-
 
 
 
@@ -43874,7 +43574,7 @@ View:AnimatedImplementation.createAnimatedComponent(View),
 Text:AnimatedImplementation.createAnimatedComponent(Text),
 Image:AnimatedImplementation.createAnimatedComponent(Image)});
 });
-__d('AnimatedImplementation',["Interpolation","Easing","InteractionManager","Interpolation","React","Set","SpringConfig","ViewStylePropTypes","flattenStyle","invariant","requestAnimationFrame"],function(global, require, module, exports) {  var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};var _get=function get(_x,_x2,_x3){var _again=true;_function: while(_again) {var object=_x,property=_x2,receiver=_x3;desc = parent = getter = undefined;_again = false;if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {_x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}}};var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}
+__d('AnimatedImplementation',["Interpolation","Easing","InteractionManager","Interpolation","React","Set","SpringConfig","invariant","flattenStyle","requestAnimationFrame"],function(global, require, module, exports) {  var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};var _get=function get(_x,_x2,_x3){var _again=true;_function: while(_again) {var object=_x,property=_x2,receiver=_x3;desc = parent = getter = undefined;_again = false;if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {_x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}}};var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}
 
 
 
@@ -43893,10 +43593,9 @@ var Interpolation=require('Interpolation');
 var React=require('React');
 var Set=require('Set');
 var SpringConfig=require('SpringConfig');
-var ViewStylePropTypes=require('ViewStylePropTypes');
+var invariant=require('invariant');
 
 var flattenStyle=require('flattenStyle');
-var invariant=require('invariant');
 var requestAnimationFrame=require('requestAnimationFrame');var 
 
 
@@ -44955,19 +44654,6 @@ ref:refName})));}}]);return AnimatedComponent;})(React.Component);
 
 
 
-AnimatedComponent.propTypes = {
-style:function(props,propName,componentName){
-for(var key in ViewStylePropTypes) {
-if(!Component.propTypes[key] && props[key] !== undefined){
-console.error(
-'You are setting the style `{ ' + key + ': ... }` as a prop. You ' + 
-'should nest it in a style object. ' + 
-'E.g. `{ style: { ' + key + ': ... } }`');}}}};
-
-
-
-
-
 
 return AnimatedComponent;}var 
 
@@ -45427,7 +45113,7 @@ createAnimatedComponent:createAnimatedComponent,
 
 __PropsOnlyForTests:AnimatedProps};
 });
-__d('Interpolation',["tinycolor"],function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,'__esModule',{value:true});var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}
+__d('Interpolation',[],function(global, require, module, exports) {  'use strict';Object.defineProperty(exports,'__esModule',{value:true});var _extends=Object.assign || function(target){for(var i=1;i < arguments.length;i++) {var source=arguments[i];for(var key in source) {if(Object.prototype.hasOwnProperty.call(source,key)){target[key] = source[key];}}}return target;};var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}
 
 
 
@@ -45439,8 +45125,6 @@ __d('Interpolation',["tinycolor"],function(global, require, module, exports) {  
 
 
 
-
-var tinycolor=require('tinycolor');
 
 
 var invariant=function(condition,message){
@@ -45448,6 +45132,7 @@ if(!condition){
 var error=new Error(message);
 error.framesToPop = 1;
 throw error;}};
+
 
 
 
@@ -45593,18 +45278,6 @@ result = result * (outputMax - outputMin) + outputMin;}
 return result;}
 
 
-function colorToRgba(
-input)
-{
-var color=tinycolor(input);
-if(color.isValid()){var _color$toRgb=
-color.toRgb();var r=_color$toRgb.r;var g=_color$toRgb.g;var b=_color$toRgb.b;var a=_color$toRgb.a;
-return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + (a === undefined?1:a) + ')';}else 
-{
-return input;}}
-
-
-
 var stringShapeRegex=/[0-9\.-]+/g;
 
 
@@ -45620,7 +45293,6 @@ config)
 {
 var outputRange=config.outputRange;
 invariant(outputRange.length >= 2,'Bad output range');
-outputRange = outputRange.map(colorToRgba);
 checkPattern(outputRange);
 
 
@@ -46092,20 +45764,6 @@ global.oRequestAnimationFrame ||
 global.msRequestAnimationFrame;
 
 module.exports = nativeRequestAnimationFrame;
-});
-__d('ViewPagerAndroid',["UnimplementedView"],function(global, require, module, exports) {  'use strict';
-
-
-
-
-
-
-
-
-
-
-
-module.exports = require('UnimplementedView');
 });
 __d('WebView',["ActivityIndicatorIOS","EdgeInsetsPropType","React","StyleSheet","Text","View","invariant","keyMirror","requireNativeComponent","NativeModules"],function(global, require, module, exports) {  'use strict';
 
@@ -51501,11 +51159,7 @@ _eventHandlers[type].get(handler).remove();
 _eventHandlers[type].delete(handler);},
 
 
-
-
-
-
-currentState:'active'};
+currentState:RCTAppState && RCTAppState.initialAppState};
 
 
 
@@ -52072,9 +51726,6 @@ RCTLinkingManager.openURL(url);}},{key:'canOpenURL',value:
 
 
 
-
-
-
 function canOpenURL(url,callback){
 invariant(
 typeof url === 'string',
@@ -52287,7 +51938,7 @@ fetch:function(){
 return new Promise(function(resolve,reject){
 RCTNetInfo.getCurrentReachability(
 function(resp){
-resolve(resp.network_info);},
+resolve(resp.network_reachability);},
 
 reject);});},
 
@@ -53920,7 +53571,7 @@ Object.keys(componentOrElement));}
 
 module.exports = findDOMNode;
 });
-__d('RNPlayNative/App/ApplicationBase.js',["react-native/Libraries/react-native/react-native.js","redux/lib/index.js","redux-thunk/lib/index.js","RNPlayNative/App/Reducers/index.js","react-redux/native.js","RNPlayNative/App/Components/Application.ios.js","RNPlayNative/package.json"],function(global, require, module, exports) {  var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(_x,_x2,_x3){var _again=true;_function: while(_again) {var object=_x,property=_x2,receiver=_x3;desc = parent = getter = undefined;_again = false;if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {_x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactNative=require(
+__d('RNPlayNative/App/ApplicationBase.js',["react-native/Libraries/react-native/react-native.js","redux/lib/index.js","redux-thunk/lib/index.js","RNPlayNative","RNPlayNative/App/Reducers/index.js","RNPlayNative/App/Components/Application.ios.js","react-redux/native.js"],function(global, require, module, exports) {  var _createClass=(function(){function defineProperties(target,props){for(var i=0;i < props.length;i++) {var descriptor=props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if('value' in descriptor)descriptor.writable = true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};})();var _get=function get(_x,_x2,_x3){var _again=true;_function: while(_again) {var object=_x,property=_x2,receiver=_x3;desc = parent = getter = undefined;_again = false;if(object === null)object = Function.prototype;var desc=Object.getOwnPropertyDescriptor(object,property);if(desc === undefined){var parent=Object.getPrototypeOf(object);if(parent === null){return undefined;}else {_x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;}}else if('value' in desc){return desc.value;}else {var getter=desc.get;if(getter === undefined){return undefined;}return getter.call(receiver);}}};function _interopRequireDefault(obj){return obj && obj.__esModule?obj:{'default':obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function');}}function _inherits(subClass,superClass){if(typeof superClass !== 'function' && superClass !== null){throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__ = superClass;}var _reactNative=require(
 
 'react-native/Libraries/react-native/react-native.js');var _reactNative2=_interopRequireDefault(_reactNative);var _redux=require(
 'redux/lib/index.js');var _reduxThunk=require(
@@ -53935,7 +53586,7 @@ __d('RNPlayNative/App/ApplicationBase.js',["react-native/Libraries/react-native/
 'RNPlayNative/App/Components/Application.ios.js');var _ComponentsApplication2=_interopRequireDefault(_ComponentsApplication);'use strict';var store=(0,_redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore)(_Reducers2.default);
 
 
-global.PACKAGE = require('RNPlayNative/package.json');
+global.PACKAGE = require('RNPlayNative');
 
 var RN_VERSION='0.13.0-rc';
 global.RN_VERSION_DISPLAY = RN_VERSION;
@@ -54649,6 +54300,113 @@ var Provider=_createAll.Provider;
 var connect=_createAll.connect;
 exports.Provider = Provider;
 exports.connect = connect;
+});
+__d('react-native/Libraries/react-native/react-native.js',["React","ActivityIndicatorIOS","DatePickerIOS","DrawerLayoutAndroid","Image","ListView","MapView","Modal","Navigator","NavigatorIOS","PickerIOS","ProgressBarAndroid","ProgressViewIOS","ScrollView","SegmentedControlIOS","SliderIOS","SwitchAndroid","SwitchIOS","TabBarIOS","Text","TextInput","ToastAndroid","ToolbarAndroid","TouchableHighlight","TouchableNativeFeedback","TouchableOpacity","TouchableWithoutFeedback","View","WebView","ActionSheetIOS","AdSupportIOS","AlertIOS","Animated","AppRegistry","AppStateIOS","AsyncStorage","BackAndroid","CameraRoll","Dimensions","Easing","ImagePickerIOS","InteractionManager","LayoutAnimation","LinkingIOS","NetInfo","PanResponder","PixelRatio","PushNotificationIOS","Settings","StatusBarIOS","StyleSheet","VibrationIOS","RCTDeviceEventEmitter","RCTNativeAppEventEmitter","NativeModules","Platform","processColor","requireNativeComponent","EdgeInsetsPropType","PointPropType","LinkedStateMixin","ReactComponentWithPureRenderMixin","NativeModules","ReactUpdates","cloneWithProps","ReactFragment","update","ReactDefaultPerf","ReactTestUtils"],function(global, require, module, exports) {  'use strict';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var ReactNative=Object.assign(Object.create(require('React')),{
+
+ActivityIndicatorIOS:require('ActivityIndicatorIOS'),
+DatePickerIOS:require('DatePickerIOS'),
+DrawerLayoutAndroid:require('DrawerLayoutAndroid'),
+Image:require('Image'),
+ListView:require('ListView'),
+MapView:require('MapView'),
+Modal:require('Modal'),
+Navigator:require('Navigator'),
+NavigatorIOS:require('NavigatorIOS'),
+PickerIOS:require('PickerIOS'),
+ProgressBarAndroid:require('ProgressBarAndroid'),
+ProgressViewIOS:require('ProgressViewIOS'),
+ScrollView:require('ScrollView'),
+SegmentedControlIOS:require('SegmentedControlIOS'),
+SliderIOS:require('SliderIOS'),
+SwitchAndroid:require('SwitchAndroid'),
+SwitchIOS:require('SwitchIOS'),
+TabBarIOS:require('TabBarIOS'),
+Text:require('Text'),
+TextInput:require('TextInput'),
+ToastAndroid:require('ToastAndroid'),
+ToolbarAndroid:require('ToolbarAndroid'),
+TouchableHighlight:require('TouchableHighlight'),
+TouchableNativeFeedback:require('TouchableNativeFeedback'),
+TouchableOpacity:require('TouchableOpacity'),
+TouchableWithoutFeedback:require('TouchableWithoutFeedback'),
+View:require('View'),
+WebView:require('WebView'),
+
+
+ActionSheetIOS:require('ActionSheetIOS'),
+AdSupportIOS:require('AdSupportIOS'),
+AlertIOS:require('AlertIOS'),
+Animated:require('Animated'),
+AppRegistry:require('AppRegistry'),
+AppStateIOS:require('AppStateIOS'),
+AsyncStorage:require('AsyncStorage'),
+BackAndroid:require('BackAndroid'),
+CameraRoll:require('CameraRoll'),
+Dimensions:require('Dimensions'),
+Easing:require('Easing'),
+ImagePickerIOS:require('ImagePickerIOS'),
+InteractionManager:require('InteractionManager'),
+LayoutAnimation:require('LayoutAnimation'),
+LinkingIOS:require('LinkingIOS'),
+NetInfo:require('NetInfo'),
+PanResponder:require('PanResponder'),
+PixelRatio:require('PixelRatio'),
+PushNotificationIOS:require('PushNotificationIOS'),
+Settings:require('Settings'),
+StatusBarIOS:require('StatusBarIOS'),
+StyleSheet:require('StyleSheet'),
+VibrationIOS:require('VibrationIOS'),
+
+
+DeviceEventEmitter:require('RCTDeviceEventEmitter'),
+NativeAppEventEmitter:require('RCTNativeAppEventEmitter'),
+NativeModules:require('NativeModules'),
+Platform:require('Platform'),
+processColor:require('processColor'),
+requireNativeComponent:require('requireNativeComponent'),
+
+
+EdgeInsetsPropType:require('EdgeInsetsPropType'),
+PointPropType:require('PointPropType'),
+
+addons:{
+LinkedStateMixin:require('LinkedStateMixin'),
+Perf:undefined,
+PureRenderMixin:require('ReactComponentWithPureRenderMixin'),
+TestModule:require('NativeModules').TestModule,
+TestUtils:undefined,
+batchedUpdates:require('ReactUpdates').batchedUpdates,
+cloneWithProps:require('cloneWithProps'),
+createFragment:require('ReactFragment').create,
+update:require('update')}});
+
+
+
+if(__DEV__){
+ReactNative.addons.Perf = require('ReactDefaultPerf');
+ReactNative.addons.TestUtils = require('ReactTestUtils');}
+
+
+module.exports = ReactNative;
 });
 __d('react-redux/lib/components/createAll.js',["react-redux/lib/components/createProvider.js","react-redux/lib/components/createConnect.js"],function(global, require, module, exports) {  'use strict';
 
@@ -60810,7 +60568,7 @@ module.exports = ret;},
 {"./es5.js":14}]},{},[4])(4);});
 ;if(typeof window !== 'undefined' && window !== null){window.P = window.Promise;}else if(typeof self !== 'undefined' && self !== null){self.P = self.Promise;}
 });
-__d('RNPlayNative/App/Screens/Login.js',["redux/lib/index.js","react-redux/native.js","react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Components/NavigationBar.ios.js","RNPlayNative/App/Api/Core.js","RNPlayNative/App/Utilities/Colors.js","RNPlayNative/App/Components/Alert.ios.js","RNPlayNative/App/Components/Spinner.ios.js","RNPlayNative/App/Components/StatusBar.ios.js","RNPlayNative/App/Actions/index.js"],function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _redux=require(
+__d('RNPlayNative/App/Screens/Login.js',["redux/lib/index.js","react-redux/native.js","react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Components/NavigationBar.ios.js","RNPlayNative/App/Api/Core.js","RNPlayNative/App/Utilities/Colors.js","RNPlayNative/App/Components/Alert.ios.js","RNPlayNative/App/Actions/index.js","RNPlayNative/App/Components/Spinner.ios.js","RNPlayNative/App/Components/StatusBar.ios.js"],function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _redux=require(
 
 
 
@@ -61350,7 +61108,7 @@ return (0,_redux.bindActionCreators)({updateProfile:updateProfile},dispatch);})(
 
 Signup);module.exports = exports.default;
 });
-__d('RNPlayNative/App/Screens/Home.ios.js',["redux/lib/index.js","react-redux/native.js","react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Screens/Explore.js","RNPlayNative/App/Screens/MyAppsContainer.js","RNPlayNative/App/Screens/CustomApp.js","RNPlayNative/App/Screens/Settings.js","RNPlayNative/App/Screens/About.js","RNPlayNative/App/Screens/QRCodeReader.js","Ionicons","RNPlayNative/App/Components/NavigationBar.ios.js","RNPlayNative/App/Utilities/Colors.js","RNPlayNative/App/Actions/index.js"],function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _redux=require(
+__d('RNPlayNative/App/Screens/Home.ios.js',["redux/lib/index.js","react-redux/native.js","react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Components/NavigationBar.ios.js","RNPlayNative/App/Utilities/Colors.js","RNPlayNative/App/Actions/index.js","Ionicons","RNPlayNative/App/Screens/Explore.js","RNPlayNative/App/Screens/MyAppsContainer.js","RNPlayNative/App/Screens/CustomApp.js","RNPlayNative/App/Screens/Settings.js","RNPlayNative/App/Screens/About.js","RNPlayNative/App/Screens/QRCodeReader.js"],function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _redux=require(
 
 
 
@@ -61473,7 +61231,7 @@ return (0,_redux.bindActionCreators)({fetchProfile:fetchProfile},dispatch);})(
 
 Home);module.exports = exports.default;
 });
-__d('RNPlayNative/App/Screens/Explore.js',["react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Components/AppList.js","RNPlayNative/App/Screens/Search.js","RNPlayNative/App/Utilities/Colors.js","RNPlayNative/App/Components/StatusBar.ios.js","Dimensions"],function(global, require, module, exports) {  'use strict';
+__d('RNPlayNative/App/Screens/Explore.js',["react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Utilities/Colors.js","RNPlayNative/App/Components/StatusBar.ios.js","Dimensions","RNPlayNative/App/Components/AppList.js","RNPlayNative/App/Screens/Search.js"],function(global, require, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native.js');var 
 
@@ -62030,7 +61788,7 @@ module.exports = NoResults;
 __d('RNPlayNative/App/Utilities/generateAppURL.js',[],function(global, require, module, exports) {  module.exports = function(app){
 return "http://packager" + global.RN_VERSION + ".rnplay.org";};
 });
-__d('image!network_error',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/joshua/rnplay/rnplay-native/android/app/src/main/res/drawable/network_error.png","uri":"network_error","width":900,"height":801,"deprecated":true};
+__d('image!network_error',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/joshua/rnplay/rnplay-native/android/app/build/intermediates/res/merged/release/drawable/network_error.png","uri":"network_error","width":900,"height":801,"deprecated":true};
 });
 __d('RNPlayNative/App/Screens/Search.js',["react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Components/AppList.js","RNPlayNative/App/Components/NoResults.js","RNPlayNative/App/Utilities/Colors.js"],function(global, require, module, exports) {  'use strict';
 
@@ -62131,7 +61889,7 @@ marginTop:0}});
 
 module.exports = Explore;
 });
-__d('RNPlayNative/App/Screens/MyAppsContainer.js',["react-redux/native.js","react-native/Libraries/react-native/react-native.js","Overlay","RNPlayNative/App/Api/Core.js","RNPlayNative/App/Components/NavigationBar.ios.js","RNPlayNative/App/Screens/Login.js","RNPlayNative/App/Screens/Signup.js","RNPlayNative/App/Screens/MyApps.js","RNPlayNative/App/Utilities/Colors.js","RNPlayNative/App/Components/StatusBar.ios.js"],function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _reactReduxNative=require(
+__d('RNPlayNative/App/Screens/MyAppsContainer.js',["react-redux/native.js","react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Api/Core.js","RNPlayNative/App/Components/NavigationBar.ios.js","RNPlayNative/App/Screens/Login.js","RNPlayNative/App/Screens/Signup.js","RNPlayNative/App/Utilities/Colors.js","RNPlayNative/App/Components/StatusBar.ios.js","Overlay","RNPlayNative/App/Screens/MyApps.js"],function(global, require, module, exports) {  Object.defineProperty(exports,'__esModule',{value:true});var _reactReduxNative=require(
 
 
 
@@ -62629,6 +62387,14 @@ return React.createElement(Text,{key:name,style:styles.moduleText},name,' ',vers
 
 
 
+_renderExitScreenText:function(){
+if(Platform.OS === 'ios'){
+return "Tap and hold the screen with two fingers simultaneously for 1.5 seconds.";}else 
+{
+return "Press the hardware back button on your device.";}},
+
+
+
 render:function(){
 StatusBar.setStyle('light-content');
 
@@ -62638,10 +62404,10 @@ React.createElement(ScrollView,{style:styles.contentContainer,automaticallyAdjus
 React.createElement(Text,{style:styles.heading},'React Native Playground'),
 React.createElement(Image,{style:styles.logo,source:require('image!rnplay_logo_light_w_sand')}),
 React.createElement(Text,{style:styles.title},'Run React Native apps from rnplay.org directly on your device.'),
-React.createElement(Text,{style:styles.text},'Get started by trying apps on the ',React.createElement(Text,{style:styles.emphasis},'Explore'),' tab, or login to your rnplay.org account in ',React.createElement(Text,{style:styles.emphasis},'My Apps'),'.'),
+React.createElement(Text,{style:styles.text},'Get started by trying apps on the ',React.createElement(Text,{style:styles.emphasis},'Explore'),' screen, or login to your rnplay.org account in ',React.createElement(Text,{style:styles.emphasis},'My Apps'),'.'),
 
 React.createElement(Text,{style:styles.title},'How do I exit a loaded app?'),
-React.createElement(Text,{style:styles.text},'Tap and hold the screen with two fingers simultaneously for 1.5 seconds.'),
+React.createElement(Text,{style:styles.text},this._renderExitScreenText()),
 
 React.createElement(Text,{style:styles.title},'What does target mean?'),
 React.createElement(Text,{style:styles.text},'The target React Native version for an app. An app might not behave if the target is different than the our bundled React Native version.'),
@@ -75094,9 +74860,9 @@ root._ = _;}}).
 
 call(this);
 });
-__d('image!rnplay_logo_light_w_sand',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/joshua/rnplay/rnplay-native/android/app/src/main/res/drawable/rnplay_logo_light_w_sand.png","uri":"rnplay_logo_light_w_sand","width":370,"height":370,"deprecated":true};
+__d('image!rnplay_logo_light_w_sand',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/joshua/rnplay/rnplay-native/android/app/build/intermediates/res/merged/release/drawable/rnplay_logo_light_w_sand.png","uri":"rnplay_logo_light_w_sand","width":370,"height":370,"deprecated":true};
 });
-__d('RNPlayNative/App/Screens/QRCodeReader.js',["react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Utilities/generateAppURL.js","Overlay","RNPlayNative/App/Components/StatusBar.ios.js","RNPlayNative/App/Components/BarCodeReader.ios.js","RNPlayNative/App/Utilities/reloadApp.ios.js","RNPlayNative/App/Components/Icon.ios.js","react-timer-mixin/TimerMixin.js","RNPlayNative/App/Utilities/Colors.js"],function(global, require, module, exports) {  'use strict';
+__d('RNPlayNative/App/Screens/QRCodeReader.js',["react-native/Libraries/react-native/react-native.js","RNPlayNative/App/Utilities/generateAppURL.js","Overlay","RNPlayNative/App/Components/StatusBar.ios.js","RNPlayNative/App/Components/BarCodeReader.ios.js","RNPlayNative/App/Utilities/reloadApp.ios.js","react-timer-mixin/TimerMixin.js","RNPlayNative/App/Utilities/Colors.js","RNPlayNative/App/Components/Icon.ios.js"],function(global, require, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native.js');
 var generateAppURL=require('RNPlayNative/App/Utilities/generateAppURL.js');
@@ -75209,7 +74975,7 @@ right:20}});
 
 module.exports = QRCodeReader;
 });
-__d('RNPlayNative/App/Components/BarCodeReader.ios.js',["react-native/Libraries/react-native/react-native.js","react-native-camera/index.ios.js","Ionicons"],function(global, require, module, exports) {  'use strict';
+__d('RNPlayNative/App/Components/BarCodeReader.ios.js',["react-native/Libraries/react-native/react-native.js","Ionicons","react-native-camera/index.ios.js"],function(global, require, module, exports) {  'use strict';
 
 var React=require('react-native/Libraries/react-native/react-native.js');
 var Camera=require('react-native-camera/index.ios.js');
@@ -76627,7 +76393,7 @@ module.exports = Guest;
 });
 __d('image!photo-camera5',[],function(global, require, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/joshua/rnplay/rnplay-native/photo-camera5.png","uri":"photo-camera5","width":256,"height":256,"deprecated":true};
 });
-__d('RNPlayNative/package.json',[],function(global, require, module, exports) {  module.exports = {
+__d('RNPlayNative',[],function(global, require, module, exports) {  module.exports = {
   "name": "RNPlayNative",
   "version": "1.11.0",
   "private": true,
@@ -76648,12 +76414,13 @@ __d('RNPlayNative/package.json',[],function(global, require, module, exports) { 
     "react-native-blur": "0.6.1",
     "react-native-camera": "0.3.7",
     "react-native-drawer-layout": "^0.1.4",
+    "react-native-fs": "^0.4.0",
     "react-native-icons": "0.4.0",
     "react-native-image-picker": "0.6.1",
     "react-native-keyboardevents": "0.4.5",
     "react-native-keychain": "0.2.5",
     "react-native-linear-gradient": "1.1.0-alpha",
-    "react-native-mapbox-gl": "1.0.0",
+    "react-native-mapbox-gl": "rnplay/react-native-mapbox-gl",
     "react-native-material-kit": "0.2.0",
     "react-native-modal": "0.3.10",
     "react-native-overlay": "0.3.0",
