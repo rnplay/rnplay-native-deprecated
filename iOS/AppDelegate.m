@@ -74,8 +74,8 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
     initialModuleName = @"UIExplorerApp";
   } else {
 
-    initialJSBundleURL = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
-    // initialJSBundleURL = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios"];
+    //initialJSBundleURL = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+    initialJSBundleURL = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
 
     initialModuleName = @"RNPlayNative";
   }

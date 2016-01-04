@@ -26,7 +26,7 @@ RCT_EXPORT_MODULE()
 RCT_EXPORT_METHOD(reloadAppWithURLString:(NSString *)URLString moduleNamed:(NSString *)moduleName appName:(NSString *)appName)
 {
   AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-  NSURL *JSBundleURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@?platform=ios", URLString]];
+  NSURL *JSBundleURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@?platform=ios&dev=true", URLString]];
   
   @try {
     ViewController *appViewController = [[ViewController alloc] init];
