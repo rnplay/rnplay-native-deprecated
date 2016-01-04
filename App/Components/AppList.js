@@ -338,7 +338,7 @@ var styles = StyleSheet.create({
 
 import { connect } from 'react-redux/native'
 
-export default connect(
+module.exports = connect(
   (state) => {
     return {
       profile: state.profile
