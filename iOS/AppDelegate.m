@@ -70,8 +70,6 @@ int const kFlipTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
   self.window.backgroundColor = [UIColor blackColor];
   [self.window makeKeyAndVisible];
 
-  [self trackMainScreeView];
-
   UILongPressGestureRecognizer *exitGesture = [[UILongPressGestureRecognizer alloc]
     initWithTarget:self action:@selector(goToHomeScreen:)];
   [exitGesture setMinimumPressDuration:1.5f];
