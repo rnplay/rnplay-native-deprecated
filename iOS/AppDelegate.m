@@ -1,11 +1,7 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
-#import "JSURL.h"
 #import "RCTRootView.h"
 #import "RCTLinkingManager.h"
-#import "GAI.h"
-#import "GAIFields.h"
-#import "GAIDictionaryBuilder.h"
 #import "RCTBridge.h"
 #import "RCTEventDispatcher.h"
 #import <Fabric/Fabric.h>
@@ -21,17 +17,6 @@ NSString *const ReturnToHomeEvent = @"returnToHome";
 
 float const kFlipTransitionDuration = 0.4f;
 int const kFlipTransitionType = UIViewAnimationOptionTransitionFlipFromRight;
-
-// Google Analytics configuration constants
-
-#if RNPLAY_DEBUG
-  static NSString *const kGANPropertyId = @"UA-63760955-1";
-#else
-  static NSString *const kGANPropertyId = @"UA-63760955-2";
-#endif
-
-static NSTimeInterval const kGANDispatchInterval = 120.0;
-static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
 
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
   NSUInteger orientations;
@@ -49,34 +34,21 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
   [Fabric with:@[[Crashlytics class]]];
-  [self initializeGoogleAnalytics];
 
   NSURL *initialJSBundleURL;
   NSString *initialModuleName;
 
-//   Example:
-//   NSString *suppliedAppId = @"qAFzcA";
-//   NSString *suppliedModuleName = @"ParallaxExample";
-
-  NSString *suppliedAppId = [[NSUserDefaults standardUserDefaults] stringForKey:@"appId"];
   NSString *suppliedModuleName = [[NSUserDefaults standardUserDefaults] stringForKey:@"moduleName"];
   NSString *suppliedAppUrl = [[NSUserDefaults standardUserDefaults] stringForKey:@"bundleUrl"];
-  NSString *useUIExplorer = [[NSUserDefaults standardUserDefaults] stringForKey:@"UIExplorer"];
 
-  if (suppliedAppId) {
-    initialJSBundleURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", @"http://packager.rnplay.org/", suppliedAppId, @".bundle"]];
-    initialModuleName = suppliedModuleName;
-  } else if (suppliedAppUrl) {
+  if (suppliedAppUrl) {
     initialJSBundleURL = [NSURL URLWithString:suppliedAppUrl];
     initialModuleName = suppliedModuleName;
-  } else if (useUIExplorer) {
-    initialJSBundleURL = [NSURL URLWithString:[[[NSBundle mainBundle] URLForResource:@"uiexplorer" withExtension:@"jsbundle"] absoluteString]];
-    initialModuleName = @"UIExplorerApp";
+
   } else {
 
     //initialJSBundleURL = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
     initialJSBundleURL = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
-
     initialModuleName = @"RNPlayNative";
   }
 
@@ -143,23 +115,6 @@ static GAILogLevel const kGANLogLevel = kGAILogLevelWarning;
                       }
                     }];
   }
-}
-
-- (void)initializeGoogleAnalytics {
-  [GAI sharedInstance].trackUncaughtExceptions = YES;
-  [GAI sharedInstance].dispatchInterval = kGANDispatchInterval;
-  [GAI sharedInstance].logger.logLevel = kGANLogLevel;
-  [[GAI sharedInstance] trackerWithTrackingId:kGANPropertyId];
-#if DEBUG
-  [[GAI sharedInstance] setDryRun:YES];
-  [GAI sharedInstance].logger.logLevel = kGAILogLevelInfo;
-#endif
-}
-
-- (void)trackMainScreeView {
-  id tracker = [[GAI sharedInstance] defaultTracker];
-  [tracker set:kGAIScreenName value:@"Main"];
-  [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 @end
