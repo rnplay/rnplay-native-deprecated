@@ -1,5 +1,0 @@
-beta_ipa "../Playground.ipa"
-
-app_identifier "org.rnplay.playground" # The bundle identifier of your app
-apple_id "1002032944" # This is NOT your Apple login ID, but the App ID of your app
-email "jsierles@gmail.com" # the login email address

@@ -33,15 +33,7 @@
 		420C36EC1B2218E7008E8F87 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 420C36EB1B2218B9008E8F87 /* libBVLinearGradient.a */; };
 		424BBF901B38C91E006C95AA /* libRNUserDefaultsIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424BBF8D1B38C917006C95AA /* libRNUserDefaultsIOS.a */; };
 		4250E8661B61924800D06A0B /* libRNKeychain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4250E8601B61923700D06A0B /* libRNKeychain.a */; };
-		42512DBA1BD115170003C7DD /* Mapbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 42512DB81BD115170003C7DD /* Mapbox.bundle */; };
-		42512DBB1BD115170003C7DD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 42512DB91BD115170003C7DD /* Settings.bundle */; };
 		427EFA4D1BAE033B00DA8D5D /* weathericons-regular-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 427EFA4C1BAE033B00DA8D5D /* weathericons-regular-webfont.ttf */; };
-		42A9E7EB1BCB31140035670A /* AudioPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A9E7E81BCB31140035670A /* AudioPlayerManager.m */; };
-		42A9E7EC1BCB31140035670A /* AudioRecorderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A9E7EA1BCB31140035670A /* AudioRecorderManager.m */; };
-		42A9E7ED1BCB31330035670A /* AudioPlayerManager.h in Sources */ = {isa = PBXBuildFile; fileRef = 42A9E7E71BCB31140035670A /* AudioPlayerManager.h */; };
-		42A9E7EE1BCB313A0035670A /* AudioRecorderManager.h in Sources */ = {isa = PBXBuildFile; fileRef = 42A9E7E91BCB31140035670A /* AudioRecorderManager.h */; };
-		42A9E7F11BCB315F0035670A /* ViewSnapshotter.h in Sources */ = {isa = PBXBuildFile; fileRef = 42A9E7EF1BCB315F0035670A /* ViewSnapshotter.h */; };
-		42A9E7F21BCB315F0035670A /* ViewSnapshotter.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A9E7F01BCB315F0035670A /* ViewSnapshotter.m */; };
 		42D8D3111B221FBB00B7BAEF /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D8D3101B221FBB00B7BAEF /* libRCTVideo.a */; };
 		42DF0C6B1B3D679700AA060D /* libActivityView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42DF0C6A1B3D678800AA060D /* libActivityView.a */; };
 		42F188861BA2396A00E0E948 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F188841BA2396A00E0E948 /* Fabric.framework */; };
@@ -53,7 +45,6 @@
 		557821551BCED9CC00E9AACD /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 557821541BCED98000E9AACD /* libRCTCamera.a */; };
 		557821561BCED9CE00E9AACD /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5578214E1BCED97100E9AACD /* libRNSpinkit.a */; };
 		5595BFD61C3474C10039FBF1 /* libReact-Native-Webview-Bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5595BFD51C3474B30039FBF1 /* libReact-Native-Webview-Bridge.a */; };
-		5595BFD91C3475080039FBF1 /* UIImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5595BFD81C3475080039FBF1 /* UIImagePickerManager.m */; };
 		5595BFE01C3475AF0039FBF1 /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5595BFDF1C34759D0039FBF1 /* libRNBlur.a */; };
 		55B8F8881B1E4F24002F65B0 /* AppReloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8F8871B1E4F24002F65B0 /* AppReloader.m */; };
 		55B8F9F41B20A858002F65B0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8F9F31B20A858002F65B0 /* CoreData.framework */; };
@@ -309,19 +300,6 @@
 			remoteInfo = RCTWebSocket;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		BBE164321B2233FB001FC1AC /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
@@ -891,7 +869,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				42F8A6DB1AF0E5D700ED7DBD /* ShellScript */,
-				BBE164321B2233FB001FC1AC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1286,7 +1263,6 @@
 			files = (
 				427EFA4D1BAE033B00DA8D5D /* weathericons-regular-webfont.ttf in Resources */,
 				55E1663E1B994EFE006817EA /* Octicons.ttf in Resources */,
-				42512DBA1BD115170003C7DD /* Mapbox.bundle in Resources */,
 				1111D16C1B18E126007370BA /* Avenir Next.ttc in Resources */,
 				55E1663A1B994EFE006817EA /* FontAwesome.ttf in Resources */,
 				55E166381B994EFE006817EA /* Entypo.ttf in Resources */,
@@ -1303,7 +1279,6 @@
 				BBA8F26A1B0D267C009C7EB9 /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				55E1663F1B994EFE006817EA /* Zocial.ttf in Resources */,
-				42512DBB1BD115170003C7DD /* Settings.bundle in Resources */,
 				55E1663D1B994EFE006817EA /* MaterialIcons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1332,15 +1307,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42A9E7F11BCB315F0035670A /* ViewSnapshotter.h in Sources */,
-				42A9E7F21BCB315F0035670A /* ViewSnapshotter.m in Sources */,
 				EE49F76F1AFA1F8D002F30A8 /* ViewController.m in Sources */,
-				42A9E7ED1BCB31330035670A /* AudioPlayerManager.h in Sources */,
-				42A9E7EB1BCB31140035670A /* AudioPlayerManager.m in Sources */,
-				42A9E7EC1BCB31140035670A /* AudioRecorderManager.m in Sources */,
-				42A9E7EE1BCB313A0035670A /* AudioRecorderManager.h in Sources */,
 				55FF68641B97284600257CB9 /* AppLoadingView.m in Sources */,
-				5595BFD91C3475080039FBF1 /* UIImagePickerManager.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				55B8F8881B1E4F24002F65B0 /* AppReloader.m in Sources */,
