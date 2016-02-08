@@ -1,15 +1,9 @@
-/**
- * React Native Playground
- * https://github.com/jsierles/rnplay
- */
-
 'use strict';
 
 var React = require('react-native');
 var Explore = require('./Explore');
 var MyAppsContainer = require('./MyAppsContainer');
 var CustomApp = require('./CustomApp');
-// var Settings = require('./Settings');
 var About = require('./About');
 var QRCodeReader = require('./QRCodeReader');
 var Icon = require('../Components/Icon');
@@ -37,7 +31,7 @@ function getIconFor(item) {
       return (
         <Icon name={item} size={24} style={{marginLeft: 25}} color={Colors.grey} />
       );
-    }
+    },
   });
 }
 
@@ -58,14 +52,6 @@ var MenuData = [
     },
     icon: getIconFor('briefcase'),
   },
-  // {
-  //   id: 3,
-  //   component: {
-  //     title: 'Direct URL',
-  //     component: CustomApp,
-  //   },
-  //   icon: getIconFor('code'),
-  // },
   {
     id: 4,
     component: {
@@ -96,6 +82,7 @@ var Home = React.createClass({
 
   componentDidMount() {
     this.props.fetchProfile();
+
     // To better debug the drawer...
     // this.drawer.openDrawer();
   },
@@ -147,7 +134,7 @@ var Home = React.createClass({
 
     return (
       <DrawerLayout
-        ref={(drawer) => { this.drawer = drawer; }}
+        ref={drawer => this.drawer = drawer}
         onDrawerSlide={(e) => this.setState({drawerSlideOutput: JSON.stringify(e.nativeEvent)})}
         onDrawerStateChanged={(e) => this.setState({drawerStateChangedOutput: JSON.stringify(e)})}
         drawerWidth={300}
@@ -155,7 +142,7 @@ var Home = React.createClass({
         {this._renderSelectedScreen()}
       </DrawerLayout>
     );
-  }
+  },
 });
 
 var styles = StyleSheet.create({
@@ -166,10 +153,10 @@ var styles = StyleSheet.create({
 
 var {fetchProfile} = require('../Actions');
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux/native'
+import { connect } from 'react-redux';
 
 export default connect(null,
   (dispatch) => {
-    return bindActionCreators({fetchProfile}, dispatch)
+    return bindActionCreators({fetchProfile}, dispatch);
   }
-)(Home)
+)(Home);

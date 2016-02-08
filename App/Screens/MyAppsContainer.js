@@ -6,7 +6,6 @@
 'use strict';
 
 var React = require('react-native');
-var Overlay = require('react-native-overlay');
 var Api = require("../Api/Core");
 var NavigationBar = require('../Components/NavigationBar');
 var Login = require('../Screens/Login');
@@ -120,7 +119,7 @@ var styles = StyleSheet.create({
   }
 });
 
-import { connect } from 'react-redux/native'
+import { connect } from 'react-redux';
 
 module.exports = connect(
   (state) => {

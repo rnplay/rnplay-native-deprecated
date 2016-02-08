@@ -2,7 +2,6 @@
 
 var React = require('react-native');
 var generateAppURL = require('../Utilities/generateAppURL');
-var Overlay = require('react-native-overlay');
 var StatusBar = require('../Components/StatusBar');
 var BarCodeReader = require('../Components/BarCodeReader');
 
@@ -12,6 +11,7 @@ var {
   View,
   TouchableOpacity,
   Platform,
+  Modal,
 } = React;
 
 var reloadApp = require('../Utilities/reloadApp');
@@ -48,9 +48,9 @@ var QRCodeReader = React.createClass({
 
     return (
       this.state.cameraOpen ?
-        <Overlay isVisible={true}>
+        <Modal isVisible={true}>
           <BarCodeReader onRead={this.onBarCodeRead} onClose={this.onBarCodeClose} />
-        </Overlay> :
+        </Modal> :
           <View style={styles.container}>
             <Text style={styles.text}>
               On rnplay.org, find an app.

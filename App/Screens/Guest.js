@@ -15,12 +15,12 @@ var {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
+  Modal
 } = React;
 
 var reloadApp = require('../Utilities/reloadApp');
 var Camera = require('react-native-camera');
-var Overlay = require('react-native-overlay');
 var Colors = require('../Utilities/Colors');
 
 var Api = require("../Api/Core");
@@ -69,7 +69,7 @@ var Guest = React.createClass({
         <TouchableOpacity onPress={() => this.setState({isModalOpen: true})}>
           <Image style={styles.cameraButton} resizeMode="contain" source={require("image!photo-camera5")} />
         </TouchableOpacity>
-        <Overlay isVisible={this.state.isModalOpen}>
+        <Modal isVisible={this.state.isModalOpen}>
           <Camera
             ref="cam"
             style={styles.container}
@@ -78,7 +78,7 @@ var Guest = React.createClass({
               <Text style={styles.cancelButton}>X</Text>
             </TouchableOpacity>
           </Camera>
-        </Overlay>
+        </Modal>
       </View>
     );
   },

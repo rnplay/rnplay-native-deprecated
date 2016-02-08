@@ -59,7 +59,7 @@ var styles = StyleSheet.create({
 
 var {deleteProfile} = require('../Actions');
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux/native'
+import { connect } from 'react-redux';
 
 export default connect(
   (state) => {

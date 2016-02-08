@@ -99,21 +99,21 @@ var Home = React.createClass({
           </View>
         </Icon.TabBarItem>
       </TabBarIOS>
-    )
-  }
+    );
+  },
 });
 
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-  }
+  },
 });
 
 // module.exports = Home;
 
 var {fetchProfile} = require('../Actions');
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux/native'
+import { connect } from 'react-redux';
 
 module.exports = connect(null,
   (dispatch) => {

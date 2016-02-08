@@ -336,7 +336,7 @@ var styles = StyleSheet.create({
   },
 });
 
-import { connect } from 'react-redux/native'
+import { connect } from 'react-redux';
 
 module.exports = connect(
   (state) => {
