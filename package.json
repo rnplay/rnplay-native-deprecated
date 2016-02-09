@@ -10,6 +10,7 @@
     "fb-watchman": "1.9.0",
     "lodash": "4.2.1",
     "qs": "6.1.0",
+    "react-native-barcodescanner": "1.0.0",
     "react-native": "facebook/react-native#0.20-stable",
     "react-native-camera": "0.3.8",
     "react-native-userdefaults-ios": "0.1.3",
