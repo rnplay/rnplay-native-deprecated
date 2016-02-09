@@ -10,7 +10,6 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
-import com.mapbox.reactnativemapboxgl.ReactNativeMapboxGLPackage;
 
 public class AppActivity extends Activity implements DefaultHardwareBackBtnHandler {
 
@@ -34,7 +33,6 @@ public class AppActivity extends Activity implements DefaultHardwareBackBtnHandl
                 .setJSMainModuleName(jsMainModuleName)
                 .addPackage(new MainReactPackage())
                 .addPackage(new BarcodeScanner())
-                .addPackage(new ReactNativeMapboxGLPackage())
                 .setUseDeveloperSupport(true)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
