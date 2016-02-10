@@ -155,7 +155,7 @@ var {fetchProfile} = require('../Actions');
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-export default connect(null,
+module.exports = connect(null,
   (dispatch) => {
     return bindActionCreators({fetchProfile}, dispatch);
   }
