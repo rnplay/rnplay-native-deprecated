@@ -14,10 +14,14 @@ var {
   Modal,
 } = React;
 
+const Portal = require('react-native/Libraries/Portal/Portal.js');
+
 var reloadApp = require('../Utilities/reloadApp');
 var Icon = require('../Components/Icon');
 var TimerMixin = require('react-timer-mixin');
 var Colors = require('../Utilities/Colors');
+
+let portalTag;
 
 var QRCodeReader = React.createClass({
   mixins: [TimerMixin],
@@ -28,11 +32,24 @@ var QRCodeReader = React.createClass({
     }
   },
 
+  componentWillMount() {
+    portalTag = Portal.allocateTag();
+  },
+
+  componentWillUnmount() {
+    portalTag = null;
+  },
+
   onBarCodeRead(e) {
     var app = JSON.parse(e.data);
     this.setTimeout(
       () => {
-        this.setState({cameraOpen: false});
+        if (Platform.OS === 'android') {
+          Portal.closeModal(portalTag);
+        }
+        else {
+          this.setState({cameraOpen: false});
+        }
       }
     )
 
@@ -40,7 +57,27 @@ var QRCodeReader = React.createClass({
   },
 
   onBarCodeClose() {
-    this.setState({cameraOpen: false});
+    if (Platform.OS === 'android') {
+      Portal.closeModal(portalTag);
+    }
+    else {
+      this.setState({cameraOpen: false});
+    }
+  },
+
+  onCameraOpen() {
+    if (Platform.OS === 'android') {
+      Portal.showModal(portalTag, this.renderBarCodeReader());
+    }
+    else {
+      this.setState({cameraOpen: true});
+    }
+  },
+
+  renderBarCodeReader() {
+    return (
+      <BarCodeReader onRead={this.onBarCodeRead} onClose={this.onBarCodeClose} />
+    );
   },
 
   render(){
@@ -49,7 +86,7 @@ var QRCodeReader = React.createClass({
     return (
       this.state.cameraOpen ?
         <Modal isVisible={true}>
-          <BarCodeReader onRead={this.onBarCodeRead} onClose={this.onBarCodeClose} />
+          {this.renderBarCodeReader()}
         </Modal> :
           <View style={styles.container}>
             <Text style={styles.text}>
@@ -62,7 +99,7 @@ var QRCodeReader = React.createClass({
               Tap below and point the camera at the displayed code.
             </Text>
 
-            <TouchableOpacity onPress={() => this.setState({cameraOpen: true})} >
+            <TouchableOpacity onPress={this.onCameraOpen} >
               <Icon
                 name='camera'
                 size={80}
