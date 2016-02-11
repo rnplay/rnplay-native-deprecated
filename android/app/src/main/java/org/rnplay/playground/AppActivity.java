@@ -64,8 +64,7 @@ public class AppActivity extends Activity implements DefaultHardwareBackBtnHandl
         super.onPause();
 
         if (mReactInstanceManager != null) {
-            // TODO: Re-enable this somehow...
-            //mReactInstanceManager.onPause();
+            mReactInstanceManager.onPause();
         }
     }
 
@@ -74,8 +73,7 @@ public class AppActivity extends Activity implements DefaultHardwareBackBtnHandl
         super.onResume();
 
         if (mReactInstanceManager != null) {
-            // TODO: Re-enable this somehow...
-            //mReactInstanceManager.onResume(this);
+            mReactInstanceManager.onResume(this, this);
         }
     }
 }
