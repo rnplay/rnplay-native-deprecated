@@ -39,7 +39,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
         String jsMainModuleName = "index.android";
         String moduleName = "RNPlayNative";
         Boolean liveReloadEnabled = false;
-        Boolean useDevSupport = false;
+        Boolean useDevSupport = true;
 
         // Get the params that is passed in from Appetize.
         Bundle bundle = getIntent().getExtras();
@@ -51,7 +51,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 jsMainModuleName = bundle.getString("jsMainModuleName");
                 moduleName = bundle.getString("moduleName");
                 liveReloadEnabled = true;
-                useDevSupport = true;
+                useDevSupport = false;
             }
         }
 
