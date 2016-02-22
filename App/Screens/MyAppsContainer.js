@@ -54,7 +54,6 @@ var MyAppsContainer = React.createClass({
 
   render() {
     StatusBar.setStyle('light-content');
-
     if(this.props.profile && this.props.profile.id){
       DEFAULT_ROUTE.id = 'my_apps';
     } else {
