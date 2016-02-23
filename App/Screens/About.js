@@ -10,7 +10,7 @@ var {
   Text,
   ScrollView,
   View,
-  LinkingIOS,
+  Linking,
   TouchableOpacity,
   Image,
   Platform,
@@ -22,13 +22,13 @@ var {map} = require('lodash');
 var About = React.createClass({
   _sendEmail() {
     if (Platform.OS === 'ios') {
-      LinkingIOS.openURL('mailto:info@rnplay.org');
+      Linking.openURL('mailto:info@rnplay.org');
     }
   },
 
   _loadURL(url) {
     if (Platform.OS === 'ios') {
-      LinkingIOS.openURL(url);
+      Linking.openURL(url);
     }
   },
 

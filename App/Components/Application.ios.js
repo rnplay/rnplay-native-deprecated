@@ -8,7 +8,7 @@
 var React = require('react-native');
 
 var qs = require('qs');
-var LinkingIOS = require('LinkingIOS');
+var Linking = require('Linking');
 var reloadApp = require('../Utilities/reloadApp');
 var Login = require('../Screens/Login');
 var Signup = require('../Screens/Signup');
@@ -36,12 +36,14 @@ var RNPlayNative = React.createClass({
   },
 
   componentDidMount() {
-    LinkingIOS.addEventListener('url', this._processURL);
+    Linking.addEventListener('url', this._processURL);
 
-    var url = LinkingIOS.popInitialURL();
-    if (url) {
-      this._processURL({url});
-    }
+    var url = Linking.getInitialURL()
+      .then((url) => {
+        if (url) {
+          this._processURL({url});
+        }
+      });
 
     this.returnSubscription = NativeAppEventEmitter.addListener('returnToHome',
       (data) => {
@@ -52,7 +54,7 @@ var RNPlayNative = React.createClass({
   },
 
   componentWillUnmount() {
-    LinkingIOS.removeEventListener('url', this._processURL);
+    Linking.removeEventListener('url', this._processURL);
     this.returnSubscription.remove();
   },
 
