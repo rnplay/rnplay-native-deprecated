@@ -164,7 +164,7 @@ var {updateProfile} = require('../Actions');
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-export default connect(
+module.exports = connect(
   (state) => {
     return {
       profile: state.profile
