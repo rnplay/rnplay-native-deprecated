@@ -2,10 +2,10 @@ var BASE_URL = 'https://rnplay.org';
 
 var Api = {
   get(url, authEmail = '', authToken = '') {
-    var platformParam = `?platform=${global.PLATFORM}`
+    var platformParam = `?platform=${global.PLATFORM}`;
 
-    if (url.contains('?')) {
-      platformParam = platformParam.replace("?", "&")
+    if (url.indexOf('?') !== -1) {
+      platformParam = platformParam.replace('?', '&');
     }
     return fetch(BASE_URL + url + platformParam, {
       method: 'get',
@@ -18,7 +18,7 @@ var Api = {
   post(url, body = '') {
     return fetch(BASE_URL + url, {
       method: 'post',
-        headers: {
+      headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
@@ -28,7 +28,7 @@ var Api = {
   put(url, body) {
     return fetch(BASE_URL + url, {
       method: 'put',
-        headers: {
+      headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
@@ -36,7 +36,7 @@ var Api = {
     }).then((res) => res.json());
   },
   delete(url) {
-    return fetch(BASE_URL + url, { method: 'delete' }).then((res) => res.json());
+    return fetch(BASE_URL + url, {method: 'delete'}).then((res) => res.json());
   }
 };
 

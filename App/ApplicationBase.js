@@ -16,7 +16,7 @@ import Application from './Components/Application';
 global.PACKAGE = require('../package.json');
 
 //TODO: Change this back when moving to 0.13 stable
-var RN_VERSION = '0.20.0'; //global.PACKAGE.dependencies['react-native'];
+var RN_VERSION = '0.21.0'; //global.PACKAGE.dependencies['react-native'];
 global.RN_VERSION_DISPLAY = RN_VERSION;
 var githubPrefix = 'rnplay/react-native#';
 
