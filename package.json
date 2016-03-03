@@ -10,7 +10,7 @@
     "fb-watchman": "1.9.0",
     "lodash": "4.5.1",
     "qs": "6.1.0",
-    "react-native": "0.21.0-rc",
+    "react-native": "0.21.0",
     "react-native-barcodescanner": "1.0.1",
     "react-native-camera": "0.3.8",
     "react-native-code-push": "Microsoft/react-native-code-push",
