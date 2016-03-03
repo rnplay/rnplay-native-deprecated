@@ -46,3 +46,4 @@ local.properties
 fabric.properties
 *.iml
 *.keystore
+.reploy.*
