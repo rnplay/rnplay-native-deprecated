@@ -8,9 +8,6 @@
 
 #import "ViewController.h"
 #import "RCTRootView.h"
-#import "GAI.h"
-#import "GAIFields.h"
-#import "GAIDictionaryBuilder.h"
 #import "AppLoadingView.h"
 
 @implementation ViewController
@@ -35,13 +32,6 @@
 
   [self setView:rootView];
 
-  [self trackScreenView];
-}
-
-- (void)trackScreenView {
-  id tracker = [[GAI sharedInstance] defaultTracker];
-  [tracker set:kGAIScreenName value:@"App"];
-  [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 @end
